@@ -3,7 +3,8 @@
 :root {
   --background: #03040f;
   --color: #d6d6d6;
-  --secondary: #00597c;
+  --primary: #ff5705;
+  --secondary: #0a0b1a;
 }
 
 * {
@@ -11,8 +12,143 @@
   padding: 0;
 }
 
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
 body {
   color: var(--color);
   background-color: var(--background);
   font-family: 'Poppins', sans-serif;
+}
+
+.container {
+  width: 60%;
+  margin: 0 auto;
+}
+
+nav {
+  padding: 20px 0;
+}
+
+.navbarLogo {
+  width: 50px;
+}
+
+.recent-episodes {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+  padding-bottom: 30px;
+}
+
+.recentPoster {
+  width: 100%;
+  border-radius: 7px;
+}
+
+.recentEpisodeIndividual {
+  padding: 10px;
+  border-radius: 7px;
+  background-color: var(--secondary);
+  text-decoration: none;
+  color: var(--color);
+}
+
+.recentTitle {
+  font-size: 14px;
+  line-height: 15px;
+  font-weight: 500;
+}
+
+.recentPosterContainer {
+  position: relative;
+}
+
+.recentEpisode {
+  display: inline;
+  font-size: 12px;
+  background-color: var(--background);
+  padding: 0 10px;
+  border-radius: 5px;
+  color: var(--color);
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
+.navbar_I {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  text-decoration: none;
+  color: var(--color);
+}
+
+.streaming {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  gap: 5px;
+  padding: 20px 0;
+}
+
+.streamingInfo {
+  padding: 10px;
+  background-color: var(--secondary);
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.streamingImage {
+  border-radius: 7px;
+  width: 225px;
+}
+
+.streamingDescription {
+  opacity: 50%;
+}
+
+.streamingTitle {
+  font-weight: 500;
+}
+
+.streamingGenres {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.streamingGenres>p {
+  border: 1px solid var(--primary);
+  padding: 0 5px;
+  border-radius: 7px;
+  font-size: 12px;
+}
+
+.streamingDescriptionPart2 {
+  margin-top: 10px;
+}
+
+.streamingScram {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+}
+
+.streamingMain {
+  padding: 10px;
+  border-radius: 7px;
 }
