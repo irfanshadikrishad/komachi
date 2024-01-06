@@ -112,3 +112,71 @@ nav {
   text-align: center;
   border-radius: 5px;
 }
+
+.streaming {
+  display: grid;
+  grid-template-columns: 3.5fr 1fr;
+  gap: 5px;
+  padding-bottom: 50px;
+}
+
+.streamingInfo {
+  background-color: var(--secondary);
+  border-radius: 7px;
+  padding: 5px;
+}
+
+.streamingInfoPoster {
+  width: 100%;
+  border-radius: 7px;
+}
+
+.streamingInfoDescription {
+  opacity: 50%;
+  line-height: 18px;
+}
+
+.streamingInfoDeep {
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5px;
+}
+
+.streamingInfoDeepAll {
+  padding: 10px 0;
+}
+
+.streamingGenres {
+  font-size: 12px;
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.streamingGenre {
+  padding: 3px 5px;
+  border-radius: 6px;
+  background-color: var(--background);
+}
+
+.streamingPlayer {
+  padding: 5px;
+  border-radius: 7px;
+  background-color: var(--secondary);
+}
+
+.streamingPlayerButtons {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 2px;
+}
+
+.streamingPlayerButton {
+  background-color: var(--background);
+  border: none;
+  color: var(--color);
+  padding: 5px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
