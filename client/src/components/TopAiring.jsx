@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { NavLink } from "react-router-dom";
+import randomcolor from "random-color";
+import TopAiringCard from "./TopAiringCard";
 
 const responsive = {
     superLargeDesktop: {
@@ -24,6 +25,7 @@ const responsive = {
 };
 
 export default function TopAiring() {
+    const rc = randomcolor();
     const [top, setTop] = useState([]);
 
     const getTopAiring = async () => {
@@ -46,14 +48,12 @@ export default function TopAiring() {
             partialVisbiles="false"
             responsive={responsive}>
             {top.length > 0 && top.map((t, i) => {
-                return <NavLink to={`/streaming/${t.id}`} key={i} className="topAiringCard">
-                    <img
-                        className="topAiringPoster"
-                        src={t.image}
-                        alt={t.title} />
-                    <p className="topAiringTitle">{t.title}</p>
-                    <p className="topRanking">TOP {i + 1}</p>
-                </NavLink>
+                return <TopAiringCard
+                    key={i}
+                    id={t.id}
+                    title={t.title}
+                    image={t.image}
+                    index={i} />
             })}
         </Carousel>
     </section>
