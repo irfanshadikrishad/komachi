@@ -49,16 +49,57 @@ nav {
 }
 
 .navbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  justify-content: space-between;
 }
 
 .navbarSocialLinks {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 5px;
+}
+
+.searchEngine {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchField {
+  border: none;
+  width: 250px;
+  outline: none;
+  padding: 5px;
+  border-radius: 7px;
+  background-color: var(--secondary);
+  color: var(--color);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #23232329;
+}
+
+.searchButton {
+  border: none;
+  background-color: transparent;
+  color: var(--color);
+}
+
+.searchContain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--secondary);
+  padding: 5px 10px;
+  border-radius: 7px;
 }
 
 .navbarSocialLink:first-child {
@@ -234,4 +275,25 @@ nav {
 .streamingPlayerEpisodeNumber {
   padding: 5px;
   text-transform: capitalize;
+}
+
+.searchContainerMain {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.searchPoster {
+  width: 100%;
+  border-radius: 7px;
+  height: 205px
+}
+
+.searchIndividual {
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 7px;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--color);
 }
