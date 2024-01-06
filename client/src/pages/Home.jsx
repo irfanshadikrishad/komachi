@@ -1,7 +1,7 @@
-import RecentEpisodes from "../components/RecentEpisodes";
+import TopAiring from "../components/TopAiring"
 
 export default function Home() {
     return <>
-        <RecentEpisodes />
+        <TopAiring />
     </>
 }

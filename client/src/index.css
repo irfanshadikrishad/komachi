@@ -5,6 +5,7 @@
   --color: #d6d6d6;
   --primary: #ff5705;
   --secondary: #0a0b1a;
+  --success: palegreen;
 }
 
 * {
@@ -47,108 +48,67 @@ nav {
   width: 50px;
 }
 
-.recent-episodes {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 5px;
-  padding-bottom: 30px;
-}
-
-.recentPoster {
-  width: 100%;
-  border-radius: 7px;
-}
-
-.recentEpisodeIndividual {
-  padding: 10px;
-  border-radius: 7px;
-  background-color: var(--secondary);
-  text-decoration: none;
-  color: var(--color);
-}
-
-.recentTitle {
-  font-size: 14px;
-  line-height: 15px;
-  font-weight: 500;
-}
-
-.recentPosterContainer {
-  position: relative;
-}
-
-.recentEpisode {
-  display: inline;
-  font-size: 12px;
-  background-color: var(--background);
-  padding: 0 10px;
-  border-radius: 5px;
-  color: var(--color);
-  position: absolute;
-  left: 5px;
-  top: 5px;
-}
-
-.navbar_I {
+.navbar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+}
+
+.navbarSocialLinks {
+  display: flex;
+  align-items: center;
   gap: 5px;
+}
+
+.navbarSocialLink:first-child {
+  font-size: 1.5rem;
+  color: var(--color);
+  display: flex;
+}
+
+.navbarSocialLink:last-child {
+  display: flex;
+  font-size: 1.9rem;
+  color: var(--color);
+}
+
+.partitionTitle {
+  padding-bottom: 10px;
+}
+
+.topAiringCard {
+  display: block;
+  padding: 5px;
+  background-color: var(--secondary);
+  height: 100%;
+  border-radius: 7px;
   text-decoration: none;
   color: var(--color);
 }
 
-.streaming {
-  display: grid;
-  grid-template-columns: 4fr 1fr;
+.react-multi-carousel-track {
   gap: 5px;
-  padding: 20px 0;
 }
 
-.streamingInfo {
-  padding: 10px;
-  background-color: var(--secondary);
-  border-radius: 7px;
+.topAiringTitle {
   font-size: 14px;
+  line-height: 14px;
 }
 
-.streamingImage {
+.topAiringPoster {
   border-radius: 7px;
-  width: 225px;
+  width: 100%;
+  height: 70%;
 }
 
-.streamingDescription {
-  opacity: 50%;
-}
-
-.streamingTitle {
-  font-weight: 500;
-}
-
-.streamingGenres {
-  display: flex;
-  gap: 3px;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.streamingGenres>p {
-  border: 1px solid var(--primary);
-  padding: 0 5px;
-  border-radius: 7px;
-  font-size: 12px;
-}
-
-.streamingDescriptionPart2 {
-  margin-top: 10px;
-}
-
-.streamingScram {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-}
-
-.streamingMain {
-  padding: 10px;
-  border-radius: 7px;
+.topRanking {
+  font-size: 10px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: var(--success);
+  background-color: var(--background);
+  padding: 1px 5px;
+  text-align: center;
+  border-radius: 5px;
 }
