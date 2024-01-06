@@ -57,6 +57,7 @@ nav {
 .navbarSocialLinks {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
 }
 
@@ -64,12 +65,16 @@ nav {
   font-size: 1.5rem;
   color: var(--color);
   display: flex;
+  border: 7px solid #10101a;
+  border-radius: 50%;
 }
 
 .navbarSocialLink:last-child {
   display: flex;
-  font-size: 1.9rem;
+  font-size: 1.5rem;
   color: var(--color);
+  border: 7px solid #10101a;
+  border-radius: 50%;
 }
 
 .partitionTitle {
@@ -183,6 +188,9 @@ nav {
   padding: 5px 10px;
   border-radius: 7px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .latestContainer {
@@ -199,6 +207,7 @@ nav {
 }
 
 .latestIndividual {
+  position: relative;
   background-color: var(--secondary);
   padding: 5px;
   border-radius: 7px;
@@ -209,4 +218,20 @@ nav {
 
 .latestTitle {
   padding: 3px 0;
+  font-size: 14px;
+}
+
+.latestEpisodeNumber {
+  font-size: 10px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--background);
+  padding: 2px 5px;
+  border-radius: 5px;
+}
+
+.streamingPlayerEpisodeNumber {
+  padding: 5px;
+  text-transform: capitalize;
 }

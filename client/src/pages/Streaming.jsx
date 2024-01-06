@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactPlayer from 'react-player';
 
-
 export default function Streaming() {
     const { animeId } = useParams();
     const [animeInfo, setAnimeInfo] = useState({});
@@ -36,6 +35,7 @@ export default function Streaming() {
             console.log(response);
         }
     }
+
     useEffect(() => {
         getAnimeInfo();
     }, [])
@@ -43,6 +43,8 @@ export default function Streaming() {
         <section className="container streaming">
             <div className="streamingPlayer">
                 {episodeUrl && <div>
+                    <div className="streamingPlayerEpisodeNumber">
+                        {`${String(episodeId).split('-').slice(-2)[0]} ${String(episodeId).split('-').slice(-2)[1]}`}</div>
                     <ReactPlayer
                         width="100%"
                         height="auto"
@@ -52,7 +54,7 @@ export default function Streaming() {
                     <div className="streamingPlayerButtons">
                         {episodes.map((epis, i) => {
                             return <button
-                                onClick={() => { getEpisode(epis.id) }}
+                                onClick={() => { getEpisode(epis.id); setEpisodeId(epis.id) }}
                                 className="streamingPlayerButton"
                                 key={i}>{i + 1}
                             </button>
@@ -62,10 +64,10 @@ export default function Streaming() {
             </div>
             <div className="streamingInfo">
                 {animeInfo && <div>
-                    <img src={animeInfo.image}
+                    {animeInfo.image && <img src={animeInfo.image}
                         alt={animeId}
                         className="streamingInfoPoster"
-                        draggable="false" />
+                        draggable="false" />}
                     <p>{animeInfo.title}</p>
                     <p className="streamingInfoDescription">
                         {String(animeInfo.description).length > 250 ? animeInfo.description.slice(0, 250) + "..." : animeInfo.description}

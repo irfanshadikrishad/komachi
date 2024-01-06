@@ -22,6 +22,7 @@ export default function Latest() {
                 return <NavLink to={`/streaming/${late.id}`} key={index} className="latestIndividual">
                     <img className="latestPoster" src={late.image} alt={late.id} draggable="false" />
                     <p className="latestTitle">{late.title}</p>
+                    <p className="latestEpisodeNumber">EP {late.episodeNumber}</p>
                 </NavLink>
             })}
         </div>
