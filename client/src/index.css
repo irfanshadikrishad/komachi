@@ -168,6 +168,7 @@ input:-webkit-autofill:active {
   grid-template-columns: 3.5fr 1fr;
   gap: 5px;
   padding-bottom: 50px;
+  align-items: flex-start;
 }
 
 .streamingInfo {
@@ -218,7 +219,7 @@ input:-webkit-autofill:active {
 
 .streamingPlayerButtons {
   display: grid;
-  grid-template-columns: repeat(20, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   gap: 2px;
 }
 
@@ -296,4 +297,98 @@ input:-webkit-autofill:active {
   font-size: 14px;
   text-decoration: none;
   color: var(--color);
+}
+
+/* --------------------------------- */
+/* -----------responsive------------ */
+/* --------------------------------- */
+@media screen and (max-width:1900px) {
+  .latestPoster {
+    height: auto;
+  }
+}
+
+@media screen and (max-width:1440px) {
+  .container {
+    width: 90%;
+  }
+
+  .searchPoster {
+    height: auto;
+  }
+}
+
+@media screen and (max-width:1024px) {
+  .latestContainer {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .latestPoster {
+    height: 190px;
+  }
+}
+
+@media screen and (max-width:768px) {
+  .latestContainer {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .latestPoster {
+    height: auto;
+  }
+
+  .navbarSocialLinks {
+    display: none;
+  }
+
+  .navbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .searchEngine {
+    justify-content: flex-end;
+  }
+
+  .searchContainerMain {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .streaming {
+    grid-template-columns: 1fr;
+  }
+
+  .streamingInfoPoster {
+    width: 200px;
+    height: auto;
+  }
+
+  .streaminImageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .streamingPlayerEpisodeNumber {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width:600px) {
+  .latestContainer {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .searchContainerMain {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .streamingPlayerButtons {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+@media screen and (max-width:425px) {
+  .searchContainerMain {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

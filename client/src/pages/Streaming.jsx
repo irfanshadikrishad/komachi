@@ -36,9 +36,11 @@ export default function Streaming() {
         }
     }
 
+    console.log(animeId);
+
     useEffect(() => {
         getAnimeInfo();
-    }, [])
+    }, [animeId])
     return (
         <section className="container streaming">
             <div className="streamingPlayer">
@@ -64,10 +66,12 @@ export default function Streaming() {
             </div>
             <div className="streamingInfo">
                 {animeInfo && <div>
-                    {animeInfo.image && <img src={animeInfo.image}
-                        alt={animeId}
-                        className="streamingInfoPoster"
-                        draggable="false" />}
+                    <div className="streaminImageContainer">
+                        {animeInfo.image && <img src={animeInfo.image}
+                            alt={animeId}
+                            className="streamingInfoPoster"
+                            draggable="false" />}
+                    </div>
                     <p>{animeInfo.title}</p>
                     <p className="streamingInfoDescription">
                         {String(animeInfo.description).length > 250 ? animeInfo.description.slice(0, 250) + "..." : animeInfo.description}
