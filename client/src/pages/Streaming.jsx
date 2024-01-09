@@ -42,7 +42,7 @@ export default function Streaming() {
 
     useEffect(() => {
         getAnimeInfo();
-    }, [animeId, episodeId])
+    }, [animeId])
     return (
         <section className="container streaming">
             <div className="streamingPlayer">
