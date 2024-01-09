@@ -30,7 +30,9 @@ export default function Navbar() {
                         name="search"
                         placeholder="Search something ..."
                         className="searchField"
-                        type="search" />
+                        type="search"
+                        autoComplete="off"
+                    />
                     <button type="submit" className="searchButton">
                         {<FiSearch />}
                     </button>

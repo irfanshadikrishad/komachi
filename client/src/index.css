@@ -299,6 +299,10 @@ input:-webkit-autofill:active {
   color: var(--color);
 }
 
+video {
+  outline: none;
+}
+
 /* --------------------------------- */
 /* -----------responsive------------ */
 /* --------------------------------- */
