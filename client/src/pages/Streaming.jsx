@@ -15,7 +15,11 @@ export default function Streaming() {
             const request = await fetch(`https://foxtream.up.railway.app/anime/gogoanime/watch/${episodeId}`);
             const response = await request.json();
             if (request.status === 200) {
-                setEpisodeUrl(response.sources[4].url);
+                if (response.sources.length <= 4) {
+                    setEpisodeUrl(response.sources[1].url);
+                } else {
+                    setEpisodeUrl(response.sources[4].url);
+                }
             }
         } catch (error) {
             console.log(error.message);
@@ -36,23 +40,21 @@ export default function Streaming() {
         }
     }
 
-    console.log(animeId);
-
     useEffect(() => {
         getAnimeInfo();
-    }, [animeId])
+    }, [animeId, episodeId])
     return (
         <section className="container streaming">
             <div className="streamingPlayer">
                 {episodeUrl && <div>
                     <div className="streamingPlayerEpisodeNumber">
                         {`${String(episodeId).split('-').slice(-2)[0]} ${String(episodeId).split('-').slice(-2)[1]}`}</div>
-                    <ReactPlayer
+                    {episodeUrl ? <ReactPlayer
                         width="100%"
                         height="auto"
                         controls={true}
                         playing={true}
-                        url={episodeUrl} />
+                        url={episodeUrl} /> : <p>Loading...</p>}
                     <div className="streamingPlayerButtons">
                         {episodes.map((epis, i) => {
                             return <button
@@ -66,16 +68,20 @@ export default function Streaming() {
             </div>
             <div className="streamingInfo">
                 {animeInfo && <div>
-                    <div className="streaminImageContainer">
-                        {animeInfo.image && <img src={animeInfo.image}
-                            alt={animeId}
-                            className="streamingInfoPoster"
-                            draggable="false" />}
+                    <div className="imageStreaming">
+                        <div className="streaminImageContainer">
+                            {animeInfo.image && <img src={animeInfo.image}
+                                alt={animeId}
+                                className="streamingInfoPoster"
+                                draggable="false" />}
+                        </div>
+                        <div>
+                            <p>{animeInfo.title}</p>
+                            <p className="streamingInfoDescription">
+                                {String(animeInfo.description).length > 250 ? animeInfo.description.slice(0, 250) + "..." : animeInfo.description}
+                            </p>
+                        </div>
                     </div>
-                    <p>{animeInfo.title}</p>
-                    <p className="streamingInfoDescription">
-                        {String(animeInfo.description).length > 250 ? animeInfo.description.slice(0, 250) + "..." : animeInfo.description}
-                    </p>
                     <div className="streamingInfoDeepAll">
                         <div className="streamingInfoDeep">
                             <p>Status</p>

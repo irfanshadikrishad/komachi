@@ -15,7 +15,7 @@ export default function Search() {
         }
     }
 
-    useEffect(() => { getSearched() }, [])
+    useEffect(() => { getSearched() }, [query])
     return <section className="container">
         <p>{query}</p>
         <div className="searchContainerMain">

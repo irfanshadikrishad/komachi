@@ -379,16 +379,20 @@ input:-webkit-autofill:active {
   }
 
   .searchContainerMain {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .streamingPlayerButtons {
     grid-template-columns: repeat(8, 1fr);
   }
-}
 
-@media screen and (max-width:425px) {
-  .searchContainerMain {
-    grid-template-columns: repeat(3, 1fr);
+  .imageStreaming {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+  }
+
+  .streamingInfoPoster {
+    width: 100%;
   }
 }
