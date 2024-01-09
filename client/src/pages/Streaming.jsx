@@ -10,6 +10,15 @@ export default function Streaming() {
     const [episodeUrl, setEpisodeUrl] = useState('');
     const [episodes, setEpisodes] = useState([]);
 
+    const rebumpEpisode = async () => {
+        const request = await fetch(`https://foxtream.up.railway.app/anime/gogoanime/info/${animeId}`)
+        const response = await request.json();
+        if (request.status === 200) {
+            setEpisodeId(response.episodes[0].id);
+            getEpisode(response.episodes[0].id);
+        }
+    }
+
     const getEpisode = async (episodeId) => {
         try {
             const request = await fetch(`https://foxtream.up.railway.app/anime/gogoanime/watch/${episodeId}`);
@@ -20,6 +29,8 @@ export default function Streaming() {
                 } else {
                     setEpisodeUrl(response.sources[4].url);
                 }
+            } else {
+                rebumpEpisode();
             }
         } catch (error) {
             console.log(error.message);
