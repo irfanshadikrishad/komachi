@@ -221,6 +221,8 @@ input:-webkit-autofill:active {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 2px;
+  max-height: 188px;
+  overflow-y: scroll;
 }
 
 .streamingPlayerButton {
@@ -301,6 +303,18 @@ input:-webkit-autofill:active {
 
 video {
   outline: none;
+}
+
+.e404 {
+  text-align: center;
+}
+
+.notFound {
+  text-align: center;
+}
+
+.notFound>img {
+  transform: translateX(-15px);
 }
 
 /* --------------------------------- */
