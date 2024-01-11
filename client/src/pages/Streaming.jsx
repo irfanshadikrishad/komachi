@@ -60,7 +60,7 @@ export default function Streaming() {
     }, [animeId])
     return (
         <>
-            {loading ? <Loading /> : <section className="container streaming">
+            {loading && animeInfo.status !== "Not yet aired" ? <Loading /> : <section className="container streaming">
                 <div className="streamingPlayer">
                     {episodeUrl && <div>
                         <div className="streamingPlayerEpisodeNumber">

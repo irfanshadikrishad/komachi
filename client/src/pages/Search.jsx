@@ -17,7 +17,7 @@ export default function Search() {
 
     useEffect(() => { getSearched() }, [query])
     return <section className="container">
-        <p>{query}</p>
+        <p>{searched.length > 0 ? `search results for '${query}'` : `no search results for '${query}'`}</p>
         <div className="searchContainerMain">
             {searched && searched.map((sea, index) => {
                 return <NavLink to={`/streaming/${sea.id}`} key={index}
