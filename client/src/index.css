@@ -341,6 +341,17 @@ video {
   cursor: pointer;
 }
 
+.streaming_Seperator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.streaminDownloadLink {
+  color: var(--color);
+  padding: 0 2px;
+}
+
 /* --------------------------------- */
 /* -----------responsive------------ */
 /* --------------------------------- */

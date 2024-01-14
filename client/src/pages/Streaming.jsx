@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactPlayer from 'react-player';
 import Loading from "../components/Loading";
+import { LuDownload } from "react-icons/lu";
 
 export default function Streaming() {
     const { animeId } = useParams();
@@ -11,6 +12,7 @@ export default function Streaming() {
     const [episodeUrl, setEpisodeUrl] = useState('');
     const [episodes, setEpisodes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [downloadLink, setDownloadLink] = useState('');
 
     const rebumpEpisode = async () => {
         const request = await fetch(`https://foxtream.up.railway.app/anime/gogoanime/info/${animeId}`)
@@ -32,6 +34,7 @@ export default function Streaming() {
                 } else {
                     setEpisodeUrl(response.sources[4].url);
                 }
+                setDownloadLink(response.download);
             } else {
                 rebumpEpisode();
             }
@@ -63,8 +66,12 @@ export default function Streaming() {
             {loading && animeInfo.status !== "Not yet aired" ? <Loading /> : <section className="container streaming">
                 <div className="streamingPlayer">
                     {episodeUrl && <div>
-                        <div className="streamingPlayerEpisodeNumber">
-                            {`${String(episodeId).split('-').slice(-2)[0]} ${String(episodeId).split('-').slice(-2)[1]}`}</div>
+                        <div className="streaming_Seperator">
+                            <p className="streamingPlayerEpisodeNumber">
+                                {`${String(episodeId).split('-').slice(-2)[0]} ${String(episodeId).split('-').slice(-2)[1]}`}
+                            </p>
+                            <a className="streaminDownloadLink" href={downloadLink} target="_blank">{<LuDownload />}</a>
+                        </div>
                         {episodeUrl && <ReactPlayer
                             width="100%"
                             height="auto"
