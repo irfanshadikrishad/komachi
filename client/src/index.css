@@ -284,6 +284,7 @@ input:-webkit-autofill:active {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
+  padding-bottom: 20px;
 }
 
 .searchPoster {
@@ -315,6 +316,29 @@ video {
 
 .notFound>img {
   transform: translateX(-15px);
+}
+
+.latest_Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.latest_buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.latest_button {
+  font-size: 0.9rem;
+  border: none;
+  padding: 2px 10px;
+  background-color: var(--secondary);
+  color: var(--color);
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 /* --------------------------------- */
@@ -412,5 +436,23 @@ video {
 
   .streamingInfoPoster {
     width: 100%;
+  }
+}
+
+@media screen and (max-width:425px) {
+  .topAiringPoster {
+    height: auto;
+  }
+}
+
+@media screen and (max-width:375px) {
+
+  .latestContainer,
+  .searchContainerMain {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .searchField {
+    width: auto;
   }
 }
