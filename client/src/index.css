@@ -258,6 +258,7 @@ input:-webkit-autofill:active {
   text-decoration: none;
   color: var(--color);
   line-height: 16px;
+  overflow: hidden;
 }
 
 .latestTitle {
