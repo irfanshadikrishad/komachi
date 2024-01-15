@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import randomcolor from "random-color";
 import TopAiringCard from "./TopAiringCard";
+import { useAuth } from '../store/auth.jsx';
 
 const responsive = {
     superLargeDesktop: {
-        // the naming can be any, depends on you.
         breakpoint: { max: 4000, min: 3000 },
         items: 8
     },
@@ -33,11 +32,11 @@ const responsive = {
 };
 
 export default function TopAiring() {
-    const rc = randomcolor();
+    const { API } = useAuth();
     const [top, setTop] = useState([]);
 
     const getTopAiring = async () => {
-        const request = await fetch(`https://foxtream.up.railway.app/anime/gogoanime/top-airing`);
+        const request = await fetch(`${API}/anime/gogoanime/top-airing`);
         const response = await request.json();
         if (request.status === 200) { setTop(response.results) } else { console.log(response); }
     }

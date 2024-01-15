@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import ReactPlayer from 'react-player';
 import Loading from "../components/Loading";
 import { LuDownload } from "react-icons/lu";
+import { useAuth } from '../store/auth.jsx';
 
 export default function Streaming() {
+    const { API } = useAuth();
     const { animeId } = useParams();
     const [animeInfo, setAnimeInfo] = useState({});
     const [genres, setGenres] = useState([]);
@@ -15,7 +17,7 @@ export default function Streaming() {
     const [downloadLink, setDownloadLink] = useState('');
 
     const rebumpEpisode = async () => {
-        const request = await fetch(`https://foxtream.up.railway.app/anime/gogoanime/info/${animeId}`)
+        const request = await fetch(`${API}/anime/gogoanime/info/${animeId}`)
         const response = await request.json();
         if (request.status === 200) {
             setEpisodeId(response.episodes[0].id);
@@ -25,7 +27,7 @@ export default function Streaming() {
 
     const getEpisode = async (episodeId) => {
         try {
-            const request = await fetch(`https://foxtream.up.railway.app/anime/gogoanime/watch/${episodeId}`);
+            const request = await fetch(`${API}/anime/gogoanime/watch/${episodeId}`);
             const response = await request.json();
             if (request.status === 200) {
                 setLoading(false);
@@ -45,7 +47,7 @@ export default function Streaming() {
     }
 
     const getAnimeInfo = async () => {
-        const request = await fetch(`https://foxtream.up.railway.app/anime/gogoanime/info/${animeId}`);
+        const request = await fetch(`${API}/anime/gogoanime/info/${animeId}`);
         const response = await request.json();
         if (request.status === 200) {
             setAnimeInfo(response);
@@ -70,7 +72,9 @@ export default function Streaming() {
                             <p className="streamingPlayerEpisodeNumber">
                                 {`${String(episodeId).split('-').slice(-2)[0]} ${String(episodeId).split('-').slice(-2)[1]}`}
                             </p>
-                            <a className="streaminDownloadLink" href={downloadLink} target="_blank">{<LuDownload />}</a>
+                            <a className="streaminDownloadLink" href={downloadLink} target="_blank">
+                                {<LuDownload />}
+                            </a>
                         </div>
                         {episodeUrl && <ReactPlayer
                             width="100%"

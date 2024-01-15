@@ -332,13 +332,14 @@ video {
 }
 
 .latest_button {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   border: none;
   padding: 2px 10px;
   background-color: var(--secondary);
   color: var(--color);
   border-radius: 4px;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 .streaming_Seperator {

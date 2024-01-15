@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
+import { useAuth } from '../store/auth.jsx';
 
 export default function Search() {
+    const { API } = useAuth();
     const { query } = useParams();
     const [searched, setSearched] = useState([]);
 
     const getSearched = async () => {
-        const request = await fetch(`https://foxtream.up.railway.app/anime/gogoanime/${query}`);
+        const request = await fetch(`${API}/anime/gogoanime/${query}`);
         const response = await request.json();
         if (request.status === 200) {
             setSearched(response.results);
