@@ -4,7 +4,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const API = "https://foxtream.up.railway.app";
-  const SERVER = "http://localhost:3001";
+  const SERVER = "https://foxtream.onrender.com";
   const [token, setToken] = useState(localStorage.getItem('logger'));
   const [user, setUser] = useState({});
   const isLoggedIn = Boolean(token);
