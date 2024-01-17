@@ -41,7 +41,7 @@ body {
 }
 
 nav {
-  padding: 20px 0;
+  padding: 10px 0 5px 0;
 }
 
 .navbarLogo {
@@ -473,6 +473,81 @@ video {
   justify-content: center;
 }
 
+.streamingV2 {
+  display: grid;
+  grid-template-columns: 3.5fr 1fr;
+  gap: 5px;
+  padding: 0 0 20px 0;
+  align-items: flex-start;
+}
+
+.streamingV2_Poster {
+  width: 100%;
+  border-radius: 7px;
+}
+
+.streamingV2_Info {
+  padding: 5px;
+  border-radius: 7px;
+  background-color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+.streamingV2_description {
+  font-size: 0.95rem;
+  line-height: 20px;
+  opacity: 50%;
+}
+
+.streamingV2_ReactPlayer {
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 7px;
+}
+
+.streamingV2Buttons {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 5px;
+  overflow-y: scroll;
+  align-items: flex-start;
+  max-height: 240px;
+}
+
+.streamingV2Button {
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  border-radius: 7px;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.streamingV2InfoGenres {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+}
+
+.streamingV2InfoGenres>span {
+  background-color: var(--background);
+  padding: 1px 10px;
+  border-radius: 7px;
+  margin-top: 5px;
+}
+
+.streamingV2Synonyms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.streamingV2AllSynonyms {
+  display: flex;
+  gap: 5px;
+}
+
 /* --------------------------------- */
 /* -----------responsive------------ */
 /* --------------------------------- */
@@ -483,6 +558,10 @@ video {
 }
 
 @media screen and (max-width:1440px) {
+  .topAiringPoster {
+    height: auto;
+  }
+
   .container {
     width: 90%;
   }
@@ -539,7 +618,27 @@ video {
   }
 }
 
+@media screen and (max-width:980px) {
+  .streamingV2 {
+    grid-template-columns: 1fr;
+  }
+
+  .streamingV2_Poster {
+    width: 200px;
+  }
+
+  .streamingV2_PosterContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 @media screen and (max-width:768px) {
+  .streamingV2Buttons {
+    grid-template-columns: repeat(10, 1fr);
+    gap: 3px;
+  }
 
   .login,
   .signup {
@@ -613,8 +712,16 @@ video {
 }
 
 @media screen and (max-width:425px) {
+  .streamingV2Buttons {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
   .topAiringPoster {
     height: auto;
+  }
+
+  .streamingV2_Poster {
+    width: 150px;
   }
 }
 

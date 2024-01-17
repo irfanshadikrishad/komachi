@@ -32,13 +32,13 @@ const responsive = {
 };
 
 export default function TopAiring() {
-    const { API } = useAuth();
+    const { SERVER } = useAuth();
     const [top, setTop] = useState([]);
 
     const getTopAiring = async () => {
-        const request = await fetch(`${API}/anime/gogoanime/top-airing`);
+        const request = await fetch(`${SERVER}/api/v1/anime/trending`);
         const response = await request.json();
-        if (request.status === 200) { setTop(response.results) } else { console.log(response); }
+        if (request.status === 200) { setTop(response) } else { console.log(response); }
     }
 
     useEffect(() => {
@@ -58,7 +58,7 @@ export default function TopAiring() {
                 return <TopAiringCard
                     key={i}
                     id={t.id}
-                    title={t.title}
+                    title={t.title.english}
                     image={t.image}
                     index={i} />
             })}
