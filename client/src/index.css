@@ -146,7 +146,10 @@ input:-webkit-autofill:active {
 .topAiringPoster {
   border-radius: 7px;
   width: 100%;
-  height: 70%;
+}
+
+.loader_center {
+  text-align: center;
 }
 
 .topRanking {
@@ -528,13 +531,33 @@ video {
   flex-wrap: wrap;
   align-items: center;
   gap: 2px;
+  margin-top: 5px;
+}
+
+.streamingV2_ReactPlayerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 3px 0;
+}
+
+.streamingV2_ReactPlayerHeader>a {
+  text-decoration: none;
+  color: var(--color);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.streamingV2_DownloadIcon {
+  font-size: 1.2rem;
+  display: flex;
 }
 
 .streamingV2InfoGenres>span {
   background-color: var(--background);
   padding: 1px 10px;
   border-radius: 7px;
-  margin-top: 5px;
 }
 
 .streamingV2Synonyms {
@@ -572,30 +595,31 @@ video {
 }
 
 @media screen and (max-width:1024px) {
+  .navMenuBarSection {
+    display: flex !important;
+  }
+
+  .navMenu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    right: 5%;
+    top: 80px;
+    background-color: var(--secondary);
+    min-height: 80px;
+    padding: 5px 10px;
+    z-index: 5;
+    border-radius: 7px;
+  }
 
   .login,
   .signup {
     margin-bottom: 30px;
   }
 
-  .navMenuBarSection {
-    display: flex !important;
-  }
-
-  .navMenu {
-    position: absolute;
-    right: 5%;
-    top: 70px;
-    background-color: var(--secondary);
-    flex-direction: column;
-    border-radius: 7px;
-    padding: 30px 30px;
-    z-index: 100;
-  }
-
   .navbarLoginSignUp {
-    margin-top: 5px;
     gap: 5px;
+    margin-bottom: 5px;
   }
 
   .navbarLoginSignUp>a {

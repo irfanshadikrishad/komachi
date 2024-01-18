@@ -1,10 +1,10 @@
 import chalk from "chalk";
 
+const Back = "https://consumet-api-fhnz.onrender.com";
+
 const trending = async (req, res) => {
   try {
-    const request = await fetch(
-      `https://foxtream.up.railway.app/meta/anilist/trending`
-    );
+    const request = await fetch(`${Back}/anime/gogoanime/top-airing`);
     const response = await request.json();
     if (request.status === 200) {
       res.status(200).json(response.results);
@@ -18,14 +18,12 @@ const trending = async (req, res) => {
 
 const recentEpisodes = async (req, res) => {
   try {
-    const request = await fetch(
-      `https://foxtream.up.railway.app/meta/anilist/recent-episodes`
-    );
+    const request = await fetch(`${Back}/anime/gogoanime/recent-episodes`);
     const response = await request.json();
     if (request.status === 200) {
       res.status(200).json(response);
     } else {
-      res.status(400).json({ error: "something went wrong" });
+      res.status(400).json({ error: response });
     }
   } catch (error) {
     console.log(chalk.magenta(`[trending] ${error.message}`));
@@ -35,9 +33,7 @@ const recentEpisodes = async (req, res) => {
 const animeInfo = async (req, res) => {
   try {
     const { anilistId } = await req.body;
-    const request = await fetch(
-      `https://foxtream.up.railway.app/meta/anilist/info/${anilistId}`
-    );
+    const request = await fetch(`${Back}/anime/gogoanime/info/${anilistId}`);
     const response = await request.json();
     if (request.status === 200) {
       res.status(200).json(response);
@@ -52,9 +48,7 @@ const animeInfo = async (req, res) => {
 const streamingEpisodeLink = async (req, res) => {
   try {
     const { episodeId } = await req.body;
-    const request = await fetch(
-      `https://foxtream.up.railway.app/meta/anilist/watch/${episodeId}`
-    );
+    const request = await fetch(`${Back}/meta/anilist/watch/${episodeId}`);
     const response = await request.json();
     if (request.status === 200) {
       res.status(200).json(response);
@@ -68,9 +62,7 @@ const streamingEpisodeLink = async (req, res) => {
 
 const randomAnime = async (req, res) => {
   try {
-    const request = await fetch(
-      `https://foxtream.up.railway.app/meta/anilist/random-anime`
-    );
+    const request = await fetch(`${Back}/meta/anilist/random-anime`);
     const response = await request.json();
     if (request.status === 200) {
       res.status(200).json(response);
@@ -85,9 +77,7 @@ const randomAnime = async (req, res) => {
 const search = async (req, res) => {
   try {
     const { searchQuery } = await req.body;
-    const request = await fetch(
-      `https://foxtream.up.railway.app/meta/anilist/${searchQuery}`
-    );
+    const request = await fetch(`${Back}/anime/gogoanime/${searchQuery}`);
     const response = await request.json();
     if (request.status === 200) {
       res.status(200).json(response);

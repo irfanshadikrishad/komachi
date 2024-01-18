@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from '../store/auth.jsx';
-import { InfinitySpin } from 'react-loader-spinner';
 
 export default function Latest() {
     const { SERVER } = useAuth();
@@ -37,24 +36,21 @@ export default function Latest() {
                     onClick={() => { setType(3) }}>ch</button>
             </div> */}
         </div>
-        {loading ? <InfinitySpin
-            visible={true}
-            width="100"
-            color="#ff5705"
-            ariaLabel="infinity-spin-loading"
-        /> : <div className="latestContainer">
-            {latest.map((late, index) => {
-                const { id, image, title, episodeNumber } = late;
-                return <NavLink
-                    to={`/streaming/${id}`}
-                    key={index}
-                    className="latestIndividual">
-                    <img className="latestPoster" src={image} alt={id} draggable="false" />
-                    <p className="latestTitle">{title.english}</p>
-                    <p className="latestEpisodeNumber">EP {episodeNumber}</p>
-                </NavLink>
-            })}
-        </div>}
+        {loading ?
+            <p>Loading...</p>
+            : <div className="latestContainer">
+                {latest.map((late, index) => {
+                    const { id, image, title, episodeNumber } = late;
+                    return <NavLink
+                        to={`/streaming/${id}`}
+                        key={index}
+                        className="latestIndividual">
+                        <img className="latestPoster" src={image} alt={id} draggable="false" />
+                        <p className="latestTitle">{title}</p>
+                        <p className="latestEpisodeNumber">EP {episodeNumber}</p>
+                    </NavLink>
+                })}
+            </div>}
 
     </section>
 }

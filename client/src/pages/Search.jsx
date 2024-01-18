@@ -3,18 +3,11 @@ import { useParams, NavLink } from "react-router-dom";
 import { useAuth } from '../store/auth.jsx';
 
 export default function Search() {
-    const { API, SERVER } = useAuth();
+    const { SERVER } = useAuth();
     const { query } = useParams();
     const [searched, setSearched] = useState([]);
 
     const getSearched = async () => {
-        // const request = await fetch(`${API}/anime/gogoanime/${query}`);
-        // const response = await request.json();
-        // if (request.status === 200) {
-        //     setSearched(response.results);
-        // } else {
-        //     console.log(response);
-        // }
         const request = await fetch(`${SERVER}/api/v1/anime/search`,
             {
                 method: "POST",
@@ -42,7 +35,7 @@ export default function Search() {
                         alt={id}
                         className="searchPoster"
                         draggable="false" />
-                    <p>{title.userPreferred}</p>
+                    <p>{title}</p>
                 </NavLink>
             })}
         </div>

@@ -10,7 +10,7 @@ export default function Navbar() {
     const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState('');
-    const [isMenu, setIsMenu] = useState(true);
+    const [isMenu, setIsMenu] = useState(false);
 
     const searchPage = async (e) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ export default function Navbar() {
             <div className="navMenuBarSection">
                 <button onClick={toggleMenu} className="navMenuBars">{<FaBars />}</button>
             </div>
-            {isMenu && <section className="navMenu">
+            <section className="navMenu" style={{ display: isMenu ? 'flex !important' : 'none !important' }}>
                 <form onSubmit={searchPage} className="searchEngine">
                     <div className="searchContain">
                         <input
@@ -59,7 +59,7 @@ export default function Navbar() {
                         <NavLink to='/signup' className="navbarLoginSignUp_SignUp">Sign Up</NavLink>
                     </>}
                 </section>
-            </section>}
+            </section>
         </section>
     </nav>
 }

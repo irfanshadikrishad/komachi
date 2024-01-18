@@ -55,11 +55,12 @@ export default function TopAiring() {
             partialVisbiles="false"
             responsive={responsive}>
             {top.length > 0 && top.map((t, i) => {
+                const { id, image, title } = t;
                 return <TopAiringCard
-                    key={i}
-                    id={t.id}
-                    title={t.title.english}
-                    image={t.image}
+                    key={id}
+                    id={id}
+                    title={title}
+                    image={image}
                     index={i} />
             })}
         </Carousel>

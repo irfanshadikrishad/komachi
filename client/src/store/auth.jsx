@@ -3,7 +3,6 @@ import { useContext, createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const API = "https://foxtream.up.railway.app";
   const SERVER = "https://foxtream.onrender.com";
   const [token, setToken] = useState(localStorage.getItem('logger'));
   const [user, setUser] = useState({});
@@ -33,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     autheticate();
   }, []);
   return (
-    <AuthContext.Provider value={{ API, SERVER, storeTokenInLS, token, isLoggedIn, user }}>
+    <AuthContext.Provider value={{ SERVER, storeTokenInLS, token, isLoggedIn, user }}>
       {children}
     </AuthContext.Provider>
   );
