@@ -603,7 +603,7 @@ video {
     z-index: 5;
     flex-direction: column;
     border-radius: 7px;
-    width: 50%;
+    width: 80%;
     height: 100%;
     z-index: 10000000;
     justify-content: center;
