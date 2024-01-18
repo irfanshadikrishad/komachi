@@ -743,6 +743,12 @@ video {
   }
 }
 
+@media screen and (max-width: 500px) {
+  .streamingV2_Poster {
+    width: 150px;
+  }
+}
+
 @media screen and (max-width:425px) {
   .s768seperator {
     flex-direction: column;
