@@ -1,65 +1,51 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { VscGithubInverted } from "react-icons/vsc";
-import { TbBrandYoutubeFilled } from "react-icons/tb";
-import { FiSearch } from "react-icons/fi";
-import { useEffect, useState } from "react";
-import { useAuth } from "../store/auth.jsx";
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+// ICONS
 import { FaBars } from "react-icons/fa6";
+import { FiSearch } from "react-icons/fi";
 
 export default function Navbar() {
-    const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
-    const [searchText, setSearchText] = useState('');
-    const [isMenu, setIsMenu] = useState(false);
+    const [query, setQuery] = useState('');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const searchPage = async (e) => {
+    const handleSearch = async (e) => {
         e.preventDefault();
-        navigate(`/search/${searchText}`);
+        if (query) {
+            navigate(`/search/${query}`);
+            setIsMenuOpen(!isMenuOpen);
+            setQuery('');
+        }
     }
 
-    const toggleMenu = async () => {
-        setIsMenu(!isMenu);
-    }
-
-    useEffect(() => { }, [isLoggedIn]);
-    return <nav className="container">
-        <section className="navbar">
-            <div>
-                <NavLink to="/" className="navbar_I">
-                    <img
-                        className="navbarLogo"
-                        src="/foxtream.png"
-                        alt="foxtream logo"
-                        draggable="false" />
-                </NavLink>
-            </div>
-            <div className="navMenuBarSection">
-                <button onClick={toggleMenu} className="navMenuBars">{<FaBars />}</button>
-            </div>
-            <section className="navMenu" style={{ display: isMenu ? 'flex !important' : 'none !important' }}>
-                <form onSubmit={searchPage} className="searchEngine">
-                    <div className="searchContain">
-                        <input
-                            onChange={(e) => { setSearchText(e.target.value) }}
-                            value={searchText}
-                            name="search"
-                            placeholder="Search something ..."
-                            className="searchField"
+    return (
+        <nav>
+            <section className="container navbar">
+                <section>
+                    <NavLink to="/">
+                        <img className='navbar_logo' src="/foxtream.png" alt="foxtream_logo" />
+                    </NavLink>
+                </section>
+                <section className={isMenuOpen ? "navbarII open" : "navbarII"}>
+                    <form className='navbar_search_form' onSubmit={handleSearch}>
+                        <input onChange={(e) => { setQuery(e.target.value) }}
+                            value={query}
+                            className='navbar_search'
                             type="search"
-                            autoComplete="off"
-                        />
-                        <button type="submit" className="searchButton">
+                            placeholder="Search..." />
+                        <button className='navbar_search_icon'>
                             {<FiSearch />}
                         </button>
-                    </div>
-                </form>
-                <section className="navbarLoginSignUp">
-                    {isLoggedIn ? <NavLink to='/profile'>Profile</NavLink> : <>
-                        <NavLink to='/login'>Login</NavLink>
-                        <NavLink to='/signup' className="navbarLoginSignUp_SignUp">Sign Up</NavLink>
-                    </>}
+                    </form>
+                    <section className='navbarLR'>
+                        <NavLink to="/login" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_login">Login</NavLink>
+                        <NavLink to="/signup" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_register">Sign Up</NavLink>
+                    </section>
+                </section>
+                <section className='navbarMenu'>
+                    <button onClick={() => { setIsMenuOpen(!isMenuOpen) }} className='navbarMenuButton'>{<FaBars />}</button>
                 </section>
             </section>
-        </section>
-    </nav>
+        </nav>
+    )
 }
