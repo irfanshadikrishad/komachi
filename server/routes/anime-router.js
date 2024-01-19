@@ -11,7 +11,7 @@ import {
 const router = Router();
 
 router.get("/trending", trending);
-router.get("/recent", recentEpisodes);
+router.post("/recent", recentEpisodes);
 router.post("/info", animeInfo);
 router.post("/stream", streamingEpisodeLink);
 router.get("/random", randomAnime);

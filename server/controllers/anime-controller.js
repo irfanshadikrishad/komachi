@@ -18,7 +18,10 @@ const trending = async (req, res) => {
 
 const recentEpisodes = async (req, res) => {
   try {
-    const request = await fetch(`${Back}/anime/gogoanime/recent-episodes`);
+    const { type } = await req.body;
+    const request = await fetch(
+      `${Back}/anime/gogoanime/recent-episodes?type=${type}`
+    );
     const response = await request.json();
     if (request.status === 200) {
       res.status(200).json(response);

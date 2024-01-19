@@ -3,6 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import TopAiringCard from "./TopAiringCard";
 import { useAuth } from '../store/auth.jsx';
+import Loader from "./Loader.jsx";
 
 const responsive = {
     superLargeDesktop: {
@@ -43,26 +44,30 @@ export default function TopAiring() {
 
     useEffect(() => {
         getTopAiring();
-    }, [])
-    return <section className="container">
-        <p className="partitionTitle">Top Airing</p>
-        <Carousel
-            autoPlay={true}
-            swipeable={true}
-            draggable={true}
-            showDots={false}
-            rewind={true}
-            partialVisbiles="false"
-            responsive={responsive}>
-            {top.length > 0 && top.map((t, i) => {
-                const { id, image, title } = t;
-                return <TopAiringCard
-                    key={id}
-                    id={id}
-                    title={title}
-                    image={image}
-                    index={i} />
-            })}
-        </Carousel>
-    </section>
+    }, [top])
+    return (
+        <section className="container">
+            {top.length > 0 ? <>
+                <p className="partitionTitle" >Top Airing</p>
+                <Carousel
+                    autoPlay={true}
+                    swipeable={true}
+                    draggable={true}
+                    showDots={false}
+                    rewind={true}
+                    partialVisbiles="false"
+                    responsive={responsive}>
+                    {top.length > 0 && top.map((to, i) => {
+                        const { id, image, title } = to;
+                        return <TopAiringCard
+                            key={id}
+                            id={id}
+                            title={title}
+                            image={image}
+                            index={i} />
+                    })}
+                </Carousel>
+            </> : <Loader />}
+        </section >
+    )
 }
