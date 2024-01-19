@@ -44,7 +44,7 @@ export default function TopAiring() {
 
     useEffect(() => {
         getTopAiring();
-    }, [top])
+    }, [])
     return (
         <section className="container">
             {top.length > 0 ? <>
