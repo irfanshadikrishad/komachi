@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth.jsx";
 import { NavLink } from "react-router-dom";
-import _ from 'lodash';
 
 export default function Profile() {
     const { user, SERVER } = useAuth();
