@@ -1,10 +1,12 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from "../store/auth.jsx";
 // ICONS
 import { FaBars } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
 
 export default function Navbar() {
+    const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,8 +40,10 @@ export default function Navbar() {
                         </button>
                     </form>
                     <section className='navbarLR'>
-                        <NavLink to="/login" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_login">Login</NavLink>
-                        <NavLink to="/signup" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_register">Sign Up</NavLink>
+                        {!isLoggedIn ? <>
+                            <NavLink to="/login" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_login">Login</NavLink>
+                            <NavLink to="/signup" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_register">Sign Up</NavLink>
+                        </> : <NavLink to="/profile" className="navbarLR_login" onClick={() => { setIsMenuOpen(!isMenuOpen) }}>Profile</NavLink>}
                     </section>
                 </section>
                 <section className='navbarMenu'>

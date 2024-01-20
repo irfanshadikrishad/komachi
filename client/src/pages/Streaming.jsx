@@ -2,17 +2,36 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
 import ReactPlayer from 'react-player';
-import { MdOutlineFileDownload } from "react-icons/md";
+import Loader from "../components/Loader.jsx";
+// ICONS
 import { ImCloudDownload } from "react-icons/im";
 
 export default function Streaming() {
-    const { SERVER } = useAuth();
+    const { SERVER, token, user, isLoggedIn } = useAuth();
     const { animeId } = useParams();
     const [animeInfo, setAnimeInfo] = useState({});
     const [episodes, setEpisodes] = useState([]);
     const [streamLink, setStreamLink] = useState('');
     const [currentEpisode, setCurrentEpisode] = useState(1);
     const [episodeDownloadLink, setEpisodeDownloadLink] = useState('');
+    const [status, setStatus] = useState("none");
+
+    const handleStatus = async (e) => {
+        setStatus(e.target.value);
+
+        const request = await fetch(`${SERVER}/api/v1/user/updatelist`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                animeId, status: e.target.value
+            })
+        })
+        const response = await request.json();
+        if (request.status === 200) { console.log(response) } else { console.log(response); }
+    }
 
     const getStreamLink = async (episodeId) => {
         const request = await fetch(`${SERVER}/api/v1/anime/stream`,
@@ -53,11 +72,22 @@ export default function Streaming() {
                 {streamLink && <div>
                     <div className="streamingV2_ReactPlayerHeader">
                         <p>Episode {String(currentEpisode).split('-')[String(currentEpisode).split('-').length - 1]}</p>
-                        <a href={episodeDownloadLink} target="_blank">Download
-                            <span className="streamingV2_DownloadIcon">
-                                {<ImCloudDownload />}
-                            </span>
-                        </a>
+
+                        <div className="streaming_options">
+                            {isLoggedIn && <select value={status} onChange={handleStatus}>
+                                <option value="none">Add to List</option>
+                                <option value="watching">Watching</option>
+                                <option value="onhold">On Hold</option>
+                                <option value="dropped">Dropped</option>
+                                <option value="planning">Planning</option>
+                                <option value="watched">Watched</option>
+                            </select>}
+                            <a className="streamingV2_Download" href={episodeDownloadLink} target="_blank">Download
+                                <span className="streamingV2_DownloadIcon">
+                                    {<ImCloudDownload />}
+                                </span>
+                            </a>
+                        </div>
                     </div>
                     <ReactPlayer
                         width="100%"
@@ -71,7 +101,7 @@ export default function Streaming() {
                         return <button onClick={() => { getStreamLink(episode.id) }} key={index} className="streamingV2Button">{episode.number}</button>
                     })}
                 </div>
-            </section> : <p>Loading...</p>}
+            </section> : <Loader />}
 
             {animeInfo.id && <section className="streamingV2_Info">
                 <section className="s768seperator">
@@ -81,7 +111,7 @@ export default function Streaming() {
                     <section>
                         <p>{animeInfo.title && animeInfo.title}</p>
                         <p className="streamingV2_description">
-                            {String(animeInfo.description).length > 250 ? String(animeInfo.description).slice(0, 250) + "..." : String(animeInfo.description)}
+                            {animeInfo.description}
                         </p>
                         <section>
                             <p>Status : {animeInfo.status}</p>
