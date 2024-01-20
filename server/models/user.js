@@ -33,6 +33,36 @@ const userSchema = new Schema({
     required: false,
     default: false,
   },
+  watching: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
+  planning: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
+  watched: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
+  dropped: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
+  onhold: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
 });
 
 userSchema.methods.genJWT = function () {
