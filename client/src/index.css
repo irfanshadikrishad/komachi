@@ -658,6 +658,17 @@ video {
   border-radius: 7px;
 }
 
+.profile_logout {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--color);
+  background-color: transparent;
+  cursor: pointer;
+}
+
 /* Profile End */
 
 /* --------------------------------- */

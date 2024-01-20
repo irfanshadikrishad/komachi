@@ -60,6 +60,7 @@ export default function Login() {
                     required={true}
                     onChange={(e) => { setPassword(e.target.value) }}
                     type="password"
+                    autoComplete="true"
                     placeholder="password" />
                 <button>Login</button>
             </form>

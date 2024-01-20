@@ -1,29 +1,19 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth.jsx";
 import { NavLink } from "react-router-dom";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-    const { user, SERVER } = useAuth();
-    // const [watchingInfos, setWatchingInfos] = useState([]);
+    const navigate = useNavigate();
+    const { user, deleteTokenFromLS } = useAuth();
 
-    // const getList = async () => {
-    //     if (user.watching) {
-    //         console.log(user.watching);
-    //         user.watching.map(async (watchin, i) => {
-    //             const request = await fetch(`${SERVER}/api/v1/anime/info`,
-    //                 {
-    //                     method: "POST",
-    //                     headers: { 'Content-Type': 'application/json' },
-    //                     body: JSON.stringify({ anilistId: watchin })
-    //                 })
-    //             const response = await request.json();
-    //             if (request.status === 200) { setWatchingInfos([...watchingInfos, response]); }
-    //         })
-    //     }
-    // }
+    const logout = async () => {
+        deleteTokenFromLS();
+        navigate('/login');
+    }
 
     useEffect(() => {
-        // getList();
     }, [user])
     return (
         <section className="container">
@@ -36,6 +26,7 @@ export default function Profile() {
                         draggable='false' />
                     <h1 className="profile_username">{user.username}</h1>
                 </section>
+                <button onClick={logout} className="profile_logout">{<RiLogoutBoxRLine />}</button>
             </section>
             <section className="profile_lists">
                 <div className="list_indi">

@@ -8,9 +8,14 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const isLoggedIn = Boolean(token);
 
-  const storeTokenInLS = (serverToken) => {
+  const storeTokenInLS = async (serverToken) => {
     setToken(serverToken);
     return localStorage.setItem('logger', serverToken);
+  }
+
+  const deleteTokenFromLS = () => {
+    setToken('');
+    return localStorage.removeItem('logger');
   }
 
   const autheticate = async () => {
@@ -30,9 +35,9 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     autheticate();
-  }, []);
+  }, [token]);
   return (
-    <AuthContext.Provider value={{ SERVER, storeTokenInLS, token, isLoggedIn, user }}>
+    <AuthContext.Provider value={{ SERVER, storeTokenInLS, token, isLoggedIn, user, deleteTokenFromLS }}>
       {children}
     </AuthContext.Provider>
   );
