@@ -669,6 +669,29 @@ video {
   cursor: pointer;
 }
 
+.announcement {
+  background-color: #006e5f;
+  color: var(--background);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 7px;
+  margin-top: 10px;
+}
+
+.close_announcement {
+  border: none;
+  background-color: transparent;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.announcement_text {
+  margin-left: 5px;
+}
+
 /* Profile End */
 
 /* --------------------------------- */

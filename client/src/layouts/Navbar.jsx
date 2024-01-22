@@ -10,6 +10,7 @@ export default function Navbar() {
     const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isAnnouncement, setIsAnnouncement] = useState(localStorage.getItem('announcement'))
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -21,35 +22,44 @@ export default function Navbar() {
     }
 
     return (
-        <nav>
-            <section className="container navbar">
-                <section>
-                    <NavLink to="/">
-                        <img className='navbar_logo' src="/foxtream.png" alt="foxtream_logo" />
-                    </NavLink>
-                </section>
-                <section className={isMenuOpen ? "navbarII open" : "navbarII"}>
-                    <form className='navbar_search_form' onSubmit={handleSearch}>
-                        <input onChange={(e) => { setQuery(e.target.value) }}
-                            value={query}
-                            className='navbar_search'
-                            type="search"
-                            placeholder="Search..." />
-                        <button className='navbar_search_icon'>
-                            {<FiSearch />}
-                        </button>
-                    </form>
-                    <section className='navbarLR'>
-                        {!isLoggedIn ? <>
-                            <NavLink to="/login" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_login">Login</NavLink>
-                            <NavLink to="/signup" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_register">Sign Up</NavLink>
-                        </> : <NavLink to="/profile" className="navbarLR_login" onClick={() => { setIsMenuOpen(!isMenuOpen) }}>Profile</NavLink>}
+        <>
+            {!isAnnouncement && <section className='container announcement'>
+                <p className='announcement_text'>Site might load slow due to free hosting services, Thanks for your patience.</p>
+                <button onClick={() => {
+                    localStorage.setItem('announcement', true);
+                    setIsAnnouncement(localStorage.getItem('announcement'));
+                }} className='close_announcement'>x</button>
+            </section>}
+            <nav>
+                <section className="container navbar">
+                    <section>
+                        <NavLink to="/">
+                            <img className='navbar_logo' src="/foxtream.png" alt="foxtream_logo" />
+                        </NavLink>
+                    </section>
+                    <section className={isMenuOpen ? "navbarII open" : "navbarII"}>
+                        <form className='navbar_search_form' onSubmit={handleSearch}>
+                            <input onChange={(e) => { setQuery(e.target.value) }}
+                                value={query}
+                                className='navbar_search'
+                                type="search"
+                                placeholder="Search..." />
+                            <button className='navbar_search_icon'>
+                                {<FiSearch />}
+                            </button>
+                        </form>
+                        <section className='navbarLR'>
+                            {!isLoggedIn ? <>
+                                <NavLink to="/login" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_login">Login</NavLink>
+                                <NavLink to="/signup" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_register">Sign Up</NavLink>
+                            </> : <NavLink to="/profile" className="navbarLR_login" onClick={() => { setIsMenuOpen(!isMenuOpen) }}>Profile</NavLink>}
+                        </section>
+                    </section>
+                    <section className='navbarMenu'>
+                        <button onClick={() => { setIsMenuOpen(!isMenuOpen) }} className='navbarMenuButton'>{<FaBars />}</button>
                     </section>
                 </section>
-                <section className='navbarMenu'>
-                    <button onClick={() => { setIsMenuOpen(!isMenuOpen) }} className='navbarMenuButton'>{<FaBars />}</button>
-                </section>
-            </section>
-        </nav>
+            </nav>
+        </>
     )
 }
