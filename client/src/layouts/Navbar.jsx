@@ -10,7 +10,7 @@ export default function Navbar() {
     const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isAnnouncement, setIsAnnouncement] = useState(localStorage.getItem('announcement'))
+    const [isAnnouncement, setIsAnnouncement] = useState(localStorage.getItem('announcement'));
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -33,9 +33,15 @@ export default function Navbar() {
             <nav>
                 <section className="container navbar">
                     <section>
-                        <NavLink to="/">
-                            <img className='navbar_logo' src="/foxtream.png" alt="foxtream_logo" />
-                        </NavLink>
+                        <div>
+                            <NavLink
+                                to="/"
+                                className='navbar_text_logo'
+                                style={{ display: 'inline' }}>
+                                {/* <img className='navbar_logo' src="/foxtream.png" alt="foxtream_logo" /> */}
+                                <p>komachi</p>
+                            </NavLink>
+                        </div>
                     </section>
                     <section className={isMenuOpen ? "navbarII open" : "navbarII"}>
                         <form className='navbar_search_form' onSubmit={handleSearch}>
@@ -50,13 +56,33 @@ export default function Navbar() {
                         </form>
                         <section className='navbarLR'>
                             {!isLoggedIn ? <>
-                                <NavLink to="/login" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_login">Login</NavLink>
-                                <NavLink to="/signup" onClick={() => { setIsMenuOpen(!isMenuOpen) }} className="navbarLR_register">Sign Up</NavLink>
-                            </> : <NavLink to="/profile" className="navbarLR_login" onClick={() => { setIsMenuOpen(!isMenuOpen) }}>Profile</NavLink>}
+                                <NavLink
+                                    to="/login"
+                                    onClick={() => { setIsMenuOpen(!isMenuOpen) }}
+                                    className="navbarLR_login">
+                                    Login
+                                </NavLink>
+                                <NavLink
+                                    to="/signup"
+                                    onClick={() => { setIsMenuOpen(!isMenuOpen) }}
+                                    className="navbarLR_register">
+                                    Sign Up
+                                </NavLink>
+                            </> : <NavLink
+                                to="/profile"
+                                className="navbarLR_login"
+                                onClick={() => { setIsMenuOpen(!isMenuOpen) }}>
+                                Profile
+                            </NavLink>}
                         </section>
                     </section>
-                    <section className='navbarMenu'>
-                        <button onClick={() => { setIsMenuOpen(!isMenuOpen) }} className='navbarMenuButton'>{<FaBars />}</button>
+                    <section
+                        className='navbarMenu'>
+                        <button
+                            onClick={() => { setIsMenuOpen(!isMenuOpen) }}
+                            className='navbarMenuButton'>
+                            {<FaBars />}
+                        </button>
                     </section>
                 </section>
             </nav>

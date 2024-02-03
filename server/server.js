@@ -14,7 +14,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://foxtream.vercel.app", "http://localhost:5173"],
+    origin: ["https://komachi-chan.vercel.app"],
     methods: "*",
   })
 );

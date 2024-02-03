@@ -3,11 +3,12 @@ import { config } from "dotenv";
 import { connect } from "mongoose";
 
 config();
+const URI = process.env.MONGODB_URI;
 
 const database = async () => {
   try {
-    await connect(process.env.MONGODB_URI);
-    console.log(chalk.cyan(`[database] connected`));
+    const connection = await connect(URI);
+    console.log(chalk.cyan(`[database] ${connection.connection.port}`));
   } catch (error) {
     console.log(chalk.magenta(`[database] ${error.message}`));
   }

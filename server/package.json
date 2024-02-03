@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@consumet/extensions": "github:consumet/consumet.ts",
     "bcryptjs": "^2.4.3",
     "chalk": "^5.3.0",
     "cors": "^2.8.5",

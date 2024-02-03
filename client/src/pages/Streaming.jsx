@@ -53,7 +53,7 @@ export default function Streaming() {
             {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ anilistId: animeId })
+                body: JSON.stringify({ animeId })
             });
         const response = await request.json();
         if (request.status === 200) {

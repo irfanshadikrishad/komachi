@@ -1,102 +1,54 @@
-import chalk from "chalk";
+import { ANIME } from "@consumet/extensions";
 
-const Back = "https://consumet-api-fhnz.onrender.com";
+const gogoanime = new ANIME.Gogoanime();
 
 const trending = async (req, res) => {
   try {
-    const request = await fetch(`${Back}/anime/gogoanime/top-airing`);
-    const response = await request.json();
-    if (request.status === 200) {
-      res.status(200).json(response.results);
-    } else {
-      res.status(400).json({ error: "something went wrong" });
-    }
+    const topAiring = await gogoanime.fetchTopAiring();
+    res.status(200).json(topAiring);
   } catch (error) {
-    console.log(chalk.magenta(`[trending] ${error.message}`));
+    res.status(400).json({ error: error.message });
   }
 };
 
 const recentEpisodes = async (req, res) => {
   try {
-    const { type } = await req.body;
-    const request = await fetch(
-      `${Back}/anime/gogoanime/recent-episodes?type=${type}`
-    );
-    const response = await request.json();
-    if (request.status === 200) {
-      res.status(200).json(response);
-    } else {
-      res.status(400).json({ error: response });
-    }
+    const { page, type } = await req.body;
+    const recent = await gogoanime.fetchRecentEpisodes(page, type);
+    res.status(200).json(recent);
   } catch (error) {
-    console.log(chalk.magenta(`[trending] ${error.message}`));
+    res.status(400).json({ error: error.message });
   }
 };
 
 const animeInfo = async (req, res) => {
   try {
-    const { anilistId } = await req.body;
-    const request = await fetch(`${Back}/anime/gogoanime/info/${anilistId}`);
-    const response = await request.json();
-    if (request.status === 200) {
-      res.status(200).json(response);
-    } else {
-      res.status(400).json({ error: "something went wrong" });
-    }
+    const { animeId } = await req.body;
+    const info = await gogoanime.fetchAnimeInfo(animeId);
+    res.status(200).json(info);
   } catch (error) {
-    console.log(chalk.magenta(`[trending] ${error.message}`));
+    res.status(400).json({ error: error.message });
   }
 };
 
 const streamingEpisodeLink = async (req, res) => {
   try {
     const { episodeId } = await req.body;
-    const request = await fetch(`${Back}/meta/anilist/watch/${episodeId}`);
-    const response = await request.json();
-    if (request.status === 200) {
-      res.status(200).json(response);
-    } else {
-      res.status(400).json({ error: "something went wrong" });
-    }
+    const streaminLinks = await gogoanime.fetchEpisodeSources(episodeId);
+    res.status(200).json(streaminLinks);
   } catch (error) {
-    console.log(chalk.magenta(`[trending] ${error.message}`));
-  }
-};
-
-const randomAnime = async (req, res) => {
-  try {
-    const request = await fetch(`${Back}/meta/anilist/random-anime`);
-    const response = await request.json();
-    if (request.status === 200) {
-      res.status(200).json(response);
-    } else {
-      res.status(400).json({ error: "something went wrong" });
-    }
-  } catch (error) {
-    console.log(chalk.magenta(`[trending] ${error.message}`));
+    res.status(400).json({ error: error.message });
   }
 };
 
 const search = async (req, res) => {
   try {
     const { searchQuery } = await req.body;
-    const request = await fetch(`${Back}/anime/gogoanime/${searchQuery}`);
-    const response = await request.json();
-    if (request.status === 200) {
-      res.status(200).json(response);
-    } else {
-      res.status(400).json({ error: "something went wrong" });
-    }
+    const searched = await gogoanime.search(searchQuery);
+    res.status(200).json(searched);
   } catch (error) {
-    console.log(chalk.magenta(`[trending] ${error.message}`));
+    res.status(400).json({ error: error.message });
   }
 };
 
-export {
-  trending,
-  recentEpisodes,
-  animeInfo,
-  streamingEpisodeLink,
-  randomAnime,
-  search,
-};
+export { trending, recentEpisodes, animeInfo, streamingEpisodeLink, search };

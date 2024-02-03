@@ -3,7 +3,7 @@ import { useContext, createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const SERVER = "https://foxtream.onrender.com";
+  const SERVER = "https://komachi.onrender.com";
   const [token, setToken] = useState(localStorage.getItem('logger'));
   const [user, setUser] = useState({});
   const isLoggedIn = Boolean(token);

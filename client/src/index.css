@@ -3,7 +3,7 @@
 :root {
   --background: #03040f;
   --color: #d6d6d6;
-  --primary: #ff5705;
+  --primary: #0247a1;
   --secondary: #0a0b1a;
   --success: palegreen;
 }
@@ -121,6 +121,12 @@ nav {
   color: var(--color);
   font-size: 1.2rem;
   background-color: transparent;
+}
+
+.navbar_text_logo {
+  color: var(--color);
+  text-decoration: none;
+  text-transform: capitalize;
 }
 
 /* Navbar Codes End */
@@ -670,13 +676,13 @@ video {
 }
 
 .announcement {
-  background-color: #006e5f;
+  background-color: var(--primary);
   color: var(--background);
   font-size: 0.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 7px;
+  border-radius: 4px;
   margin-top: 10px;
 }
 
@@ -689,7 +695,8 @@ video {
 }
 
 .announcement_text {
-  margin-left: 5px;
+  line-height: 13px;
+  margin: 10px;
 }
 
 /* Profile End */
