@@ -14,7 +14,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://komachi-chan.vercel.app"],
+    origin: ["https://komachi-chan.vercel.app", "http://localhost:5173"],
     methods: "*",
   })
 );
