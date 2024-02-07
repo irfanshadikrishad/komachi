@@ -5,6 +5,7 @@ import {
   animeInfo,
   streamingEpisodeLink,
   search,
+  steamingServerSources,
 } from "../controllers/anime-controller.js";
 
 const router = Router();
@@ -14,5 +15,6 @@ router.post("/recent", recentEpisodes);
 router.post("/info", animeInfo);
 router.post("/stream", streamingEpisodeLink);
 router.post("/search", search);
+router.post("/sources", steamingServerSources);
 
 export default router;

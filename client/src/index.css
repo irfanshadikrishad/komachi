@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,400;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,400;1,800;1,900&display=swap");
 
 :root {
   --background: #03040f;
@@ -32,7 +32,7 @@
 body {
   color: var(--color);
   background-color: var(--background);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .container {
@@ -317,7 +317,7 @@ input:-webkit-autofill:active {
 .searchPoster {
   width: 100%;
   border-radius: 7px;
-  height: 205px
+  height: 205px;
 }
 
 .searchIndividual {
@@ -342,7 +342,7 @@ video {
   text-align: center;
 }
 
-.notFound>img {
+.notFound > img {
   transform: translateX(-15px);
 }
 
@@ -388,7 +388,7 @@ video {
   padding: 10px;
 }
 
-.signup_form>input {
+.signup_form > input {
   font-size: 1rem;
   border: none;
   padding: 10px;
@@ -398,7 +398,7 @@ video {
   outline: none;
 }
 
-.signup_form>button {
+.signup_form > button {
   font-size: 1rem;
   padding: 10px;
   border: none;
@@ -442,7 +442,7 @@ video {
   padding: 10px;
 }
 
-.login_form>input {
+.login_form > input {
   font-size: 1rem;
   padding: 10px;
   border-radius: 7px;
@@ -452,7 +452,7 @@ video {
   background-color: var(--background);
 }
 
-.login_form>button {
+.login_form > button {
   font-size: 1rem;
   padding: 10px;
   border-radius: 7px;
@@ -558,7 +558,7 @@ video {
   gap: 5px;
 }
 
-.streaming_options>select {
+.streaming_options > select {
   border: none;
   color: var(--color);
   background-color: var(--background);
@@ -582,7 +582,7 @@ video {
   display: flex;
 }
 
-.streamingV2InfoGenres>span {
+.streamingV2InfoGenres > span {
   background-color: var(--background);
   padding: 1px 10px;
   border-radius: 7px;
@@ -648,7 +648,7 @@ video {
   flex-direction: column;
 }
 
-.list_inner>p>a {
+.list_inner > p > a {
   text-decoration: none;
   color: rgba(0, 255, 255, 0.61);
 }
@@ -701,16 +701,42 @@ video {
 
 /* Profile End */
 
+.navbar_socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+}
+.navbar_socials > a {
+  display: flex;
+  color: var(--color);
+}
+.streaming_sources {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 5px 0;
+}
+.streaming_sources > button {
+  font-size: 1rem;
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  padding: 5px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
 /* --------------------------------- */
 /* -----------responsive------------ */
 /* --------------------------------- */
-@media screen and (max-width:1900px) {
+@media screen and (max-width: 1900px) {
   .latestPoster {
     height: auto;
   }
 }
 
-@media screen and (max-width:1440px) {
+@media screen and (max-width: 1440px) {
   .topAiringPoster {
     height: auto;
   }
@@ -724,7 +750,7 @@ video {
   }
 }
 
-@media screen and (max-width:1024px) {
+@media screen and (max-width: 1024px) {
   .navbarII {
     display: none;
     position: fixed;
@@ -779,7 +805,7 @@ video {
   }
 }
 
-@media screen and (max-width:980px) {
+@media screen and (max-width: 980px) {
   .s768seperator {
     display: flex;
     align-items: flex-start;
@@ -801,7 +827,7 @@ video {
   }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
   .profile_lists {
     grid-template-columns: 1fr 1fr;
   }
@@ -861,8 +887,7 @@ video {
   }
 }
 
-@media screen and (max-width:600px) {
-
+@media screen and (max-width: 600px) {
   .login,
   .signup {
     grid-template-columns: 1fr;
@@ -901,7 +926,7 @@ video {
   }
 }
 
-@media screen and (max-width:425px) {
+@media screen and (max-width: 425px) {
   .s768seperator {
     flex-direction: column;
   }
@@ -919,8 +944,7 @@ video {
   }
 }
 
-@media screen and (max-width:375px) {
-
+@media screen and (max-width: 375px) {
   .latestContainer,
   .searchContainerMain {
     grid-template-columns: 1fr 1fr;

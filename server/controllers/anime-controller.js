@@ -15,7 +15,14 @@ const recentEpisodes = async (req, res) => {
   try {
     const { page, type } = await req.body;
     const recent = await gogoanime.fetchRecentEpisodes(page, type);
-    res.status(200).json(recent);
+    const recentPageTwo = await gogoanime.fetchRecentEpisodes(page + 1, type);
+    const recentPageThree = await gogoanime.fetchRecentEpisodes(page + 2, type);
+    const recentEpisodesOverall = [
+      ...recent.results,
+      ...recentPageTwo.results,
+      ...recentPageThree.results,
+    ];
+    res.status(200).json(recentEpisodesOverall);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -42,13 +49,39 @@ const streamingEpisodeLink = async (req, res) => {
 };
 
 const search = async (req, res) => {
+  const searchProvider = async (q, p) => {
+    return await gogoanime.search(q, p);
+  };
   try {
     const { searchQuery } = await req.body;
-    const searched = await gogoanime.search(searchQuery);
-    res.status(200).json(searched);
+    const searched = await searchProvider(searchQuery, 1);
+    if (searched.hasNextPage) {
+      const searchedTwo = await searchProvider(searchQuery, 2);
+      const searchedOverAll = [...searched.results, ...searchedTwo.results];
+      res.status(200).json(searchedOverAll);
+    } else {
+      res.status(200).json(searched.results);
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-export { trending, recentEpisodes, animeInfo, streamingEpisodeLink, search };
+const steamingServerSources = async (req, res) => {
+  try {
+    const { episodeId } = await req.body;
+    const sources = await gogoanime.fetchEpisodeServers(episodeId);
+    res.status(200).json(sources);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export {
+  trending,
+  recentEpisodes,
+  animeInfo,
+  streamingEpisodeLink,
+  search,
+  steamingServerSources,
+};
