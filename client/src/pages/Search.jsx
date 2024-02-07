@@ -28,7 +28,7 @@ export default function Search() {
     <section className="container">
       <p>
         {searched.length > 0
-          ? `search results for '${query}'`
+          ? `search results for '${query}' / ${searched.length} found`
           : `no search results for '${query}'`}
       </p>
       <div className="searchContainerMain">

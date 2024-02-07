@@ -49,19 +49,19 @@ const streamingEpisodeLink = async (req, res) => {
 };
 
 const search = async (req, res) => {
-  const searchProvider = async (q, p) => {
-    return await gogoanime.search(q, p);
-  };
   try {
+    let searchedOverall = [];
     const { searchQuery } = await req.body;
-    const searched = await searchProvider(searchQuery, 1);
-    if (searched.hasNextPage) {
-      const searchedTwo = await searchProvider(searchQuery, 2);
-      const searchedOverAll = [...searched.results, ...searchedTwo.results];
-      res.status(200).json(searchedOverAll);
-    } else {
-      res.status(200).json(searched.results);
+    async function searchProvider(searchQuery, page) {
+      const searched = await gogoanime.search(searchQuery, page);
+      searchedOverall = [...searchedOverall, ...searched.results];
+      if (searched.hasNextPage) {
+        await searchProvider(searchQuery, searched.currentPage + 1); // recursion to get exact results
+      } else {
+        res.status(200).json(searchedOverall);
+      }
     }
+    await searchProvider(searchQuery, 1);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
