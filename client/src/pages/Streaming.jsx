@@ -7,7 +7,8 @@ import Loader from "../components/Loader.jsx";
 import { ImCloudDownload } from "react-icons/im";
 
 export default function Streaming() {
-  const { SERVER, token, user, isLoggedIn } = useAuth();
+  const { SERVER, token, user, isLoggedIn, getRuntimeInMilliseconds } =
+    useAuth();
   const { animeId } = useParams();
   const [animeInfo, setAnimeInfo] = useState({});
   const [episodes, setEpisodes] = useState([]);
@@ -40,6 +41,7 @@ export default function Streaming() {
   };
 
   const getStreamLink = async (episodeId) => {
+    const startGettingLink = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/stream`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -50,12 +52,16 @@ export default function Streaming() {
       setStreamLink(response.sources[response.sources.length - 1].url);
       setCurrentEpisode(episodeId);
       setEpisodeDownloadLink(response.download);
+      const endGettingLink = getRuntimeInMilliseconds();
+      const runtime = endGettingLink - startGettingLink;
+      console.log(`[stream-link] ${runtime.toFixed(2)} sec.`);
     } else {
       console.log(response);
     }
   };
 
   const getAnimeInfo = async () => {
+    const startTime = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/info`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -66,6 +72,9 @@ export default function Streaming() {
       setAnimeInfo(response);
       setEpisodes(response.episodes);
       getStreamLink(response.episodes[0].id);
+      const endTime = getRuntimeInMilliseconds();
+      const runtime = endTime - startTime;
+      console.log(`[info] ${runtime.toFixed(2)} sec.`);
     } else {
       console.log(response);
     }
@@ -105,7 +114,7 @@ export default function Streaming() {
                 </p>
 
                 <div className="streaming_options">
-                  {isLoggedIn && (
+                  {/* {isLoggedIn && (
                     <select value={status} onChange={handleStatus}>
                       <option value="none">Add to List</option>
                       <option value="watching">Watching</option>
@@ -114,7 +123,7 @@ export default function Streaming() {
                       <option value="planning">Planning</option>
                       <option value="watched">Watched</option>
                     </select>
-                  )}
+                  )} */}
                   <a
                     className="streamingV2_Download"
                     href={episodeDownloadLink}

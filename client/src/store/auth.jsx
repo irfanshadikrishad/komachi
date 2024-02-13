@@ -8,6 +8,10 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const isLoggedIn = Boolean(token);
 
+  function getRuntimeInMilliseconds() {
+    return performance.now() / 1000;
+  }
+
   const storeTokenInLS = async (serverToken) => {
     setToken(serverToken);
     return localStorage.setItem("logger", serverToken);
@@ -44,6 +48,7 @@ export const AuthProvider = ({ children }) => {
         isLoggedIn,
         user,
         deleteTokenFromLS,
+        getRuntimeInMilliseconds,
       }}
     >
       {children}
