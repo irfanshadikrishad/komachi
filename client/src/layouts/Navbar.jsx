@@ -1,19 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../store/auth.jsx";
 // ICONS
 import { FaBars } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
 import { FaGithub, FaYoutube } from "react-icons/fa";
 
 export default function Navbar() {
-  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAnnouncement, setIsAnnouncement] = useState(
-    localStorage.getItem("announcement")
-  );
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -26,23 +21,6 @@ export default function Navbar() {
 
   return (
     <>
-      {!isAnnouncement && (
-        <section className="container announcement">
-          <p className="announcement_text">
-            Site might load slow due to free hosting services, Thanks for your
-            patience.
-          </p>
-          <button
-            onClick={() => {
-              localStorage.setItem("announcement", true);
-              setIsAnnouncement(localStorage.getItem("announcement"));
-            }}
-            className="close_announcement"
-          >
-            x
-          </button>
-        </section>
-      )}
       <nav>
         <section className="container navbar">
           <section>

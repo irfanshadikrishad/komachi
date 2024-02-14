@@ -1,11 +1,19 @@
+import chalk from "chalk";
 import { ANIME } from "@consumet/extensions";
 
 const gogoanime = new ANIME.Gogoanime();
+function getRuntimeInSeconds() {
+  return performance.now() / 1000;
+}
 
 const trending = async (req, res) => {
   try {
+    const startTime = getRuntimeInSeconds();
     const topAiring = await gogoanime.fetchTopAiring();
     res.status(200).json(topAiring);
+    const endTime = getRuntimeInSeconds();
+    const runtime = endTime - startTime;
+    console.log(chalk.gray(`[trending] ${runtime.toFixed(2)}s.`));
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -13,6 +21,7 @@ const trending = async (req, res) => {
 
 const recentEpisodes = async (req, res) => {
   try {
+    const startTime = getRuntimeInSeconds();
     const { page, type } = await req.body;
     const recent = await gogoanime.fetchRecentEpisodes(page, type);
     const recentPageTwo = await gogoanime.fetchRecentEpisodes(page + 1, type);
@@ -23,6 +32,9 @@ const recentEpisodes = async (req, res) => {
       ...recentPageThree.results,
     ];
     res.status(200).json(recentEpisodesOverall);
+    const endTime = getRuntimeInSeconds();
+    const runtime = endTime - startTime;
+    console.log(chalk.gray(`[recentEpisodes] ${runtime.toFixed(2)}s.`));
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -30,9 +42,13 @@ const recentEpisodes = async (req, res) => {
 
 const animeInfo = async (req, res) => {
   try {
+    const startTime = getRuntimeInSeconds();
     const { animeId } = await req.body;
     const info = await gogoanime.fetchAnimeInfo(animeId);
     res.status(200).json(info);
+    const endTime = getRuntimeInSeconds();
+    const runtime = endTime - startTime;
+    console.log(chalk.gray(`[animeInfo] ${runtime.toFixed(2)}s.`));
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -40,9 +56,13 @@ const animeInfo = async (req, res) => {
 
 const streamingEpisodeLink = async (req, res) => {
   try {
+    const startTime = getRuntimeInSeconds();
     const { episodeId } = await req.body;
     const streaminLinks = await gogoanime.fetchEpisodeSources(episodeId);
     res.status(200).json(streaminLinks);
+    const endTime = getRuntimeInSeconds();
+    const runtime = endTime - startTime;
+    console.log(chalk.gray(`[streamingEpisodeLink] ${runtime.toFixed(2)}s.`));
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -50,6 +70,7 @@ const streamingEpisodeLink = async (req, res) => {
 
 const search = async (req, res) => {
   try {
+    const startTime = getRuntimeInSeconds();
     let searchedOverall = [];
     const { searchQuery } = await req.body;
     async function searchProvider(searchQuery, page) {
@@ -59,6 +80,9 @@ const search = async (req, res) => {
         await searchProvider(searchQuery, searched.currentPage + 1); // recursion to get exact results
       } else {
         res.status(200).json(searchedOverall);
+        const endTime = getRuntimeInSeconds();
+        const runtime = endTime - startTime;
+        console.log(chalk.gray(`[search] ${runtime.toFixed(2)}s.`));
       }
     }
     await searchProvider(searchQuery, 1);
@@ -69,9 +93,13 @@ const search = async (req, res) => {
 
 const steamingServerSources = async (req, res) => {
   try {
+    const startTime = getRuntimeInSeconds();
     const { episodeId } = await req.body;
     const sources = await gogoanime.fetchEpisodeServers(episodeId);
     res.status(200).json(sources);
+    const endTime = getRuntimeInSeconds();
+    const runtime = endTime - startTime;
+    console.log(chalk.gray(`[steamingServerSources] ${runtime.toFixed(2)}s.`));
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

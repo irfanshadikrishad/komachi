@@ -23,17 +23,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   const autheticate = async () => {
-    const request = await fetch(`${SERVER}/api/v1/user`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const response = await request.json();
-    if (request.status === 200) {
-      setUser(response.user);
-    }
+    // const request = await fetch(`${SERVER}/api/v1/user`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
+    // const response = await request.json();
+    // if (request.status === 200) {
+    //   setUser(response.user);
+    // }
   };
 
   useEffect(() => {
