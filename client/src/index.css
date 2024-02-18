@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,400;1,800;1,900&display=swap");
 
 :root {
-  --background: #03040f;
-  --color: #d6d6d6;
-  --primary: #0247a1;
-  --secondary: #0a0b1a;
+  --background: #060606;
+  --color: #adadad;
+  --primary: #00859b;
+  --secondary: #0c0c0c;
   --success: palegreen;
+
+  --publisher-color: #00859b !important;
+  --publisher-color-safe: #00859b !important;
 }
 
 * {
@@ -513,49 +516,12 @@ video {
   overflow-y: scroll;
 }
 
-.streamingV2_ReactPlayer {
-  padding: 5px;
-  background-color: var(--secondary);
-  border-radius: 7px;
-}
-
-.streamingV2Buttons {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 5px;
-  overflow-y: scroll;
-  align-items: flex-start;
-  max-height: 240px;
-}
-
-.streamingV2Button {
-  border: none;
-  color: var(--color);
-  background-color: var(--background);
-  border-radius: 7px;
-  padding: 5px 0;
-  cursor: pointer;
-}
-
 .streamingV2InfoGenres {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 2px;
   margin-top: 5px;
-}
-
-.streamingV2_ReactPlayerHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 0 3px 0;
-}
-
-.streaming_options {
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
 .streaming_options > select {
@@ -567,19 +533,6 @@ video {
   cursor: pointer;
   outline: none;
   font-size: 1rem;
-}
-
-.streamingV2_Download {
-  text-decoration: none;
-  color: var(--color);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.streamingV2_DownloadIcon {
-  font-size: 1.2rem;
-  display: flex;
 }
 
 .streamingV2InfoGenres > span {
@@ -726,6 +679,17 @@ video {
   padding: 5px 10px;
   border-radius: 7px;
   cursor: pointer;
+}
+
+.publisher-anchor-color a,
+.sort-menu-refresh__item.selected {
+  color: var(--primary) !important;
+}
+.badge-content {
+  background-color: var(--primary) !important;
+}
+.sort-menu-refresh__item.selected {
+  border-bottom: var(--primary) !important;
 }
 /* --------------------------------- */
 /* -----------responsive------------ */

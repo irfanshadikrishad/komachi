@@ -1,0 +1,50 @@
+.disqus {
+  background-color: var(--secondary);
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 7px;
+  text-align: center;
+}
+.streamingV2_ReactPlayer {
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 7px;
+}
+.streamingV2_ReactPlayerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 3px 0;
+}
+.streamingV2_DownloadIcon {
+  font-size: 1.2rem;
+  display: flex;
+}
+.streamingV2_Download {
+  text-decoration: none;
+  color: var(--color);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.streaming_options {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.streamingV2Buttons {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 5px;
+  overflow-y: scroll;
+  align-items: flex-start;
+  max-height: 240px;
+}
+.streamingV2Button {
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  border-radius: 7px;
+  padding: 5px 0;
+  cursor: pointer;
+}
