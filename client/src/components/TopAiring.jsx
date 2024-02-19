@@ -34,7 +34,7 @@ const responsive = {
 
 export default function TopAiring() {
   const { SERVER, getRuntimeInMilliseconds } = useAuth();
-  const [top, setTop] = useState([]);
+  const [top, setTop] = useState(JSON.parse(localStorage.getItem("trending")));
 
   const getTopAiring = async () => {
     const startTime = getRuntimeInMilliseconds();
@@ -42,6 +42,7 @@ export default function TopAiring() {
     const response = await request.json();
     if (request.status === 200) {
       setTop(response.results);
+      localStorage.setItem("trending", JSON.stringify(response.results));
       const endTime = getRuntimeInMilliseconds();
       const runtime = endTime - startTime;
       console.log(`[trending] ${runtime.toFixed(2)} sec.`);
@@ -55,7 +56,7 @@ export default function TopAiring() {
   }, []);
   return (
     <section className="container">
-      {top.length > 0 ? (
+      {top ? (
         <>
           <p className="partitionTitle">Top Airing</p>
           <Carousel
@@ -64,8 +65,9 @@ export default function TopAiring() {
             draggable={true}
             showDots={false}
             rewind={true}
-            partialVisbiles="false"
+            partialVisbiles={false}
             responsive={responsive}
+            infinite={false}
           >
             {top.length > 0 &&
               top.map((to, i) => {

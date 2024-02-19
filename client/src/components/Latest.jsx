@@ -5,7 +5,9 @@ import Loader from "./Loader.jsx";
 
 export default function Latest() {
   const { SERVER, getRuntimeInMilliseconds } = useAuth();
-  const [latest, setLatest] = useState([]);
+  const [latest, setLatest] = useState(
+    JSON.parse(localStorage.getItem("latest"))
+  ); // Storing Latest Episodes in LocalStorage
   const [loading, setLoading] = useState(true);
   const [type, setType] = useState(localStorage.getItem("latest_type"));
 
@@ -21,6 +23,7 @@ export default function Latest() {
     if (request.status === 200) {
       setLatest(response);
       setLoading(false);
+      localStorage.setItem("latest", JSON.stringify(response));
       const endTime = getRuntimeInMilliseconds();
       const runtime = endTime - startTime;
       console.log(`[latest] ${runtime.toFixed(2)} sec.`);
@@ -77,11 +80,9 @@ export default function Latest() {
           </div>
         </div>
       )}
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="latestContainer">
-          {latest.map((late, index) => {
+      <div className="latestContainer">
+        {latest &&
+          latest.map((late, index) => {
             const { id, image, title, episodeNumber } = late;
             return (
               <NavLink
@@ -100,8 +101,7 @@ export default function Latest() {
               </NavLink>
             );
           })}
-        </div>
-      )}
+      </div>
     </section>
   );
 }
