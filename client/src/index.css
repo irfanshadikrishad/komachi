@@ -8,6 +8,11 @@
   --success: palegreen;
 }
 
+/* Custom styles to override Disqus default link color */
+#disqus_thread a {
+  color: var(--primary) !important;
+}
+
 * {
   margin: 0;
   padding: 0;
