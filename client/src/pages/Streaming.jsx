@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
 import Loader from "../components/Loader.jsx";
 import Player from "../components/Player.jsx";
 import Info from "../components/Info.jsx";
+import { Helmet } from "react-helmet";
 
 export default function Streaming() {
   const { SERVER, getRuntimeInMilliseconds } = useAuth();
   const { animeId } = useParams();
+  const { search } = useLocation();
+  const location = new URLSearchParams(search);
+  const providedEpisodeId = location.get("eps");
   const [animeInfo, setAnimeInfo] = useState({});
   const [episodes, setEpisodes] = useState([]);
   const [streamLink, setStreamLink] = useState("");
-  const [currentEpisode, setCurrentEpisode] = useState(1);
+  const [currentEpisode, setCurrentEpisode] = useState(providedEpisodeId);
   const [episodeDownloadLink, setEpisodeDownloadLink] = useState("");
   const [sources, setSources] = useState([]);
 
@@ -46,7 +50,11 @@ export default function Streaming() {
     if (request.status === 200) {
       setAnimeInfo(response);
       setEpisodes(response.episodes);
-      getStreamLink(response.episodes[0].id);
+      if (providedEpisodeId) {
+        getStreamLink(providedEpisodeId);
+      } else {
+        getStreamLink(response.episodes[0].id);
+      }
       const endTime = getRuntimeInMilliseconds();
       const runtime = endTime - startTime;
       console.log(`[info] ${runtime.toFixed(2)} sec.`);
@@ -74,6 +82,9 @@ export default function Streaming() {
   }, [animeId]);
   return (
     <section className="container streamingV2">
+      <Helmet>
+        <title>{`Komachi / ${animeInfo.title ? animeInfo.title : ""}`}</title>
+      </Helmet>
       {streamLink ? (
         <Player
           streamLink={streamLink}

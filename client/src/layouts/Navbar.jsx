@@ -55,40 +55,6 @@ export default function Navbar() {
                 {<FaYoutube />}
               </a>
             </section>
-            {/* <section className="navbarLR">
-              {!isLoggedIn ? (
-                <>
-                  <NavLink
-                    to="/login"
-                    onClick={() => {
-                      setIsMenuOpen(!isMenuOpen);
-                    }}
-                    className="navbarLR_login"
-                  >
-                    Login
-                  </NavLink>
-                  <NavLink
-                    to="/signup"
-                    onClick={() => {
-                      setIsMenuOpen(!isMenuOpen);
-                    }}
-                    className="navbarLR_register"
-                  >
-                    Sign Up
-                  </NavLink>
-                </>
-              ) : (
-                <NavLink
-                  to="/profile"
-                  className="navbarLR_login"
-                  onClick={() => {
-                    setIsMenuOpen(!isMenuOpen);
-                  }}
-                >
-                  Profile
-                </NavLink>
-              )}
-            </section> */}
           </section>
           <section className="navbarMenu">
             <button

@@ -1,8 +1,8 @@
 import ReactPlayer from "react-player";
 import { ImCloudDownload } from "react-icons/im";
 import styles from "../styles/Player.module.css";
-import { useEffect } from "react";
 import { DiscussionEmbed } from "disqus-react";
+import { useState } from "react";
 
 export default function Player({
   streamLink,
@@ -11,7 +11,8 @@ export default function Player({
   episodes,
   getStreamLink,
 }) {
-  useEffect(() => {}, []);
+  const [isCommentLoaded, setIsCommentLoaded] = useState(false);
+
   return (
     <div>
       <section className={styles.streamingV2_ReactPlayer}>
@@ -61,17 +62,29 @@ export default function Player({
           })}
         </div>
       </section>
-      <div className={styles.disqus}>
-        {/* <DiscussionEmbed
-          shortname="komachi-1"
-          config={{
-            url: "https://komachi-1.disqus.com",
-            identifier: currentEpisode,
-            title: currentEpisode,
-            language: "zh_en",
-          }}
-        /> */}
-        <p>comments section coming soon.</p>
+      <div
+        className={styles.disqus}
+        style={{ padding: isCommentLoaded ? "15px" : "5px" }}
+      >
+        {isCommentLoaded ? (
+          <DiscussionEmbed
+            shortname="komachi-1"
+            config={{
+              url: streamLink,
+              identifier: currentEpisode,
+              title: currentEpisode,
+            }}
+          />
+        ) : (
+          <p
+            onClick={() => {
+              setIsCommentLoaded(true);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Load Comments
+          </p>
+        )}
       </div>
     </div>
   );

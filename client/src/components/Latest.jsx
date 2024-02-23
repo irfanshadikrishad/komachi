@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
-import Loader from "./Loader.jsx";
+import LatestCard from "./LatestCard.jsx";
 
 export default function Latest() {
   const { SERVER, getRuntimeInMilliseconds } = useAuth();
@@ -83,22 +82,16 @@ export default function Latest() {
       <div className="latestContainer">
         {latest &&
           latest.map((late, index) => {
-            const { id, image, title, episodeNumber } = late;
+            const { id, image, title, episodeNumber, episodeId } = late;
             return (
-              <NavLink
-                to={`/streaming/${id}`}
+              <LatestCard
                 key={index}
-                className="latestIndividual"
-              >
-                <img
-                  className="latestPoster"
-                  src={image}
-                  alt={id}
-                  draggable="false"
-                />
-                <p className="latestTitle">{title}</p>
-                <p className="latestEpisodeNumber">EP {episodeNumber}</p>
-              </NavLink>
+                id={id}
+                image={image}
+                title={title}
+                episodeNumber={episodeNumber}
+                episodeId={episodeId}
+              />
             );
           })}
       </div>

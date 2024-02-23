@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("logger"));
   const [user, setUser] = useState({});
   const isLoggedIn = Boolean(token);
+  const defaultPoster = "./default_poster.jpg";
 
   function getRuntimeInMilliseconds() {
     return performance.now() / 1000;
@@ -22,23 +23,23 @@ export const AuthProvider = ({ children }) => {
     return localStorage.removeItem("logger");
   };
 
-  const autheticate = async () => {
-    // const request = await fetch(`${SERVER}/api/v1/user`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
-    // const response = await request.json();
-    // if (request.status === 200) {
-    //   setUser(response.user);
-    // }
-  };
+  // const autheticate = async () => {
+  //   const request = await fetch(`${SERVER}/api/v1/user`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
+  //   const response = await request.json();
+  //   if (request.status === 200) {
+  //     setUser(response.user);
+  //   }
+  // };
 
-  useEffect(() => {
-    autheticate();
-  }, [token]);
+  // useEffect(() => {
+  //   autheticate();
+  // }, [token]);
   return (
     <AuthContext.Provider
       value={{
@@ -49,6 +50,7 @@ export const AuthProvider = ({ children }) => {
         user,
         deleteTokenFromLS,
         getRuntimeInMilliseconds,
+        defaultPoster,
       }}
     >
       {children}

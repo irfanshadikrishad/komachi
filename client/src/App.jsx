@@ -25,5 +25,5 @@ export default function App() {
         <Route path="*" element={<E404 />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
