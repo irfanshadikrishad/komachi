@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const isLoggedIn = Boolean(token);
   const defaultPoster = "./default_poster.jpg";
+  const productionMode = true;
 
   function getRuntimeInMilliseconds() {
     return performance.now() / 1000;
@@ -51,6 +52,7 @@ export const AuthProvider = ({ children }) => {
         deleteTokenFromLS,
         getRuntimeInMilliseconds,
         defaultPoster,
+        productionMode,
       }}
     >
       {children}
