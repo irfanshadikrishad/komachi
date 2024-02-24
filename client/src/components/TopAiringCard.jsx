@@ -10,8 +10,11 @@ export default function TopAiringCard({ id, title, image, index }) {
     <NavLink to={`/streaming/${id}`} className="topAiringCard">
       <img
         className="topAiringPoster"
-        src={image ? image : defaultPoster}
+        src={image}
         alt={title}
+        onError={(e) => {
+          e.target.src = defaultPoster;
+        }}
       />
       <p className="topAiringTitle">{title}</p>
       <p style={{ color: `${rc.hexString()}` }} className="topRanking">

@@ -9,6 +9,7 @@ export default function LatestCard({
   episodeId,
 }) {
   const { defaultPoster } = useAuth();
+
   return (
     <NavLink
       to={`/streaming/${id}?eps=${episodeId}`}
@@ -16,8 +17,12 @@ export default function LatestCard({
     >
       <img
         className="latestPoster"
-        src={image ? image : defaultPoster}
+        src={image}
         alt={id}
+        onError={(e) => {
+          // If there is an error getting image, Show default poster
+          e.target.src = defaultPoster;
+        }}
         draggable="false"
       />
       <p className="latestTitle">{title}</p>

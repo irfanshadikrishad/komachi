@@ -133,6 +133,9 @@ nav {
   text-decoration: none;
   text-transform: capitalize;
 }
+.navbar_text_logo > p {
+  display: inline;
+}
 
 /* Navbar Codes End */
 
