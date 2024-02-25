@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
 import { FaGithub, FaYoutube } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ export default function Navbar() {
               }}
               className="navbarMenuButton"
             >
-              {<FaBars />}
+              {isMenuOpen ? <MdClose /> : <FaBars />}
             </button>
           </section>
         </section>

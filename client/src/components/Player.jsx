@@ -2,7 +2,8 @@ import ReactPlayer from "react-player";
 import { ImCloudDownload } from "react-icons/im";
 import styles from "../styles/Player.module.css";
 import { DiscussionEmbed } from "disqus-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ResponsiveVideoIframe } from "responsive-video-iframe";
 
 export default function Player({
   streamLink,
@@ -10,9 +11,24 @@ export default function Player({
   episodeDownloadLink,
   episodes,
   getStreamLink,
+  setStreamLink,
+  sources,
 }) {
   const [isCommentLoaded, setIsCommentLoaded] = useState(false);
+  const [isNotNative, setIsNotNative] = useState(true);
 
+  const nativeChecker = () => {
+    const extension = String(streamLink).slice(-5);
+    if (extension !== ".m3u8") {
+      setIsNotNative(false);
+    } else {
+      setIsNotNative(true);
+    }
+  };
+
+  useEffect(() => {
+    nativeChecker();
+  }, [streamLink]);
   return (
     <div>
       <section className={styles.streamingV2_ReactPlayer}>
@@ -37,15 +53,39 @@ export default function Player({
                 </a>
               </div>
             </div>
-            <ReactPlayer
-              width="100%"
-              height="auto"
-              controls={true}
-              playing={true}
-              url={streamLink}
-            />
+            {isNotNative ? (
+              <ReactPlayer
+                width="100%"
+                height="auto"
+                controls={true}
+                playing={true}
+                url={streamLink}
+              />
+            ) : (
+              <ResponsiveVideoIframe
+                title={currentEpisode}
+                url={streamLink}
+                width="100%"
+                height="auto"
+              />
+            )}
           </div>
         )}
+        <div className={styles.serverSources}>
+          {sources &&
+            sources.map((source, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setStreamLink(source.url);
+                  }}
+                >
+                  {source.name}
+                </button>
+              );
+            })}
+        </div>
         <div className={styles.streamingV2Buttons}>
           {episodes.map((episode, index) => {
             return (

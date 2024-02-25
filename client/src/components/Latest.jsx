@@ -36,49 +36,47 @@ export default function Latest() {
   }, [type]);
   return (
     <section className="container">
-      {!loading && (
-        <div className="latest_Header">
-          <p className="partitionTitleII">Latest updates</p>
-          <div className="latest_buttons">
-            <button
-              style={{
-                backgroundColor: type === 1 && "var(--background) !important",
-              }}
-              className="latest_button"
-              onClick={() => {
-                setType(1);
-                localStorage.setItem("latest_type", 1);
-              }}
-            >
-              jp
-            </button>
-            <button
-              style={{
-                backgroundColor: type === 2 && "var(--background) !important",
-              }}
-              className="latest_button"
-              onClick={() => {
-                setType(2);
-                localStorage.setItem("latest_type", 2);
-              }}
-            >
-              en
-            </button>
-            <button
-              style={{
-                backgroundColor: type === 3 && "var(--background) !important",
-              }}
-              className="latest_button"
-              onClick={() => {
-                setType(3);
-                localStorage.setItem("latest_type", 3);
-              }}
-            >
-              ch
-            </button>
-          </div>
+      <div className="latest_Header">
+        <p className="partitionTitleII">Latest updates</p>
+        <div className="latest_buttons">
+          <button
+            style={{
+              backgroundColor: type === 1 && "var(--background) !important",
+            }}
+            className="latest_button"
+            onClick={() => {
+              setType(1);
+              localStorage.setItem("latest_type", 1);
+            }}
+          >
+            jp
+          </button>
+          <button
+            style={{
+              backgroundColor: type === 2 && "var(--background) !important",
+            }}
+            className="latest_button"
+            onClick={() => {
+              setType(2);
+              localStorage.setItem("latest_type", 2);
+            }}
+          >
+            en
+          </button>
+          <button
+            style={{
+              backgroundColor: type === 3 && "var(--background) !important",
+            }}
+            className="latest_button"
+            onClick={() => {
+              setType(3);
+              localStorage.setItem("latest_type", 3);
+            }}
+          >
+            ch
+          </button>
         </div>
-      )}
+      </div>
       <div className="latestContainer">
         {latest &&
           latest.map((late, index) => {

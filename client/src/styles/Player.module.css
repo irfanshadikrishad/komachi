@@ -47,9 +47,36 @@
   padding: 5px 0;
   cursor: pointer;
 }
+.serverSources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 5px 0;
+}
+.serverSources > button {
+  color: var(--color);
+  background-color: var(--background);
+  border: none;
+  padding: 8px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+#videoPlayerWrap {
+  overflow: hidden !important;
+}
+iframe {
+  border: 0;
+  overflow: hidden !important;
+}
 
 @media screen and (max-width: 600px) {
   .streamingV2Buttons {
     grid-template-columns: repeat(7, 1fr);
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .streamingV2 {
+    grid-template-columns: 3fr 1fr;
   }
 }

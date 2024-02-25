@@ -19,7 +19,8 @@
     "react-multi-carousel": "^2.8.4",
     "react-player": "^2.14.1",
     "react-router-dom": "^6.21.2",
-    "react-toastify": "^10.0.3"
+    "react-toastify": "^10.0.3",
+    "responsive-video-iframe": "^1.0.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",

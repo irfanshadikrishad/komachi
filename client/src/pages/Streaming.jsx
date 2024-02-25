@@ -31,6 +31,8 @@ export default function Streaming() {
       setStreamLink(response.sources[response.sources.length - 1].url);
       setCurrentEpisode(episodeId);
       setEpisodeDownloadLink(response.download);
+      // Get Sources
+      await getServerSources(episodeId);
       const endGettingLink = getRuntimeInMilliseconds();
       const runtime = endGettingLink - startGettingLink;
       console.log(`[stream-link] ${runtime.toFixed(2)} sec.`);
@@ -83,7 +85,9 @@ export default function Streaming() {
   return (
     <section className="container streamingV2">
       <Helmet>
-        <title>{`Komachi / ${animeInfo.title ? animeInfo.title : ""}`}</title>
+        <title>{`Komachi ${
+          animeInfo.title ? `/ ${animeInfo.title}` : ""
+        }`}</title>
       </Helmet>
       {streamLink ? (
         <Player
@@ -92,9 +96,13 @@ export default function Streaming() {
           episodeDownloadLink={episodeDownloadLink}
           episodes={episodes}
           getStreamLink={getStreamLink}
+          setStreamLink={setStreamLink}
+          sources={sources}
         />
-      ) : (
+      ) : animeInfo.totalEpisode !== 0 ? (
         <Loader />
+      ) : (
+        <p>Not available.</p>
       )}
 
       {animeInfo.id && <Info animeInfo={animeInfo} />}
