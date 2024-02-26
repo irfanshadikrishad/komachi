@@ -1,9 +1,10 @@
 import ReactPlayer from "react-player";
-import { ImCloudDownload } from "react-icons/im";
 import styles from "../styles/Player.module.css";
 import { DiscussionEmbed } from "disqus-react";
 import { useEffect, useState } from "react";
 import { ResponsiveVideoIframe } from "responsive-video-iframe";
+import { FiPlayCircle } from "react-icons/fi";
+import { ImCloudDownload } from "react-icons/im";
 
 export default function Player({
   streamLink,
@@ -81,7 +82,7 @@ export default function Player({
                     setStreamLink(source.url);
                   }}
                 >
-                  {source.name}
+                  <FiPlayCircle /> {source.name}
                 </button>
               );
             })}
@@ -95,6 +96,10 @@ export default function Player({
                 }}
                 key={index}
                 className={styles.streamingV2Button}
+                style={{
+                  backgroundColor:
+                    currentEpisode === episode.id && "var(--primary)",
+                }}
               >
                 {episode.number}
               </button>

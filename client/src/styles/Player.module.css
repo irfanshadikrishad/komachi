@@ -60,6 +60,13 @@
   padding: 8px 10px;
   border-radius: 7px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.serverSources > button > svg {
+  display: flex;
+  transform: translateY(0.5px);
 }
 #videoPlayerWrap {
   overflow: hidden !important;
