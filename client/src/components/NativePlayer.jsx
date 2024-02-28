@@ -14,7 +14,12 @@ export default function NativePlayer({
           currentEpisode && currentEpisode.id
         }`}</p>
         {currentEpisode && (
-          <ResponsiveVideoIframe url={currentEpisode.episodeUrl} />
+          <ResponsiveVideoIframe
+            width="100%"
+            height="auto"
+            url={currentEpisode.episodeUrl}
+            title={currentEpisode.id}
+          />
         )}
         <div className={styles.buttons}>
           {episodes.length > 0 &&

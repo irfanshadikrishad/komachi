@@ -5,6 +5,7 @@ import { useAuth } from "../store/auth";
 import styles from "../styles/Native.module.css";
 import NativeInfo from "../components/NativeInfo";
 import NativePlayer from "../components/NativePlayer";
+import Loader from "../components/Loader.jsx";
 
 export default function Native() {
   const { SERVER } = useAuth();
@@ -41,13 +42,21 @@ export default function Native() {
           animeInfo.title ? `/ ${animeInfo.title}` : ""
         }`}</title>
       </Helmet>
-      <NativePlayer
-        styles={styles}
-        currentEpisode={currentEpisode}
-        episodes={episodes}
-        setCurrentEpisode={setCurrentEpisode}
-      />
-      <NativeInfo styles={styles} animeInfo={animeInfo} />
+      {currentEpisode ? (
+        <NativePlayer
+          styles={styles}
+          currentEpisode={currentEpisode}
+          episodes={episodes}
+          setCurrentEpisode={setCurrentEpisode}
+        />
+      ) : (
+        <Loader />
+      )}
+      {animeInfo.animeId ? (
+        <NativeInfo styles={styles} animeInfo={animeInfo} />
+      ) : (
+        <Loader />
+      )}
     </section>
   );
 }
