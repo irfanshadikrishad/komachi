@@ -9,6 +9,7 @@ export default function Search() {
   const { query } = useParams();
   const [searched, setSearched] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [native, setNative] = useState([]);
 
   const getSearched = async () => {
     const startSearching = getRuntimeInMilliseconds();
@@ -29,8 +30,23 @@ export default function Search() {
     }
   };
 
+  const getNativeSearch = async () => {
+    const startSearching = getRuntimeInMilliseconds();
+    const request = await fetch(`${SERVER}/api/native/search/${query}`);
+    const response = await request.json();
+    if (request.status === 200) {
+      setNative(response);
+      const endSearching = getRuntimeInMilliseconds();
+      const runtime = endSearching - startSearching;
+      console.log(`[native] ${runtime.toFixed(2)} sec.`);
+    } else {
+      console.log(response);
+    }
+  };
+
   useEffect(() => {
     getSearched();
+    getNativeSearch();
   }, [query]);
   return (
     <section className="container">
@@ -68,6 +84,34 @@ export default function Search() {
               })}
           </div>
         </>
+      )}
+      {native.length > 0 && (
+        <section className="native">
+          <p>
+            [Native] search results for '{query}' / {native.length} found
+          </p>
+          <div className="searchContainerMain">
+            {native &&
+              native.map((n, index) => {
+                const { poster, title, animeId } = n;
+                return (
+                  <NavLink
+                    to={`/native/${animeId}`}
+                    key={index}
+                    className="searchIndividual"
+                  >
+                    <img
+                      src={poster}
+                      alt={title}
+                      className="searchPoster"
+                      draggable="false"
+                    />
+                    <p>{title}</p>
+                  </NavLink>
+                );
+              })}
+          </div>
+        </section>
       )}
     </section>
   );

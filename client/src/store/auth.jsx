@@ -3,12 +3,12 @@ import { useContext, createContext, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const SERVER = "https://komachi.onrender.com";
+  const SERVER = "http://localhost:3001";
   const [token, setToken] = useState(localStorage.getItem("logger"));
   const [user, setUser] = useState({});
   const isLoggedIn = Boolean(token);
   const defaultPoster = "./default_poster.jpg";
-  const productionMode = true;
+  const productionMode = false;
 
   function getRuntimeInMilliseconds() {
     return performance.now() / 1000;

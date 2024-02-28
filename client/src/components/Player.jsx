@@ -1,10 +1,10 @@
 import ReactPlayer from "react-player";
 import styles from "../styles/Player.module.css";
-import { DiscussionEmbed } from "disqus-react";
 import { useEffect, useState } from "react";
 import { ResponsiveVideoIframe } from "responsive-video-iframe";
 import { FiPlayCircle } from "react-icons/fi";
 import { ImCloudDownload } from "react-icons/im";
+import Disqus from "./Disqus";
 
 export default function Player({
   streamLink,
@@ -15,7 +15,6 @@ export default function Player({
   setStreamLink,
   sources,
 }) {
-  const [isCommentLoaded, setIsCommentLoaded] = useState(false);
   const [isNotNative, setIsNotNative] = useState(true);
 
   const nativeChecker = () => {
@@ -107,30 +106,7 @@ export default function Player({
           })}
         </div>
       </section>
-      <div
-        className={styles.disqus}
-        style={{ padding: isCommentLoaded ? "15px" : "5px" }}
-      >
-        {isCommentLoaded ? (
-          <DiscussionEmbed
-            shortname="komachi-1"
-            config={{
-              url: streamLink,
-              identifier: currentEpisode,
-              title: currentEpisode,
-            }}
-          />
-        ) : (
-          <p
-            onClick={() => {
-              setIsCommentLoaded(true);
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            Load Comments
-          </p>
-        )}
-      </div>
+      <Disqus url={streamLink} currentEpisode={currentEpisode} />
     </div>
   );
 }

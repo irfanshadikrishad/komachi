@@ -1,9 +1,3 @@
-.disqus {
-  background-color: var(--secondary);
-  margin-top: 5px;
-  border-radius: 7px;
-  text-align: center;
-}
 .streamingV2_ReactPlayer {
   padding: 5px;
   background-color: var(--secondary);

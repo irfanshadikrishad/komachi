@@ -126,6 +126,7 @@ nav {
   color: var(--color);
   font-size: 1.2rem;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .navbar_text_logo {
@@ -686,7 +687,12 @@ video {
   border-radius: 7px;
   cursor: pointer;
 }
-
+.disqus {
+  background-color: var(--secondary);
+  margin-top: 5px;
+  border-radius: 7px;
+  text-align: center;
+}
 .publisher-anchor-color a,
 .sort-menu-refresh__item.selected {
   color: var(--primary) !important;
@@ -854,6 +860,19 @@ video {
   .streamingPlayerEpisodeNumber {
     font-size: 14px;
   }
+}
+
+.embed-player {
+  border-radius: 7px;
+}
+.icon {
+  display: flex;
+}
+.comment_loader {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (max-width: 600px) {
