@@ -14,7 +14,7 @@ export default function Info({ animeInfo }) {
           <p>{animeInfo.title && animeInfo.title}</p>
           <p className="streamingV2_description">{animeInfo.description}</p>
           <section>
-            <p>Status : {animeInfo.otherName.replace("Status:", " ")}</p>
+            <p>Status : {animeInfo.status}</p>
             <p>Total Episodes : {animeInfo.totalEpisodes}</p>
             {animeInfo.releaseDate && (
               <p>
@@ -30,6 +30,7 @@ export default function Info({ animeInfo }) {
                 {animeInfo.endDate.year}{" "}
               </p>
             )}
+            <p>Synonyms: {animeInfo.otherName}</p>
             <div className="streamingV2InfoGenres">
               {animeInfo.genres &&
                 animeInfo.genres.map((genre, index) => {
