@@ -1,3 +1,5 @@
+import randomcolor from "random-color";
+
 export default function Info({ animeInfo }) {
   return (
     <section className="streamingV2_Info">
@@ -14,27 +16,42 @@ export default function Info({ animeInfo }) {
           <p>{animeInfo.title && animeInfo.title}</p>
           <p className="streamingV2_description">{animeInfo.description}</p>
           <section>
-            <p>Status : {animeInfo.status}</p>
-            <p>Total Episodes : {animeInfo.totalEpisodes}</p>
+            <p className="seperator">
+              <span className="blob">Status :</span> {animeInfo.status}
+            </p>
+            <p className="seperator">
+              <span className="blob">Total Episodes :</span>{" "}
+              {animeInfo.totalEpisodes}
+            </p>
             {animeInfo.releaseDate && (
-              <p>
-                Released: {animeInfo.releaseDate} {animeInfo.season}
+              <p className="seperator">
+                <span className="blob">Released:</span> {animeInfo.releaseDate}{" "}
+                {animeInfo.season}
               </p>
             )}
-            <p>Type : {animeInfo.type}</p>
+            <p className="seperator">
+              <span className="blob">Type :</span> {animeInfo.type}
+            </p>
             {animeInfo.startDate && (
-              <p>
-                Airing Date : {animeInfo.startDate.day}/
-                {animeInfo.startDate.month}/{animeInfo.startDate.year} –{" "}
-                {animeInfo.endDate.day}/{animeInfo.endDate.month}/
-                {animeInfo.endDate.year}{" "}
+              <p className="seperator">
+                <span className="blob">Airing Date :</span>{" "}
+                {animeInfo.startDate.day}/{animeInfo.startDate.month}/
+                {animeInfo.startDate.year} – {animeInfo.endDate.day}/
+                {animeInfo.endDate.month}/{animeInfo.endDate.year}{" "}
               </p>
             )}
-            <p>Synonyms: {animeInfo.otherName}</p>
+            <p>
+              <span className="blob">Synonyms:</span> {animeInfo.otherName}
+            </p>
             <div className="streamingV2InfoGenres">
               {animeInfo.genres &&
                 animeInfo.genres.map((genre, index) => {
-                  return <span key={index}>{genre}</span>;
+                  const color = randomcolor();
+                  return (
+                    <span key={index} style={{ color: color.hexString() }}>
+                      {genre}
+                    </span>
+                  );
                 })}
             </div>
           </section>

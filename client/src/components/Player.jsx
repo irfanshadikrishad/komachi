@@ -1,7 +1,6 @@
 import ReactPlayer from "react-player";
 import styles from "../styles/Player.module.css";
 import { useEffect, useState } from "react";
-import { ResponsiveVideoIframe } from "responsive-video-iframe";
 import { FiPlayCircle } from "react-icons/fi";
 import { ImCloudDownload } from "react-icons/im";
 import Disqus from "./Disqus";
@@ -35,7 +34,7 @@ export default function Player({
         {streamLink && (
           <div>
             <div className={styles.streamingV2_ReactPlayerHeader}>
-              <p>{`Episode ${
+              <p style={{ color: "var(--primary)" }}>{`Episode ${
                 String(currentEpisode).split("-")[
                   String(currentEpisode).split("-").length - 1
                 ]
@@ -62,9 +61,10 @@ export default function Player({
                 url={streamLink}
               />
             ) : (
-              <ResponsiveVideoIframe
-                title={currentEpisode}
-                url={streamLink}
+              <iframe
+                className="komachi_player"
+                src={streamLink}
+                allowFullScreen="true"
                 width="100%"
                 height="auto"
               />

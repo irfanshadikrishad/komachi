@@ -136,6 +136,8 @@ nav {
 }
 .navbar_text_logo > p {
   display: inline;
+  color: var(--primary);
+  font-weight: 500;
 }
 
 /* Navbar Codes End */
@@ -496,7 +498,7 @@ video {
 
 .streamingV2 {
   display: grid;
-  grid-template-columns: 3.5fr 1fr;
+  grid-template-columns: 3fr 1fr;
   gap: 5px;
   padding: 0 0 20px 0;
   align-items: flex-start;
@@ -527,7 +529,7 @@ video {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   margin-top: 5px;
 }
 
@@ -703,6 +705,24 @@ video {
 .sort-menu-refresh__item.selected {
   border-bottom: var(--primary) !important;
 }
+.komachi_player {
+  aspect-ratio: 16/9;
+  border-radius: 7px;
+  overflow: hidden;
+}
+.title {
+  color: var(--primary);
+  font-weight: 500;
+}
+.blob {
+  padding: 1px 5px;
+  background-color: var(--background);
+  border-radius: 7px;
+}
+.seperator {
+  margin: 5px 0;
+}
+
 /* --------------------------------- */
 /* -----------responsive------------ */
 /* --------------------------------- */

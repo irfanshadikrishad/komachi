@@ -1,4 +1,3 @@
-import { ResponsiveVideoIframe } from "responsive-video-iframe";
 import Disqus from "../components/Disqus.jsx";
 
 export default function NativePlayer({
@@ -14,11 +13,12 @@ export default function NativePlayer({
           currentEpisode && currentEpisode.id
         }`}</p>
         {currentEpisode && (
-          <ResponsiveVideoIframe
+          <iframe
+            className="komachi_player"
+            src={currentEpisode.episodeUrl}
+            allowFullScreen="true"
             width="100%"
             height="auto"
-            url={currentEpisode.episodeUrl}
-            title={currentEpisode.id}
           />
         )}
         <div className={styles.buttons}>
