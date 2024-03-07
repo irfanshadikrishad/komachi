@@ -15,8 +15,8 @@ export default function NativePlayer({
         {currentEpisode && (
           <iframe
             className="komachi_player"
-            src={currentEpisode.episodeUrl}
-            allowFullScreen="true"
+            src={currentEpisode.url}
+            allowFullScreen={true}
             width="100%"
             height="auto"
           />
@@ -44,10 +44,7 @@ export default function NativePlayer({
         </div>
       </section>
       {currentEpisode && (
-        <Disqus
-          url={currentEpisode.episodeUrl}
-          currentEpisode={currentEpisode.id}
-        />
+        <Disqus url={currentEpisode.url} currentEpisode={currentEpisode.id} />
       )}
     </section>
   );

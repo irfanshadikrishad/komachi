@@ -64,7 +64,7 @@ export default function Player({
               <iframe
                 className="komachi_player"
                 src={streamLink}
-                allowFullScreen="true"
+                allowFullScreen={true}
                 width="100%"
                 height="auto"
               />
