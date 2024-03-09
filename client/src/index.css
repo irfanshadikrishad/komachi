@@ -164,7 +164,7 @@ input:-webkit-autofill:active {
   display: block;
   padding: 5px;
   background-color: var(--secondary);
-  height: 100%;
+  height: 97%;
   border-radius: 7px;
   text-decoration: none;
   color: var(--color);
@@ -182,6 +182,7 @@ input:-webkit-autofill:active {
 .topAiringPoster {
   border-radius: 7px;
   width: 100%;
+  aspect-ratio: 2/2.8;
 }
 
 .loader_center {

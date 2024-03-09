@@ -1,6 +1,7 @@
+import { memo } from "react";
 import randomcolor from "random-color";
 
-export default function Info({ animeInfo }) {
+const Info = memo(({ animeInfo }) => {
   return (
     <section className="streamingV2_Info">
       <section className="s768seperator">
@@ -59,4 +60,6 @@ export default function Info({ animeInfo }) {
       </section>
     </section>
   );
-}
+});
+
+export default Info;

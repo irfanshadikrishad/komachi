@@ -1,6 +1,7 @@
+import { memo } from "react";
 import randomcolor from "random-color";
 
-export default function NativeInfo({ styles, animeInfo }) {
+const NativeInfo = memo(({ styles, animeInfo }) => {
   return (
     <section className={styles.info}>
       <img className={styles.poster} src={animeInfo.poster} draggable="false" />
@@ -60,4 +61,6 @@ export default function NativeInfo({ styles, animeInfo }) {
       </div>
     </section>
   );
-}
+});
+
+export default NativeInfo;

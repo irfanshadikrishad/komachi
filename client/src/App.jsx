@@ -8,6 +8,7 @@ import Login from "./pages/Login.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Profile from "./pages/Profile.jsx";
 import Native from "./pages/Native.jsx";
+import NativeHome from "./pages/NativeHome.jsx";
 import { useAuth } from "./store/auth.jsx";
 import { useEffect } from "react";
 
@@ -58,6 +59,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/streaming/:animeId" element={<Streaming />} />
+        <Route path="/native" element={<NativeHome />} />
         <Route path="/native/:animeId" element={<Native />} />
         <Route path="/search/:query" element={<Search />} />
         <Route path="/login" element={<Login />} />

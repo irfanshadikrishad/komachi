@@ -33,4 +33,19 @@ const singleAnime = async (req, res) => {
   }
 };
 
-export { search, singleAnime };
+const latest = async (req, res) => {
+  try {
+    const lat = await Anime.find({}).select({
+      episodes: 0,
+      genre: 0,
+      description: 0,
+      synonyms: 0,
+      _id: 0,
+    });
+    res.status(200).json(lat.reverse());
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export { search, singleAnime, latest };
