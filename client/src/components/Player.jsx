@@ -13,6 +13,7 @@ export default function Player({
   getStreamLink,
   setStreamLink,
   sources,
+  animeId,
 }) {
   const [isNotNative, setIsNotNative] = useState(true);
 
@@ -92,6 +93,7 @@ export default function Player({
               <button
                 onClick={() => {
                   getStreamLink(episode.id);
+                  localStorage.setItem(animeId, episode.id);
                 }}
                 key={index}
                 className={styles.streamingV2Button}

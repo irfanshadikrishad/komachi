@@ -5,6 +5,7 @@ export default function NativePlayer({
   currentEpisode,
   episodes,
   setCurrentEpisode,
+  animeId,
 }) {
   return (
     <section>
@@ -31,6 +32,7 @@ export default function NativePlayer({
                   key={index}
                   onClick={() => {
                     setCurrentEpisode(episode);
+                    localStorage.setItem(animeId, JSON.stringify(episode));
                   }}
                   style={{
                     backgroundColor:

@@ -26,7 +26,10 @@ export default function Native() {
     if (request.status === 200) {
       setAnimeInfo(response);
       setEpisodes(response.episodes);
-      setCurrentEpisode(response.episodes[0]);
+      // get last watched episode
+      JSON.parse(localStorage.getItem(animeId))
+        ? setCurrentEpisode(JSON.parse(localStorage.getItem(animeId)))
+        : setCurrentEpisode(response.episodes[0]);
     } else {
       console.log(response);
     }
@@ -48,6 +51,7 @@ export default function Native() {
           currentEpisode={currentEpisode}
           episodes={episodes}
           setCurrentEpisode={setCurrentEpisode}
+          animeId={animeId}
         />
       ) : (
         <Loader />
