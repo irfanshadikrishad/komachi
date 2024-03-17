@@ -90,6 +90,14 @@ export default function Streaming() {
         <title>{`Konami ${
           animeInfo.title ? `/ ${animeInfo.title}` : ""
         }`}</title>
+        <meta
+          name="description"
+          content={`Watch ${animeInfo.title} online : ${animeInfo.description}`}
+        />
+        <meta
+          name="keywords"
+          content={`konami, ${animeInfo.title}, ${animeInfo.totalEpisode} episodes`}
+        />
       </Helmet>
       {streamLink ? (
         <Player

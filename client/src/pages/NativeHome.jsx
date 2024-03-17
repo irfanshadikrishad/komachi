@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
+import { Helmet } from "react-helmet";
 
 export default function NativeHome() {
   const { SERVER, defaultPoster } = useAuth();
@@ -20,6 +21,14 @@ export default function NativeHome() {
   }, []);
   return (
     <section className="container">
+      <Helmet>
+        <title>Konami (native)</title>
+        <meta name="description" content="Konami native streaming" />
+        <meta
+          name="keywords"
+          content="Konami, native streaming, watch anime online, anime in hindi"
+        />
+      </Helmet>
       <div className="latest_Header">
         <p className="partitionTitleII">Recently added</p>
       </div>

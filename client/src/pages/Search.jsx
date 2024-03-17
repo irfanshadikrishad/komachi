@@ -52,6 +52,11 @@ export default function Search() {
     <section className="container">
       <Helmet>
         <title>{`Konami / ${query}`}</title>
+        <meta name="description" content="Konami - Search for anime" />
+        <meta
+          name="keywords"
+          content="konami, search anime, watch anime online"
+        />
       </Helmet>
       {isLoading ? (
         <Loader />

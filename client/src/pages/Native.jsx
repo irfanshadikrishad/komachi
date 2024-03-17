@@ -44,6 +44,11 @@ export default function Native() {
         <title>{`Konami ${
           animeInfo.title ? `/ ${animeInfo.title}` : ""
         }`}</title>
+        <meta
+          name="description"
+          content={`Watch ${animeInfo.title} online : ${animeInfo.description}`}
+        />
+        <meta name="keywords" content={`Konami, ${animeInfo.title}`} />
       </Helmet>
       {currentEpisode ? (
         <NativePlayer
