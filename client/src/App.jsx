@@ -11,6 +11,7 @@ import Native from "./pages/Native.jsx";
 import NativeHome from "./pages/NativeHome.jsx";
 import { useAuth } from "./store/auth.jsx";
 import { useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   const { isLoggedIn, productionMode } = useAuth();
@@ -67,6 +68,7 @@ export default function App() {
         {isLoggedIn && <Route path="/profile" element={<Profile />} />}
         <Route path="*" element={<E404 />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }
