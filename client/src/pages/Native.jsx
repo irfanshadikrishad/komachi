@@ -41,7 +41,7 @@ export default function Native() {
   return (
     <section className={`container ${styles.native}`}>
       <Helmet>
-        <title>{`Komachi ${
+        <title>{`Konami ${
           animeInfo.title ? `/ ${animeInfo.title}` : ""
         }`}</title>
       </Helmet>

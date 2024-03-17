@@ -87,7 +87,7 @@ export default function Streaming() {
   return (
     <section className="container streamingV2">
       <Helmet>
-        <title>{`Komachi ${
+        <title>{`Konami ${
           animeInfo.title ? `/ ${animeInfo.title}` : ""
         }`}</title>
       </Helmet>

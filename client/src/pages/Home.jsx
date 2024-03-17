@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Komachi</title>
+        <title>Konami</title>
       </Helmet>
       <TopAiring />
       <Latest />

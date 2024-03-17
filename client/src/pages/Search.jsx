@@ -51,7 +51,7 @@ export default function Search() {
   return (
     <section className="container">
       <Helmet>
-        <title>{`Komachi / ${query}`}</title>
+        <title>{`Konami / ${query}`}</title>
       </Helmet>
       {isLoading ? (
         <Loader />

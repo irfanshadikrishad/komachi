@@ -31,7 +31,7 @@ export default function Navbar() {
                 className="navbar_text_logo"
                 style={{ display: "inline" }}
               >
-                <p>komachi</p>
+                <p>Konami</p>
               </NavLink>
             </div>
           </section>
