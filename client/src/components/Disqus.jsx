@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DiscussionEmbed } from "disqus-react";
-import { RiExpandUpDownLine } from "react-icons/ri";
+import { FaChevronDown } from "react-icons/fa";
 
 export default function Disqus({ url, currentEpisode }) {
   const [isCommentLoaded, setIsCommentLoaded] = useState(false);
@@ -29,7 +29,7 @@ export default function Disqus({ url, currentEpisode }) {
             setIsCommentLoaded(true);
           }}
         >
-          Load Comments <span className="icon">{<RiExpandUpDownLine />}</span>
+          Load Comments <span className="icon">{<FaChevronDown />}</span>
         </p>
       )}
     </div>
