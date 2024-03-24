@@ -22,10 +22,16 @@ const trending = async (req, res) => {
 const recentEpisodes = async (req, res) => {
   try {
     const startTime = getRuntimeInSeconds();
-    const { page, type } = await req.body;
-    const recent = await gogoanime.fetchRecentEpisodes(page, type);
-    const recentPageTwo = await gogoanime.fetchRecentEpisodes(page + 1, type);
-    const recentPageThree = await gogoanime.fetchRecentEpisodes(page + 2, type);
+    const { page, audioType } = await req.body;
+    const recent = await gogoanime.fetchRecentEpisodes(page, audioType);
+    const recentPageTwo = await gogoanime.fetchRecentEpisodes(
+      page + 1,
+      audioType
+    );
+    const recentPageThree = await gogoanime.fetchRecentEpisodes(
+      page + 2,
+      audioType
+    );
     const recentEpisodesOverall = [
       ...recent.results,
       ...recentPageTwo.results,

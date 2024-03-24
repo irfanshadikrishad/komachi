@@ -1,12 +1,15 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../store/auth.jsx";
 // ICONS
 import { FaBars } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
 import { FaGithub, FaYoutube } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
+import FullPageLoader from "../components/FullPageLoader.jsx";
 
 export default function Navbar() {
+  const { fullPageLoader } = useAuth();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,8 +24,8 @@ export default function Navbar() {
   };
 
   return (
-    <>
-      <nav>
+    <nav>
+      {!fullPageLoader ? (
         <section className="container navbar">
           <section>
             <div>
@@ -68,7 +71,9 @@ export default function Navbar() {
             </button>
           </section>
         </section>
-      </nav>
-    </>
+      ) : (
+        <FullPageLoader />
+      )}
+    </nav>
   );
 }

@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const isLoggedIn = Boolean(token);
   const defaultPoster = "./default_poster.jpg";
   let productionMode = true;
+  const [fullPageLoader, setFullPageLoader] = useState(true);
 
   // Comment before deploying
   // SERVER = "http://localhost:3001";
@@ -40,6 +41,8 @@ export const AuthProvider = ({ children }) => {
         getRuntimeInMilliseconds,
         defaultPoster,
         productionMode,
+        fullPageLoader,
+        setFullPageLoader,
       }}
     >
       {children}

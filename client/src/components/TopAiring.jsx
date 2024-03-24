@@ -34,15 +34,14 @@ const responsive = {
 
 export default function TopAiring() {
   const { SERVER, getRuntimeInMilliseconds } = useAuth();
-  const [top, setTop] = useState(JSON.parse(localStorage.getItem("trending")));
+  const [topAiring, setTopAiring] = useState(null);
 
   const getTopAiring = async () => {
     const startTime = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/trending`);
     const response = await request.json();
     if (request.status === 200) {
-      setTop(response.results);
-      localStorage.setItem("trending", JSON.stringify(response.results));
+      setTopAiring(response.results);
       const endTime = getRuntimeInMilliseconds();
       const runtime = endTime - startTime;
       console.log(`[trending] ${runtime.toFixed(2)} sec.`);
@@ -56,7 +55,7 @@ export default function TopAiring() {
   }, []);
   return (
     <section className="container">
-      {top ? (
+      {topAiring ? (
         <>
           <p className="partitionTitle">Top Airing</p>
           <Carousel
@@ -69,8 +68,8 @@ export default function TopAiring() {
             responsive={responsive}
             infinite={false}
           >
-            {top.length > 0 &&
-              top.map((to, i) => {
+            {topAiring.length > 0 &&
+              topAiring.map((to, i) => {
                 const { id, image, title } = to;
                 return (
                   <TopAiringCard

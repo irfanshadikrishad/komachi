@@ -1,8 +1,10 @@
 import Latest from "../components/Latest";
 import TopAiring from "../components/TopAiring";
 import { Helmet } from "react-helmet";
+import { useAuth } from "../store/auth";
 
 export default function Home() {
+  const { fullPageLoader } = useAuth();
   return (
     <>
       <Helmet>
@@ -23,7 +25,7 @@ export default function Home() {
           content="Anime streaming, Watch anime online, Anime episodes, Japanese animation, Anime series, Anime movies, Otaku entertainment, Subbed anime, Dubbed anime, Anime classics, New anime releases, Anime genres (e.g., action, adventure, romance, fantasy), Anime community, Anime recommendations, Anime reviews"
         />
       </Helmet>
-      <TopAiring />
+      {!fullPageLoader && <TopAiring />}
       <Latest />
     </>
   );
