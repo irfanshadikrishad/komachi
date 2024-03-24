@@ -383,7 +383,11 @@ video {
   cursor: pointer;
   text-transform: uppercase;
 }
-
+.streaming_title {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 20px;
+}
 .streaming_Seperator {
   display: flex;
   align-items: center;

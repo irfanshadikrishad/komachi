@@ -29,10 +29,16 @@ const NativeInfo = memo(({ styles, animeInfo }) => {
             {` ${animeInfo.totalEpisodes}`}
           </p>
         )}
-        {animeInfo.duration && (
+        {animeInfo.episodeDuration && (
           <p className={styles.seperator}>
             <span className={styles.blob}>Episode Duration:</span>
-            {` ${animeInfo.duration}`}
+            {` ${animeInfo.episodeDuration}`}
+          </p>
+        )}
+        {animeInfo.isAdult && (
+          <p className={styles.seperator}>
+            <span className={styles.blob}>isAdult?:</span>
+            {` ${animeInfo.isAdult}`}
           </p>
         )}
         {animeInfo.synonyms && (

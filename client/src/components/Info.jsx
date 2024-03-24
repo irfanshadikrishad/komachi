@@ -14,7 +14,9 @@ const Info = memo(({ animeInfo }) => {
           />
         </div>
         <section>
-          <p>{animeInfo.title && animeInfo.title}</p>
+          <h1 className="streaming_title">
+            {animeInfo.title && animeInfo.title}
+          </h1>
           <p className="streamingV2_description">{animeInfo.description}</p>
           <section>
             <p className="seperator">

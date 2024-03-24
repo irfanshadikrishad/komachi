@@ -7,7 +7,12 @@ import Info from "../components/Info.jsx";
 import { Helmet } from "react-helmet";
 
 export default function Streaming() {
-  const { SERVER, getRuntimeInMilliseconds } = useAuth();
+  const {
+    SERVER,
+    getRuntimeInMilliseconds,
+    fullPageLoader,
+    setFullPageLoader,
+  } = useAuth();
   const { animeId } = useParams();
   const { search } = useLocation();
   const location = new URLSearchParams(search);
@@ -30,6 +35,7 @@ export default function Streaming() {
     });
     const response = await request.json();
     if (request.status === 200) {
+      setFullPageLoader(false);
       setStreamLink(response.sources[response.sources.length - 1].url);
       setCurrentEpisode(episodeId);
       setEpisodeDownloadLink(response.download);
@@ -83,6 +89,7 @@ export default function Streaming() {
 
   useEffect(() => {
     getAnimeInfo();
+    setFullPageLoader(true);
   }, [animeId]);
   return (
     <section className="container streamingV2">
@@ -110,13 +117,11 @@ export default function Streaming() {
           sources={sources}
           animeId={animeId}
         />
-      ) : animeInfo.totalEpisode !== 0 ? (
-        <Loader />
       ) : (
-        <p>Not available.</p>
+        ""
       )}
 
-      {animeInfo.id && <Info animeInfo={animeInfo} />}
+      {!fullPageLoader && animeInfo.id && <Info animeInfo={animeInfo} />}
     </section>
   );
 }

@@ -5,10 +5,9 @@ import { useAuth } from "../store/auth";
 import styles from "../styles/Native.module.css";
 import NativeInfo from "../components/NativeInfo";
 import NativePlayer from "../components/NativePlayer";
-import Loader from "../components/Loader.jsx";
 
 export default function Native() {
-  const { SERVER } = useAuth();
+  const { SERVER, fullPageLoader, setFullPageLoader } = useAuth();
   const { animeId } = useParams();
   const [animeInfo, setAnimeInfo] = useState({});
   const [episodes, setEpisodes] = useState([]);
@@ -24,6 +23,7 @@ export default function Native() {
     });
     const response = await request.json();
     if (request.status === 200) {
+      setFullPageLoader(false);
       setAnimeInfo(response);
       setEpisodes(response.episodes);
       // get last watched episode
@@ -50,7 +50,7 @@ export default function Native() {
         />
         <meta name="keywords" content={`Konami, ${animeInfo.title}`} />
       </Helmet>
-      {currentEpisode ? (
+      {!fullPageLoader && currentEpisode && (
         <NativePlayer
           styles={styles}
           currentEpisode={currentEpisode}
@@ -58,13 +58,9 @@ export default function Native() {
           setCurrentEpisode={setCurrentEpisode}
           animeId={animeId}
         />
-      ) : (
-        <Loader />
       )}
-      {animeInfo.animeId ? (
+      {!fullPageLoader && animeInfo.animeId && (
         <NativeInfo styles={styles} animeInfo={animeInfo} />
-      ) : (
-        <Loader />
       )}
     </section>
   );
