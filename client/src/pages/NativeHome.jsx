@@ -39,29 +39,30 @@ export default function NativeHome() {
       {!fullPageLoader && (
         <div className="latestContainer">
           {latestAnimes &&
-            latestAnimes.map((late) => {
-              return (
-                <a
-                  key={late.animeId}
-                  href={`/native/${late.animeId}`}
-                  className="latestIndividual"
-                >
-                  <img
-                    className="latestPoster"
-                    src={late.poster}
-                    alt={`${late.animeId}`}
-                    onError={(e) => {
-                      e.target.src = defaultPoster;
-                    }}
-                  />
-                  <p className="latestTitle">{late.title}</p>
-                  <p className="latestEpisodeNumber">
-                    {late.format}{" "}
-                    {late.totalEpisodes && `[${late.totalEpisodes}]`}
-                  </p>
-                </a>
-              );
-            })}
+            latestAnimes.map(
+              ({ animeId, poster, title, format, totalEpisodes }) => {
+                return (
+                  <a
+                    key={animeId}
+                    href={`/native/${animeId}`}
+                    className="latestIndividual"
+                  >
+                    <img
+                      className="latestPoster"
+                      src={poster}
+                      alt={`${animeId}`}
+                      onError={(e) => {
+                        e.target.src = defaultPoster;
+                      }}
+                    />
+                    <p className="latestTitle">{title}</p>
+                    <p className="latestEpisodeNumber">
+                      {format} {totalEpisodes && `[${totalEpisodes}]`}
+                    </p>
+                  </a>
+                );
+              }
+            )}
         </div>
       )}
     </section>

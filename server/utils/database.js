@@ -7,10 +7,10 @@ const URI = process.env.MONGODB_URI;
 
 const database = async () => {
   try {
-    const connection = await connect(URI);
-    console.log(chalk.cyan(`[database] ${connection.connection.port}`));
-  } catch (error) {
-    console.log(chalk.magenta(`[database] ${error.message}`));
+    const { connection } = await connect(URI);
+    console.log(chalk.cyan(`[database] ${connection.port}`));
+  } catch ({ message }) {
+    console.log(chalk.magenta(`[database] ${message}`));
   }
 };
 

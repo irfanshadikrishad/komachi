@@ -69,8 +69,7 @@ export default function Search() {
           </p>
           <div className="searchContainerMain">
             {searched &&
-              searched.map((sea, index) => {
-                const { image, title, id } = sea;
+              searched.map(({ image, title, id }, index) => {
                 return (
                   <NavLink
                     to={`/streaming/${id}`}
@@ -97,8 +96,7 @@ export default function Search() {
           </p>
           <div className="searchContainerMain">
             {native &&
-              native.map((n, index) => {
-                const { poster, title, animeId } = n;
+              native.map(({ poster, title, animeId }, index) => {
                 return (
                   <NavLink
                     to={`/native/${animeId}`}

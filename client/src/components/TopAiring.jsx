@@ -69,8 +69,7 @@ export default function TopAiring() {
             infinite={false}
           >
             {topAiring.length > 0 &&
-              topAiring.map((to, i) => {
-                const { id, image, title } = to;
+              topAiring.map(({ id, image, title }, i) => {
                 return (
                   <TopAiringCard
                     key={id}

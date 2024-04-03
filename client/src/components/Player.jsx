@@ -74,35 +74,34 @@ export default function Player({
         )}
         <div className={styles.serverSources}>
           {sources &&
-            sources.map((source, index) => {
+            sources.map(({ url, name }, index) => {
               return (
                 <button
                   key={index}
                   onClick={() => {
-                    setStreamLink(source.url);
+                    setStreamLink(url);
                   }}
                 >
-                  <FiPlayCircle /> {source.name}
+                  <FiPlayCircle /> {name}
                 </button>
               );
             })}
         </div>
         <div className={styles.streamingV2Buttons}>
-          {episodes.map((episode, index) => {
+          {episodes.map(({ id }, index) => {
             return (
               <button
                 onClick={() => {
-                  getStreamLink(episode.id);
-                  localStorage.setItem(animeId, episode.id);
+                  getStreamLink(id);
+                  localStorage.setItem(animeId, id);
                 }}
                 key={index}
                 className={styles.streamingV2Button}
                 style={{
-                  backgroundColor:
-                    currentEpisode === episode.id && "var(--primary)",
+                  backgroundColor: currentEpisode === id && "var(--primary)",
                 }}
               >
-                {episode.number}
+                {number}
               </button>
             );
           })}

@@ -83,19 +83,20 @@ export default function Latest() {
       )}
       <div className="latestContainer">
         {latest &&
-          latest.map((late, index) => {
-            const { id, image, title, episodeNumber, episodeId } = late;
-            return (
-              <LatestCard
-                key={index}
-                id={id}
-                image={image}
-                title={title}
-                episodeNumber={episodeNumber}
-                episodeId={episodeId}
-              />
-            );
-          })}
+          latest.map(
+            ({ id, image, title, episodeNumber, episodeId }, index) => {
+              return (
+                <LatestCard
+                  key={index}
+                  id={id}
+                  image={image}
+                  title={title}
+                  episodeNumber={episodeNumber}
+                  episodeId={episodeId}
+                />
+              );
+            }
+          )}
       </div>
     </section>
   );
