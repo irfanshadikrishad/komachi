@@ -1,9 +1,9 @@
 import { useAuth } from "../store/auth.jsx";
-import randomColor from "random-color";
 import { NavLink } from "react-router-dom";
+import uniqolor from "uniqolor";
 
 export default function TopAiringCard({ id, title, image, index }) {
-  const rc = randomColor();
+  const { color } = uniqolor(image);
   const { defaultPoster } = useAuth();
 
   return (
@@ -17,7 +17,7 @@ export default function TopAiringCard({ id, title, image, index }) {
         }}
       />
       <p className="topAiringTitle">{title}</p>
-      <p style={{ color: `${rc.hexString()}` }} className="topRanking">
+      <p style={{ color: `${color}` }} className="topRanking">
         TOP {index + 1}
       </p>
     </NavLink>

@@ -19,7 +19,6 @@ export default function Latest() {
     const response = await request.json();
 
     if (request.status === 200) {
-      console.log(response);
       setLatest(response);
       setFullPageLoader(false);
       const endTime = getRuntimeInMilliseconds();

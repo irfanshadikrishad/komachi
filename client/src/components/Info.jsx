@@ -1,5 +1,5 @@
 import { memo } from "react";
-import randomcolor from "random-color";
+import uniqolor from "uniqolor";
 
 const Info = memo(({ animeInfo }) => {
   return (
@@ -49,9 +49,9 @@ const Info = memo(({ animeInfo }) => {
             <div className="streamingV2InfoGenres">
               {animeInfo.genres &&
                 animeInfo.genres.map((genre, index) => {
-                  const color = randomcolor();
+                  const { color } = uniqolor(genre);
                   return (
-                    <span key={index} style={{ color: color.hexString() }}>
+                    <span key={index} style={{ color: color }}>
                       {genre}
                     </span>
                   );

@@ -12,7 +12,6 @@
   "dependencies": {
     "@vercel/analytics": "^1.2.2",
     "disqus-react": "^1.1.5",
-    "random-color": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
@@ -20,7 +19,8 @@
     "react-multi-carousel": "^2.8.5",
     "react-player": "^2.15.1",
     "react-router-dom": "^6.22.3",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "uniqolor": "^1.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.74",

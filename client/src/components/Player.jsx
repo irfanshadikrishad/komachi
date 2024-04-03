@@ -88,7 +88,7 @@ export default function Player({
             })}
         </div>
         <div className={styles.streamingV2Buttons}>
-          {episodes.map(({ id }, index) => {
+          {episodes.map(({ id, number }, index) => {
             return (
               <button
                 onClick={() => {

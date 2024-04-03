@@ -1,5 +1,5 @@
 import { memo } from "react";
-import randomcolor from "random-color";
+import uniqolor from "uniqolor";
 
 const NativeInfo = memo(({ styles, animeInfo }) => {
   return (
@@ -52,12 +52,12 @@ const NativeInfo = memo(({ styles, animeInfo }) => {
         <div className={styles.genres}>
           {animeInfo.genre &&
             animeInfo.genre.map((genre, index) => {
-              const color = randomcolor(); // to get different color on every render
+              const { color } = uniqolor(genre);
               return (
                 <p
                   className={styles.genre}
                   key={index}
-                  style={{ color: color.hexString() }}
+                  style={{ color: color }}
                 >
                   {genre}
                 </p>
