@@ -12,6 +12,12 @@ const animeSchema = Schema(
     aired: String,
     genre: [String],
     episodes: [{ id: Number, url: String }],
+    relations: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Anime",
+      },
+    ],
   },
   { timestamps: true }
 );

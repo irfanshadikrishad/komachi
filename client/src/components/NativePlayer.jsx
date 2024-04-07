@@ -1,3 +1,4 @@
+import { useAuth } from "../store/auth.jsx";
 import Disqus from "../components/Disqus.jsx";
 
 export default function NativePlayer({
@@ -6,7 +7,10 @@ export default function NativePlayer({
   episodes,
   setCurrentEpisode,
   animeId,
+  relations,
 }) {
+  const { defaultPoster } = useAuth();
+
   return (
     <section>
       <section className={styles.player}>
@@ -48,6 +52,26 @@ export default function NativePlayer({
       {currentEpisode && (
         <Disqus url={currentEpisode.url} currentEpisode={currentEpisode.id} />
       )}
+      <section className="relations">
+        {relations &&
+          relations.map(({ animeId, poster, title, format }) => {
+            return (
+              <a href={`/native/${animeId}`} className="relationsSingle">
+                <img
+                  className="relationsPoster"
+                  src={poster}
+                  alt={poster}
+                  draggable="false"
+                  onError={(e) => {
+                    e.target.src = defaultPoster;
+                  }}
+                />
+                <p className="relationsTitle">{title}</p>
+                <div className="relationsFormat">{format}</div>
+              </a>
+            );
+          })}
+      </section>
     </section>
   );
 }

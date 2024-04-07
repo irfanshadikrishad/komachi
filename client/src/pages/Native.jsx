@@ -57,6 +57,7 @@ export default function Native() {
           episodes={episodes}
           setCurrentEpisode={setCurrentEpisode}
           animeId={animeId}
+          relations={animeInfo.relations}
         />
       )}
       {!fullPageLoader && animeInfo.animeId && (

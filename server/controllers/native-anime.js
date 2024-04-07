@@ -21,7 +21,7 @@ const search = async (req, res) => {
 const singleAnime = async (req, res) => {
   try {
     const { animeId } = await req.body;
-    const anime = await Anime.findOne({ animeId });
+    const anime = await Anime.findOne({ animeId }).populate("relations");
     if (anime) {
       res.status(200).json(anime);
     } else {

@@ -729,6 +729,38 @@ video {
   margin: 5px 0;
 }
 
+.relations {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+  margin-top: 5px;
+}
+.relationsSingle {
+  position: relative;
+  color: var(--color);
+  background-color: var(--secondary);
+  font-size: 0.9rem;
+  padding: 5px;
+  border-radius: 7px;
+  text-decoration: none;
+}
+.relationsPoster {
+  width: 100%;
+  border-radius: 7px;
+  aspect-ratio: 5/7;
+}
+.relationsFormat {
+  position: absolute;
+  background-color: var(--background);
+  top: 10px;
+  left: 10px;
+  border-radius: 4px;
+  padding: 0px 5px;
+  font-size: 0.7rem;
+  font-weight: 100;
+  display: flex;
+}
+
 /* --------------------------------- */
 /* -----------responsive------------ */
 /* --------------------------------- */
@@ -829,6 +861,9 @@ video {
 }
 
 @media screen and (max-width: 768px) {
+  .relations {
+    grid-template-columns: repeat(4, 1fr);
+  }
   .profile_lists {
     grid-template-columns: 1fr 1fr;
   }
@@ -903,6 +938,9 @@ video {
 }
 
 @media screen and (max-width: 600px) {
+  .relations {
+    grid-template-columns: repeat(3, 1fr);
+  }
   .login,
   .signup {
     grid-template-columns: 1fr;
