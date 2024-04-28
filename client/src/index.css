@@ -618,7 +618,7 @@ video {
 
 .list_inner > p > a {
   text-decoration: none;
-  color: rgba(0, 255, 255, 0.61);
+  color: var(--primary);
 }
 
 .profile_list_grid {
@@ -980,10 +980,6 @@ video {
 }
 
 @media screen and (max-width: 425px) {
-  .s768seperator {
-    flex-direction: column;
-  }
-
   .streamingV2Buttons {
     grid-template-columns: repeat(7, 1fr);
   }
@@ -993,7 +989,7 @@ video {
   }
 
   .streamingV2_Poster {
-    width: 150px;
+    width: 120px;
   }
 }
 
@@ -1005,5 +1001,11 @@ video {
 
   .searchField {
     width: auto;
+  }
+  .s768seperator {
+    flex-direction: column;
+  }
+  .streamingV2_Poster {
+    width: 100%;
   }
 }

@@ -72,20 +72,25 @@ export default function Player({
             )}
           </div>
         )}
-        <div className={styles.serverSources}>
-          {sources &&
-            sources.map(({ url, name }, index) => {
-              return (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setStreamLink(url);
-                  }}
-                >
-                  <FiPlayCircle /> {name}
-                </button>
-              );
-            })}
+        <div className={styles.external_sources}>
+          <div className={styles.external_sources_1}>
+            <p>External Sources</p>
+          </div>
+          <div className={styles.serverSources}>
+            {sources &&
+              sources.map(({ url, name }, index) => {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setStreamLink(url);
+                    }}
+                  >
+                    <FiPlayCircle /> {name}
+                  </button>
+                );
+              })}
+          </div>
         </div>
         <div className={styles.streamingV2Buttons}>
           {episodes.map(({ id, number }, index) => {

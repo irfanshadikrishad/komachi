@@ -12,24 +12,24 @@
   "dependencies": {
     "@vercel/analytics": "^1.2.2",
     "disqus-react": "^1.1.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
-    "react-icons": "^5.0.1",
+    "react-icons": "^5.1.0",
     "react-multi-carousel": "^2.8.5",
-    "react-player": "^2.15.1",
-    "react-router-dom": "^6.22.3",
+    "react-player": "^2.16.0",
+    "react-router-dom": "^6.23.0",
     "react-toastify": "^10.0.5",
     "uniqolor": "^1.1.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.74",
-    "@types/react-dom": "^18.2.24",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^9.0.0",
+    "eslint": "^9.1.1",
     "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.6",
-    "vite": "^5.2.8"
+    "vite": "^5.2.10"
   }
 }

@@ -46,7 +46,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  margin: 0 0 5px 0;
 }
 .serverSources > button {
   color: var(--color);
@@ -69,6 +68,28 @@
 iframe {
   border: 0;
   overflow: hidden !important;
+}
+.external_sources {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  padding: 5px;
+  border-radius: 7px;
+  margin-bottom: 5px;
+  border: 2px dashed var(--background);
+  gap: 5px;
+}
+.external_sources_1 {
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .external_sources {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
 
 @media screen and (max-width: 600px) {
