@@ -9,6 +9,6 @@
 - Clean UI.
 - Fast anime updates.
 - Multiple stream source.
-- Login, Registration functionalty (deprecated).
+- ~~Login, Registration functionalty.~~
 
 #### Thanks for visiting.
