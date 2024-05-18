@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
-import Loader from "../components/Loader.jsx";
 import Player from "../components/Player.jsx";
 import Info from "../components/Info.jsx";
 import { Helmet } from "react-helmet";

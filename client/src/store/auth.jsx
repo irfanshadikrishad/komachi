@@ -4,9 +4,6 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   let SERVER = "https://komachi.onrender.com";
-  const [token, setToken] = useState(localStorage.getItem("logger"));
-  const [user, setUser] = useState({});
-  const isLoggedIn = Boolean(token);
   const defaultPoster = "./default_poster.jpg";
   let productionMode = true;
   const [fullPageLoader, setFullPageLoader] = useState(true);
@@ -19,25 +16,10 @@ export const AuthProvider = ({ children }) => {
     return performance.now() / 1000;
   }
 
-  const storeTokenInLS = async (serverToken) => {
-    setToken(serverToken);
-    return localStorage.setItem("logger", serverToken);
-  };
-
-  const deleteTokenFromLS = () => {
-    setToken("");
-    return localStorage.removeItem("logger");
-  };
-
   return (
     <AuthContext.Provider
       value={{
         SERVER,
-        storeTokenInLS,
-        token,
-        isLoggedIn,
-        user,
-        deleteTokenFromLS,
         getRuntimeInMilliseconds,
         defaultPoster,
         productionMode,
