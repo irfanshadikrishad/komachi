@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vercel/analytics": "^1.2.2",
+    "@vercel/analytics": "^1.3.1",
     "disqus-react": "^1.1.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -23,9 +23,9 @@
     "uniqolor": "^1.1.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.2",
+    "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.3.0",
     "eslint": "^9.3.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
