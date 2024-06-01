@@ -4,8 +4,6 @@ import Navbar from "./layouts/Navbar";
 import Streaming from "./pages/Streaming";
 import Search from "./pages/Search";
 import E404 from "./pages/E404";
-import Native from "./pages/Native.jsx";
-import NativeHome from "./pages/NativeHome.jsx";
 import { useAuth } from "./store/auth.jsx";
 import { useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
@@ -57,8 +55,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/streaming/:animeId" element={<Streaming />} />
-        <Route path="/native" element={<NativeHome />} />
-        <Route path="/native/:animeId" element={<Native />} />
         <Route path="/search/:query" element={<Search />} />
         <Route path="*" element={<E404 />} />
       </Routes>

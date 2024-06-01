@@ -25,7 +25,6 @@ export default function Player({
       setIsNotNative(true);
     }
   };
-
   useEffect(() => {
     nativeChecker();
   }, [streamLink]);

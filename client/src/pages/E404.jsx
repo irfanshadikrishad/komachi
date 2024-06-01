@@ -1,6 +1,10 @@
 import { Helmet } from "react-helmet";
+import { useAuth } from "../store/auth";
 
 export default function E404() {
+  const { setFullPageLoader } = useAuth();
+
+  setFullPageLoader(false);
   return (
     <section className="container">
       <Helmet>

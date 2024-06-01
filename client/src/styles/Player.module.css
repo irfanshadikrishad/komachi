@@ -39,7 +39,8 @@
   color: var(--color);
   background-color: var(--background);
   border-radius: 3px;
-  padding: 5px 0;
+  padding: 10px;
+  text-align: start;
   cursor: pointer;
 }
 .serverSources {
@@ -84,6 +85,36 @@ iframe {
   align-items: center;
   justify-content: center;
 }
+.recommendations {
+  padding-bottom: 30px;
+}
+.recommendations_list {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+.recommendations_image {
+  width: 100%;
+  border-radius: 5px;
+  aspect-ratio: 2 / 2.8;
+}
+.recommendations_individual {
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 7px;
+}
+
+@media screen and (max-width: 1440px) {
+  .streamingV2 {
+    grid-template-columns: 3fr 1fr;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .recommendations_list {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
 
 @media screen and (max-width: 768px) {
   .external_sources {
@@ -92,14 +123,20 @@ iframe {
   }
 }
 
-@media screen and (max-width: 600px) {
-  .streamingV2Buttons {
-    grid-template-columns: repeat(7, 1fr);
+@media screen and (max-width: 700px) {
+  .recommendations_list {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media screen and (max-width: 1440px) {
-  .streamingV2 {
-    grid-template-columns: 3fr 1fr;
+@media screen and (max-width: 450px) {
+  .recommendations_list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .recommendations_list {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

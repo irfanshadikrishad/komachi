@@ -21,6 +21,15 @@ const trending = async (req, res) => {
   }
 };
 
+const popular = async (req, res) => {
+  try {
+    const { results } = await anilist.fetchPopularAnime(1, 10);
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const recentEpisodes = async (req, res) => {
   try {
     const startTime = getRuntimeInSeconds();
@@ -59,7 +68,7 @@ const streamingEpisodeLink = async (req, res) => {
     const runtime = endTime - startTime;
     console.log(chalk.gray(`[streamingEpisodeLink] ${runtime.toFixed(2)}s.`));
   } catch (error) {
-    res.status(400).json({ error: error.message, episodeId });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -107,4 +116,5 @@ export {
   streamingEpisodeLink,
   search,
   steamingServerSources,
+  popular,
 };

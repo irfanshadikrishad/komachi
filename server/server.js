@@ -2,12 +2,9 @@ import { config } from "dotenv";
 import chalk from "chalk";
 import express from "express";
 import cors from "cors";
-import database from "./utils/database.js";
 import animeRouter from "./routes/anime-router.js";
-import nativeAnimeRouter from "./routes/native-anime.js";
 
 config();
-// database();
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -19,7 +16,6 @@ app.use(
 );
 app.use(express.json());
 app.use("/api/v1/anime", animeRouter);
-app.use("/api/native/", nativeAnimeRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json({ status: 200 });

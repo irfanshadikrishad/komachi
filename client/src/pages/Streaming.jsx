@@ -4,6 +4,8 @@ import { useAuth } from "../store/auth.jsx";
 import Player from "../components/Player.jsx";
 import Info from "../components/Info.jsx";
 import { Helmet } from "react-helmet";
+import Loader from "../components/Loader.jsx";
+import Recommendations from "../components/Recommendations.jsx";
 
 export default function Streaming() {
   const {
@@ -25,6 +27,20 @@ export default function Streaming() {
   const [episodeDownloadLink, setEpisodeDownloadLink] = useState("");
   const [sources, setSources] = useState([]);
 
+  function hasRepeatedWords(str) {
+    const words = str.split("-");
+    const wordSet = new Set();
+
+    for (let word of words) {
+      if (wordSet.has(word)) {
+        return true;
+      }
+      wordSet.add(word);
+    }
+
+    return false;
+  }
+
   const getStreamLink = async (episodeId) => {
     const startGettingLink = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/stream`, {
@@ -35,7 +51,6 @@ export default function Streaming() {
     const response = await request.json();
 
     if (request.status === 200) {
-      setFullPageLoader(false);
       setStreamLink(response.sources[response.sources.length - 1].url);
       setCurrentEpisode(episodeId);
       setEpisodeDownloadLink(response.download);
@@ -45,7 +60,7 @@ export default function Streaming() {
       const runtime = endGettingLink - startGettingLink;
       console.log(`[stream-link] ${runtime.toFixed(2)} sec.`);
     } else {
-      console.log(response);
+      console.log(response, episodeId);
     }
   };
 
@@ -57,7 +72,6 @@ export default function Streaming() {
       body: JSON.stringify({ animeId }),
     });
     const response = await request.json();
-    // console.log(response.episodes[0].id, providedEpisodeId);
     if (request.status === 200) {
       setAnimeInfo(response);
       setEpisodes(response.episodes);
@@ -67,7 +81,12 @@ export default function Streaming() {
         unicornId.pop(); // removing initial episode id
         unicornId = unicornId.join("-");
         unicornId = unicornId + `-${providedEpisodeId}`;
-        getStreamLink(unicornId);
+        // If overwriting results in repetation of words
+        if (hasRepeatedWords(unicornId)) {
+          getStreamLink(providedEpisodeId);
+        } else {
+          getStreamLink(unicornId);
+        }
       } else {
         getStreamLink(response.episodes[0].id);
       }
@@ -90,45 +109,53 @@ export default function Streaming() {
     if (request.status === 200) {
       setSources(response);
     } else {
-      console.log(response);
+      console.log(response, episodeId);
     }
   };
 
   useEffect(() => {
     getAnimeInfo();
-    setFullPageLoader(true);
+    setFullPageLoader(false);
   }, [animeId]);
   return (
-    <section className="container streamingV2">
-      <Helmet>
-        <title>{`Konami ${
-          animeInfo.title ? `/ ${animeInfo.title.english}` : ""
-        }`}</title>
-        <meta
-          name="description"
-          content={`Watch ${animeInfo.title} online : ${animeInfo.description}`}
-        />
-        <meta
-          name="keywords"
-          content={`konami, ${animeInfo.title}, ${animeInfo.totalEpisode} episodes`}
-        />
-      </Helmet>
-      {streamLink ? (
-        <Player
-          streamLink={streamLink}
-          currentEpisode={currentEpisode}
-          episodeDownloadLink={episodeDownloadLink}
-          episodes={episodes}
-          getStreamLink={getStreamLink}
-          setStreamLink={setStreamLink}
-          sources={sources}
-          animeId={animeId}
-        />
-      ) : (
-        ""
-      )}
+    <section className="container">
+      <section className="streamingV2">
+        <Helmet>
+          <title>{`Konami ${
+            animeInfo.title ? `/ ${animeInfo.title.english}` : ""
+          }`}</title>
+          <meta
+            name="description"
+            content={`Watch ${animeInfo.title} online : ${animeInfo.description}`}
+          />
+          <meta
+            name="keywords"
+            content={`konami, ${animeInfo.title}, ${animeInfo.totalEpisode} episodes`}
+          />
+        </Helmet>
 
-      {!fullPageLoader && animeInfo.id && <Info animeInfo={animeInfo} />}
+        {streamLink ? (
+          <Player
+            streamLink={streamLink}
+            currentEpisode={currentEpisode}
+            episodeDownloadLink={episodeDownloadLink}
+            episodes={episodes}
+            getStreamLink={getStreamLink}
+            setStreamLink={setStreamLink}
+            sources={sources}
+            animeId={animeId}
+          />
+        ) : (
+          <Loader />
+        )}
+
+        {animeInfo.id && <Info animeInfo={animeInfo} />}
+      </section>
+      <Recommendations
+        recommendations={
+          animeInfo.recommendations && animeInfo.recommendations.slice(0, 13)
+        }
+      />
     </section>
   );
 }
