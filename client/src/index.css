@@ -286,7 +286,8 @@ input:-webkit-autofill:active {
   width: 100%;
   height: auto;
   border-radius: 7px;
-  aspect-ratio: 2/2.7;
+  /* anilist previledge */
+  /* aspect-ratio: 2/2.7; */
 }
 
 .latestIndividual {
@@ -330,7 +331,7 @@ input:-webkit-autofill:active {
 .searchPoster {
   width: 100%;
   border-radius: 7px;
-  height: 205px;
+  /* height: 205px; */
 }
 
 .searchIndividual {

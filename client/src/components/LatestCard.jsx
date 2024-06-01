@@ -12,7 +12,7 @@ export default function LatestCard({
 
   return (
     <NavLink
-      to={`/streaming/${id}?eps=${episodeId}`}
+      to={`/streaming/${id}?eps=${episodeNumber}`}
       className="latestIndividual"
     >
       <img

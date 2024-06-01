@@ -16,7 +16,9 @@ export default function TopAiringCard({ id, title, image, index }) {
           e.target.src = defaultPoster;
         }}
       />
-      <p className="topAiringTitle">{title}</p>
+      <p className="topAiringTitle">
+        {title.english ? title.english : title.romaji}
+      </p>
       <p style={{ color: `${color}` }} className="topRanking">
         TOP {index + 1}
       </p>

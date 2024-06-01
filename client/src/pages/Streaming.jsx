@@ -33,6 +33,7 @@ export default function Streaming() {
       body: JSON.stringify({ episodeId }),
     });
     const response = await request.json();
+
     if (request.status === 200) {
       setFullPageLoader(false);
       setStreamLink(response.sources[response.sources.length - 1].url);
@@ -56,11 +57,17 @@ export default function Streaming() {
       body: JSON.stringify({ animeId }),
     });
     const response = await request.json();
+    // console.log(response.episodes[0].id, providedEpisodeId);
     if (request.status === 200) {
       setAnimeInfo(response);
       setEpisodes(response.episodes);
       if (providedEpisodeId) {
-        getStreamLink(providedEpisodeId);
+        const episodePrefix = response.episodes[0].id;
+        let unicornId = episodePrefix.split("-");
+        unicornId.pop(); // removing initial episode id
+        unicornId = unicornId.join("-");
+        unicornId = unicornId + `-${providedEpisodeId}`;
+        getStreamLink(unicornId);
       } else {
         getStreamLink(response.episodes[0].id);
       }
@@ -72,6 +79,7 @@ export default function Streaming() {
     }
   };
 
+  // Individual Episode Sources
   const getServerSources = async (episodeId) => {
     const request = await fetch(`${SERVER}/api/v1/anime/sources`, {
       method: "POST",
@@ -94,7 +102,7 @@ export default function Streaming() {
     <section className="container streamingV2">
       <Helmet>
         <title>{`Konami ${
-          animeInfo.title ? `/ ${animeInfo.title}` : ""
+          animeInfo.title ? `/ ${animeInfo.title.english}` : ""
         }`}</title>
         <meta
           name="description"

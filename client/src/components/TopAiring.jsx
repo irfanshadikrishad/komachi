@@ -40,8 +40,9 @@ export default function TopAiring() {
     const startTime = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/trending`);
     const response = await request.json();
+    // console.log(response);
     if (request.status === 200) {
-      setTopAiring(response.results);
+      setTopAiring(response);
       const endTime = getRuntimeInMilliseconds();
       const runtime = endTime - startTime;
       console.log(`[trending] ${runtime.toFixed(2)} sec.`);

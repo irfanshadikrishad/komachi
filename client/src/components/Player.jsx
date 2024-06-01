@@ -93,7 +93,7 @@ export default function Player({
           </div>
         </div>
         <div className={styles.streamingV2Buttons}>
-          {episodes.map(({ id, number }, index) => {
+          {episodes.map(({ id, title }, index) => {
             return (
               <button
                 onClick={() => {
@@ -106,7 +106,7 @@ export default function Player({
                   backgroundColor: currentEpisode === id && "var(--primary)",
                 }}
               >
-                {number}
+                {title}
               </button>
             );
           })}

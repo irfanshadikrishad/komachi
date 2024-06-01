@@ -27,7 +27,7 @@
 }
 .streamingV2Buttons {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  /* grid-template-columns: repeat(12, 1fr); */
   gap: 5px;
   overflow-y: scroll;
   align-items: flex-start;
@@ -38,7 +38,7 @@
   border: none;
   color: var(--color);
   background-color: var(--background);
-  border-radius: 7px;
+  border-radius: 3px;
   padding: 5px 0;
   cursor: pointer;
 }

@@ -15,7 +15,7 @@ const Info = memo(({ animeInfo }) => {
         </div>
         <section>
           <h1 className="streaming_title">
-            {animeInfo.title && animeInfo.title}
+            {animeInfo.title && animeInfo.title.english}
           </h1>
           <p className="streamingV2_description">{animeInfo.description}</p>
           <section>

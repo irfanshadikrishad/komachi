@@ -5,10 +5,15 @@ import Loader from "../components/Loader.jsx";
 import { Helmet } from "react-helmet";
 
 export default function Search() {
-  const { SERVER, getRuntimeInMilliseconds } = useAuth();
+  const {
+    SERVER,
+    getRuntimeInMilliseconds,
+    setFullPageLoader,
+    fullPageLoader,
+  } = useAuth();
   const { query } = useParams();
   const [searched, setSearched] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [native, setNative] = useState([]);
 
   const getSearched = async () => {
@@ -21,6 +26,7 @@ export default function Search() {
     const response = await request.json();
     if (request.status === 200) {
       setSearched(response);
+      setFullPageLoader(false);
       setIsLoading(false);
       const endSearching = getRuntimeInMilliseconds();
       const runtime = endSearching - startSearching;
@@ -36,6 +42,7 @@ export default function Search() {
     const response = await request.json();
     if (request.status === 200) {
       setNative(response);
+      setIsLoading(false);
       const endSearching = getRuntimeInMilliseconds();
       const runtime = endSearching - startSearching;
       console.log(`[native] ${runtime.toFixed(2)} sec.`);
@@ -58,9 +65,8 @@ export default function Search() {
           content="konami, search anime, watch anime online"
         />
       </Helmet>
-      {isLoading ? (
-        <Loader />
-      ) : (
+
+      {!fullPageLoader && (
         <>
           <p>
             {searched.length > 0
@@ -82,13 +88,14 @@ export default function Search() {
                       className="searchPoster"
                       draggable="false"
                     />
-                    <p>{title}</p>
+                    <p>{title.english ? title.english : title.romaji}</p>
                   </NavLink>
                 );
               })}
           </div>
         </>
       )}
+
       {native.length > 0 && (
         <section className="native">
           <p>

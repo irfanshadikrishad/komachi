@@ -17,7 +17,7 @@ export default function Latest() {
       body: JSON.stringify({ page: 1, audioType }),
     });
     const response = await request.json();
-
+    // console.log(response);
     if (request.status === 200) {
       setLatest(response);
       setFullPageLoader(false);
@@ -37,47 +37,6 @@ export default function Latest() {
       {latest && (
         <div className="latest_Header">
           <p className="partitionTitleII">Latest updates</p>
-          <div className="latest_buttons">
-            <button
-              style={{
-                backgroundColor:
-                  audioType === 1 && "var(--background) !important",
-              }}
-              className="latest_button"
-              onClick={() => {
-                setAudioType(1);
-                localStorage.setItem("latest_type", 1);
-              }}
-            >
-              jp
-            </button>
-            <button
-              style={{
-                backgroundColor:
-                  audioType === 2 && "var(--background) !important",
-              }}
-              className="latest_button"
-              onClick={() => {
-                setAudioType(2);
-                localStorage.setItem("latest_type", 2);
-              }}
-            >
-              en
-            </button>
-            <button
-              style={{
-                backgroundColor:
-                  audioType === 3 && "var(--background) !important",
-              }}
-              className="latest_button"
-              onClick={() => {
-                setAudioType(3);
-                localStorage.setItem("latest_type", 3);
-              }}
-            >
-              ch
-            </button>
-          </div>
         </div>
       )}
       <div className="latestContainer">
@@ -89,7 +48,7 @@ export default function Latest() {
                   key={index}
                   id={id}
                   image={image}
-                  title={title}
+                  title={title.english}
                   episodeNumber={episodeNumber}
                   episodeId={episodeId}
                 />

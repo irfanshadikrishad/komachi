@@ -1,7 +1,9 @@
 import chalk from "chalk";
-import { ANIME } from "@consumet/extensions";
+import { ANIME, META } from "@consumet/extensions";
 
 const gogoanime = new ANIME.Gogoanime();
+const anilist = new META.Anilist();
+
 function getRuntimeInSeconds() {
   return performance.now() / 1000;
 }
@@ -9,8 +11,8 @@ function getRuntimeInSeconds() {
 const trending = async (req, res) => {
   try {
     const startTime = getRuntimeInSeconds();
-    const topAiring = await gogoanime.fetchTopAiring();
-    res.status(200).json(topAiring);
+    const topAiring = await anilist.fetchTrendingAnime();
+    res.status(200).json(topAiring.results);
     const endTime = getRuntimeInSeconds();
     const runtime = endTime - startTime;
     console.log(chalk.gray(`[trending] ${runtime.toFixed(2)}s.`));
@@ -22,22 +24,9 @@ const trending = async (req, res) => {
 const recentEpisodes = async (req, res) => {
   try {
     const startTime = getRuntimeInSeconds();
-    const { page, audioType } = await req.body;
-    const recent = await gogoanime.fetchRecentEpisodes(page, audioType);
-    const recentPageTwo = await gogoanime.fetchRecentEpisodes(
-      page + 1,
-      audioType
-    );
-    const recentPageThree = await gogoanime.fetchRecentEpisodes(
-      page + 2,
-      audioType
-    );
-    const recentEpisodesOverall = [
-      ...recent.results,
-      ...recentPageTwo.results,
-      ...recentPageThree.results,
-    ];
-    res.status(200).json(recentEpisodesOverall);
+    // const { page, audioType } = await req.body;
+    const recent = await anilist.fetchRecentEpisodes("gogoanime", 1, 34);
+    res.status(200).json(recent.results);
     const endTime = getRuntimeInSeconds();
     const runtime = endTime - startTime;
     console.log(chalk.gray(`[recentEpisodes] ${runtime.toFixed(2)}s.`));
@@ -50,7 +39,7 @@ const animeInfo = async (req, res) => {
   try {
     const startTime = getRuntimeInSeconds();
     const { animeId } = await req.body;
-    const info = await gogoanime.fetchAnimeInfo(animeId);
+    const info = await anilist.fetchAnimeInfo(animeId);
     res.status(200).json(info);
     const endTime = getRuntimeInSeconds();
     const runtime = endTime - startTime;
@@ -70,7 +59,7 @@ const streamingEpisodeLink = async (req, res) => {
     const runtime = endTime - startTime;
     console.log(chalk.gray(`[streamingEpisodeLink] ${runtime.toFixed(2)}s.`));
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message, episodeId });
   }
 };
 
@@ -80,7 +69,7 @@ const search = async (req, res) => {
     let searchedOverall = [];
     const { searchQuery } = await req.body;
     async function searchProvider(searchQuery, page) {
-      const searched = await gogoanime.search(searchQuery, page);
+      const searched = await anilist.search(searchQuery, page, 25);
       searchedOverall = [...searchedOverall, ...searched.results];
       if (searched.hasNextPage) {
         await searchProvider(searchQuery, searched.currentPage + 1); // recursion to get exact results

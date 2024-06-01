@@ -7,7 +7,7 @@ import animeRouter from "./routes/anime-router.js";
 import nativeAnimeRouter from "./routes/native-anime.js";
 
 config();
-database();
+// database();
 const PORT = process.env.PORT || 3001;
 const app = express();
 
