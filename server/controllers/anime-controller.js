@@ -44,6 +44,16 @@ const recentEpisodes = async (req, res) => {
   }
 };
 
+const dubEpisodes = async (req, res) => {
+  try {
+    const { animeId } = await req.body;
+    const episodes = await gogoanime.fetchAnimeInfo(animeId);
+    res.status(200).json(episodes.episodes);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const animeInfo = async (req, res) => {
   try {
     const startTime = getRuntimeInSeconds();
@@ -117,4 +127,5 @@ export {
   search,
   steamingServerSources,
   popular,
+  dubEpisodes,
 };

@@ -7,6 +7,7 @@ import {
   search,
   steamingServerSources,
   popular,
+  dubEpisodes,
 } from "../controllers/anime-controller.js";
 
 const router = Router();
@@ -18,5 +19,6 @@ router.post("/stream", streamingEpisodeLink);
 router.post("/search", search);
 router.post("/sources", steamingServerSources);
 router.get("/popular", popular);
+router.post("/dub-episodes", dubEpisodes);
 
 export default router;

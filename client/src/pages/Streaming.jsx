@@ -26,6 +26,7 @@ export default function Streaming() {
   const [currentEpisode, setCurrentEpisode] = useState(providedEpisodeId);
   const [episodeDownloadLink, setEpisodeDownloadLink] = useState("");
   const [sources, setSources] = useState([]);
+  const [dubEpisodes, setDubEpisodes] = useState([]);
 
   function hasRepeatedWords(str) {
     const words = str.split("-");
@@ -64,6 +65,27 @@ export default function Streaming() {
     }
   };
 
+  function subToDub(subId) {
+    const dubId = subId.split("-episode-").slice(0, -1);
+    // console.log(`${String(dubId)}-dub`, subId);
+    return `${String(dubId)}-dub`;
+  }
+
+  const getDubEpisodesInfo = async (subId) => {
+    const request = await fetch(`${SERVER}/api/v1/anime/dub-episodes`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ animeId: subToDub(subId) }),
+    });
+    const response = await request.json();
+
+    if (request.status === 200) {
+      setDubEpisodes(response);
+    } else {
+      console.log(response);
+    }
+  };
+
   const getAnimeInfo = async () => {
     const startTime = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/info`, {
@@ -90,6 +112,7 @@ export default function Streaming() {
       } else {
         getStreamLink(response.episodes[0].id);
       }
+      getDubEpisodesInfo(response.episodes[0].id);
       const endTime = getRuntimeInMilliseconds();
       const runtime = endTime - startTime;
       console.log(`[info] ${runtime.toFixed(2)} sec.`);
@@ -144,6 +167,7 @@ export default function Streaming() {
             setStreamLink={setStreamLink}
             sources={sources}
             animeId={animeId}
+            dubEpisodes={dubEpisodes}
           />
         ) : (
           <Loader />

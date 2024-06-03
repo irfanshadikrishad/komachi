@@ -14,8 +14,11 @@ export default function Player({
   setStreamLink,
   sources,
   animeId,
+  dubEpisodes,
 }) {
   const [isNotNative, setIsNotNative] = useState(true);
+  const [isSub, setIsSub] = useState(true);
+  const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
 
   const nativeChecker = () => {
     const extension = String(streamLink).slice(-5);
@@ -73,7 +76,29 @@ export default function Player({
         )}
         <div className={styles.external_sources}>
           <div className={styles.external_sources_1}>
-            <p>External Sources</p>
+            <p>Source Types</p>
+            <section className={styles.source_btns}>
+              <button
+                onClick={() => {
+                  setIsSub(true);
+                  setUnicornEpisodes(episodes);
+                }}
+                style={{ backgroundColor: isSub && "var(--primary)" }}
+              >
+                sub ({episodes.length})
+              </button>
+              {dubEpisodes.length > 0 && (
+                <button
+                  onClick={() => {
+                    setIsSub(false);
+                    setUnicornEpisodes(dubEpisodes);
+                  }}
+                  style={{ backgroundColor: !isSub && "var(--primary)" }}
+                >
+                  dub ({dubEpisodes.length})
+                </button>
+              )}
+            </section>
           </div>
           <div className={styles.serverSources}>
             {sources &&
@@ -92,7 +117,7 @@ export default function Player({
           </div>
         </div>
         <div className={styles.streamingV2Buttons}>
-          {episodes.map(({ id, title }, index) => {
+          {unicornEpisodes.map(({ id, title, number }, index) => {
             return (
               <button
                 onClick={() => {
@@ -105,7 +130,7 @@ export default function Player({
                   backgroundColor: currentEpisode === id && "var(--primary)",
                 }}
               >
-                {title}
+                {title ? title : number}
               </button>
             );
           })}

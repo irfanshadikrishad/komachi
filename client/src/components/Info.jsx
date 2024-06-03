@@ -15,7 +15,9 @@ const Info = memo(({ animeInfo }) => {
         </div>
         <section>
           <h1 className="streaming_title">
-            {animeInfo.title && animeInfo.title.english}
+            {animeInfo.title.english
+              ? animeInfo.title.english
+              : animeInfo.title.romaji}
           </h1>
           <p className="streamingV2_description">{animeInfo.description}</p>
           <section>
@@ -37,14 +39,17 @@ const Info = memo(({ animeInfo }) => {
             </p>
             {animeInfo.startDate && (
               <p className="seperator">
-                <span className="blob">Airing Date :</span>{" "}
-                {animeInfo.startDate.day}/{animeInfo.startDate.month}/
-                {animeInfo.startDate.year} – {animeInfo.endDate.day}/
-                {animeInfo.endDate.month}/{animeInfo.endDate.year}{" "}
+                <span className="blob">Airing Date :</span>
+                {` ${Object.values(animeInfo.startDate).join("/")} ${
+                  animeInfo.endDate.year
+                    ? "– " + Object.values(animeInfo.endDate).join("/")
+                    : ""
+                }`}
               </p>
             )}
             <p>
-              <span className="blob">Synonyms:</span> {animeInfo.otherName}
+              <span className="blob">Synonyms:</span>{" "}
+              {animeInfo.synonyms && animeInfo.synonyms.join(" • ")}
             </p>
             <div className="streamingV2InfoGenres">
               {animeInfo.genres &&
