@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
-import Loader from "../components/Loader.jsx";
 import { Helmet } from "react-helmet";
+import Loader from "../components/Loader.jsx";
 
 export default function Search() {
-  const {
-    SERVER,
-    getRuntimeInMilliseconds,
-    setFullPageLoader,
-    fullPageLoader,
-  } = useAuth();
+  const { SERVER, getRuntimeInMilliseconds } = useAuth();
   const { query } = useParams();
   const [searched, setSearched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +21,6 @@ export default function Search() {
     const response = await request.json();
     if (request.status === 200) {
       setSearched(response);
-      setFullPageLoader(false);
       setIsLoading(false);
       const endSearching = getRuntimeInMilliseconds();
       const runtime = endSearching - startSearching;
@@ -66,7 +60,7 @@ export default function Search() {
         />
       </Helmet>
 
-      {!fullPageLoader && (
+      {searched.length > 0 ? (
         <>
           <p>
             {searched.length > 0
@@ -94,6 +88,8 @@ export default function Search() {
               })}
           </div>
         </>
+      ) : (
+        <Loader />
       )}
 
       {native.length > 0 && (

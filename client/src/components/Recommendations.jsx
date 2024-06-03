@@ -6,36 +6,34 @@ export default function Recommendations({ recommendations }) {
   const { defaultPoster } = useAuth();
   return (
     <section className={styles.recommendations}>
-      <h1>Recommendations</h1>
+      {recommendations && <h1>Recommendations</h1>}
       <div className={styles.recommendations_list}>
         {recommendations &&
-          recommendations.map(
-            ({ title, image, status, id, type, episodes }, index) => {
-              return (
-                <Link
-                  to={`/streaming/${id}`}
-                  key={index}
-                  className={styles.recommendations_individual}
-                >
-                  <img
-                    className={styles.recommendations_image}
-                    src={image}
-                    alt={title.english}
-                    draggable="false"
-                    onError={(e) => {
-                      e.target.src = defaultPoster;
-                    }}
-                  />
-                  <p className="topAiringTitle">
-                    {title.english ? title.english : title.romaji}
-                  </p>
-                  <section className={styles.recommendations_info}>
-                    <p>{`EP ${episodes} • ${type}`}</p>
-                  </section>
-                </Link>
-              );
-            }
-          )}
+          recommendations.map(({ title, image, id, type, episodes }, index) => {
+            return (
+              <Link
+                to={`/streaming/${id}`}
+                key={index}
+                className={styles.recommendations_individual}
+              >
+                <img
+                  className={styles.recommendations_image}
+                  src={image}
+                  alt={title.english}
+                  draggable="false"
+                  onError={(e) => {
+                    e.target.src = defaultPoster;
+                  }}
+                />
+                <p className="topAiringTitle">
+                  {title.english ? title.english : title.romaji}
+                </p>
+                <section className={styles.recommendations_info}>
+                  <p>{`EP ${episodes} • ${type}`}</p>
+                </section>
+              </Link>
+            );
+          })}
       </div>
     </section>
   );

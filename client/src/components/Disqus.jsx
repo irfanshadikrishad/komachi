@@ -9,7 +9,7 @@ export default function Disqus({ url, currentEpisode }) {
     setIsCommentLoaded(false);
   }, [url]);
   return (
-    <div
+    <section
       className="disqus"
       style={{ padding: isCommentLoaded ? "15px" : "5px" }}
     >
@@ -32,6 +32,6 @@ export default function Disqus({ url, currentEpisode }) {
           Load Comments <span className="icon">{<FaChevronDown />}</span>
         </p>
       )}
-    </div>
+    </section>
   );
 }

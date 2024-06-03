@@ -11,8 +11,6 @@ export default function Streaming() {
   const {
     SERVER,
     getRuntimeInMilliseconds,
-    fullPageLoader,
-    setFullPageLoader,
   } = useAuth();
   const { animeId } = useParams();
   const { search } = useLocation();
@@ -138,7 +136,6 @@ export default function Streaming() {
 
   useEffect(() => {
     getAnimeInfo();
-    setFullPageLoader(false);
   }, [animeId]);
   return (
     <section className="container">

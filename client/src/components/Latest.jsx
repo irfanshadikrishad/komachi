@@ -1,26 +1,23 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth.jsx";
 import LatestCard from "./LatestCard.jsx";
+import Loader from "./Loader.jsx";
 
 export default function Latest() {
-  const { SERVER, getRuntimeInMilliseconds, setFullPageLoader } = useAuth();
+  const { SERVER, getRuntimeInMilliseconds } = useAuth();
   const [latest, setLatest] = useState(null);
-  const [audioType, setAudioType] = useState(
-    localStorage.getItem("latest_type")
-  );
 
   const getLatest = async () => {
     const startTime = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/recent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ page: 1, audioType }),
+      body: JSON.stringify({ page: 1 }),
     });
     const response = await request.json();
-    // console.log(response);
+
     if (request.status === 200) {
       setLatest(response);
-      setFullPageLoader(false);
       const endTime = getRuntimeInMilliseconds();
       const runtime = endTime - startTime;
       console.log(`[latest] ${runtime.toFixed(2)} sec.`);
@@ -31,7 +28,7 @@ export default function Latest() {
 
   useEffect(() => {
     getLatest();
-  }, [audioType]);
+  }, []);
   return (
     <section className="container">
       {latest && (
@@ -40,7 +37,7 @@ export default function Latest() {
         </div>
       )}
       <div className="latestContainer">
-        {latest &&
+        {latest ? (
           latest.map(
             ({ id, image, title, episodeNumber, episodeId }, index) => {
               return (
@@ -54,7 +51,10 @@ export default function Latest() {
                 />
               );
             }
-          )}
+          )
+        ) : (
+          <Loader />
+        )}
       </div>
     </section>
   );
