@@ -8,8 +8,8 @@ export const AuthProvider = ({ children }) => {
   let productionMode = true;
 
   // Comment before deploying
-  // SERVER = "http://localhost:3001";
-  // productionMode = false;
+  SERVER = "http://localhost:3001";
+  productionMode = false;
 
   function getRuntimeInMilliseconds() {
     return performance.now() / 1000;

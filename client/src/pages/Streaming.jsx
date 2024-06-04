@@ -45,12 +45,12 @@ export default function Streaming() {
       const runtime = endGettingLink - startGettingLink;
       console.log(`[stream-link] ${runtime.toFixed(2)} sec.`);
     } else {
-      console.log(response, episodeId);
-      // If the providesEpisode number is more then we have we will load the last one
+      // console.log(response, episodeId, episodes);
+      // If episode not found, load first episode
       let providedEpisode = episodeId.split("-episode-");
       providedEpisode = providedEpisode[providedEpisode.length - 1];
-      if (episodes.length < providedEpisode) {
-        getStreamLink(episodes[episodes.length - 1].id);
+      if (episodes.length > 0) {
+        getStreamLink(episodes[0].id);
       }
     }
   };
@@ -166,18 +166,22 @@ export default function Streaming() {
             nextAiringEpisode={nextAiringTime}
           />
         ) : noEpisodes ? (
-          <Player
-            currentEpisode={currentEpisode}
-            episodeDownloadLink={episodeDownloadLink}
-            episodes={episodes}
-            getStreamLink={getStreamLink}
-            setStreamLink={setStreamLink}
-            sources={sources}
-            animeId={animeId}
-            dubEpisodes={dubEpisodes}
-            nextAiringEpisode={nextAiringTime}
-            streamLink={`https://www.youtube.com/watch?v=${animeInfo.trailer.id}`}
-          />
+          animeInfo.trailer ? (
+            <Player
+              currentEpisode={currentEpisode}
+              episodeDownloadLink={episodeDownloadLink}
+              episodes={episodes}
+              getStreamLink={getStreamLink}
+              setStreamLink={setStreamLink}
+              sources={sources}
+              animeId={animeId}
+              dubEpisodes={dubEpisodes}
+              nextAiringEpisode={nextAiringTime}
+              streamLink={`https://www.youtube.com/watch?v=${animeInfo.trailer.id}`}
+            />
+          ) : (
+            <p>No episodes or trailer available.</p>
+          )
         ) : (
           <Loader />
         )}

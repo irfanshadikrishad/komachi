@@ -5,7 +5,6 @@ import { useAuth } from "../store/auth";
 export default function Recommendations({ recommendations }) {
   const { defaultPoster } = useAuth();
 
-  console.log(recommendations && recommendations.length);
   return (
     <section className={styles.recommendations}>
       {recommendations && recommendations.length > 0 && (
