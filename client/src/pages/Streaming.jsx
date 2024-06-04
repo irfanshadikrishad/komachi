@@ -6,12 +6,10 @@ import Info from "../components/Info.jsx";
 import { Helmet } from "react-helmet";
 import Loader from "../components/Loader.jsx";
 import Recommendations from "../components/Recommendations.jsx";
+import { subToDub, hasRepeatedWords } from "../utils/info_modifier.js";
 
 export default function Streaming() {
-  const {
-    SERVER,
-    getRuntimeInMilliseconds,
-  } = useAuth();
+  const { SERVER, getRuntimeInMilliseconds } = useAuth();
   const { animeId } = useParams();
   const { search } = useLocation();
   const location = new URLSearchParams(search);
@@ -25,20 +23,8 @@ export default function Streaming() {
   const [episodeDownloadLink, setEpisodeDownloadLink] = useState("");
   const [sources, setSources] = useState([]);
   const [dubEpisodes, setDubEpisodes] = useState([]);
-
-  function hasRepeatedWords(str) {
-    const words = str.split("-");
-    const wordSet = new Set();
-
-    for (let word of words) {
-      if (wordSet.has(word)) {
-        return true;
-      }
-      wordSet.add(word);
-    }
-
-    return false;
-  }
+  const [nextAiringTime, setNextAiringTime] = useState({});
+  const [noEpisodes, setNoEpisodes] = useState(false);
 
   const getStreamLink = async (episodeId) => {
     const startGettingLink = getRuntimeInMilliseconds();
@@ -60,14 +46,14 @@ export default function Streaming() {
       console.log(`[stream-link] ${runtime.toFixed(2)} sec.`);
     } else {
       console.log(response, episodeId);
+      // If the providesEpisode number is more then we have we will load the last one
+      let providedEpisode = episodeId.split("-episode-");
+      providedEpisode = providedEpisode[providedEpisode.length - 1];
+      if (episodes.length < providedEpisode) {
+        getStreamLink(episodes[episodes.length - 1].id);
+      }
     }
   };
-
-  function subToDub(subId) {
-    const dubId = subId.split("-episode-").slice(0, -1);
-    // console.log(`${String(dubId)}-dub`, subId);
-    return `${String(dubId)}-dub`;
-  }
 
   const getDubEpisodesInfo = async (subId) => {
     const request = await fetch(`${SERVER}/api/v1/anime/dub-episodes`, {
@@ -93,6 +79,7 @@ export default function Streaming() {
     });
     const response = await request.json();
     if (request.status === 200) {
+      setNextAiringTime(response.nextAiringEpisode);
       setAnimeInfo(response);
       setEpisodes(response.episodes);
       if (providedEpisodeId) {
@@ -108,9 +95,14 @@ export default function Streaming() {
           getStreamLink(unicornId);
         }
       } else {
-        getStreamLink(response.episodes[0].id);
+        if (response.episodes.length > 0) {
+          getStreamLink(response.episodes[0].id);
+        } else {
+          setNoEpisodes(true);
+        }
       }
-      getDubEpisodesInfo(response.episodes[0].id);
+      response.episodes.length > 0 &&
+        getDubEpisodesInfo(response.episodes[0].id);
       const endTime = getRuntimeInMilliseconds();
       const runtime = endTime - startTime;
       console.log(`[info] ${runtime.toFixed(2)} sec.`);
@@ -142,7 +134,13 @@ export default function Streaming() {
       <section className="streamingV2">
         <Helmet>
           <title>{`Konami ${
-            animeInfo.title ? `/ ${animeInfo.title.english}` : ""
+            animeInfo.title
+              ? `/ ${
+                  animeInfo.title.english
+                    ? animeInfo.title.english
+                    : animeInfo.title.romaji
+                }`
+              : ""
           }`}</title>
           <meta
             name="description"
@@ -165,6 +163,20 @@ export default function Streaming() {
             sources={sources}
             animeId={animeId}
             dubEpisodes={dubEpisodes}
+            nextAiringEpisode={nextAiringTime}
+          />
+        ) : noEpisodes ? (
+          <Player
+            currentEpisode={currentEpisode}
+            episodeDownloadLink={episodeDownloadLink}
+            episodes={episodes}
+            getStreamLink={getStreamLink}
+            setStreamLink={setStreamLink}
+            sources={sources}
+            animeId={animeId}
+            dubEpisodes={dubEpisodes}
+            nextAiringEpisode={nextAiringTime}
+            streamLink={`https://www.youtube.com/watch?v=${animeInfo.trailer.id}`}
           />
         ) : (
           <Loader />

@@ -4,9 +4,13 @@ import { useAuth } from "../store/auth";
 
 export default function Recommendations({ recommendations }) {
   const { defaultPoster } = useAuth();
+
+  console.log(recommendations && recommendations.length);
   return (
     <section className={styles.recommendations}>
-      {recommendations && <h1>Recommendations</h1>}
+      {recommendations && recommendations.length > 0 && (
+        <h1>Recommendations</h1>
+      )}
       <div className={styles.recommendations_list}>
         {recommendations &&
           recommendations.map(({ title, image, id, type, episodes }, index) => {

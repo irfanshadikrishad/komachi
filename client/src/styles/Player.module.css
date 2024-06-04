@@ -90,7 +90,11 @@ iframe {
   gap: 2px;
   background-color: var(--background);
   border-radius: 4px;
-  padding: 10px 0;
+  padding: 10px 5px;
+}
+.nextAiringEpisode {
+  font-size: 0.9rem;
+  text-align: center;
 }
 .source_btns {
   display: flex;
@@ -105,6 +109,9 @@ iframe {
   background-color: var(--secondary);
   cursor: pointer;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 .recommendations {
   padding-bottom: 30px;

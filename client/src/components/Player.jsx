@@ -1,9 +1,13 @@
 import ReactPlayer from "react-player";
 import styles from "../styles/Player.module.css";
 import { useEffect, useState } from "react";
-import { FiPlayCircle } from "react-icons/fi";
-import { ImCloudDownload } from "react-icons/im";
 import Disqus from "./Disqus";
+import { convertTimestampToReadable } from "../utils/info_modifier";
+// ICONS
+import { ImCloudDownload } from "react-icons/im";
+import { FiPlayCircle } from "react-icons/fi";
+import { FaRegClosedCaptioning } from "react-icons/fa6";
+import { IoMic } from "react-icons/io5";
 
 export default function Player({
   streamLink,
@@ -15,6 +19,7 @@ export default function Player({
   sources,
   animeId,
   dubEpisodes,
+  nextAiringEpisode,
 }) {
   const [isNotNative, setIsNotNative] = useState(true);
   const [isSub, setIsSub] = useState(true);
@@ -55,23 +60,13 @@ export default function Player({
                 </a>
               </div>
             </div>
-            {isNotNative ? (
-              <ReactPlayer
-                width="100%"
-                height="auto"
-                controls={true}
-                playing={true}
-                url={streamLink}
-              />
-            ) : (
-              <iframe
-                className="komachi_player"
-                src={streamLink}
-                allowFullScreen={true}
-                width="100%"
-                height="auto"
-              />
-            )}
+            <ReactPlayer
+              width="100%"
+              height={isNotNative ? "auto" : "400px"}
+              controls={true}
+              playing={true}
+              url={streamLink}
+            />
           </div>
         )}
         <div className={styles.external_sources}>
@@ -85,7 +80,7 @@ export default function Player({
                 }}
                 style={{ backgroundColor: isSub && "var(--primary)" }}
               >
-                sub ({episodes.length})
+                <FaRegClosedCaptioning /> sub ({episodes.length})
               </button>
               {dubEpisodes.length > 0 && (
                 <button
@@ -95,10 +90,18 @@ export default function Player({
                   }}
                   style={{ backgroundColor: !isSub && "var(--primary)" }}
                 >
-                  dub ({dubEpisodes.length})
+                  <IoMic /> dub ({dubEpisodes.length})
                 </button>
               )}
             </section>
+            {nextAiringEpisode && (
+              <p className={styles.nextAiringEpisode}>
+                {convertTimestampToReadable(
+                  nextAiringEpisode.airingTime,
+                  nextAiringEpisode.episode
+                )}
+              </p>
+            )}
           </div>
           <div className={styles.serverSources}>
             {sources &&
