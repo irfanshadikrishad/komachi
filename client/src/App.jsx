@@ -7,6 +7,7 @@ import E404 from "./pages/E404";
 import { useAuth } from "./store/auth.jsx";
 import { useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import Footer from "./layouts/Footer.jsx";
 
 export default function App() {
   const { productionMode } = useAuth();
@@ -58,6 +59,7 @@ export default function App() {
         <Route path="/search/:query" element={<Search />} />
         <Route path="*" element={<E404 />} />
       </Routes>
+      <Footer />
       <Analytics />
     </BrowserRouter>
   );

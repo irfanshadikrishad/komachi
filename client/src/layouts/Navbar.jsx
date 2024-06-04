@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Logo from "../components/Logo";
 // ICONS
 import { FaBars } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
@@ -23,17 +24,7 @@ export default function Navbar() {
   return (
     <nav>
       <section className="container navbar">
-        <section>
-          <div>
-            <NavLink
-              to="/"
-              className="navbar_text_logo"
-              style={{ display: "inline" }}
-            >
-              <p>Konami</p>
-            </NavLink>
-          </div>
-        </section>
+        <Logo />
         <section className={isMenuOpen ? "navbarII open" : "navbarII"}>
           <form className="navbar_search_form" onSubmit={handleSearch}>
             <input

@@ -40,6 +40,12 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .container {
   width: 60%;
   margin: 0 auto;
