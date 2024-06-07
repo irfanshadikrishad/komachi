@@ -62,7 +62,7 @@ export default function Streaming() {
       body: JSON.stringify({ animeId: subToDub(subId) }),
     });
     const response = await request.json();
-
+    // console.log(response, subId, episodes);
     if (request.status === 200) {
       setDubEpisodes(response);
     } else {
@@ -82,6 +82,8 @@ export default function Streaming() {
       setNextAiringTime(response.nextAiringEpisode);
       setAnimeInfo(response);
       setEpisodes(response.episodes);
+      getDubEpisodesInfo(response.episodes[0].id); // Get the dub episodes
+      // For specific episodes
       if (providedEpisodeId) {
         const episodePrefix = response.episodes[0].id;
         let unicornId = episodePrefix.split("-");
@@ -101,8 +103,6 @@ export default function Streaming() {
           setNoEpisodes(true);
         }
       }
-      response.episodes.length > 0 &&
-        getDubEpisodesInfo(response.episodes[0].id);
       const endTime = getRuntimeInMilliseconds();
       const runtime = endTime - startTime;
       console.log(`[info] ${runtime.toFixed(2)} sec.`);
@@ -132,7 +132,9 @@ export default function Streaming() {
     }
   }, [episodes]);
   useEffect(() => {
+    setDubEpisodes([]);
     getAnimeInfo();
+    window.scrollTo({ top: 0 }); // On click recommended, scroll to top
   }, [animeId]);
   return (
     <section className="container">

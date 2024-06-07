@@ -3,6 +3,7 @@ import styles from "../styles/Player.module.css";
 import { useEffect, useState } from "react";
 import Disqus from "./Disqus";
 import { convertTimestampToReadable } from "../utils/info_modifier";
+import Episodes from "./Episodes";
 // ICONS
 import { ImCloudDownload } from "react-icons/im";
 import { FiPlayCircle } from "react-icons/fi";
@@ -119,25 +120,12 @@ export default function Player({
               })}
           </div>
         </div>
-        <div className={styles.streamingV2Buttons}>
-          {unicornEpisodes.map(({ id, title, number }, index) => {
-            return (
-              <button
-                onClick={() => {
-                  getStreamLink(id);
-                  localStorage.setItem(animeId, id);
-                }}
-                key={index}
-                className={styles.streamingV2Button}
-                style={{
-                  backgroundColor: currentEpisode === id && "var(--primary)",
-                }}
-              >
-                {title ? title : number}
-              </button>
-            );
-          })}
-        </div>
+        <Episodes
+          getStreamLink={getStreamLink}
+          animeId={animeId}
+          currentEpisode={currentEpisode}
+          unicornEpisodes={unicornEpisodes}
+        />
       </section>
       <Disqus url={streamLink} currentEpisode={currentEpisode} />
     </div>

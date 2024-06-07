@@ -9,12 +9,7 @@ export default function LatestCard({
   episodeId,
 }) {
   const { defaultPoster } = useAuth();
-
-  // console.log(episodeId, episodeNumber);
-  let unicorn = episodeId;
-  if (episodeId === "undefined" || episodeId.includes("?ep=")) {
-    unicorn = episodeNumber;
-  }
+  let unicorn = episodeId.split("-episode-").pop() || episodeNumber;
 
   return (
     <NavLink
