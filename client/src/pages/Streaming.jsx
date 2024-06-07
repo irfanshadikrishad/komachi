@@ -127,6 +127,11 @@ export default function Streaming() {
   };
 
   useEffect(() => {
+    if (!streamLink) {
+      getStreamLink(providedEpisodeId);
+    }
+  }, [episodes]);
+  useEffect(() => {
     getAnimeInfo();
   }, [animeId]);
   return (
