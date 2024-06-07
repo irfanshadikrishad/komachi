@@ -9,5 +9,10 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1"
+  },
+  "name": "server",
+  "module": "server.js",
+  "devDependencies": {
+    "@types/bun": "latest"
   }
 }

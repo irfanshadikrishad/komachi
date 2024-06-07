@@ -34,7 +34,7 @@ const recentEpisodes = async (req, res) => {
   try {
     const startTime = getRuntimeInSeconds();
     const { page } = await req.body;
-    const recent = await anilist.fetchRecentEpisodes("gogoanime", page, 34);
+    const recent = await anilist.fetchRecentEpisodes(page, 34);
     res.status(200).json(recent.results);
     const endTime = getRuntimeInSeconds();
     const runtime = endTime - startTime;

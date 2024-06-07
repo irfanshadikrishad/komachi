@@ -3,7 +3,7 @@
 Install all the dependencies
 
 ```
-npm install
+bun install
 ```
 
 Create `.env` file and provide these informations mentioned in `.env.example`

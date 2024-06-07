@@ -13,8 +13,11 @@ export default function Footer() {
             Disclaimer: This site does not store any files on its server. All
             contents are provided by non-affiliated third parties.
           </p>
+          <p className={styles.copyright}>
+            © Irfan Shadik Rishad, 2024 - {new Date().getFullYear()}
+          </p>
         </div>
-        <div>
+        <div className={styles.part_two}>
           <p style={{ color: "var(--primary)" }}>Navigations</p>
           <div className={styles.footer_links}>
             <Link to="/">Home</Link>

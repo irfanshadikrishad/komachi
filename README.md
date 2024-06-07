@@ -11,4 +11,11 @@
 - Multiple stream source.
 - ~~Login, Registration functionalty.~~
 
+#### tech stacks:
+
+- ExpressJS
+- NodeJS
+- ReactJS
+- Bun
+
 #### Thanks for visiting.

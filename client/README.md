@@ -3,7 +3,7 @@
 Install all the dependencies
 
 ```
-npm install
+bun install
 ```
 
 In `src/store` give `production=false` to enable devtools.

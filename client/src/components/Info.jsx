@@ -1,5 +1,8 @@
 import { memo } from "react";
 import uniqolor from "uniqolor";
+import styles from "../styles/info.module.css";
+// ICONS
+import { SiAnilist, SiMyanimelist } from "react-icons/si";
 
 const Info = memo(({ animeInfo }) => {
   return (
@@ -14,11 +17,27 @@ const Info = memo(({ animeInfo }) => {
           />
         </div>
         <section>
-          <h1 className="streaming_title">
-            {animeInfo.title.english
-              ? animeInfo.title.english
-              : animeInfo.title.romaji}
-          </h1>
+          <div className={styles.info_header}>
+            <h1 className="streaming_title">
+              {animeInfo.title.english
+                ? animeInfo.title.english
+                : animeInfo.title.romaji}
+            </h1>
+            <div className={styles.external_db_links}>
+              <a
+                href={`https://anilist.co/anime/${animeInfo.id}`}
+                target="_blank"
+              >
+                <SiAnilist />
+              </a>
+              <a
+                href={`https://myanimelist.net/anime/${animeInfo.malId}`}
+                target="_blank"
+              >
+                <SiMyanimelist />
+              </a>
+            </div>
+          </div>
           <p className="streamingV2_description">{animeInfo.description}</p>
           <section>
             <p className="seperator">
@@ -47,6 +66,10 @@ const Info = memo(({ animeInfo }) => {
                 }`}
               </p>
             )}
+            <p>
+              <span className="blob">Studios:</span>{" "}
+              {animeInfo.studios && animeInfo.studios.join(" • ")}
+            </p>
             <p>
               <span className="blob">Synonyms:</span>{" "}
               {animeInfo.synonyms && animeInfo.synonyms.join(" • ")}

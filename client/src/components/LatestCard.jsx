@@ -10,9 +10,11 @@ export default function LatestCard({
 }) {
   const { defaultPoster } = useAuth();
 
+  let unicorn_number = String(episodeId).split("-");
+  unicorn_number = unicorn_number.pop();
   return (
     <NavLink
-      to={`/streaming/${id}?eps=${episodeNumber}`}
+      to={`/streaming/${id}?eps=${unicorn_number}`}
       className="latestIndividual"
     >
       <img
@@ -26,7 +28,7 @@ export default function LatestCard({
         draggable="false"
       />
       <p className="latestTitle">{title}</p>
-      <p className="latestEpisodeNumber">EP {episodeNumber}</p>
+      <p className="latestEpisodeNumber">EP {unicorn_number}</p>
     </NavLink>
   );
 }
