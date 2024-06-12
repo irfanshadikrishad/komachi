@@ -1,9 +1,14 @@
 import ReactPlayer from "react-player";
 import styles from "../styles/Player.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Disqus from "./Disqus";
-import { convertTimestampToReadable } from "../utils/info_modifier";
+import {
+  convertTimestampToReadable,
+  stringToBoolean,
+} from "../utils/info_modifier";
 import Episodes from "./Episodes";
+import { useAuth } from "../store/auth";
+import Automatics from "./Automatics";
 // ICONS
 import { ImCloudDownload } from "react-icons/im";
 import { FiPlayCircle } from "react-icons/fi";
@@ -19,12 +24,15 @@ export default function Player({
   setStreamLink,
   sources,
   animeId,
+  malId,
   dubEpisodes,
   nextAiringEpisode,
 }) {
+  const { skipTime, automatics } = useAuth();
   const [isNotNative, setIsNotNative] = useState(true);
   const [isSub, setIsSub] = useState(true);
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
+  const react_player = useRef();
 
   const nativeChecker = () => {
     const extension = String(streamLink).slice(-5);
@@ -34,6 +42,28 @@ export default function Player({
       setIsNotNative(true);
     }
   };
+
+  // SKip on Intro and Outro
+  setInterval(() => {
+    if (
+      skipTime &&
+      react_player.current.player.isPlaying &&
+      react_player.current.getCurrentTime() ===
+        skipTime[0].interval.startTime &&
+      stringToBoolean(automatics.skip)
+    ) {
+      react_player.current.seekTo(skipTime[0].interval.endTime);
+    } else if (
+      skipTime &&
+      react_player.current.isPlaying &&
+      react_player.current.getCurrentTime() ===
+        skipTime[1].interval.startTime &&
+      stringToBoolean(automatics.skip)
+    ) {
+      react_player.current.seekTo(skipTime[1].interval.endTime);
+    }
+  }, 3000);
+
   useEffect(() => {
     nativeChecker();
   }, [streamLink]);
@@ -62,14 +92,17 @@ export default function Player({
               </div>
             </div>
             <ReactPlayer
+              ref={react_player}
               width="100%"
               height={isNotNative ? "auto" : "400px"}
               controls={true}
-              playing={true}
+              playing={automatics ? stringToBoolean(automatics.play) : false}
               url={streamLink}
+              // light={true}
             />
           </div>
         )}
+        <Automatics />
         <div className={styles.external_sources}>
           <div className={styles.external_sources_1}>
             <p>Source Types</p>
@@ -123,6 +156,7 @@ export default function Player({
         <Episodes
           getStreamLink={getStreamLink}
           animeId={animeId}
+          malId={malId}
           currentEpisode={currentEpisode}
           unicornEpisodes={unicornEpisodes}
         />

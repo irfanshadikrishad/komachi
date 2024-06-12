@@ -146,6 +146,72 @@ iframe {
   padding: 2px 5px;
   border-radius: 4px;
 }
+.ctrls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+  border: 2px dashed var(--background);
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+.ctrl {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--color);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ctrl > input {
+  display: none;
+}
+.ctrl > p {
+  margin-left: 20px;
+}
+/* .ctrl:hover .checkmark {
+  background-color: var(--primary);
+} */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  background-color: var(--background);
+  border-radius: 4px;
+}
+.ctrl > input:checked ~ .checkmark {
+  background-color: var(--primary);
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.ctrl > input:checked ~ .checkmark:after {
+  display: block;
+}
+.checkmark:after {
+  left: 5px;
+  top: 3px;
+  width: 3px;
+  height: 5px;
+  border: solid var(--background);
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {

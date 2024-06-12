@@ -16,8 +16,12 @@ function convertTimestampToReadable(airingTime, episode) {
 }
 
 function subToDub(subId) {
-  const dubId = subId.split("-episode-").slice(0, -1);
-  return `${String(dubId)}-dub`;
+  if (String(subId).includes("dub")) {
+    return subId;
+  } else {
+    const dubId = subId.split("-episode-").slice(0, -1);
+    return `${String(dubId)}-dub`;
+  }
 }
 
 function hasRepeatedWords(str) {
@@ -34,4 +38,23 @@ function hasRepeatedWords(str) {
   return false;
 }
 
-export { convertTimestampToReadable, subToDub, hasRepeatedWords };
+const episodeIdToEpisodeNumber = (episodeId) => {
+  const arr = String(episodeId).split("-");
+  return arr[arr.length - 1];
+};
+
+const stringToBoolean = (string) => {
+  if (string === "true" || string === true) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export {
+  convertTimestampToReadable,
+  subToDub,
+  hasRepeatedWords,
+  episodeIdToEpisodeNumber,
+  stringToBoolean,
+};
