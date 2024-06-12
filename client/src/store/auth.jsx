@@ -7,6 +7,11 @@ export const AuthProvider = ({ children }) => {
   const SKIP_SERVER = "https://api.aniskip.com";
   const defaultPoster = "./default_poster.jpg";
   const [skipTime, setSkipTime] = useState();
+  const [automatics, setAutomatics] = useState({
+    play: localStorage.getItem("play") ? localStorage.getItem("play") : false,
+    skip: localStorage.getItem("skip") ? localStorage.getItem("skip") : false,
+    next: localStorage.getItem("next") ? localStorage.getItem("next") : false,
+  });
   let productionMode = true;
 
   // Comment before deploying
@@ -27,6 +32,8 @@ export const AuthProvider = ({ children }) => {
         SKIP_SERVER,
         skipTime,
         setSkipTime,
+        automatics,
+        setAutomatics,
       }}
     >
       {children}

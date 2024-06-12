@@ -2,14 +2,18 @@ import ReactPlayer from "react-player";
 import styles from "../styles/Player.module.css";
 import { useEffect, useState, useRef } from "react";
 import Disqus from "./Disqus";
-import { convertTimestampToReadable } from "../utils/info_modifier";
+import {
+  convertTimestampToReadable,
+  stringToBoolean,
+} from "../utils/info_modifier";
 import Episodes from "./Episodes";
+import { useAuth } from "../store/auth";
+import Automatics from "./Automatics";
 // ICONS
 import { ImCloudDownload } from "react-icons/im";
 import { FiPlayCircle } from "react-icons/fi";
 import { FaRegClosedCaptioning } from "react-icons/fa6";
 import { IoMic } from "react-icons/io5";
-import { useAuth } from "../store/auth";
 
 export default function Player({
   streamLink,
@@ -24,10 +28,10 @@ export default function Player({
   dubEpisodes,
   nextAiringEpisode,
 }) {
+  const { skipTime, automatics } = useAuth();
   const [isNotNative, setIsNotNative] = useState(true);
   const [isSub, setIsSub] = useState(true);
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
-  const { skipTime } = useAuth();
   const react_player = useRef();
 
   const nativeChecker = () => {
@@ -40,19 +44,25 @@ export default function Player({
   };
 
   // SKip on Intro and Outro
-  // setInterval(() => {
-  //   if (
-  //     react_player.current.player.isPlaying &&
-  //     react_player.current.getCurrentTime() === skipTime[0].interval.startTime
-  //   ) {
-  //     react_player.current.seekTo(skipTime[0].interval.endTime);
-  //   } else if (
-  //     react_player.current.isPlaying &&
-  //     react_player.current.getCurrentTime() === skipTime[1].interval.startTime
-  //   ) {
-  //     react_player.current.seekTo(skipTime[1].interval.endTime);
-  //   }
-  // }, 3000);
+  setInterval(() => {
+    if (
+      skipTime &&
+      react_player.current.player.isPlaying &&
+      react_player.current.getCurrentTime() ===
+        skipTime[0].interval.startTime &&
+      stringToBoolean(automatics.skip)
+    ) {
+      react_player.current.seekTo(skipTime[0].interval.endTime);
+    } else if (
+      skipTime &&
+      react_player.current.isPlaying &&
+      react_player.current.getCurrentTime() ===
+        skipTime[1].interval.startTime &&
+      stringToBoolean(automatics.skip)
+    ) {
+      react_player.current.seekTo(skipTime[1].interval.endTime);
+    }
+  }, 3000);
 
   useEffect(() => {
     nativeChecker();
@@ -86,18 +96,13 @@ export default function Player({
               width="100%"
               height={isNotNative ? "auto" : "400px"}
               controls={true}
-              playing={false}
+              playing={automatics ? stringToBoolean(automatics.play) : false}
               url={streamLink}
               // light={true}
             />
           </div>
         )}
-        <section className={styles.ctrls}>
-          <div className={styles.ctrl}>
-            <input type="checkbox" name="" id="" />
-            <label htmlFor="">autoplay</label>
-          </div>
-        </section>
+        <Automatics />
         <div className={styles.external_sources}>
           <div className={styles.external_sources_1}>
             <p>Source Types</p>

@@ -9,7 +9,7 @@ import Recommendations from "../components/Recommendations.jsx";
 import { subToDub, hasRepeatedWords } from "../utils/info_modifier.js";
 
 export default function Streaming() {
-  const { SERVER, getRuntimeInMilliseconds } = useAuth();
+  const { SERVER } = useAuth();
   const { animeId } = useParams();
   const { search } = useLocation();
   const location = new URLSearchParams(search);
@@ -27,7 +27,6 @@ export default function Streaming() {
   const [noEpisodes, setNoEpisodes] = useState(false);
 
   const getStreamLink = async (episodeId) => {
-    const startGettingLink = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/stream`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -41,37 +40,43 @@ export default function Streaming() {
       setEpisodeDownloadLink(response.download);
       // Get Sources
       await getServerSources(episodeId);
-      const endGettingLink = getRuntimeInMilliseconds();
-      const runtime = endGettingLink - startGettingLink;
-      console.log(`[stream-link] ${runtime.toFixed(2)} sec.`);
     } else {
-      // console.log(response, episodeId, episodes);
-      // If episode not found, load first episode
-      let providedEpisode = episodeId.split("-episode-");
-      providedEpisode = providedEpisode[providedEpisode.length - 1];
-      if (episodes.length > 0) {
-        getStreamLink(episodes[0].id);
+      try {
+        // If replacing the Id works, let it work
+        let replaceId = String(episodes[0]?.id).split("-");
+        replaceId[replaceId.length - 1] = episodeId;
+        replaceId = replaceId.join("-");
+        console.log("replaceId", replaceId);
+        await getStreamLink(replaceId);
+      } catch (error) {
+        // Else load the first episode
+        await getStreamLink(episodes[0].id);
       }
     }
   };
 
   const getDubEpisodesInfo = async (subId) => {
-    const request = await fetch(`${SERVER}/api/v1/anime/dub-episodes`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ animeId: subToDub(subId) }),
-    });
-    const response = await request.json();
-    // console.log(response, subId, episodes);
-    if (request.status === 200) {
-      setDubEpisodes(response);
-    } else {
-      console.log(response);
+    try {
+      const request = await fetch(`${SERVER}/api/v1/anime/dub-episodes`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ animeId: subToDub(subId) }),
+      });
+      const response = await request.json();
+      if (request.status === 200) {
+        setDubEpisodes(response);
+      }
+    } catch (error) {
+      console.table({
+        error: error.message,
+        subId,
+        dubId: subToDub(subId),
+        episodes,
+      });
     }
   };
 
   const getAnimeInfo = async () => {
-    const startTime = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/info`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -103,9 +108,6 @@ export default function Streaming() {
           setNoEpisodes(true);
         }
       }
-      const endTime = getRuntimeInMilliseconds();
-      const runtime = endTime - startTime;
-      console.log(`[info] ${runtime.toFixed(2)} sec.`);
     } else {
       console.log(response);
     }
