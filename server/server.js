@@ -10,7 +10,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://konami.tech", "http://localhost:5173"],
+    origin: [
+      "https://konami.tech",
+      "http://localhost:5173",
+      "https://komachi-phi.vercel.app",
+    ],
     methods: "*",
   })
 );
