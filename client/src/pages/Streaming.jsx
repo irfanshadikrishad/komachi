@@ -171,6 +171,7 @@ export default function Streaming() {
             animeId={animeId}
             dubEpisodes={dubEpisodes}
             nextAiringEpisode={nextAiringTime}
+            malId={animeInfo.malId}
           />
         ) : noEpisodes ? (
           animeInfo.trailer ? (

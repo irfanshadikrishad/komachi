@@ -34,4 +34,14 @@ function hasRepeatedWords(str) {
   return false;
 }
 
-export { convertTimestampToReadable, subToDub, hasRepeatedWords };
+const episodeIdToEpisodeNumber = (episodeId) => {
+  const arr = String(episodeId).split("-");
+  return arr[arr.length - 1];
+};
+
+export {
+  convertTimestampToReadable,
+  subToDub,
+  hasRepeatedWords,
+  episodeIdToEpisodeNumber,
+};
