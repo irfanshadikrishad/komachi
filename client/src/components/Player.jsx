@@ -45,6 +45,7 @@ export default function Player({
 
   // SKip on Intro and Outro
   setInterval(() => {
+    // For Auto Skip
     if (
       skipTime &&
       react_player.current.player.isPlaying &&
@@ -62,7 +63,21 @@ export default function Player({
     ) {
       react_player.current.seekTo(skipTime[1].interval.endTime);
     }
-  }, 3000);
+
+    // For Auto Next
+    // if (
+    //   stringToBoolean(automatics.next) &&
+    //   react_player.current.getCurrentTime() >
+    //     react_player.current.getDuration() - 5
+    // ) {
+    //   let splt = currentEpisode.split("-");
+    //   const nextEpisodeNumber = Number(splt[splt.length - 1]) + 1;
+    //   splt[splt.length - 1] = nextEpisodeNumber;
+    //   const nextEpisodeId = splt.join("-");
+    //   console.log(nextEpisodeId);
+    //   getStreamLink(nextEpisodeId);
+    // }
+  }, 5000);
 
   useEffect(() => {
     nativeChecker();
