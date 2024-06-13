@@ -33,19 +33,14 @@ const responsive = {
 };
 
 export default function TopAiring() {
-  const { SERVER, getRuntimeInMilliseconds } = useAuth();
+  const { SERVER } = useAuth();
   const [topAiring, setTopAiring] = useState(null);
 
   const getTopAiring = async () => {
-    const startTime = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/trending`);
     const response = await request.json();
-    // console.log(response);
     if (request.status === 200) {
       setTopAiring(response);
-      const endTime = getRuntimeInMilliseconds();
-      const runtime = endTime - startTime;
-      console.log(`[trending] ${runtime.toFixed(2)} sec.`);
     } else {
       console.log(response);
     }

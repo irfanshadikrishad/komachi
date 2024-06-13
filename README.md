@@ -1,6 +1,6 @@
 #### Komachi
 
-##### An anime streaming service to watch and download anime online. Built in MERN stack.
+##### An anime streaming platform to watch and download your favourite anime's online.
 
 #### features:
 
@@ -9,7 +9,8 @@
 - Clean UI.
 - Fast anime updates.
 - Multiple stream source.
-- ~~Login, Registration functionalty.~~
+- Auto Skip Intro, Outro
+- Auto Play next episode
 
 #### tech stacks:
 

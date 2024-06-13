@@ -6,7 +6,15 @@ Install all the dependencies
 bun install
 ```
 
-In `src/store` give `production=false` to enable devtools.
+Environment Variables:
+
+```
+PROD=
+VITE_BASE_SERVER_URL=
+VITE_SKIP_SERVER_URL=
+```
+
+`PROD` should be false if your are on localhost
 
 To run client
 
