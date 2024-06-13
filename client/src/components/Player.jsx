@@ -46,22 +46,17 @@ export default function Player({
 
   // For Auto Skip
   const autoSkip = useCallback(() => {
-    if (
-      skipTime &&
-      react_player.current?.player?.isPlaying &&
-      react_player.current.getCurrentTime() ===
-        skipTime[0]?.interval.startTime &&
-      stringToBoolean(automatics.skip)
-    ) {
-      react_player.current.seekTo(skipTime[0].interval.endTime);
-    } else if (
-      skipTime &&
-      react_player.current?.isPlaying &&
-      react_player.current.getCurrentTime() ===
-        skipTime[1]?.interval.startTime &&
-      stringToBoolean(automatics.skip)
-    ) {
-      react_player.current.seekTo(skipTime[1].interval.endTime);
+    if (skipTime && stringToBoolean(automatics.skip)) {
+      skipTime.forEach((skip_time) => {
+        const currentTime = react_player.current.getCurrentTime();
+        // console.log(currentTime, skip_time.interval.startTime);
+        if (
+          currentTime > skip_time.interval.startTime &&
+          currentTime < skip_time.interval.endTime
+        ) {
+          react_player.current.seekTo(skip_time.interval.endTime);
+        }
+      });
     }
   }, [skipTime, automatics.skip]);
 
