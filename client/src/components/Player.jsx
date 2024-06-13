@@ -1,6 +1,6 @@
 import ReactPlayer from "react-player";
 import styles from "../styles/Player.module.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import Disqus from "./Disqus";
 import {
   convertTimestampToReadable,
@@ -33,55 +33,67 @@ export default function Player({
   const [isSub, setIsSub] = useState(true);
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
   const react_player = useRef();
+  const intervalRef = useRef(null);
 
-  const nativeChecker = () => {
+  const nativeChecker = useCallback(() => {
     const extension = String(streamLink).slice(-5);
     if (extension !== ".m3u8") {
       setIsNotNative(false);
     } else {
       setIsNotNative(true);
     }
-  };
+  }, [streamLink]);
 
-  // SKip on Intro and Outro
-  setInterval(() => {
-    // For Auto Skip
+  // For Auto Skip
+  const autoSkip = useCallback(() => {
     if (
       skipTime &&
-      react_player.current.player.isPlaying &&
+      react_player.current?.player?.isPlaying &&
       react_player.current.getCurrentTime() ===
-        skipTime[0].interval.startTime &&
+        skipTime[0]?.interval.startTime &&
       stringToBoolean(automatics.skip)
     ) {
       react_player.current.seekTo(skipTime[0].interval.endTime);
     } else if (
       skipTime &&
-      react_player.current.isPlaying &&
+      react_player.current?.isPlaying &&
       react_player.current.getCurrentTime() ===
-        skipTime[1].interval.startTime &&
+        skipTime[1]?.interval.startTime &&
       stringToBoolean(automatics.skip)
     ) {
       react_player.current.seekTo(skipTime[1].interval.endTime);
     }
+  }, [skipTime, automatics.skip]);
 
-    // For Auto Next
-    // if (
-    //   stringToBoolean(automatics.next) &&
-    //   react_player.current.getCurrentTime() >
-    //     react_player.current.getDuration() - 5
-    // ) {
-    //   let splt = currentEpisode.split("-");
-    //   const nextEpisodeNumber = Number(splt[splt.length - 1]) + 1;
-    //   splt[splt.length - 1] = nextEpisodeNumber;
-    //   const nextEpisodeId = splt.join("-");
-    //   console.log(nextEpisodeId);
-    //   getStreamLink(nextEpisodeId);
-    // }
-  }, 5000);
+  // For Auto Next
+  const autoNext = useCallback(() => {
+    if (
+      stringToBoolean(automatics.next) &&
+      react_player.current?.getCurrentTime() >
+        react_player.current?.getDuration() - 5
+    ) {
+      let splt = currentEpisode.split("-");
+      const nextEpisodeNumber = Number(splt[splt.length - 1]) + 1;
+      splt[splt.length - 1] = nextEpisodeNumber;
+      const nextEpisodeId = splt.join("-");
+      // console.log(nextEpisodeId);
+      getStreamLink(nextEpisodeId);
+    }
+  }, [automatics.next, currentEpisode, getStreamLink]);
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      autoSkip();
+      autoNext();
+    }, 5000);
+
+    return () => clearInterval(intervalRef.current);
+  }, [autoSkip, autoNext]);
 
   useEffect(() => {
     nativeChecker();
-  }, [streamLink]);
+  }, [streamLink, nativeChecker]);
+
   return (
     <div>
       <section className={styles.streamingV2_ReactPlayer}>
