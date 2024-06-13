@@ -1,5 +1,5 @@
 import ReactPlayer from "react-player";
-import styles from "../styles/Player.module.css";
+import styles from "../styles/player.module.css";
 import { useEffect, useState, useRef, useCallback } from "react";
 import Disqus from "./Disqus";
 import {

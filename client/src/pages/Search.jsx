@@ -5,12 +5,11 @@ import { Helmet } from "react-helmet";
 import Loader from "../components/Loader.jsx";
 
 export default function Search() {
-  const { SERVER, getRuntimeInMilliseconds } = useAuth();
+  const { SERVER } = useAuth();
   const { query } = useParams();
   const [searched, setSearched] = useState([]);
 
   const getSearched = async () => {
-    const startSearching = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/search`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -19,9 +18,6 @@ export default function Search() {
     const response = await request.json();
     if (request.status === 200) {
       setSearched(response);
-      const endSearching = getRuntimeInMilliseconds();
-      const runtime = endSearching - startSearching;
-      console.log(`[search] ${runtime.toFixed(2)} sec.`);
     } else {
       console.log(response);
     }

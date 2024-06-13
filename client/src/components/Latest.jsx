@@ -4,11 +4,10 @@ import LatestCard from "./LatestCard.jsx";
 import Loader from "./Loader.jsx";
 
 export default function Latest() {
-  const { SERVER, getRuntimeInMilliseconds } = useAuth();
+  const { SERVER } = useAuth();
   const [latest, setLatest] = useState(null);
 
   const getLatest = async () => {
-    const startTime = getRuntimeInMilliseconds();
     const request = await fetch(`${SERVER}/api/v1/anime/recent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -18,9 +17,6 @@ export default function Latest() {
 
     if (request.status === 200) {
       setLatest(response);
-      const endTime = getRuntimeInMilliseconds();
-      const runtime = endTime - startTime;
-      console.log(`[latest] ${runtime.toFixed(2)} sec.`);
     } else {
       console.log(response);
     }

@@ -1,3 +1,4 @@
+//@// Converts timestamp like 1120415 to readable string
 function convertTimestampToReadable(airingTime, episode) {
   let currentDate = new Date();
 
@@ -15,6 +16,9 @@ function convertTimestampToReadable(airingTime, episode) {
   return output;
 }
 
+//@// Converts SubId to DubId
+//@// Example Input: one-piece-episode-1
+//@// Example output: one-piece-dub-episode-1
 function subToDub(subId) {
   if (String(subId).includes("dub")) {
     return subId;
@@ -24,6 +28,8 @@ function subToDub(subId) {
   }
 }
 
+//@// Checks for repeated string
+//@// use cases to identify: one-piece-episode-episode-1108
 function hasRepeatedWords(str) {
   const words = str.split("-");
   const wordSet = new Set();
@@ -38,11 +44,15 @@ function hasRepeatedWords(str) {
   return false;
 }
 
+//@// Converts episodeId to episode number
+//@// exmaple input: one-piece-episode-1108
+//@// example output: 1108
 const episodeIdToEpisodeNumber = (episodeId) => {
   const arr = String(episodeId).split("-");
   return arr[arr.length - 1];
 };
 
+//@// input like 'true' or 'false' will be returned as boolean true/false
 const stringToBoolean = (string) => {
   if (string === "true" || string === true) {
     return true;
@@ -51,9 +61,9 @@ const stringToBoolean = (string) => {
   }
 };
 
+//@// default id example: kaijuu-8-gou-episode-1
+//@// toSetId example: 8
 const replaceId = (defaultId, toSetId) => {
-  //@// default id example: kaijuu-8-gou-episode-1
-  //@// toSetId example: 8
   let splt = String(defaultId).split("-");
   splt[splt.length - 1] = toSetId;
 

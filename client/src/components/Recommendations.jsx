@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "../styles/Player.module.css";
+import styles from "../styles/player.module.css";
 import { useAuth } from "../store/auth";
 
 export default function Recommendations({ recommendations }) {

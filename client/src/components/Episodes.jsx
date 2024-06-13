@@ -1,5 +1,5 @@
 import { useAuth } from "../store/auth";
-import styles from "../styles/Player.module.css";
+import styles from "../styles/player.module.css";
 
 export default function Episodes({
   unicornEpisodes,
