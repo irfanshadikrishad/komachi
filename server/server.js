@@ -12,6 +12,7 @@ app.use(
   cors({
     origin: [
       "https://konami.tech",
+      "https://www.konami.tech",
       "http://localhost:5173",
       "https://komachi-phi.vercel.app",
     ],

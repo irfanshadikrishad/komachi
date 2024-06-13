@@ -6,7 +6,11 @@ import Info from "../components/Info.jsx";
 import { Helmet } from "react-helmet";
 import Loader from "../components/Loader.jsx";
 import Recommendations from "../components/Recommendations.jsx";
-import { subToDub, hasRepeatedWords } from "../utils/info_modifier.js";
+import {
+  subToDub,
+  hasRepeatedWords,
+  replaceId,
+} from "../utils/info_modifier.js";
 
 export default function Streaming() {
   const { SERVER } = useAuth();
@@ -27,31 +31,35 @@ export default function Streaming() {
   const [noEpisodes, setNoEpisodes] = useState(false);
 
   const getStreamLink = async (episodeId) => {
-    const request = await fetch(`${SERVER}/api/v1/anime/stream`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ episodeId }),
-    });
-    const response = await request.json();
-
-    if (request.status === 200) {
-      setStreamLink(response.sources[response.sources.length - 1].url);
-      setCurrentEpisode(episodeId);
-      setEpisodeDownloadLink(response.download);
-      // Get Sources
-      await getServerSources(episodeId);
-    } else {
-      try {
-        // If replacing the Id works, let it work
-        let replaceId = String(episodes[0]?.id).split("-");
-        replaceId[replaceId.length - 1] = episodeId;
-        replaceId = replaceId.join("-");
-        console.log("replaceId", replaceId);
-        await getStreamLink(replaceId);
-      } catch (error) {
-        // Else load the first episode
-        await getStreamLink(episodes[0].id);
+    try {
+      // Check if episodeId is a number
+      const episodeIdNumber = Number(episodeId);
+      if (!isNaN(episodeIdNumber)) {
+        // If episodeId is a number, replace it
+        episodeId = replaceId(episodes[0]?.id, episodeId);
       }
+
+      // Make the fetch request
+      const request = await fetch(`${SERVER}/api/v1/anime/stream`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ episodeId }),
+      });
+
+      const response = await request.json();
+
+      // Handle response
+      if (request.status === 200) {
+        setStreamLink(response.sources[response.sources.length - 1].url);
+        setCurrentEpisode(episodeId);
+        setEpisodeDownloadLink(response.download);
+        // Get Sources
+        await getServerSources(episodeId);
+      } else {
+        console.log(response.error, episodeId);
+      }
+    } catch (error) {
+      console.error("Error fetching stream link:", error, episodeId);
     }
   };
 

@@ -51,10 +51,20 @@ const stringToBoolean = (string) => {
   }
 };
 
+const replaceId = (defaultId, toSetId) => {
+  //@// default id example: kaijuu-8-gou-episode-1
+  //@// toSetId example: 8
+  let splt = String(defaultId).split("-");
+  splt[splt.length - 1] = toSetId;
+
+  return String(splt.join("-"));
+};
+
 export {
   convertTimestampToReadable,
   subToDub,
   hasRepeatedWords,
   episodeIdToEpisodeNumber,
   stringToBoolean,
+  replaceId,
 };
