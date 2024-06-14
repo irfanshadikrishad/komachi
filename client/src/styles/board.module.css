@@ -1,0 +1,68 @@
+.board {
+  position: relative;
+  border-radius: 4px;
+  min-height: 300px;
+  padding: 10px;
+  background-size: cover;
+  background-position: top left;
+}
+.board::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top right,
+    var(--secondary) 21%,
+    rgba(0, 0, 0, 0) 187%
+  );
+}
+.elem {
+  position: absolute;
+  bottom: 40px;
+  left: 20px;
+  color: whitesmoke;
+}
+.description {
+  width: 60%;
+  line-height: 20px;
+  opacity: 60%;
+}
+.title {
+  font-size: 2rem;
+}
+.watch {
+  text-decoration: none;
+  color: var(--primary);
+  background-color: var(--background);
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+}
+.watch:hover {
+  color: var(--text);
+  transition: all 0.3s ease-in;
+}
+.boardBtns {
+  margin-top: 10px;
+  display: flex;
+  /* align-items: center; */
+  gap: 5px;
+}
+.bookmark {
+  border: none;
+  color: var(--primary);
+  background-color: var(--background);
+  padding: 5px 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
