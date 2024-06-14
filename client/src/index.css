@@ -844,6 +844,28 @@ video {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+/* Overwriting Some default CSS for Carousel */
+.react-multi-carousel-track {
+  gap: 0 !important;
+}
+ul.react-multi-carousel-dot-list {
+  left: 20px;
+  bottom: 15px !important;
+  justify-content: flex-start;
+}
+.react-multi-carousel-dot button {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  border: none !important;
+  background-color: var(--background);
+}
+.react-multi-carousel-dot--active button {
+  background-color: var(--primary);
+}
+.react-multiple-carousel__arrow {
+  display: none;
+}
 
 @media screen and (max-width: 980px) {
   .s768seperator {
