@@ -65,3 +65,29 @@
   justify-content: center;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 1.2rem;
+    width: 70%;
+  }
+  .description {
+    font-size: 0.9rem;
+    width: 90%;
+  }
+  .board {
+    background-position: top center;
+  }
+}
+@media screen and (max-width: 425px) {
+  .title {
+    font-size: 1rem;
+  }
+  .description {
+    font-size: 0.7rem;
+    line-height: 14px;
+  }
+  .board {
+    filter: blur(5px);
+  }
+}
