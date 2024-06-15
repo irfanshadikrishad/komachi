@@ -1,5 +1,5 @@
+import Board from "../components/Board";
 import Latest from "../components/Latest";
-import TopAiring from "../components/TopAiring";
 import { Helmet } from "react-helmet";
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
           content="Anime streaming, Watch anime online, Anime episodes, Japanese animation, Anime series, Anime movies, Otaku entertainment, Subbed anime, Dubbed anime, Anime classics, New anime releases, Anime genres (e.g., action, adventure, romance, fantasy), Anime community, Anime recommendations, Anime reviews"
         />
       </Helmet>
-      <TopAiring />
+      <Board />
       <Latest />
     </>
   );

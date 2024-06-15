@@ -844,6 +844,22 @@ video {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+/* Overwriting Some default CSS for Carousel */
+.swiper-button-prev,
+.swiper-button-next {
+  display: none;
+}
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  left: 20px;
+  bottom: 15px;
+}
+.swiper-pagination {
+  text-align: left;
+}
+.swiper-pagination-bullet-active {
+  background-color: var(--primary);
+}
 
 @media screen and (max-width: 980px) {
   .s768seperator {
