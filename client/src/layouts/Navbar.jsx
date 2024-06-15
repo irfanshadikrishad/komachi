@@ -1,62 +1,50 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
+import styles from "../styles/navbar.module.css";
 // ICONS
-import { FaBars } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
-import { FaGithub, FaYoutube } from "react-icons/fa";
-import { MdClose } from "react-icons/md";
+import { RiUser6Line } from "react-icons/ri";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const [query, setQuery] = useState("");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [query, setQuery] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
-  const handleSearch = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (query) {
       navigate(`/search/${query}`);
-      setIsMenuOpen(!isMenuOpen);
       setQuery("");
     }
   };
 
   return (
-    <nav>
-      <section className="container navbar">
+    <nav className={`container ${styles.navbar}`}>
+      <section>
         <Logo />
-        <section className={isMenuOpen ? "navbarII open" : "navbarII"}>
-          <form className="navbar_search_form" onSubmit={handleSearch}>
+      </section>
+      <section className={styles.right_btns}>
+        <form onSubmit={handleSubmit} className={styles.query}>
+          {searchOpen && (
             <input
               onChange={(e) => {
                 setQuery(e.target.value);
               }}
-              value={query}
-              className="navbar_search"
-              type="search"
               placeholder="Search..."
+              type="text"
+              autoComplete={false}
             />
-            <button className="navbar_search_icon">{<FiSearch />}</button>
-          </form>
-          <section className="navbar_socials">
-            <a href="https://github.com/irfanshadikrishad" target="_blank">
-              {<FaGithub />}
-            </a>
-            <a href="https://youtube.com/@irfanshadikrishad" target="_blank">
-              {<FaYoutube />}
-            </a>
-          </section>
-        </section>
-        <section className="navbarMenu">
+          )}
           <button
             onClick={() => {
-              setIsMenuOpen(!isMenuOpen);
+              setSearchOpen(!searchOpen);
             }}
-            className="navbarMenuButton"
           >
-            {isMenuOpen ? <MdClose /> : <FaBars />}
+            {<FiSearch />}
           </button>
-        </section>
+        </form>
+        <button disabled>{<RiUser6Line />}</button>
       </section>
     </nav>
   );

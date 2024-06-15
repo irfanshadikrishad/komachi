@@ -1,8 +1,6 @@
 import { memo } from "react";
 import uniqolor from "uniqolor";
-// import styles from "../styles/info.module.css";
-// ICONS
-// import { SiAnilist, SiMyanimelist } from "react-icons/si";
+import { removeHtmlAndMarkdown } from "../utils/info_modifier";
 
 const Info = memo(({ animeInfo }) => {
   return (
@@ -22,7 +20,9 @@ const Info = memo(({ animeInfo }) => {
               ? animeInfo.title.english
               : animeInfo.title.romaji}
           </h1>
-          <p className="streamingV2_description">{animeInfo.description}</p>
+          <p className="streamingV2_description">
+            {removeHtmlAndMarkdown(animeInfo.description)}
+          </p>
           <section>
             <p className="seperator">
               <span className="blob">Status :</span> {animeInfo.status}

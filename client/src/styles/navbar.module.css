@@ -1,0 +1,44 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.right_btns {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  gap: 5px;
+}
+.right_btns button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: none;
+  width: 35px;
+  height: 35px;
+  font-size: 1rem;
+  color: var(--text);
+  background-color: var(--secondary);
+  cursor: pointer;
+  border-radius: 4px;
+}
+.right_btns button:first-child {
+  position: relative;
+}
+.query {
+  display: flex;
+  flex-direction: row;
+}
+.query input {
+  border: none;
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 1rem;
+  padding: 0 10px;
+  background-color: var(--secondary);
+  outline: none;
+  transform: translateX(10px);
+}
