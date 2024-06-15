@@ -70,6 +70,40 @@ const replaceId = (defaultId, toSetId) => {
   return String(splt.join("-"));
 };
 
+//@// This function will take input as: "<p># Header</p>\n<p>This is **bold** and *italic* text with `inline code`.</p>\n- List item\n"
+//@// Will give output: "Header This is bold and italic text with inline code. List item"
+function removeHtmlAndMarkdown(input) {
+  // Remove HTML tags
+  input = input.replace(/<\/?[^>]+(>|$)/g, "");
+
+  // Remove headers
+  input = input.replace(/(^|\n)#{1,6}\s+(.+?)(\n|$)/g, "$2 ");
+  // Remove bold and italic
+  input = input.replace(/(\*\*|__)(.*?)\1/g, "$2"); // bold
+  input = input.replace(/(\*|_)(.*?)\1/g, "$2"); // italic
+  // Remove inline code
+  input = input.replace(/`(.+?)`/g, "$1");
+  // Remove links
+  input = input.replace(/\[(.*?)\]\(.*?\)/g, "$1");
+  // Remove images
+  input = input.replace(/!\[(.*?)\]\(.*?\)/g, "$1");
+  // Remove blockquotes
+  input = input.replace(/(^|\n)>\s+(.+?)(\n|$)/g, "$2 ");
+  // Remove unordered lists
+  input = input.replace(/(^|\n)-\s+(.+?)(\n|$)/g, "$2 ");
+  // Remove ordered lists
+  input = input.replace(/(^|\n)\d+\.\s+(.+?)(\n|$)/g, "$2 ");
+  // Remove horizontal rules
+  input = input.replace(/(^|\n)\s*([-*_]){3,}\s*(\n|$)/g, "$1");
+  // Remove strikethrough
+  input = input.replace(/~~(.*?)~~/g, "$1");
+
+  // Remove newlines and excess whitespace
+  input = input.replace(/\s+/g, " ").trim();
+
+  return input;
+}
+
 export {
   convertTimestampToReadable,
   subToDub,
@@ -77,4 +111,5 @@ export {
   episodeIdToEpisodeNumber,
   stringToBoolean,
   replaceId,
+  removeHtmlAndMarkdown,
 };

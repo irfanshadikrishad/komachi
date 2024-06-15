@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
 import styles from "../styles/board.module.css";
-import { Link } from "react-router-dom";
 // ICONS
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { BsBookmarkStar } from "react-icons/bs";
-// Carousel
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-
-const responsive = {
-  allDevice: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 1,
-  },
-};
+// Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination, Autoplay, Navigation } from "swiper/modules";
+// Utils
+import { removeHtmlAndMarkdown } from "../utils/info_modifier";
 
 export default function Board() {
   const { SERVER } = useAuth();
@@ -30,6 +27,7 @@ export default function Board() {
 
       if (request.status === 200) {
         setPopular(response);
+        localStorage.setItem("board", response);
       } else {
         console.log(response);
       }
@@ -43,49 +41,50 @@ export default function Board() {
   }, []);
   return (
     <section className="container">
-      <Carousel
-        autoPlay={true}
-        infinite={true}
-        showDots={true}
-        keyBoardControl={true}
-        swipeable={true}
-        draggable={true}
-        // removeArrowOnDeviceType={["allDevice"]}
-        responsive={responsive}
+      <Swiper
+        modules={[Pagination, Autoplay, Navigation]}
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={{ delay: 3000 }}
+        pagination={{ clickable: true }}
+        navigation
       >
-        {popular.map((pplr, index) => {
-          return (
-            <section key={index} style={{ position: "relative" }}>
-              <div
-                className={styles.board}
-                style={{
-                  backgroundImage: `url(${pplr.cover})`,
-                }}
-              ></div>
-              <div className={styles.elem}>
-                <h1 className={styles.title}>
-                  {pplr.title && pplr.title.english
-                    ? pplr.title.english
-                    : pplr.title.romaji}
-                </h1>
-                <p className={styles.description}>
-                  {String(pplr.description).length > 150
-                    ? `${String(pplr.description).slice(0, 150)}...`
-                    : String(pplr.description)}
-                </p>
-                <div className={styles.boardBtns}>
-                  <Link href={`/streaming/${pplr.id}`} className={styles.watch}>
-                    {<FaRegCirclePlay />} Watch now
-                  </Link>
-                  <button className={styles.bookmark}>
-                    {<BsBookmarkStar />}
-                  </button>
+        {popular &&
+          popular.slice(0, 5).map((pplr, index) => {
+            return (
+              <SwiperSlide key={index} style={{ position: "relative" }}>
+                <div
+                  className={styles.board}
+                  style={{
+                    backgroundImage: `url(${pplr.cover})`,
+                  }}
+                ></div>
+                <div className={styles.elem}>
+                  <h1 className={styles.title}>
+                    {pplr.title && pplr.title.english
+                      ? pplr.title.english
+                      : pplr.title.romaji}
+                  </h1>
+                  <p className={styles.description}>
+                    {String(pplr.description).length > 250
+                      ? removeHtmlAndMarkdown(
+                          `${String(pplr.description).slice(0, 250)}...`
+                        )
+                      : removeHtmlAndMarkdown(String(pplr.description))}
+                  </p>
+                  <div className={styles.boardBtns}>
+                    <a href={`/streaming/${pplr.id}`} className={styles.watch}>
+                      {<FaRegCirclePlay />} Watch now
+                    </a>
+                    <button disabled className={styles.bookmark}>
+                      {<BsBookmarkStar />}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </section>
-          );
-        })}
-      </Carousel>
+              </SwiperSlide>
+            );
+          })}
+      </Swiper>
     </section>
   );
 }

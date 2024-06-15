@@ -845,26 +845,20 @@ video {
   }
 }
 /* Overwriting Some default CSS for Carousel */
-.react-multi-carousel-track {
-  gap: 0 !important;
-}
-ul.react-multi-carousel-dot-list {
-  left: 20px;
-  bottom: 15px !important;
-  justify-content: flex-start;
-}
-.react-multi-carousel-dot button {
-  width: 8px;
-  height: 8px;
-  border-radius: 4px;
-  border: none !important;
-  background-color: var(--background);
-}
-.react-multi-carousel-dot--active button {
-  background-color: var(--primary);
-}
-.react-multiple-carousel__arrow {
+.swiper-button-prev,
+.swiper-button-next {
   display: none;
+}
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  left: 20px;
+  bottom: 15px;
+}
+.swiper-pagination {
+  text-align: left;
+}
+.swiper-pagination-bullet-active {
+  background-color: var(--primary);
 }
 
 @media screen and (max-width: 980px) {
