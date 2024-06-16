@@ -6,7 +6,8 @@ const anilist = new META.Anilist();
 
 const trending = async (req, res) => {
   try {
-    const topAiring = await anilist.fetchTrendingAnime();
+    const { page, perPage } = req.body;
+    const topAiring = await anilist.fetchTrendingAnime(page, perPage);
     res.status(200).json(topAiring.results);
   } catch (error) {
     console.log(chalk.magenta("trending", error));
@@ -16,7 +17,8 @@ const trending = async (req, res) => {
 
 const popular = async (req, res) => {
   try {
-    const { results } = await anilist.fetchPopularAnime(1, 10);
+    const { page, perPage } = req.body;
+    const { results } = await anilist.fetchPopularAnime(page, perPage);
     res.status(200).json(results);
   } catch (error) {
     console.log(chalk.magenta(`popular`, error));

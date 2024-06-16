@@ -8,23 +8,27 @@ import styles from "../styles/search.module.css";
 import { RiSearchLine } from "react-icons/ri";
 import { IoChevronDown } from "react-icons/io5";
 import { MdTune } from "react-icons/md";
+import Card from "../components/Card.jsx";
 
 export default function Search() {
   const { SERVER } = useAuth();
   const { search } = useLocation();
   const location = new URLSearchParams(search);
-  const [query, setQuery] = useState(location.get("search"));
+  const [query, setQuery] = useState(location.get("query"));
   const [searched, setSearched] = useState([]);
   const [trending, setTrending] = useState([]);
+  const [popular, setPopular] = useState([]);
 
-  const getSearched = async () => {
+  const getSearched = async (e) => {
+    // e.preventDefault();
     if (query) {
-      const request = await fetch(`${SERVER}/api/v1/anime/search`, {
+      const request = await fetch(`${SERVER}/api/v1/anime/advance-search`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ searchQuery: query }),
+        body: JSON.stringify({ query }),
       });
       const response = await request.json();
+      console.log(response);
       if (request.status === 200) {
         setSearched(response);
       } else {
@@ -36,12 +40,33 @@ export default function Search() {
   const getTrending = async () => {
     try {
       const request = await fetch(`${SERVER}/api/v1/anime/trending`, {
-        method: "GET",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ page: 1, perPage: 7 }),
       });
       const response = await request.json();
+
       if (request.status === 200) {
         setTrending(response);
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getPopular = async () => {
+    try {
+      const request = await fetch(`${SERVER}/api/v1/anime/popular`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ page: 1, perPage: 7 }),
+      });
+      const response = await request.json();
+
+      if (request.status === 200) {
+        setPopular(response);
       } else {
         console.log(response);
       }
@@ -53,6 +78,7 @@ export default function Search() {
   useEffect(() => {
     getSearched();
     getTrending();
+    getPopular();
   }, [query]);
   return (
     <section className="container">
@@ -65,12 +91,19 @@ export default function Search() {
         />
       </Helmet>
 
-      <section className={styles.filter}>
+      <form onChange={getSearched} className={styles.filter}>
         <section>
           <p className={styles.selector_Title}>Search</p>
           <div className={styles.searchFieldContainer}>
             <RiSearchLine />
-            <input type="text" className={styles.searchField} />
+            <input
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
+              type="text"
+              className={styles.searchField}
+            />
           </div>
         </section>
         <section>
@@ -104,32 +137,71 @@ export default function Search() {
         <section>
           <button className={styles.options}>{<MdTune />}</button>
         </section>
-      </section>
+      </form>
 
-      <section className={styles.billboard_Main}>
-        <p className={styles.billboard_Header}>Trending</p>
-        <section className={styles.billboard}>
-          {trending.slice(0, 7).map((tren) => {
-            return (
-              <Link
-                to={`/streaming/${tren.id}`}
-                key={tren.id}
-                className={styles.billboard_Individual}
-              >
-                <img
-                  src={tren.image}
-                  alt={tren.image}
-                  className={styles.billboard_Poster}
-                  draggable={false}
-                />
-                <p className={styles.billboard_Title}>
-                  {tren.title.english ? tren.title.english : tren.title.romaji}
-                </p>
-              </Link>
-            );
-          })}
+      {query ? (
+        <section className={styles.billboard_Wrapper}>
+          <section className={styles.billboard_Main}>
+            <div className={styles.billboard_HeaderMain}>
+              <p className={styles.billboard_Header}>{`Result for ${query}`}</p>
+            </div>
+            <section className={styles.billboard}>
+              {searched.map(({ id, image, totalEpisodes, title }) => {
+                return (
+                  <Card
+                    key={id}
+                    id={id}
+                    image={image}
+                    totalEpisodes={totalEpisodes}
+                    title={title}
+                  />
+                );
+              })}
+            </section>
+          </section>
         </section>
-      </section>
+      ) : (
+        <section className={styles.billboard_Wrapper}>
+          <section className={styles.billboard_Main}>
+            <div className={styles.billboard_HeaderMain}>
+              <p className={styles.billboard_Header}>Trending</p>
+              <Link to={`/search/trending`}>view all</Link>
+            </div>
+            <section className={styles.billboard}>
+              {trending.map(({ id, image, totalEpisodes, title }) => {
+                return (
+                  <Card
+                    key={id}
+                    id={id}
+                    image={image}
+                    totalEpisodes={totalEpisodes}
+                    title={title}
+                  />
+                );
+              })}
+            </section>
+          </section>
+          <section className={styles.billboard_Main}>
+            <div className={styles.billboard_HeaderMain}>
+              <p className={styles.billboard_Header}>Popular</p>
+              <Link to={`/search/popular`}>view all</Link>
+            </div>
+            <section className={styles.billboard}>
+              {popular.map(({ id, image, totalEpisodes, title }) => {
+                return (
+                  <Card
+                    key={id}
+                    id={id}
+                    image={image}
+                    totalEpisodes={totalEpisodes}
+                    title={title}
+                  />
+                );
+              })}
+            </section>
+          </section>
+        </section>
+      )}
     </section>
   );
 }

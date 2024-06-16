@@ -8,6 +8,8 @@ import E404 from "./pages/E404";
 import { useAuth } from "./store/auth.jsx";
 import { Analytics } from "@vercel/analytics/react";
 import Footer from "./layouts/Footer.jsx";
+import Trending from "./pages/Trending.jsx";
+import Popular from "./pages/Popular.jsx";
 
 export default function App() {
   const { productionMode } = useAuth();
@@ -71,6 +73,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/streaming/:animeId" element={<Streaming />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/search/trending" element={<Trending />} />
+        <Route path="/search/popular" element={<Popular />} />
         <Route path="*" element={<E404 />} />
       </Routes>
       <Footer />
