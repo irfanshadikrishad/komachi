@@ -8,7 +8,7 @@ export default function Recommendations({ recommendations }) {
   return (
     <section className={styles.recommendations}>
       {recommendations && recommendations.length > 0 && (
-        <h1>Recommendations</h1>
+        <h4>Recommendations</h4>
       )}
       <div className={styles.recommendations_list}>
         {recommendations &&

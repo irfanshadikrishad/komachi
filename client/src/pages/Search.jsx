@@ -91,13 +91,18 @@ export default function Search() {
         />
       </Helmet>
 
-      <form onChange={getSearched} className={styles.filter}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className={styles.filter}
+      >
         <section>
           <p className={styles.selector_Title}>Search</p>
           <div className={styles.searchFieldContainer}>
             <RiSearchLine />
             <input
-              value={query}
+              value={query ? query : ""}
               onChange={(e) => {
                 setQuery(e.target.value);
               }}
@@ -143,7 +148,9 @@ export default function Search() {
         <section className={styles.billboard_Wrapper}>
           <section className={styles.billboard_Main}>
             <div className={styles.billboard_HeaderMain}>
-              <p className={styles.billboard_Header}>{`Result for ${query}`}</p>
+              <p
+                className={styles.billboard_Header}
+              >{`Search result for ${query}`}</p>
             </div>
             <section className={styles.billboard}>
               {searched.map(({ id, image, totalEpisodes, title }) => {

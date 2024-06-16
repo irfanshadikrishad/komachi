@@ -33,7 +33,7 @@ export default function Navbar() {
               }}
               placeholder="Search..."
               type="text"
-              autoComplete={false}
+              autoComplete="false"
             />
           )}
           <button
