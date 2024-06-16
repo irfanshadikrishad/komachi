@@ -56,7 +56,7 @@ export default function Streaming() {
         // Get Sources
         await getServerSources(episodeId);
       } else {
-        console.log(response.error, episodeId);
+        console.table({ error: response.error, episodeId, episodes });
       }
     } catch (error) {
       console.error("Error fetching stream link:", error, episodeId);
@@ -95,7 +95,7 @@ export default function Streaming() {
       setNextAiringTime(response.nextAiringEpisode);
       setAnimeInfo(response);
       setEpisodes(response.episodes);
-      getDubEpisodesInfo(response.episodes[0].id); // Get the dub episodes
+      getDubEpisodesInfo(response.episodes[0]?.id); // Get the dub episodes
       // For specific episodes
       if (providedEpisodeId) {
         const episodePrefix = response.episodes[0].id;

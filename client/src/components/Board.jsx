@@ -20,8 +20,9 @@ export default function Board() {
   const getPopularAnime = async () => {
     try {
       const request = await fetch(`${SERVER}/api/v1/anime/trending`, {
-        method: "GET",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ page: 1, perPage: 5 }),
       });
       const response = await request.json();
 
@@ -50,7 +51,7 @@ export default function Board() {
         navigation
       >
         {popular &&
-          popular.slice(0, 5).map((pplr, index) => {
+          popular.map((pplr, index) => {
             return (
               <SwiperSlide key={index} style={{ position: "relative" }}>
                 <div

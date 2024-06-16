@@ -14,7 +14,7 @@ export default function Navbar() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (query) {
-      navigate(`/search/${query}`);
+      navigate(`/search?query=${query}`);
       setQuery("");
     }
   };
@@ -33,7 +33,7 @@ export default function Navbar() {
               }}
               placeholder="Search..."
               type="text"
-              autoComplete={false}
+              autoComplete="false"
             />
           )}
           <button

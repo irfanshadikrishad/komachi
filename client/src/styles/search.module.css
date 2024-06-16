@@ -1,0 +1,119 @@
+.searchFieldContainer {
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary);
+  width: 208px;
+  height: 35px;
+  border-radius: 2px;
+  padding: 0 5px;
+}
+.searchFieldContainer svg {
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.searchField {
+  border: none;
+  border-radius: 2px;
+  font-size: 1rem;
+  padding: 5px;
+  color: var(--text);
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+}
+.selector {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 218px;
+  height: 35px;
+  padding: 10px;
+  border-radius: 2px;
+  border: none;
+  color: var(--text);
+  background-color: var(--secondary);
+  cursor: pointer;
+}
+.selector svg {
+  font-size: 1rem;
+  color: var(--text);
+}
+.filter {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.selector_Title {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: var(--text);
+  width: 35px;
+  height: 35px;
+  border-radius: 2px;
+  font-size: 1.4rem;
+  background-color: var(--secondary);
+  cursor: pointer;
+}
+.billboard {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+.billboard_Main {
+  padding: 5px 0;
+}
+.billboard_Poster {
+  width: 100%;
+  border-radius: 4px;
+  aspect-ratio: 2/3;
+}
+.billboard_Individual {
+  position: relative;
+  padding: 5px;
+  color: var(--text);
+  background-color: var(--secondary);
+  border-radius: 4px;
+  text-decoration: none;
+}
+.billboard_Title {
+  font-size: 0.9rem;
+  line-height: 15px;
+}
+.billboard_Header {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 5px 0;
+  text-transform: capitalize;
+}
+.billboard_HeaderMain {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.billboard_HeaderMain a {
+  color: var(--text);
+  text-decoration: none;
+}
+.episode {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.7rem;
+  background-color: var(--background);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.billboard_Wrapper {
+  padding-bottom: 20px;
+}
