@@ -70,7 +70,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/streaming/:animeId" element={<Streaming />} />
-        <Route path="/search/:query" element={<Search />} />
+        <Route path="/search" element={<Search />} />
         <Route path="*" element={<E404 />} />
       </Routes>
       <Footer />

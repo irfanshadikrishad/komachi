@@ -99,6 +99,29 @@ const steamingServerSources = async (req, res) => {
   }
 };
 
+const advanceSearch = async (req, res) => {
+  try {
+    const { query, type, page, perPage, format, sort, genres, year, season } =
+      await req.body;
+    const result = await anilist.advancedSearch(
+      query,
+      type,
+      page,
+      perPage,
+      format,
+      sort,
+      genres,
+      undefined,
+      year,
+      season
+    );
+    res.status(200).json(result.results);
+  } catch (error) {
+    console.log(chalk.magenta(error.message));
+    res.status(400).json({ error: error.message });
+  }
+};
+
 export {
   trending,
   recentEpisodes,
@@ -108,4 +131,5 @@ export {
   steamingServerSources,
   popular,
   dubEpisodes,
+  advanceSearch,
 };
