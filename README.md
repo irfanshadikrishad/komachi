@@ -19,4 +19,8 @@
 - ReactJS
 - Bun
 
+#### Contribution Guideline:
+
+Want to contribute to the project? Checkout [contribution guideline](https://github.com/irfanshadikrishad/komachi/blob/main/CONTRIBUTING.md).
+
 #### Thanks for visiting.
