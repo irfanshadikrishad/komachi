@@ -124,6 +124,15 @@ const advanceSearch = async (req, res) => {
   }
 };
 
+const random_Anime = async (req, res) => {
+  try {
+    const r = await anilist.fetchRandomAnime();
+    res.status(200).json(r);
+  } catch (error) {
+    res.status(200).json(error.message);
+  }
+};
+
 export {
   trending,
   recentEpisodes,
@@ -134,4 +143,5 @@ export {
   popular,
   dubEpisodes,
   advanceSearch,
+  random_Anime,
 };

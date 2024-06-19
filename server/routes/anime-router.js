@@ -9,6 +9,7 @@ import {
   popular,
   dubEpisodes,
   advanceSearch,
+  random_Anime,
 } from "../controllers/anime-controller.js";
 
 const router = Router();
@@ -22,5 +23,6 @@ router.post("/sources", steamingServerSources);
 router.post("/popular", popular);
 router.post("/dub-episodes", dubEpisodes);
 router.post("/advance-search", advanceSearch);
+router.get("/random", random_Anime);
 
 export default router;

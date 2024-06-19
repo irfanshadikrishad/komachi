@@ -28,7 +28,7 @@ export default function Search() {
         body: JSON.stringify({ query }),
       });
       const response = await request.json();
-      console.log(response);
+      // console.log(response);
       if (request.status === 200) {
         setSearched(response);
       } else {
@@ -76,9 +76,12 @@ export default function Search() {
   };
 
   useEffect(() => {
-    getSearched();
     getTrending();
     getPopular();
+  }, []); // need to fetch only once
+
+  useEffect(() => {
+    getSearched();
   }, [query]);
   return (
     <section className="container">
@@ -150,7 +153,7 @@ export default function Search() {
             <div className={styles.billboard_HeaderMain}>
               <p
                 className={styles.billboard_Header}
-              >{`Search result for ${query}`}</p>
+              >{`Search result for '${query}'`}</p>
             </div>
             <section className={styles.billboard}>
               {searched.map(({ id, image, totalEpisodes, title }) => {
