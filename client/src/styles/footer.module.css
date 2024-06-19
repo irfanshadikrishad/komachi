@@ -14,9 +14,15 @@
   display: flex;
   flex-direction: column;
 }
-.footer_links > a {
+.link_wrapper > a {
   color: var(--color);
   text-decoration: none;
+}
+.link_wrapper > a:hover {
+  transform: translateX(-10px);
+  color: var(--primary);
+  transition: 0.2s;
+  transition-timing-function: ease-in;
 }
 .follow {
   display: flex;

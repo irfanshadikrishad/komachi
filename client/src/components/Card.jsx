@@ -15,7 +15,13 @@ export default function Card({ id, image, title, totalEpisodes }) {
         draggable={false}
       />
       <p className={styles.billboard_Title}>
-        {title.english ? title.english : title.romaji}
+        {title.english
+          ? title.english.length > 25
+            ? String(title.english).slice(0, 25)
+            : title.english
+          : title.romaji.length > 25
+          ? String(title.romaji).slice(0, 25)
+          : title.romaji}
       </p>
 
       <p className={styles.episode}>

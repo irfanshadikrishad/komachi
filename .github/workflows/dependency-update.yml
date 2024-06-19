@@ -1,0 +1,47 @@
+name: Dependency Update
+
+on:
+  schedule:
+    - cron: "0 0 * * 5" # This runs the workflow every Friday at midnight UTC
+  workflow_dispatch: # Allows manual trigger of the workflow
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Update dependencies
+        run: npm update
+
+      - name: Run tests
+        run: npm test
+
+      - name: Commit and push changes
+        if: success() # Only runs if all previous steps were successful
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b dependency-updates
+          git commit -am "chore: dependency-updates"
+          git push -u origin dependency-updates
+
+      - name: Create Pull Request
+        if: success() # Only runs if the commit and push step was successful
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update dependencies
+          branch: dependency-updates
+          title: "Automated Dependency Updates"
+          body: "This PR updates dependencies to their latest versions."

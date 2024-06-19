@@ -32,13 +32,6 @@ export default function Streaming() {
 
   const getStreamLink = async (episodeId) => {
     try {
-      // Check if episodeId is a number
-      const episodeIdNumber = Number(episodeId);
-      if (!isNaN(episodeIdNumber)) {
-        // If episodeId is a number, replace it
-        episodeId = replaceId(episodes[0]?.id, episodeId);
-      }
-
       // Make the fetch request
       const request = await fetch(`${SERVER}/api/v1/anime/stream`, {
         method: "POST",
@@ -57,6 +50,9 @@ export default function Streaming() {
         await getServerSources(episodeId);
       } else {
         console.table({ error: response.error, episodeId, episodes });
+        if (Number(episodeId) > episodes.length) {
+          await getStreamLink(episodes[0].id);
+        }
       }
     } catch (error) {
       console.error("Error fetching stream link:", error, episodeId);

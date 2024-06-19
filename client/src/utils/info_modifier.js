@@ -66,7 +66,7 @@ const stringToBoolean = (string) => {
 const replaceId = (defaultId, toSetId) => {
   let splt = String(defaultId).split("-");
   splt[splt.length - 1] = toSetId;
-
+  // console.log(defaultId, toSetId, String(splt.join("-")));
   return String(splt.join("-"));
 };
 
