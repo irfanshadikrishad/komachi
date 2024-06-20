@@ -32,26 +32,31 @@ export default function Streaming() {
 
   const getStreamLink = async (episodeId) => {
     try {
-      // Make the fetch request
-      const request = await fetch(`${SERVER}/api/v1/anime/stream`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ episodeId }),
-      });
+      if (episodeId) {
+        // Make the fetch request
+        const request = await fetch(`${SERVER}/api/v1/anime/stream`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ episodeId }),
+        });
 
-      const response = await request.json();
+        const response = await request.json();
 
-      // Handle response
-      if (request.status === 200) {
-        setStreamLink(response.sources[response.sources.length - 1].url);
-        setCurrentEpisode(episodeId);
-        setEpisodeDownloadLink(response.download);
-        // Get Sources
-        await getServerSources(episodeId);
-      } else {
-        console.table({ error: response.error, episodeId, episodes });
-        if (Number(episodeId) > episodes.length) {
-          await getStreamLink(episodes[0].id);
+        // Handle response
+        if (request.status === 200) {
+          // Make the default quality to stream
+          setStreamLink(response.sources[response.sources.length - 1].url);
+          setCurrentEpisode(episodeId);
+          setEpisodeDownloadLink(response.download);
+          // Get Sources
+          await getServerSources(episodeId);
+        } else {
+          if (Number(episodeId) > episodes.length) {
+            await getStreamLink(episodes[0]?.id);
+          } else {
+            // If it falls between episode range, it should work
+            await getStreamLink(episodes[Number(episodeId) - 1]?.id);
+          }
         }
       }
     } catch (error) {
@@ -61,14 +66,18 @@ export default function Streaming() {
 
   const getDubEpisodesInfo = async (subId) => {
     try {
-      const request = await fetch(`${SERVER}/api/v1/anime/dub-episodes`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ animeId: subToDub(subId) }),
-      });
-      const response = await request.json();
-      if (request.status === 200) {
-        setDubEpisodes(response);
+      if (subId) {
+        const request = await fetch(`${SERVER}/api/v1/anime/dub-episodes`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ animeId: subToDub(subId) }),
+        });
+        const response = await request.json();
+        if (request.status === 200) {
+          setDubEpisodes(response);
+        }
+      } else {
+        console.log(`subId `, subId, `dubId `, subToDub(subId));
       }
     } catch (error) {
       console.table({
@@ -81,54 +90,62 @@ export default function Streaming() {
   };
 
   const getAnimeInfo = async () => {
-    const request = await fetch(`${SERVER}/api/v1/anime/info`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ animeId }),
-    });
-    const response = await request.json();
-    if (request.status === 200) {
-      setNextAiringTime(response.nextAiringEpisode);
-      setAnimeInfo(response);
-      setEpisodes(response.episodes);
-      getDubEpisodesInfo(response.episodes[0]?.id); // Get the dub episodes
-      // For specific episodes
-      if (providedEpisodeId) {
-        const episodePrefix = response.episodes[0].id;
-        let unicornId = episodePrefix.split("-");
-        unicornId.pop(); // removing initial episode id
-        unicornId = unicornId.join("-");
-        unicornId = unicornId + `-${providedEpisodeId}`;
-        // If overwriting results in repetation of words
-        if (hasRepeatedWords(unicornId)) {
-          getStreamLink(providedEpisodeId);
+    try {
+      const request = await fetch(`${SERVER}/api/v1/anime/info`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ animeId }),
+      });
+      const response = await request.json();
+      if (request.status === 200) {
+        setNextAiringTime(response.nextAiringEpisode);
+        setAnimeInfo(response);
+        setEpisodes(response.episodes);
+        getDubEpisodesInfo(response.episodes[0]?.id); // Get the dub episodes
+        // For specific episodes
+        if (providedEpisodeId) {
+          const episodePrefix = response.episodes[0].id;
+          let unicornId = episodePrefix.split("-");
+          unicornId.pop(); // removing initial episode id
+          unicornId = unicornId.join("-");
+          unicornId = unicornId + `-${providedEpisodeId}`;
+          // If overwriting results in repetation of words
+          if (hasRepeatedWords(unicornId)) {
+            getStreamLink(providedEpisodeId);
+          } else {
+            getStreamLink(unicornId);
+          }
         } else {
-          getStreamLink(unicornId);
+          if (response.episodes.length > 0) {
+            getStreamLink(response.episodes[0].id);
+          } else {
+            setNoEpisodes(true);
+          }
         }
       } else {
-        if (response.episodes.length > 0) {
-          getStreamLink(response.episodes[0].id);
-        } else {
-          setNoEpisodes(true);
-        }
+        console.log(response);
       }
-    } else {
-      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   // Individual Episode Sources
   const getServerSources = async (episodeId) => {
-    const request = await fetch(`${SERVER}/api/v1/anime/sources`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ episodeId }),
-    });
-    const response = await request.json();
-    if (request.status === 200) {
-      setSources(response);
-    } else {
-      console.log(response, episodeId);
+    try {
+      const request = await fetch(`${SERVER}/api/v1/anime/sources`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ episodeId }),
+      });
+      const response = await request.json();
+      if (request.status === 200) {
+        setSources(response);
+      } else {
+        console.log(response, episodeId);
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
