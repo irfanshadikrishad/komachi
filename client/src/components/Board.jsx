@@ -28,7 +28,6 @@ export default function Board() {
 
       if (request.status === 200) {
         setPopular(response);
-        localStorage.setItem("board", response);
       } else {
         console.log(response);
       }

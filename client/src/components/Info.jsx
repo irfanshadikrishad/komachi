@@ -50,11 +50,11 @@ const Info = memo(({ animeInfo }) => {
                 }`}
               </p>
             )}
-            <p>
+            <p className="seperator">
               <span className="blob">Studios:</span>{" "}
               {animeInfo.studios && animeInfo.studios.join(" • ")}
             </p>
-            <p>
+            <p className="seperator">
               <span className="blob">Synonyms:</span>{" "}
               {animeInfo.synonyms && animeInfo.synonyms.join(" • ")}
             </p>

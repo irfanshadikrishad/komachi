@@ -51,7 +51,7 @@ export default function Episodes({
               backgroundColor: currentEpisode === id && "var(--primary)",
             }}
           >
-            {title ? title : number}
+            {title ? title : `Episode ${number}`}
           </button>
         );
       })}
