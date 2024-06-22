@@ -13,20 +13,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Bun
-        run: curl -fsSL https://bun.sh/install | bash
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16" # You can specify the version of Node.js you want to use
+
+      - name: Install npm-check-updates globally
+        run: npm install -g npm-check-updates
 
       - name: Update dependencies for client
         working-directory: ./client
         run: |
-          bun install
-          bun upgrade
+          npm install
+          ncu -u
+          npm install
 
       - name: Update dependencies for server
         working-directory: ./server
         run: |
-          bun install
-          bun upgrade
+          npm install
+          ncu -u
+          npm install
 
       - name: Commit and push changes
         if: success() # Only runs if all previous steps were successful
