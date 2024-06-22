@@ -3,17 +3,11 @@
 Install all the dependencies
 
 ```
-bun install
+npm install
 ```
 
 To run server
 
 ```
 nodemon server.js
-```
-
-or
-
-```
-bun server.js
 ```
