@@ -65,6 +65,48 @@
   justify-content: center;
   cursor: pointer;
 }
+.status_Board {
+  display: flex;
+  gap: 5px;
+  align-items: stretch;
+  color: var(--text);
+  background-color: var(--secondary);
+  width: fit-content;
+  border-radius: 5px;
+}
+.status_Board > button {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: var(--secondary);
+  background-color: var(--primary);
+  border: none;
+  padding: 0 3px;
+  border-radius: 2px;
+}
+.status_Board > p {
+  padding: 0 10px 0 0;
+  border-radius: 5px;
+}
+.status_Main {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+.episode_stats {
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary);
+  padding: 0 5px;
+  border-radius: 5px;
+}
+.episode_stats > button {
+  display: flex;
+  font-size: 1.1rem;
+  border: none;
+  color: var(--primary);
+  background-color: transparent;
+}
 
 @media screen and (max-width: 768px) {
   .title {
