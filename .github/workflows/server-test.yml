@@ -18,8 +18,10 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Install dependencies
+      - name: Install dependencies in ./server
+        working-directory: ./server
         run: npm install
 
-      - name: Run tests with Jest
-        run: npm test --prefix ./server
+      - name: Run tests with Jest in ./server
+        working-directory: ./server
+        run: npm test
