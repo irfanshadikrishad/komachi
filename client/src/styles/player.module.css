@@ -212,6 +212,17 @@ iframe {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+.player_Wrapper {
+  position: relative;
+}
+.ed {
+  position: absolute;
+  width: 0px;
+  height: 5px;
+  background-color: var(--primary);
+  bottom: 27px;
+  opacity: 50%;
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
