@@ -28,10 +28,11 @@ export default function Player({
   dubEpisodes,
   nextAiringEpisode,
 }) {
-  const { skipTime, automatics } = useAuth();
+  const { skipTime, automatics, getSkipTime } = useAuth();
   const [isNotNative, setIsNotNative] = useState(true);
   const [isSub, setIsSub] = useState(true);
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
+  const [isMouseOver, setIsMouseOver] = useState(false);
   const react_player = useRef();
   const intervalRef = useRef(null);
 
@@ -44,6 +45,23 @@ export default function Player({
     }
   }, [streamLink]);
 
+  // Calculating the auto-skip durations
+  let OP_LEFT, ED_LEFT, OP_WIDTH, ED_WIDTH;
+  if (skipTime && skipTime[0]) {
+    const duration = skipTime[0].episodeLength;
+    const start_Time = skipTime[0].interval.startTime;
+    const end_Time = skipTime[0].interval.endTime;
+    OP_LEFT = (start_Time / duration) * 100;
+    OP_WIDTH = ((end_Time - start_Time) / duration) * 100;
+  }
+  if (skipTime && skipTime[1]) {
+    const duration = skipTime[1].episodeLength;
+    const start_Time = skipTime[1].interval.startTime;
+    const end_Time = skipTime[1].interval.endTime;
+    ED_LEFT = (start_Time / duration) * 100;
+    ED_WIDTH = ((end_Time - start_Time) / duration) * 100;
+  }
+
   // For Auto Skip
   const autoSkip = useCallback(() => {
     if (skipTime && stringToBoolean(automatics.skip)) {
@@ -54,7 +72,7 @@ export default function Player({
           currentTime > skip_time.interval.startTime &&
           currentTime < skip_time.interval.endTime
         ) {
-          react_player.current.seekTo(skip_time.interval.endTime);
+          react_player.current.seekTo(skip_time.interval.endTime + 1);
         }
       });
     }
@@ -71,8 +89,9 @@ export default function Player({
       const nextEpisodeNumber = Number(splt[splt.length - 1]) + 1;
       splt[splt.length - 1] = nextEpisodeNumber;
       const nextEpisodeId = splt.join("-");
-      // console.log(nextEpisodeId);
       getStreamLink(nextEpisodeId);
+      // After auto-skik to next episode, get their skip time
+      getSkipTime(nextEpisodeNumber, malId);
     }
   }, [automatics.next, currentEpisode, getStreamLink]);
 
@@ -113,15 +132,45 @@ export default function Player({
                 </a>
               </div>
             </div>
-            <ReactPlayer
-              ref={react_player}
-              width="100%"
-              height={isNotNative ? "auto" : "400px"}
-              controls={true}
-              playing={automatics ? stringToBoolean(automatics.play) : false}
-              url={streamLink}
-              // light={true}
-            />
+            <div
+              className={styles.player_Wrapper}
+              onMouseOver={() => {
+                setIsMouseOver(true);
+              }}
+              onMouseLeave={() => {
+                setIsMouseOver(false);
+              }}
+            >
+              <ReactPlayer
+                ref={react_player}
+                width="100%"
+                height={isNotNative ? "auto" : "400px"}
+                controls={true}
+                playing={automatics ? stringToBoolean(automatics.play) : false}
+                url={streamLink}
+                className="react_player"
+                style={{ overflow: "hidden" }}
+                // light={true}
+              />
+              <section>
+                <div
+                  className={styles.ed}
+                  style={{
+                    display: isMouseOver ? "inline" : "none",
+                    left: ED_LEFT ? `${ED_LEFT}%` : "16px",
+                    width: `${Number(ED_WIDTH)}%`,
+                  }}
+                ></div>
+                <div
+                  className={styles.ed}
+                  style={{
+                    display: isMouseOver ? "inline" : "none",
+                    left: OP_LEFT ? `${OP_LEFT}%` : "16px",
+                    width: `${Number(OP_WIDTH)}%`,
+                  }}
+                ></div>
+              </section>
+            </div>
           </div>
         )}
         <Automatics />

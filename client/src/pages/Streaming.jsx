@@ -13,7 +13,7 @@ import {
 } from "../utils/info_modifier.js";
 
 export default function Streaming() {
-  const { SERVER } = useAuth();
+  const { SERVER, getSkipTime } = useAuth();
   const { animeId } = useParams();
   const { search } = useLocation();
   const location = new URLSearchParams(search);
@@ -102,6 +102,7 @@ export default function Streaming() {
         setAnimeInfo(response);
         setEpisodes(response.episodes);
         getDubEpisodesInfo(response.episodes[0]?.id); // Get the dub episodes
+        getSkipTime(1, response.malId);
         // For specific episodes
         if (providedEpisodeId) {
           const episodePrefix = response.episodes[0].id;

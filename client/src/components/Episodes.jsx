@@ -8,32 +8,7 @@ export default function Episodes({
   malId,
   currentEpisode,
 }) {
-  const { SKIP_SERVER, setSkipTime } = useAuth();
-
-  const getSkipTime = async (episodeNumber, malId) => {
-    try {
-      const types = ["op", "ed"];
-      const url = new URL(
-        `${SKIP_SERVER}/v2/skip-times/${malId}/${episodeNumber}`
-      );
-      url.searchParams.append("episodeLength", 0);
-      types.forEach((type) => url.searchParams.append("types", type));
-
-      const request = await fetch(url.toString(), {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-      });
-
-      const response = await request.json();
-      if (response.statusCode === 200) {
-        setSkipTime(response.results);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { getSkipTime } = useAuth();
 
   return (
     <div className={styles.streamingV2Buttons}>
