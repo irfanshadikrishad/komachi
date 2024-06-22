@@ -4,7 +4,11 @@ import styles from "../styles/board.module.css";
 // ICONS
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { BsBookmarkStar } from "react-icons/bs";
-// Swiper
+import { MdVerified } from "react-icons/md"; // for completed
+import { AiFillThunderbolt } from "react-icons/ai";
+import { TbMicrophoneFilled } from "react-icons/tb";
+import { FaClosedCaptioning } from "react-icons/fa6";
+import { TbLoader } from "react-icons/tb"; // Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -65,6 +69,29 @@ export default function Board() {
                       ? pplr.title.english
                       : pplr.title.romaji}
                   </h1>
+                  <section className={styles.status_Main}>
+                    <div className={styles.status_Board}>
+                      <button>
+                        {pplr.status === "Completed" ? (
+                          <MdVerified />
+                        ) : (
+                          <TbLoader />
+                        )}
+                      </button>
+                      <p>{pplr.status}</p>
+                    </div>
+                    <div className={styles.status_Board}>
+                      <button>
+                        <AiFillThunderbolt />
+                      </button>
+                      <p>{`Ranking #${index + 1}`}</p>
+                    </div>
+                    <div className={styles.episode_stats}>
+                      <button>
+                        <FaClosedCaptioning />
+                      </button>
+                    </div>
+                  </section>
                   <p className={styles.description}>
                     {String(pplr.description).length > 250
                       ? removeHtmlAndMarkdown(
