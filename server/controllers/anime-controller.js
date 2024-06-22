@@ -26,35 +26,35 @@ const popular = async (req, res) => {
   }
 };
 
-const recentEpisodes = async (req, res) => {
+const recent_Episodes = async (req, res) => {
   try {
     const { page } = await req.body;
     const recent = await anilist.fetchRecentEpisodes("gogoanime", page, 34);
     res.status(200).json(recent.results);
   } catch (error) {
-    console.log(chalk.magenta(`recentEpisodes`, error));
+    console.log(chalk.magenta(`recent_Episodes`, error));
     res.status(400).json({ error: error.message });
   }
 };
 
-const dubEpisodes = async (req, res) => {
+const dub_Episodes = async (req, res) => {
   try {
     const { animeId } = await req.body;
     const episodes = await gogoanime.fetchAnimeInfo(animeId);
     res.status(200).json(episodes.episodes);
   } catch (error) {
-    console.log(chalk.magenta(`dubEpisodes`, error));
+    console.log(chalk.magenta(`dub_Episodes`, error));
     res.status(400).json({ error: error.message });
   }
 };
 
-const animeInfo = async (req, res) => {
+const anime_Info = async (req, res) => {
   try {
     const { animeId } = await req.body;
     const info = await anilist.fetchAnimeInfo(animeId);
     res.status(200).json(info);
   } catch (error) {
-    console.log(chalk.magenta(`animeInfo`, error));
+    console.log(chalk.magenta(`anime_Info`, error));
     res.status(400).json({ error: error.message });
   }
 };
@@ -101,7 +101,7 @@ const steamingServerSources = async (req, res) => {
   }
 };
 
-const advanceSearch = async (req, res) => {
+const advanced_Search = async (req, res) => {
   try {
     const { query, type, page, perPage, format, sort, genres, year, season } =
       await req.body;
@@ -113,7 +113,7 @@ const advanceSearch = async (req, res) => {
       format,
       sort,
       genres,
-      undefined,
+      undefined, // id not preferred
       year,
       season
     );
@@ -126,22 +126,31 @@ const advanceSearch = async (req, res) => {
 
 const random_Anime = async (req, res) => {
   try {
-    const r = await anilist.fetchRandomAnime();
+    let r;
+
+    async function getRandom() {
+      r = await anilist.fetchRandomAnime();
+    }
+
+    do {
+      await getRandom();
+    } while (!r.episodes || r.episodes.length === 0);
+
     res.status(200).json(r);
   } catch (error) {
-    res.status(200).json(error.message);
+    res.status(500).json({ error: error.message });
   }
 };
 
 export {
   trending,
-  recentEpisodes,
-  animeInfo,
+  recent_Episodes,
+  anime_Info,
   streamingEpisodeLink,
   search,
   steamingServerSources,
   popular,
-  dubEpisodes,
-  advanceSearch,
+  dub_Episodes,
+  advanced_Search,
   random_Anime,
 };

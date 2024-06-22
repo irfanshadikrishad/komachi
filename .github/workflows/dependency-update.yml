@@ -2,7 +2,7 @@ name: Dependency Update
 
 on:
   schedule:
-    - cron: "0 0 * * 5" # This runs the workflow every Friday at midnight UTC
+    - cron: "0 */12 * * *" # For running every 12 hrs
   workflow_dispatch: # Allows manual trigger of the workflow
 
 jobs:
