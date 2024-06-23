@@ -26,14 +26,14 @@ jobs:
         run: |
           npm install
           ncu -u
-          npm install
+          npm install --legacy-peer-deps
 
       - name: Update dependencies for server
         working-directory: ./server
         run: |
           npm install
           ncu -u
-          npm install
+          npm install --legacy-peer-deps
 
       - name: Commit and push changes
         if: success() # Only runs if all previous steps were successful
