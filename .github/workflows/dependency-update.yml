@@ -2,7 +2,7 @@ name: Dependency Update
 
 on:
   schedule:
-    - cron: "0 */12 * * *" # For running every 12 hrs
+    - cron: "0 */6 * * *" # For running every 6 hrs
   workflow_dispatch: # Allows manual trigger of the workflow
 
 jobs:
@@ -24,14 +24,14 @@ jobs:
       - name: Update dependencies for client
         working-directory: ./client
         run: |
-          npm install
+          npm install --legacy-peer-deps
           ncu -u
           npm install --legacy-peer-deps
 
       - name: Update dependencies for server
         working-directory: ./server
         run: |
-          npm install
+          npm install --legacy-peer-deps
           ncu -u
           npm install --legacy-peer-deps
 
