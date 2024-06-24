@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: ""
+    directory: "/"  # This will be ignored
+    commit-message:
+      prefix: chore: update-dependencies (dependabot)
+    schedule:
+      interval: "daily"
+  - package-ecosystem: ""  # Duplicate with specific directory
+    directory: "./server"
+    commit-message:
+      prefix: chore: update server dependencies (dependabot)
+    schedule:
+      interval: "daily"
+  - package-ecosystem: ""  # Duplicate with specific directory
+    directory: "./client"
+    commit-message:
+      prefix: chore: update client dependencies (dependabot)
+    schedule:
+      interval: "daily"
