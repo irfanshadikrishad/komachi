@@ -7,7 +7,7 @@ import styles from "../styles/search.module.css";
 // ICONS
 import { RiSearchLine } from "react-icons/ri";
 import { IoChevronDown } from "react-icons/io5";
-import { MdTune } from "react-icons/md";
+import { MdTune, MdVerified } from "react-icons/md";
 import Card from "../components/Card.jsx";
 
 export default function Search() {
@@ -18,6 +18,13 @@ export default function Search() {
   const [searched, setSearched] = useState([]);
   const [trending, setTrending] = useState([]);
   const [popular, setPopular] = useState([]);
+  // Advance Search Open/Close
+  const [isFormatOpen, setIsFormatOpen] = useState(false);
+  // Advance Search States
+  const [year, setYear] = useState(undefined);
+  const [season, setSeason] = useState(undefined);
+  const [format, setFormat] = useState([]);
+  const [genres, setGenres] = useState([]);
 
   const getSearched = async (e) => {
     // e.preventDefault();
@@ -74,6 +81,15 @@ export default function Search() {
       console.log(error);
     }
   };
+
+  function insert_Into_Array(toInsertString, arrayToBeInsertedTo) {
+    setFormat((prevFormat) => {
+      if (!prevFormat.includes(toInsertString)) {
+        return [...prevFormat, toInsertString];
+      }
+      return prevFormat;
+    });
+  }
 
   useEffect(() => {
     getTrending();
@@ -135,12 +151,82 @@ export default function Search() {
             <IoChevronDown />
           </button>
         </section>
-        <section>
+        <section className={styles.list_Wrapper}>
           <p className={styles.selector_Title}>Format</p>
-          <button className={styles.selector}>
-            <p>Any</p>
+          <button
+            className={styles.selector}
+            onClick={() => {
+              setIsFormatOpen(!isFormatOpen);
+            }}
+          >
+            <section className={styles.arrays}>
+              {format.length > 0 ? (
+                format.map((frmt, index) => {
+                  return (
+                    <div key={index} className={styles.array}>
+                      <p>{frmt}</p>
+                      <button>x</button>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>Any</p>
+              )}
+            </section>
             <IoChevronDown />
           </button>
+          {isFormatOpen && (
+            <section className={styles.genre_List}>
+              <button
+                onClick={() => {
+                  insert_Into_Array("TV", format);
+                }}
+              >
+                TV
+                {format.includes("TV") && <MdVerified />}
+              </button>
+              <button
+                onClick={() => {
+                  insert_Into_Array("TV_SHORT", format);
+                }}
+              >
+                TV_SHORT
+                {format.includes("TV_SHORT") && <MdVerified />}
+              </button>
+              <button
+                onClick={() => {
+                  insert_Into_Array("MOVIE", format);
+                }}
+              >
+                MOVIE
+                {format.includes("MOVIE") && <MdVerified />}
+              </button>
+              <button
+                onClick={() => {
+                  insert_Into_Array("SPECIAL", format);
+                }}
+              >
+                SPECIAL
+                {format.includes("SPECIAL") && <MdVerified />}
+              </button>
+              <button
+                onClick={() => {
+                  insert_Into_Array("OVA", format);
+                }}
+              >
+                OVA
+                {format.includes("OVA") && <MdVerified />}
+              </button>
+              <button
+                onClick={() => {
+                  insert_Into_Array("ONA", format);
+                }}
+              >
+                ONA
+                {format.includes("ONA") && <MdVerified />}
+              </button>
+            </section>
+          )}
         </section>
         <section>
           <button className={styles.options}>{<MdTune />}</button>
