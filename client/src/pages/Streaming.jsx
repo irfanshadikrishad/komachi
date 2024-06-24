@@ -6,11 +6,11 @@ import Info from "../components/Info.jsx";
 import { Helmet } from "react-helmet";
 import Loader from "../components/Loader.jsx";
 import Recommendations from "../components/Recommendations.jsx";
+import { hasRepeatedWords } from "../utils/info_modifier.js";
 import {
-  subToDub,
-  hasRepeatedWords,
-  replaceId,
-} from "../utils/info_modifier.js";
+  getSubEpisodesFromGoGo,
+  getDubEpisodesFromGoGo,
+} from "../utils/episodes.js";
 
 export default function Streaming() {
   const { SERVER, getSkipTime } = useAuth();
@@ -64,31 +64,6 @@ export default function Streaming() {
     }
   };
 
-  const getDubEpisodesInfo = async (subId) => {
-    try {
-      if (subId) {
-        const request = await fetch(`${SERVER}/api/v1/anime/dub-episodes`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ animeId: subToDub(subId) }),
-        });
-        const response = await request.json();
-        if (request.status === 200) {
-          setDubEpisodes(response);
-        }
-      } else {
-        console.log(`subId `, subId, `dubId `, subToDub(subId));
-      }
-    } catch (error) {
-      console.table({
-        error: error.message,
-        subId,
-        dubId: subToDub(subId),
-        episodes,
-      });
-    }
-  };
-
   const getAnimeInfo = async () => {
     try {
       const request = await fetch(`${SERVER}/api/v1/anime/info`, {
@@ -100,8 +75,12 @@ export default function Streaming() {
       if (request.status === 200) {
         setNextAiringTime(response.nextAiringEpisode);
         setAnimeInfo(response);
-        setEpisodes(response.episodes);
-        getDubEpisodesInfo(response.episodes[0]?.id); // Get the dub episodes
+        setEpisodes(
+          await getSubEpisodesFromGoGo(SERVER, response.episodes[0]?.id)
+        );
+        setDubEpisodes(
+          await getDubEpisodesFromGoGo(SERVER, response.episodes[0]?.id)
+        ); // Get the dub episodes
         getSkipTime(1, response.malId);
         // For specific episodes
         if (providedEpisodeId) {

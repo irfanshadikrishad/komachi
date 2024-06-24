@@ -85,7 +85,7 @@ export default function Player({
       react_player.current?.getCurrentTime() >
         react_player.current?.getDuration() - 5
     ) {
-      let splt = currentEpisode.split("-");
+      let splt = currentEpisode?.split("-");
       const nextEpisodeNumber = Number(splt[splt.length - 1]) + 1;
       splt[splt.length - 1] = nextEpisodeNumber;
       const nextEpisodeId = splt.join("-");
@@ -114,11 +114,15 @@ export default function Player({
         {streamLink && (
           <div>
             <div className={styles.streamingV2_ReactPlayerHeader}>
-              <p style={{ color: "var(--primary)" }}>{`Episode ${
-                String(currentEpisode).split("-")[
-                  String(currentEpisode).split("-").length - 1
-                ]
-              }`}</p>
+              <p style={{ color: "var(--primary)" }}>
+                {currentEpisode
+                  ? `Episode ${
+                      String(currentEpisode).split("-")[
+                        String(currentEpisode).split("-").length - 1
+                      ]
+                    }`
+                  : `No Episodes available!`}
+              </p>
               <div className={styles.streaming_options}>
                 <a
                   className={styles.streamingV2_Download}
@@ -187,7 +191,7 @@ export default function Player({
               >
                 <FaRegClosedCaptioning /> sub ({episodes.length})
               </button>
-              {dubEpisodes.length > 0 && (
+              {dubEpisodes && dubEpisodes.length > 0 && (
                 <button
                   onClick={() => {
                     setIsSub(false);

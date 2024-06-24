@@ -32,6 +32,8 @@
 }
 .title {
   font-size: 2rem;
+  width: 60%;
+  line-height: 30px;
 }
 .watch {
   text-decoration: none;
@@ -91,11 +93,14 @@
 .status_Main {
   display: flex;
   gap: 5px;
+  margin-top: 10px;
   margin-bottom: 5px;
 }
 .episode_stats {
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 5px;
   background-color: var(--secondary);
   padding: 0 5px;
   border-radius: 5px;
@@ -106,6 +111,9 @@
   border: none;
   color: var(--primary);
   background-color: transparent;
+}
+.episode_stats > p {
+  padding: 0 10px 0 0;
 }
 
 @media screen and (max-width: 768px) {

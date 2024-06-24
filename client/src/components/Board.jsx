@@ -19,19 +19,18 @@ import { removeHtmlAndMarkdown } from "../utils/info_modifier";
 
 export default function Board() {
   const { SERVER } = useAuth();
-  const [popular, setPopular] = useState([]);
+  const [boardInfo, setBoardInfo] = useState([]);
 
   const getPopularAnime = async () => {
     try {
-      const request = await fetch(`${SERVER}/api/v1/anime/trending`, {
-        method: "POST",
+      const request = await fetch(`${SERVER}/api/v1/anime/board`, {
+        method: "GET",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: 1, perPage: 5 }),
       });
       const response = await request.json();
 
       if (request.status === 200) {
-        setPopular(response);
+        setBoardInfo(response);
       } else {
         console.log(response);
       }
@@ -53,32 +52,28 @@ export default function Board() {
         pagination={{ clickable: true }}
         navigation
       >
-        {popular &&
-          popular.map((pplr, index) => {
+        {boardInfo &&
+          boardInfo.map((bored, index) => {
             return (
               <SwiperSlide key={index} style={{ position: "relative" }}>
                 <div
                   className={styles.board}
                   style={{
-                    backgroundImage: `url(${pplr.cover})`,
+                    backgroundImage: `url(${bored.cover})`,
                   }}
                 ></div>
                 <div className={styles.elem}>
-                  <h1 className={styles.title}>
-                    {pplr.title && pplr.title.english
-                      ? pplr.title.english
-                      : pplr.title.romaji}
-                  </h1>
+                  <h1 className={styles.title}>{bored.title}</h1>
                   <section className={styles.status_Main}>
                     <div className={styles.status_Board}>
                       <button>
-                        {pplr.status === "Completed" ? (
+                        {bored.status === "Completed" ? (
                           <MdVerified />
                         ) : (
                           <TbLoader />
                         )}
                       </button>
-                      <p>{pplr.status}</p>
+                      <p>{bored.status}</p>
                     </div>
                     <div className={styles.status_Board}>
                       <button>
@@ -90,17 +85,28 @@ export default function Board() {
                       <button>
                         <FaClosedCaptioning />
                       </button>
+                      <p>{bored.totalSub}</p>
                     </div>
+                    {bored.totalDub > 0 && (
+                      <div className={styles.episode_stats}>
+                        <button>
+                          <TbMicrophoneFilled />
+                        </button>
+                        <p>{bored.totalDub}</p>
+                      </div>
+                    )}
                   </section>
                   <p className={styles.description}>
-                    {String(pplr.description).length > 250
-                      ? removeHtmlAndMarkdown(
-                          `${String(pplr.description).slice(0, 250)}...`
+                    {String(bored.description).length > 150
+                      ? bored.description &&
+                        removeHtmlAndMarkdown(
+                          `${String(bored.description).slice(0, 150)}...`
                         )
-                      : removeHtmlAndMarkdown(String(pplr.description))}
+                      : bored.description &&
+                        removeHtmlAndMarkdown(String(bored.description))}
                   </p>
                   <div className={styles.boardBtns}>
-                    <a href={`/streaming/${pplr.id}`} className={styles.watch}>
+                    <a href={`/streaming/${bored.id}`} className={styles.watch}>
                       {<FaRegCirclePlay />} Watch now
                     </a>
                     <button disabled className={styles.bookmark}>

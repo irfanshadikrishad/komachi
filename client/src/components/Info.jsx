@@ -21,7 +21,8 @@ const Info = memo(({ animeInfo }) => {
               : animeInfo.title.romaji}
           </h1>
           <p className="streamingV2_description">
-            {removeHtmlAndMarkdown(animeInfo.description)}
+            {animeInfo.description &&
+              removeHtmlAndMarkdown(animeInfo.description)}
           </p>
           <section>
             <p className="seperator">

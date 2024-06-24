@@ -142,6 +142,65 @@ const random_Anime = async (req, res) => {
   }
 };
 
+const sub_Episodes = async (req, res) => {
+  try {
+    const { animeId } = await req.body;
+    const info = await gogoanime.fetchAnimeInfo(animeId);
+    if (info) {
+      res.status(200).json(info.episodes);
+    } else {
+      res.status(400).json(info);
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const get_Board = async (req, res) => {
+  try {
+    const trnd = await anilist.fetchTrendingAnime(1, 5);
+    const boardPromises = trnd.results.map(async ({ id }) => {
+      const raw_data = await anilist.fetchAnimeInfo(id);
+      const episodeId = (raw_data.episodes[0]?.id)
+        .split("-")
+        .slice(0, -2)
+        .join("-");
+
+      const dub_episodeId = episodeId + "-dub";
+
+      const getSub = await gogoanime.fetchAnimeInfo(episodeId);
+
+      let getDub = null;
+      try {
+        getDub = await gogoanime.fetchAnimeInfo(dub_episodeId);
+      } catch (error) {
+        // console.log(`getting dub failed for ${dub_episodeId}`);
+      }
+
+      return {
+        id: raw_data.id,
+        title:
+          raw_data.title && raw_data.title.english
+            ? raw_data.title.english
+            : raw_data.title.romaji,
+        description: raw_data.description,
+        cover: raw_data.cover,
+        totalEpisodes: raw_data.totalEpisodes,
+        genres: raw_data.genres,
+        status: raw_data.status,
+        totalSub: getSub ? getSub.episodes.length : 0,
+        totalDub: getDub ? getDub.episodes.length : 0,
+      };
+    });
+    const board = await Promise.all(boardPromises);
+    res.status(200).json(board);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 export {
   trending,
   recent_Episodes,
@@ -153,4 +212,6 @@ export {
   dub_Episodes,
   advanced_Search,
   random_Anime,
+  sub_Episodes,
+  get_Board,
 };

@@ -2,12 +2,15 @@ name: Dependency Update
 
 on:
   schedule:
-    - cron: "0 */6 * * *" # For running every 6 hrs
+    - cron: "0 */6 * * *" # Runs every 6 hours
   workflow_dispatch: # Allows manual trigger of the workflow
 
 jobs:
   update-dependencies:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # Ensure the GITHUB_TOKEN has write permissions
 
     steps:
       - name: Checkout repository
@@ -16,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16" # You can specify the version of Node.js you want to use
+          node-version: "16" # Specify the Node.js version
 
       - name: Install npm-check-updates globally
         run: npm install -g npm-check-updates
@@ -40,10 +43,12 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git checkout -b dependency-updates
+          git checkout -b dependency-updates || git checkout dependency-updates
           git add .
           git commit -m "chore: dependency updates"
           git push -u origin dependency-updates
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
         if: success() # Only runs if the commit and push step was successful
