@@ -21,7 +21,7 @@ export default function Board() {
   const { SERVER } = useAuth();
   const [boardInfo, setBoardInfo] = useState([]);
 
-  const getPopularAnime = async () => {
+  const getBoardAnimes = async () => {
     try {
       const request = await fetch(`${SERVER}/api/v1/anime/board`, {
         method: "GET",
@@ -40,7 +40,7 @@ export default function Board() {
   };
 
   useEffect(() => {
-    getPopularAnime();
+    getBoardAnimes();
   }, []);
   return (
     <section className="container">
@@ -52,7 +52,7 @@ export default function Board() {
         pagination={{ clickable: true }}
         navigation
       >
-        {boardInfo &&
+        {boardInfo.length > 0 &&
           boardInfo.map((bored, index) => {
             return (
               <SwiperSlide key={index} style={{ position: "relative" }}>
@@ -97,16 +97,17 @@ export default function Board() {
                     )}
                   </section>
                   <p className={styles.description}>
-                    {String(bored.description).length > 150
-                      ? bored.description &&
-                        removeHtmlAndMarkdown(
+                    {bored.description && String(bored.description).length > 150
+                      ? removeHtmlAndMarkdown(
                           `${String(bored.description).slice(0, 150)}...`
                         )
-                      : bored.description &&
-                        removeHtmlAndMarkdown(String(bored.description))}
+                      : removeHtmlAndMarkdown(String(bored.description))}
                   </p>
                   <div className={styles.boardBtns}>
-                    <a href={`/streaming/${bored.id}`} className={styles.watch}>
+                    <a
+                      href={`/streaming/${bored?.id}`}
+                      className={styles.watch}
+                    >
                       {<FaRegCirclePlay />} Watch now
                     </a>
                     <button disabled className={styles.bookmark}>
