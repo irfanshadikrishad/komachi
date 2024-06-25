@@ -13,29 +13,32 @@ export default function Recommendations({ recommendations }) {
       <div className={styles.recommendations_list}>
         {recommendations &&
           recommendations.map(({ title, image, id, type, episodes }, index) => {
-            return (
-              <Link
-                to={`/streaming/${id}`}
-                key={index}
-                className={styles.recommendations_individual}
-              >
-                <img
-                  className={styles.recommendations_image}
-                  src={image}
-                  alt={title.english}
-                  draggable="false"
-                  onError={(e) => {
-                    e.target.src = defaultPoster;
-                  }}
-                />
-                <p className="topAiringTitle">
-                  {title.english ? title.english : title.romaji}
-                </p>
-                <section className={styles.recommendations_info}>
-                  <p>{`EP ${episodes} • ${type}`}</p>
-                </section>
-              </Link>
-            );
+            // some might not contain id, this is pre-caution for such cases
+            if (id) {
+              return (
+                <Link
+                  to={`/streaming/${id}`}
+                  key={index}
+                  className={styles.recommendations_individual}
+                >
+                  <img
+                    className={styles.recommendations_image}
+                    src={image}
+                    alt={title.english}
+                    draggable="false"
+                    onError={(e) => {
+                      e.target.src = defaultPoster;
+                    }}
+                  />
+                  <p className="topAiringTitle">
+                    {title.english ? title.english : title.romaji}
+                  </p>
+                  <section className={styles.recommendations_info}>
+                    <p>{`EP ${episodes} • ${type}`}</p>
+                  </section>
+                </Link>
+              );
+            }
           })}
       </div>
     </section>
