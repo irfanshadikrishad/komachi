@@ -35,15 +35,14 @@ export default function Latest() {
       <div className="latestContainer">
         {latest ? (
           latest.map(
-            ({ id, image, title, episodeNumber, episodeId }, index) => {
+            ({ id, image, title, currentEpisode, totalEpisodes }, index) => {
               return (
                 <LatestCard
                   key={index}
                   id={id}
                   image={image}
-                  title={title.english}
-                  episodeNumber={episodeNumber}
-                  episodeId={episodeId}
+                  title={title.english ? title.english : title.romaji}
+                  currentEpisode={currentEpisode}
                 />
               );
             }
