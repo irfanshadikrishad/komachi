@@ -28,11 +28,33 @@ const popular = async (req, res) => {
 
 const recent_Episodes = async (req, res) => {
   try {
-    const { page } = await req.body;
-    const recent = await anilist.fetchRecentEpisodes("gogoanime", page, 34);
-    res.status(200).json(recent.results);
+    const {
+      query,
+      type,
+      page,
+      perPage,
+      format,
+      sort,
+      genres,
+      year,
+      status,
+      season,
+    } = await req.body;
+    const result = await anilist.advancedSearch(
+      query,
+      type,
+      page,
+      27,
+      "TV",
+      ["UPDATED_AT_DESC"],
+      genres,
+      undefined,
+      year,
+      "RELEASING"
+    );
+    res.status(200).json(result.results);
   } catch (error) {
-    console.log(chalk.magenta(`recent_Episodes`, error));
+    console.log(chalk.magenta(error.message));
     res.status(400).json({ error: error.message });
   }
 };
@@ -162,38 +184,48 @@ const get_Board = async (req, res) => {
     const trnd = await anilist.fetchTrendingAnime(1, 5);
     const boardPromises = trnd.results.map(async ({ id }) => {
       const raw_data = await anilist.fetchAnimeInfo(id);
-      const episodeId = (raw_data.episodes[0]?.id)
-        .split("-")
-        .slice(0, -2)
-        .join("-");
 
-      const dub_episodeId = episodeId + "-dub";
+      if (
+        raw_data.episodes &&
+        raw_data.episodes.length > 0 &&
+        raw_data.episodes[0].id
+      ) {
+        const episodeId = raw_data.episodes[0].id
+          .split("-")
+          .slice(0, -2)
+          .join("-");
 
-      const getSub = await gogoanime.fetchAnimeInfo(episodeId);
+        const dub_episodeId = episodeId + "-dub";
 
-      let getDub = null;
-      try {
-        getDub = await gogoanime.fetchAnimeInfo(dub_episodeId);
-      } catch (error) {
-        // console.log(`getting dub failed for ${dub_episodeId}`);
+        const getSub = await gogoanime.fetchAnimeInfo(episodeId);
+
+        let getDub = null;
+        try {
+          getDub = await gogoanime.fetchAnimeInfo(dub_episodeId);
+        } catch (error) {
+          // console.log(`getting dub failed for ${dub_episodeId}`);
+        }
+
+        return {
+          id: raw_data.id,
+          title:
+            raw_data.title && raw_data.title.english
+              ? raw_data.title.english
+              : raw_data.title.romaji,
+          description: raw_data.description,
+          cover: raw_data.cover,
+          totalEpisodes: raw_data.totalEpisodes,
+          genres: raw_data.genres,
+          status: raw_data.status,
+          totalSub: getSub ? getSub.episodes.length : 0,
+          totalDub: getDub ? getDub.episodes.length : 0,
+        };
       }
-
-      return {
-        id: raw_data.id,
-        title:
-          raw_data.title && raw_data.title.english
-            ? raw_data.title.english
-            : raw_data.title.romaji,
-        description: raw_data.description,
-        cover: raw_data.cover,
-        totalEpisodes: raw_data.totalEpisodes,
-        genres: raw_data.genres,
-        status: raw_data.status,
-        totalSub: getSub ? getSub.episodes.length : 0,
-        totalDub: getDub ? getDub.episodes.length : 0,
-      };
+      return null; // Return null if conditions are not met
     });
-    const board = await Promise.all(boardPromises);
+
+    const boardResults = await Promise.all(boardPromises);
+    const board = boardResults.filter(Boolean); // Filter out null entries
     res.status(200).json(board);
   } catch (error) {
     console.log(error.message);
