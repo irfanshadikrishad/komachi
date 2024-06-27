@@ -1,19 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
 
-export default function LatestCard({
-  id,
-  image,
-  title,
-  episodeNumber,
-  episodeId,
-}) {
+export default function LatestCard({ id, image, title, currentEpisode }) {
   const { defaultPoster } = useAuth();
-  let unicorn = episodeId.split("-episode-").pop() || episodeNumber;
 
   return (
     <NavLink
-      to={`/streaming/${id}?eps=${unicorn}`}
+      to={`/streaming/${id}?eps=${currentEpisode}`}
       className="latestIndividual"
     >
       <img
@@ -27,7 +20,7 @@ export default function LatestCard({
         draggable="false"
       />
       <p className="latestTitle">{title}</p>
-      <p className="latestEpisodeNumber">EP {unicorn}</p>
+      <p className="latestEpisodeNumber">EP {currentEpisode}</p>
     </NavLink>
   );
 }
