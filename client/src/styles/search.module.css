@@ -139,13 +139,17 @@
   border: none;
   padding: 8px 0;
   border-radius: 4px;
-  background-color: var(--background);
+  background-color: transparent;
   color: var(--text);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
+}
+.genre_List > button:hover {
+  color: var(--primary);
+  background-color: var(--background);
 }
 .arrays {
   display: flex;
@@ -155,14 +159,14 @@
   justify-content: center;
 }
 .array {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   display: flex;
   flex-direction: row;
   gap: 5px;
   background-color: var(--background);
   align-items: center;
   justify-content: center;
-  padding: 2px 5px;
+  padding: 5px 8px;
   border-radius: 4px;
 }
 .array > button {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, NavLink, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
 import { Helmet } from "react-helmet";
@@ -8,13 +8,17 @@ import styles from "../styles/search.module.css";
 import { RiSearchLine } from "react-icons/ri";
 import { IoChevronDown } from "react-icons/io5";
 import { MdTune, MdVerified } from "react-icons/md";
+import { FaCheckCircle } from "react-icons/fa";
+// Components
 import Card from "../components/Card.jsx";
 
 export default function Search() {
   const { SERVER } = useAuth();
   const { search } = useLocation();
   const location = new URLSearchParams(search);
-  const [query, setQuery] = useState(location.get("query"));
+  const [query, setQuery] = useState(
+    location.get("query") ? location.get("query") : ""
+  );
   const [searched, setSearched] = useState([]);
   const [trending, setTrending] = useState([]);
   const [popular, setPopular] = useState([]);
@@ -25,22 +29,34 @@ export default function Search() {
   const [season, setSeason] = useState(undefined);
   const [format, setFormat] = useState([]);
   const [genres, setGenres] = useState([]);
+  // References
+  const formatRef = useRef(null);
+
+  // for format ouside click
+  const handleClickOutside = (event) => {
+    if (event.target.className !== "format_btn") {
+      setIsFormatOpen(false);
+    }
+  };
 
   const getSearched = async (e) => {
-    // e.preventDefault();
-    if (query) {
-      const request = await fetch(`${SERVER}/api/v1/anime/advance-search`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-      const response = await request.json();
-      // console.log(response);
-      if (request.status === 200) {
-        setSearched(response);
-      } else {
-        console.log(response);
-      }
+    const request = await fetch(`${SERVER}/api/v1/anime/advance-search`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+        format:
+          format.length > 0
+            ? format
+            : ["TV", "TV_SHORT", "SPECIAL", "MOVIE", "OVA", "ONA"],
+      }),
+    });
+    const response = await request.json();
+    // console.log(response);
+    if (request.status === 200) {
+      setSearched(response);
+    } else {
+      console.log(response);
     }
   };
 
@@ -94,11 +110,16 @@ export default function Search() {
   useEffect(() => {
     getTrending();
     getPopular();
+    // Outside click handler
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []); // need to fetch only once
 
   useEffect(() => {
     getSearched();
-  }, [query]);
+  }, [query, format]);
   return (
     <section className="container">
       <Helmet>
@@ -156,16 +177,23 @@ export default function Search() {
           <button
             className={styles.selector}
             onClick={() => {
-              setIsFormatOpen(!isFormatOpen);
+              setIsFormatOpen(true);
             }}
           >
-            <section className={styles.arrays}>
+            <section ref={formatRef} className={styles.arrays}>
               {format.length > 0 ? (
                 format.map((frmt, index) => {
                   return (
-                    <div key={index} className={styles.array}>
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation(); // this stops it from closing dropdown
+                        //  delete format from list
+                        setFormat(format.filter((item) => item !== frmt));
+                      }}
+                      key={index}
+                      className={styles.array}
+                    >
                       <p>{frmt}</p>
-                      <button>x</button>
                     </div>
                   );
                 })
@@ -178,52 +206,58 @@ export default function Search() {
           {isFormatOpen && (
             <section className={styles.genre_List}>
               <button
+                className="format_btn"
                 onClick={() => {
                   insert_Into_Array("TV", format);
                 }}
               >
-                TV
-                {format.includes("TV") && <MdVerified />}
+                TV Show
+                {format.includes("TV") && <FaCheckCircle />}
               </button>
               <button
+                className="format_btn"
                 onClick={() => {
                   insert_Into_Array("TV_SHORT", format);
                 }}
               >
-                TV_SHORT
-                {format.includes("TV_SHORT") && <MdVerified />}
+                TV Short
+                {format.includes("TV_SHORT") && <FaCheckCircle />}
               </button>
               <button
+                className="format_btn"
                 onClick={() => {
                   insert_Into_Array("MOVIE", format);
                 }}
               >
-                MOVIE
-                {format.includes("MOVIE") && <MdVerified />}
+                Movie
+                {format.includes("MOVIE") && <FaCheckCircle />}
               </button>
               <button
+                className="format_btn"
                 onClick={() => {
                   insert_Into_Array("SPECIAL", format);
                 }}
               >
-                SPECIAL
-                {format.includes("SPECIAL") && <MdVerified />}
+                Special
+                {format.includes("SPECIAL") && <FaCheckCircle />}
               </button>
               <button
+                className="format_btn"
                 onClick={() => {
                   insert_Into_Array("OVA", format);
                 }}
               >
                 OVA
-                {format.includes("OVA") && <MdVerified />}
+                {format.includes("OVA") && <FaCheckCircle />}
               </button>
               <button
+                className="format_btn"
                 onClick={() => {
                   insert_Into_Array("ONA", format);
                 }}
               >
                 ONA
-                {format.includes("ONA") && <MdVerified />}
+                {format.includes("ONA") && <FaCheckCircle />}
               </button>
             </section>
           )}
