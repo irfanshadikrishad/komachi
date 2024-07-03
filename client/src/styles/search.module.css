@@ -34,6 +34,7 @@
   color: var(--text);
   background-color: var(--secondary);
   cursor: pointer;
+  overflow: hidden;
 }
 .selector svg {
   font-size: 1rem;
@@ -116,4 +117,60 @@
 }
 .billboard_Wrapper {
   padding-bottom: 20px;
+}
+.list_Wrapper {
+  position: relative;
+}
+.genre_List {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 1;
+  width: 208px;
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 4px;
+  top: 62px;
+  left: 0;
+}
+.genre_List > button {
+  font-size: 0.8rem;
+  border: none;
+  padding: 8px 0;
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.genre_List > button:hover {
+  color: var(--primary);
+  background-color: var(--background);
+}
+.arrays {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+.array {
+  font-size: 0.7rem;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  background-color: var(--background);
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+.array > button {
+  border: none;
+  color: tomato;
+  background-color: transparent;
 }
