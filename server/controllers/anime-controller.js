@@ -125,21 +125,38 @@ const steamingServerSources = async (req, res) => {
 
 const advanced_Search = async (req, res) => {
   try {
-    const { query, type, page, perPage, format, sort, genres, year, season } =
+    let { query, type, page, perPage, format, sort, genres, year, season } =
       await req.body;
-    const result = await anilist.advancedSearch(
-      query,
-      type,
-      page,
-      perPage,
-      format,
-      sort,
-      genres,
-      undefined, // id not preferred
-      year,
-      season
-    );
-    res.status(200).json(result.results);
+    // console.log(await req.body);
+    if (query === "") {
+      const result = await anilist.advancedSearch(
+        undefined,
+        type,
+        page,
+        perPage,
+        format,
+        sort,
+        genres,
+        undefined, // id not preferred
+        year,
+        season
+      );
+      res.status(200).json(result.results);
+    } else {
+      const result = await anilist.advancedSearch(
+        query,
+        type,
+        page,
+        perPage,
+        format,
+        sort,
+        genres,
+        undefined, // id not preferred
+        year,
+        season
+      );
+      res.status(200).json(result.results);
+    }
   } catch (error) {
     console.log(chalk.magenta(error.message));
     res.status(400).json({ error: error.message });
