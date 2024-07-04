@@ -1,29 +1,30 @@
-import { useEffect, useState, useRef, useCallback } from "react";
-import { useParams, NavLink, useLocation, Link } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
 import { Helmet } from "react-helmet";
-import Loader from "../components/Loader.jsx";
 import styles from "../styles/search.module.css";
 // ICONS
 import { RiSearchLine } from "react-icons/ri";
 import { IoChevronDown } from "react-icons/io5";
-import { MdTune, MdVerified } from "react-icons/md";
-import { FaCheckCircle } from "react-icons/fa";
+import { MdTune } from "react-icons/md";
 // Components
 import Card from "../components/Card.jsx";
+import GenreButton from "../components/GenreButton.jsx";
+import FormatButton from "../components/FormatButton.jsx";
 
 export default function Search() {
   const { SERVER } = useAuth();
   const { search } = useLocation();
   const location = new URLSearchParams(search);
   const [query, setQuery] = useState(
-    location.get("query") ? location.get("query") : ""
+    location.get("query") ? location.get("query") : undefined
   );
   const [searched, setSearched] = useState([]);
   const [trending, setTrending] = useState([]);
   const [popular, setPopular] = useState([]);
   // Advance Search Open/Close
   const [isFormatOpen, setIsFormatOpen] = useState(false);
+  const [isGenresOpen, setIsGenresOpen] = useState(false);
   // Advance Search States
   const [year, setYear] = useState(undefined);
   const [season, setSeason] = useState(undefined);
@@ -37,6 +38,9 @@ export default function Search() {
     if (event.target.className !== "format_btn") {
       setIsFormatOpen(false);
     }
+    if (event.target.className !== "genre_btn") {
+      setIsGenresOpen(false);
+    }
   };
 
   const getSearched = async (e) => {
@@ -49,6 +53,7 @@ export default function Search() {
           format.length > 0
             ? format
             : ["TV", "TV_SHORT", "SPECIAL", "MOVIE", "OVA", "ONA"],
+        genres: genres.length > 0 ? genres : undefined,
       }),
     });
     const response = await request.json();
@@ -98,15 +103,6 @@ export default function Search() {
     }
   };
 
-  function insert_Into_Array(toInsertString, arrayToBeInsertedTo) {
-    setFormat((prevFormat) => {
-      if (!prevFormat.includes(toInsertString)) {
-        return [...prevFormat, toInsertString];
-      }
-      return prevFormat;
-    });
-  }
-
   useEffect(() => {
     getTrending();
     getPopular();
@@ -119,7 +115,7 @@ export default function Search() {
 
   useEffect(() => {
     getSearched();
-  }, [query, format]);
+  }, [query, format, genres]);
   return (
     <section className="container">
       <Helmet>
@@ -151,12 +147,116 @@ export default function Search() {
             />
           </div>
         </section>
-        <section>
+        <section className={styles.list_Wrapper}>
           <p className={styles.selector_Title}>Genres</p>
-          <button className={styles.selector}>
-            <p>Any</p>
+          <button
+            className={styles.selector}
+            onClick={() => {
+              setIsGenresOpen(true);
+            }}
+          >
+            <section ref={formatRef} className={styles.arrays}>
+              {genres.length > 0 ? (
+                genres.map((gnr, index) => {
+                  return (
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation(); // this stops it from closing dropdown
+                        //  delete format from list
+                        setGenres(genres.filter((item) => item !== gnr));
+                      }}
+                      key={index}
+                      className={styles.array}
+                    >
+                      <p>{gnr}</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>Any</p>
+              )}
+            </section>
             <IoChevronDown />
           </button>
+          {isGenresOpen && (
+            <section className={styles.genre_List}>
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Action"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Adventure"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Horror"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Cars"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Comedy"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Drama"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Fantasy"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Mecha"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Mystery"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Sci-Fi"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Psychological"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Romance"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Sports"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Supernatural"}
+              />
+              <GenreButton
+                genres={genres}
+                setGenres={setGenres}
+                genre={"Thriller"}
+              />
+            </section>
+          )}
         </section>
         <section>
           <p className={styles.selector_Title}>Year</p>
@@ -205,75 +305,49 @@ export default function Search() {
           </button>
           {isFormatOpen && (
             <section className={styles.genre_List}>
-              <button
-                className="format_btn"
-                onClick={() => {
-                  insert_Into_Array("TV", format);
-                }}
-              >
-                TV Show
-                {format.includes("TV") && <FaCheckCircle />}
-              </button>
-              <button
-                className="format_btn"
-                onClick={() => {
-                  insert_Into_Array("TV_SHORT", format);
-                }}
-              >
-                TV Short
-                {format.includes("TV_SHORT") && <FaCheckCircle />}
-              </button>
-              <button
-                className="format_btn"
-                onClick={() => {
-                  insert_Into_Array("MOVIE", format);
-                }}
-              >
-                Movie
-                {format.includes("MOVIE") && <FaCheckCircle />}
-              </button>
-              <button
-                className="format_btn"
-                onClick={() => {
-                  insert_Into_Array("SPECIAL", format);
-                }}
-              >
-                Special
-                {format.includes("SPECIAL") && <FaCheckCircle />}
-              </button>
-              <button
-                className="format_btn"
-                onClick={() => {
-                  insert_Into_Array("OVA", format);
-                }}
-              >
-                OVA
-                {format.includes("OVA") && <FaCheckCircle />}
-              </button>
-              <button
-                className="format_btn"
-                onClick={() => {
-                  insert_Into_Array("ONA", format);
-                }}
-              >
-                ONA
-                {format.includes("ONA") && <FaCheckCircle />}
-              </button>
+              <FormatButton name={"TV"} format={format} setFormat={setFormat} />
+              <FormatButton
+                name={"TV_SHORT"}
+                format={format}
+                setFormat={setFormat}
+              />
+              <FormatButton
+                name={"MOVIE"}
+                format={format}
+                setFormat={setFormat}
+              />
+              <FormatButton
+                name={"SPECIAL"}
+                format={format}
+                setFormat={setFormat}
+              />
+              <FormatButton
+                name={"OVA"}
+                format={format}
+                setFormat={setFormat}
+              />
+              <FormatButton
+                name={"ONA"}
+                format={format}
+                setFormat={setFormat}
+              />
             </section>
           )}
         </section>
         <section>
-          <button className={styles.options}>{<MdTune />}</button>
+          <button className={styles.options} disabled>
+            {<MdTune />}
+          </button>
         </section>
       </form>
 
-      {query ? (
+      {searched.length > 0 ? (
         <section className={styles.billboard_Wrapper}>
           <section className={styles.billboard_Main}>
             <div className={styles.billboard_HeaderMain}>
-              <p
-                className={styles.billboard_Header}
-              >{`Search result for '${query}'`}</p>
+              <p className={styles.billboard_Header}>{`Search result for '${
+                query !== undefined ? query : "(⊙x⊙;)"
+              }'`}</p>
             </div>
             <section className={styles.billboard}>
               {searched.map(({ id, image, totalEpisodes, title }) => {
