@@ -7,6 +7,7 @@ import styles from "../styles/search.module.css";
 import { RiSearchLine } from "react-icons/ri";
 import { IoChevronDown } from "react-icons/io5";
 import { MdTune } from "react-icons/md";
+import { FaCheckCircle } from "react-icons/fa";
 // Components
 import Card from "../components/Card.jsx";
 import GenreButton from "../components/GenreButton.jsx";
@@ -25,6 +26,7 @@ export default function Search() {
   // Advance Search Open/Close
   const [isFormatOpen, setIsFormatOpen] = useState(false);
   const [isGenresOpen, setIsGenresOpen] = useState(false);
+  const [isSeasonOpen, setIsSeasonOpen] = useState(false);
   // Advance Search States
   const [year, setYear] = useState(undefined);
   const [season, setSeason] = useState(undefined);
@@ -35,12 +37,17 @@ export default function Search() {
 
   // for format ouside click
   const handleClickOutside = (event) => {
-    if (event.target.className !== "format_btn") {
-      setIsFormatOpen(false);
-    }
-    if (event.target.className !== "genre_btn") {
-      setIsGenresOpen(false);
-    }
+    const classMap = {
+      format_btn: setIsFormatOpen,
+      genre_btn: setIsGenresOpen,
+      season_btn: setIsSeasonOpen,
+    };
+
+    Object.keys(classMap).forEach((key) => {
+      if (event.target.className !== key) {
+        classMap[key](false);
+      }
+    });
   };
 
   const getSearched = async (e) => {
@@ -265,12 +272,70 @@ export default function Search() {
             <IoChevronDown />
           </button>
         </section>
-        <section>
+        <section className={styles.list_Wrapper}>
           <p className={styles.selector_Title}>Season</p>
-          <button className={styles.selector}>
-            <p>Any</p>
+          <button
+            className={styles.selector}
+            onClick={() => {
+              setIsSeasonOpen(true);
+            }}
+          >
+            <section ref={formatRef} className={styles.arrays}>
+              {season !== undefined ? (
+                <div
+                  onClick={() => {
+                    setSeason(undefined);
+                  }}
+                  className={styles.array}
+                >
+                  <p>{season}</p>
+                </div>
+              ) : (
+                <p>Any</p>
+              )}
+            </section>
             <IoChevronDown />
           </button>
+          {isSeasonOpen && (
+            <section className={styles.genre_List}>
+              <button
+                className="season_btn"
+                onClick={() => {
+                  setSeason("SPRING");
+                }}
+              >
+                Spring
+                {season === "SPRING" && <FaCheckCircle />}
+              </button>
+              <button
+                className="season_btn"
+                onClick={() => {
+                  setSeason("SUMMER");
+                }}
+              >
+                Summer
+                {season === "SUMMER" && <FaCheckCircle />}
+              </button>
+              <button
+                className="season_btn"
+                onClick={() => {
+                  setSeason("FALL");
+                }}
+              >
+                Fall
+                {season === "FALL" && <FaCheckCircle />}
+              </button>
+              <button
+                className="season_btn"
+                onClick={() => {
+                  setSeason("WINTER");
+                }}
+              >
+                Winter
+                {season === "WINTER" && <FaCheckCircle />}
+              </button>
+            </section>
+          )}
         </section>
         <section className={styles.list_Wrapper}>
           <p className={styles.selector_Title}>Format</p>
