@@ -27,11 +27,13 @@ export default function Search() {
   const [isFormatOpen, setIsFormatOpen] = useState(false);
   const [isGenresOpen, setIsGenresOpen] = useState(false);
   const [isSeasonOpen, setIsSeasonOpen] = useState(false);
+  const [isYearOpen, setIsYearOpen] = useState(false);
   // Advance Search States
   const [year, setYear] = useState(undefined);
   const [season, setSeason] = useState(undefined);
   const [format, setFormat] = useState([]);
   const [genres, setGenres] = useState([]);
+  const [allYrs, setAllYrs] = useState([]);
   // References
   const formatRef = useRef(null);
 
@@ -41,6 +43,7 @@ export default function Search() {
       format_btn: setIsFormatOpen,
       genre_btn: setIsGenresOpen,
       season_btn: setIsSeasonOpen,
+      year_btn: setIsYearOpen,
     };
 
     Object.keys(classMap).forEach((key) => {
@@ -61,6 +64,8 @@ export default function Search() {
             ? format
             : ["TV", "TV_SHORT", "SPECIAL", "MOVIE", "OVA", "ONA"],
         genres: genres.length > 0 ? genres : undefined,
+        year: year ? year : undefined,
+        season: season ? season : undefined,
       }),
     });
     const response = await request.json();
@@ -110,9 +115,19 @@ export default function Search() {
     }
   };
 
+  const allYears = () => {
+    const current_Year = new Date().getFullYear();
+    const yrs = [current_Year + 1, current_Year];
+    for (let i = 1; i < 10; i++) {
+      yrs.push(current_Year - i);
+    }
+    setAllYrs(yrs);
+  };
+
   useEffect(() => {
     getTrending();
     getPopular();
+    allYears();
     // Outside click handler
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -122,7 +137,7 @@ export default function Search() {
 
   useEffect(() => {
     getSearched();
-  }, [query, format, genres]);
+  }, [query, format, genres, year, season]);
   return (
     <section className="container">
       <Helmet>
@@ -265,12 +280,49 @@ export default function Search() {
             </section>
           )}
         </section>
-        <section>
+        <section className={styles.list_Wrapper}>
           <p className={styles.selector_Title}>Year</p>
-          <button className={styles.selector}>
-            <p>Any</p>
+          <button
+            className={styles.selector}
+            onClick={() => {
+              setIsYearOpen(true);
+            }}
+          >
+            <section ref={formatRef} className={styles.arrays}>
+              {year !== undefined ? (
+                <div
+                  onClick={() => {
+                    setYear(undefined);
+                  }}
+                  className={styles.array}
+                >
+                  <p>{year}</p>
+                </div>
+              ) : (
+                <p>Any</p>
+              )}
+            </section>
             <IoChevronDown />
           </button>
+          {isYearOpen && (
+            <section className={styles.genre_List}>
+              {allYrs &&
+                allYrs.map((alyrs, i) => {
+                  return (
+                    <button
+                      key={i}
+                      className="year_btn"
+                      onClick={() => {
+                        setYear(alyrs);
+                      }}
+                    >
+                      {alyrs}
+                      {year === alyrs && <FaCheckCircle />}
+                    </button>
+                  );
+                })}
+            </section>
+          )}
         </section>
         <section className={styles.list_Wrapper}>
           <p className={styles.selector_Title}>Season</p>
