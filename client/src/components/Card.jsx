@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/search.module.css";
+import { slisor } from "../utils/workers";
 
 export default function Card({ id, image, title, totalEpisodes }) {
   return (
@@ -17,10 +18,10 @@ export default function Card({ id, image, title, totalEpisodes }) {
       <p className={styles.billboard_Title}>
         {title.english
           ? title.english.length > 25
-            ? String(title.english).slice(0, 25)
+            ? slisor(String(title.english), 25)
             : title.english
           : title.romaji.length > 25
-          ? String(title.romaji).slice(0, 25)
+          ? slisor(String(title.romaji), 25)
           : title.romaji}
       </p>
 
