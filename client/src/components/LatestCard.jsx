@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
+import { slisor } from "../utils/workers.js";
 
 export default function LatestCard({ id, image, title, currentEpisode }) {
   const { defaultPoster } = useAuth();
@@ -19,7 +20,7 @@ export default function LatestCard({ id, image, title, currentEpisode }) {
         }}
         draggable="false"
       />
-      <p className="latestTitle">{title}</p>
+      <p className="latestTitle">{slisor(title, 34)}</p>
       <p className="latestEpisodeNumber">EP {currentEpisode}</p>
     </NavLink>
   );
