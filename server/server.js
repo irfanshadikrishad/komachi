@@ -3,8 +3,10 @@ import chalk from "chalk";
 import express from "express";
 import cors from "cors";
 import animeRouter from "./routes/anime-router.js";
+import database from "./utils/database.js";
 
 config();
+database();
 const PORT = process.env.PORT || 3001;
 const app = express();
 

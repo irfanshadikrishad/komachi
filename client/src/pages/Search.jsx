@@ -69,7 +69,7 @@ export default function Search() {
       }),
     });
     const response = await request.json();
-    // console.log(response);
+
     if (request.status === 200) {
       setSearched(response);
     } else {
@@ -467,12 +467,12 @@ export default function Search() {
               }'`}</p>
             </div>
             <section className={styles.billboard}>
-              {searched.map(({ id, image, totalEpisodes, title }) => {
+              {searched.map(({ anilistId, poster, totalEpisodes, title }) => {
                 return (
                   <Card
-                    key={id}
-                    id={id}
-                    image={image}
+                    key={anilistId}
+                    id={anilistId}
+                    image={poster}
                     totalEpisodes={totalEpisodes}
                     title={title}
                   />

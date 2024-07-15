@@ -33,30 +33,30 @@ export default function Streaming() {
   const getStreamLink = async (episodeId) => {
     try {
       if (episodeId) {
-        // Make the fetch request
-        const request = await fetch(`${SERVER}/api/v1/anime/stream`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ episodeId }),
-        });
-
-        const response = await request.json();
-
-        // Handle response
-        if (request.status === 200) {
-          // Make the default quality to stream
-          setStreamLink(response.sources[response.sources.length - 1].url);
-          setCurrentEpisode(episodeId);
-          setEpisodeDownloadLink(response.download);
-          // Get Sources
-          await getServerSources(episodeId);
+        // New Method
+        if (episodeId.includes("dub")) {
+          dubEpisodes.map(async (eps) => {
+            if (episodeId === eps.id) {
+              setStreamLink(
+                eps.sources.sources[eps.sources.sources.length - 1].url
+              );
+              setEpisodeDownloadLink(eps.sources.sources.download);
+              setCurrentEpisode(eps.id);
+              await getServerSources(eps.id);
+            }
+          });
         } else {
-          if (Number(episodeId) > episodes.length) {
-            await getStreamLink(episodes[0]?.id);
-          } else {
-            // If it falls between episode range, it should work
-            await getStreamLink(episodes[Number(episodeId) - 1]?.id);
-          }
+          episodes.map(async (eps) => {
+            if (episodeId === eps.id) {
+              setStreamLink(
+                eps.sources.sources[eps.sources.sources.length - 1].url
+              );
+              setEpisodeDownloadLink(eps.sources.sources.download);
+              setCurrentEpisode(eps.id);
+            }
+            // Get External Sources | eg: Vidstreaming, Gogo, Streamwish ...
+            await getServerSources(eps.id);
+          });
         }
       }
     } catch (error) {
@@ -72,19 +72,16 @@ export default function Streaming() {
         body: JSON.stringify({ animeId }),
       });
       const response = await request.json();
+
       if (request.status === 200) {
         setNextAiringTime(response.nextAiringEpisode);
         setAnimeInfo(response);
-        setEpisodes(
-          await getSubEpisodesFromGoGo(SERVER, response.episodes[0]?.id)
-        );
-        setDubEpisodes(
-          await getDubEpisodesFromGoGo(SERVER, response.episodes[0]?.id)
-        ); // Get the dub episodes
+        setEpisodes(response.sub_episodes);
+        setDubEpisodes(response.dub_episodes); // Get the dub episodes
         getSkipTime(1, response.malId);
         // For specific episodes
         if (providedEpisodeId) {
-          const episodePrefix = response.episodes[0].id;
+          const episodePrefix = response.sub_episodes[0].id;
           let unicornId = episodePrefix.split("-");
           unicornId.pop(); // removing initial episode id
           unicornId = unicornId.join("-");
@@ -96,8 +93,8 @@ export default function Streaming() {
             getStreamLink(unicornId);
           }
         } else {
-          if (response.episodes.length > 0) {
-            getStreamLink(response.episodes[0].id);
+          if (response.sub_episodes.length > 0) {
+            getStreamLink(response.sub_episodes[0].id);
           } else {
             setNoEpisodes(true);
           }
@@ -197,7 +194,7 @@ export default function Streaming() {
           <Loader />
         )}
 
-        {animeInfo.id && <Info animeInfo={animeInfo} />}
+        {animeInfo.anilistId && <Info animeInfo={animeInfo} />}
       </section>
       <Recommendations
         recommendations={

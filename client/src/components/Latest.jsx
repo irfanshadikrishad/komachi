@@ -34,19 +34,17 @@ export default function Latest() {
       )}
       <div className="latestContainer">
         {latest ? (
-          latest.map(
-            ({ id, image, title, currentEpisode, totalEpisodes }, index) => {
-              return (
-                <LatestCard
-                  key={index}
-                  id={id}
-                  image={image}
-                  title={title.english ? title.english : title.romaji}
-                  currentEpisode={currentEpisode}
-                />
-              );
-            }
-          )
+          latest.map(({ anilistId, poster, title, sub_episodes }, index) => {
+            return (
+              <LatestCard
+                key={index}
+                id={anilistId}
+                image={poster}
+                title={title.english ? title.english : title.romaji}
+                currentEpisode={sub_episodes.length}
+              />
+            );
+          })
         ) : (
           <Loader />
         )}

@@ -9,8 +9,8 @@ const Info = memo(({ animeInfo }) => {
         <div className="streamingV2_PosterContainer">
           <img
             className="streamingV2_Poster"
-            src={animeInfo.image}
-            alt={animeInfo.id}
+            src={animeInfo.poster}
+            alt={animeInfo.anilistId}
             draggable="false"
           />
         </div>
