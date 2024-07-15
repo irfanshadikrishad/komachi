@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import { ANIME, META } from "@consumet/extensions";
+import Anime from "../model/anime.js";
 
 const gogoanime = new ANIME.Gogoanime();
 const anilist = new META.Anilist();
@@ -28,34 +29,10 @@ const popular = async (req, res) => {
 
 const recent_Episodes = async (req, res) => {
   try {
-    const {
-      query,
-      type,
-      page,
-      perPage,
-      format,
-      sort,
-      genres,
-      year,
-      status,
-      season,
-    } = await req.body;
-    const result = await anilist.advancedSearch(
-      query,
-      type,
-      page,
-      27,
-      "TV",
-      ["UPDATED_AT_DESC"],
-      genres,
-      undefined,
-      year,
-      "RELEASING"
-    );
-    res.status(200).json(result.results);
+    const recent = await Anime.find({}).sort({ updatedAt: -1 }).limit(25);
+    res.status(200).json(recent);
   } catch (error) {
-    console.log(chalk.magenta(error.message));
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -73,11 +50,15 @@ const dub_Episodes = async (req, res) => {
 const anime_Info = async (req, res) => {
   try {
     const { animeId } = await req.body;
-    const info = await anilist.fetchAnimeInfo(animeId);
-    res.status(200).json(info);
+    const info = await Anime.findOne({ anilistId: animeId });
+    if (info) {
+      res.status(200).json(info);
+    } else {
+      res.status(404).json({ message: `not found` });
+    }
   } catch (error) {
     console.log(chalk.magenta(`anime_Info`, error));
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -127,36 +108,14 @@ const advanced_Search = async (req, res) => {
   try {
     let { query, type, page, perPage, format, sort, genres, year, season } =
       await req.body;
-    // console.log(await req.body);
-    if (query === "") {
-      const result = await anilist.advancedSearch(
-        undefined,
-        type,
-        page,
-        perPage,
-        format,
-        sort,
-        genres,
-        undefined, // id not preferred
-        year,
-        season
-      );
-      res.status(200).json(result.results);
-    } else {
-      const result = await anilist.advancedSearch(
-        query,
-        type,
-        page,
-        perPage,
-        format,
-        sort,
-        genres,
-        undefined, // id not preferred
-        year,
-        season
-      );
-      res.status(200).json(result.results);
-    }
+    const results = await Anime.find({
+      $or: [
+        { "title.english": { $regex: query, $options: "i" } },
+        { "title.romaji": { $regex: query, $options: "i" } },
+        { "title.native": { $regex: query, $options: "i" } },
+      ],
+    }).limit(60);
+    res.status(200).json(results);
   } catch (error) {
     console.log(chalk.magenta(error.message));
     res.status(400).json({ error: error.message });
@@ -198,55 +157,10 @@ const sub_Episodes = async (req, res) => {
 
 const get_Board = async (req, res) => {
   try {
-    const trnd = await anilist.fetchTrendingAnime(1, 5);
-    const boardPromises = trnd.results.map(async ({ id }) => {
-      const raw_data = await anilist.fetchAnimeInfo(id);
-
-      if (
-        raw_data.episodes &&
-        raw_data.episodes.length > 0 &&
-        raw_data.episodes[0].id
-      ) {
-        const episodeId = raw_data.episodes[0].id
-          .split("-")
-          .slice(0, -2)
-          .join("-");
-
-        const dub_episodeId = episodeId + "-dub";
-
-        const getSub = await gogoanime.fetchAnimeInfo(episodeId);
-
-        let getDub = null;
-        try {
-          getDub = await gogoanime.fetchAnimeInfo(dub_episodeId);
-        } catch (error) {
-          // console.log(`getting dub failed for ${dub_episodeId}`);
-        }
-
-        return {
-          id: raw_data.id,
-          title:
-            raw_data.title && raw_data.title.english
-              ? raw_data.title.english
-              : raw_data.title.romaji,
-          description: raw_data.description,
-          cover: raw_data.cover,
-          totalEpisodes: raw_data.totalEpisodes,
-          genres: raw_data.genres,
-          status: raw_data.status,
-          totalSub: getSub ? getSub.episodes.length : 0,
-          totalDub: getDub ? getDub.episodes.length : 0,
-        };
-      }
-      return null; // Return null if conditions are not met
-    });
-
-    const boardResults = await Promise.all(boardPromises);
-    const board = boardResults.filter(Boolean); // Filter out null entries
+    const board = await Anime.find({}).sort({ updatedAt: -1 }).limit(5);
     res.status(200).json(board);
   } catch (error) {
-    console.log(error.message);
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 

@@ -63,7 +63,11 @@ export default function Board() {
                   }}
                 ></div>
                 <div className={styles.elem}>
-                  <h1 className={styles.title}>{bored.title}</h1>
+                  <h1 className={styles.title}>
+                    {bored.title.english
+                      ? bored.title.english
+                      : bored.title.romaji}
+                  </h1>
                   <section className={styles.status_Main}>
                     <div className={styles.status_Board}>
                       <button>
@@ -85,14 +89,14 @@ export default function Board() {
                       <button>
                         <FaClosedCaptioning />
                       </button>
-                      <p>{bored.totalSub}</p>
+                      <p>{bored.sub_episodes.length}</p>
                     </div>
-                    {bored.totalDub > 0 && (
+                    {bored.dub_episodes.length > 0 && (
                       <div className={styles.episode_stats}>
                         <button>
                           <TbMicrophoneFilled />
                         </button>
-                        <p>{bored.totalDub}</p>
+                        <p>{bored.dub_episodes.length}</p>
                       </div>
                     )}
                   </section>
@@ -105,7 +109,7 @@ export default function Board() {
                   </p>
                   <div className={styles.boardBtns}>
                     <a
-                      href={`/streaming/${bored?.id}`}
+                      href={`/streaming/${bored?.anilistId}`}
                       className={styles.watch}
                     >
                       {<FaRegCirclePlay />} Watch now
