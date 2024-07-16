@@ -12,6 +12,7 @@ import {
   random_Anime,
   sub_Episodes,
   get_Board,
+  stats,
 } from "../controllers/anime-controller.js";
 
 const router = Router();
@@ -28,5 +29,6 @@ router.post("/advance-search", advanced_Search);
 router.post("/sub-episodes", sub_Episodes);
 router.get("/random", random_Anime);
 router.get("/board", get_Board);
+router.get("/stats", stats);
 
 export default router;
