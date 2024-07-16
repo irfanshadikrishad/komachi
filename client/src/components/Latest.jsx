@@ -5,7 +5,7 @@ import Loader from "./Loader.jsx";
 
 export default function Latest() {
   const { SERVER } = useAuth();
-  const [latest, setLatest] = useState(null);
+  const [latest, setLatest] = useState([]);
 
   const getLatest = async () => {
     const request = await fetch(`${SERVER}/api/v1/anime/recent`, {
@@ -33,7 +33,7 @@ export default function Latest() {
         </div>
       )}
       <div className="latestContainer">
-        {latest ? (
+        {latest.length > 0 ? (
           latest.map(({ anilistId, poster, title, sub_episodes }, index) => {
             return (
               <LatestCard
