@@ -196,11 +196,11 @@ export default function Streaming() {
 
         {animeInfo.anilistId && <Info animeInfo={animeInfo} />}
       </section>
-      <Recommendations
+      {/* <Recommendations
         recommendations={
           animeInfo.recommendations && animeInfo.recommendations.slice(0, 13)
         }
-      />
+      /> */}
     </section>
   );
 }
