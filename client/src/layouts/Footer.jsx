@@ -18,7 +18,7 @@ export default function Footer() {
       const response = await request.json();
 
       if (request.status === 200) {
-        navigate(`/streaming/${String(response.id)}`);
+        navigate(`/streaming/${String(response[0].anilistId)}`);
       } else {
         console.log(response);
       }
@@ -26,6 +26,7 @@ export default function Footer() {
       console.log(error);
     }
   };
+
   return (
     <section className={styles.footer_main}>
       <section className={`container ${styles.footer}`}>
@@ -53,6 +54,9 @@ export default function Footer() {
             </span>
             <span className={styles.link_wrapper}>
               <Link to="/search/popular">Popular</Link>
+            </span>
+            <span className={styles.link_wrapper}>
+              <Link to="/stats">Stats</Link>
             </span>
           </div>
           <FooterFollow />

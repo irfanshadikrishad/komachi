@@ -124,17 +124,11 @@ const advanced_Search = async (req, res) => {
 
 const random_Anime = async (req, res) => {
   try {
-    let r;
-
-    async function getRandom() {
-      r = await anilist.fetchRandomAnime();
-    }
-
-    do {
-      await getRandom();
-    } while (!r.episodes || r.episodes.length === 0);
-
-    res.status(200).json(r);
+    const total_Animes = await Anime.find({});
+    const random_number =
+      Math.floor(Math.random() * (total_Animes.length - 1 + 1)) + 1;
+    const random_Anime = await Anime.find({}).skip(random_number).limit(1);
+    res.status(200).json(random_Anime);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -164,6 +158,15 @@ const get_Board = async (req, res) => {
   }
 };
 
+const stats = async (req, res) => {
+  try {
+    const totalAnimes = await Anime.find({});
+    res.status(200).json({ total_animes: totalAnimes.length });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 export {
   trending,
   recent_Episodes,
@@ -177,4 +180,5 @@ export {
   random_Anime,
   sub_Episodes,
   get_Board,
+  stats,
 };
