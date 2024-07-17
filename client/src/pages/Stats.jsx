@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth.jsx";
 import Loader from "../components/Loader.jsx";
+import styles from "../styles/stats.module.css";
 
 export default function Stats() {
   const { SERVER } = useAuth();
@@ -35,7 +36,15 @@ export default function Stats() {
       {loading ? (
         <Loader />
       ) : (
-        <p>Total Anime: {stats?.total_animes ? stats.total_animes : 0}</p>
+        <section className={styles.stats_Cards}>
+          <div
+            className={styles.stats_Card}
+            style={{ backgroundImage: "url(kanna.png)" }}
+          >
+            <p>Total Animes</p>
+            <h1>{stats?.total_animes}</h1>
+          </div>
+        </section>
       )}
     </section>
   );

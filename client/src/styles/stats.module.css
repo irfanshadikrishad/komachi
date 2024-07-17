@@ -1,0 +1,16 @@
+.stats_Cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+.stats_Card {
+  padding: 10px;
+  background-color: var(--secondary);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: top right;
+}
