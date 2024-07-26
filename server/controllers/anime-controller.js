@@ -108,14 +108,18 @@ const advanced_Search = async (req, res) => {
   try {
     let { query, type, page, perPage, format, sort, genres, year, season } =
       await req.body;
-    const results = await Anime.find({
-      $or: [
-        { "title.english": { $regex: query, $options: "i" } },
-        { "title.romaji": { $regex: query, $options: "i" } },
-        { "title.native": { $regex: query, $options: "i" } },
-      ],
-    }).limit(60);
-    res.status(200).json(results);
+    if (query) {
+      const results = await Anime.find({
+        $or: [
+          { "title.english": { $regex: query, $options: "i" } },
+          { "title.romaji": { $regex: query, $options: "i" } },
+          { "title.native": { $regex: query, $options: "i" } },
+        ],
+      }).limit(60);
+      res.status(200).json(results);
+    } else {
+      res.status(200).json([]);
+    }
   } catch (error) {
     console.log(chalk.magenta(error.message));
     res.status(400).json({ error: error.message });

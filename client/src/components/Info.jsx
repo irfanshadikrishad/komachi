@@ -13,6 +13,7 @@ const Info = memo(({ animeInfo }) => {
             alt={animeInfo.anilistId}
             draggable="false"
           />
+          {animeInfo.isAdult === "true" && <p className="isAdult">18+</p>}
         </div>
         <section>
           <h1 className="streaming_title">
@@ -32,21 +33,21 @@ const Info = memo(({ animeInfo }) => {
               <span className="blob">Total Episodes :</span>{" "}
               {animeInfo.totalEpisodes}
             </p>
-            {animeInfo.releaseDate && (
+            {animeInfo.release_date && (
               <p className="seperator">
-                <span className="blob">Released:</span> {animeInfo.releaseDate}{" "}
+                <span className="blob">Released:</span> {animeInfo.release_date}{" "}
                 {animeInfo.season}
               </p>
             )}
             <p className="seperator">
-              <span className="blob">Type :</span> {animeInfo.type}
+              <span className="blob">Type :</span> {animeInfo.format}
             </p>
-            {animeInfo.startDate && (
+            {animeInfo.airing_start && (
               <p className="seperator">
                 <span className="blob">Airing Date :</span>
-                {` ${Object.values(animeInfo.startDate).join("/")} ${
-                  animeInfo.endDate.year
-                    ? "– " + Object.values(animeInfo.endDate).join("/")
+                {` ${Object.values(animeInfo.airing_start).join("/")} ${
+                  animeInfo.airing_end.year
+                    ? "– " + Object.values(animeInfo.airing_end).join("/")
                     : ""
                 }`}
               </p>
@@ -54,6 +55,10 @@ const Info = memo(({ animeInfo }) => {
             <p className="seperator">
               <span className="blob">Studios:</span>{" "}
               {animeInfo.studios && animeInfo.studios.join(" • ")}
+            </p>
+            <p className="seperator">
+              <span className="blob">Origin:</span>{" "}
+              {animeInfo.origin && animeInfo.origin}
             </p>
             <p className="seperator">
               <span className="blob">Synonyms:</span>{" "}

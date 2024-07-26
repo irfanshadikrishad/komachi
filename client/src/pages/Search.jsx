@@ -467,17 +467,20 @@ export default function Search() {
               }'`}</p>
             </div>
             <section className={styles.billboard}>
-              {searched.map(({ anilistId, poster, totalEpisodes, title }) => {
-                return (
-                  <Card
-                    key={anilistId}
-                    id={anilistId}
-                    image={poster}
-                    totalEpisodes={totalEpisodes}
-                    title={title}
-                  />
-                );
-              })}
+              {searched.map(
+                ({ isAdult, anilistId, poster, totalEpisodes, title }) => {
+                  return (
+                    <Card
+                      key={anilistId}
+                      id={anilistId}
+                      image={poster}
+                      totalEpisodes={totalEpisodes}
+                      title={title}
+                      isAdult={isAdult}
+                    />
+                  );
+                }
+              )}
             </section>
           </section>
         </section>

@@ -106,14 +106,23 @@
   color: var(--text);
   text-decoration: none;
 }
-.episode {
+.tags {
   position: absolute;
   top: 10px;
   left: 10px;
-  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.tag {
   background-color: var(--background);
-  padding: 1px 5px;
+  font-size: 0.7rem;
   border-radius: 4px;
+  padding: 1px 5px;
+}
+.adult {
+  color: var(--adult);
+  background-color: var(--background);
 }
 .billboard_Wrapper {
   padding-bottom: 20px;

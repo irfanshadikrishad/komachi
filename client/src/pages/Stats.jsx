@@ -44,6 +44,13 @@ export default function Stats() {
             <p>Total Animes</p>
             <h1>{stats?.total_animes}</h1>
           </div>
+          <div
+            className={styles.stats_Card}
+            style={{ backgroundImage: "url(fern.png)" }}
+          >
+            <p>New episodes</p>
+            <h1>0</h1>
+          </div>
         </section>
       )}
     </section>

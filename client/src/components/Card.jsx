@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "../styles/search.module.css";
 import { slisor } from "../utils/workers";
 
-export default function Card({ id, image, title, totalEpisodes }) {
+export default function Card({ id, image, title, totalEpisodes, isAdult }) {
   return (
     <Link
       to={`/streaming/${id}`}
@@ -25,9 +25,14 @@ export default function Card({ id, image, title, totalEpisodes }) {
           : title.romaji}
       </p>
 
-      <p className={styles.episode}>
-        {totalEpisodes ? `EPS ${totalEpisodes}` : `Upcoming`}
-      </p>
+      <div className={styles.tags}>
+        <p className={styles.tag}>
+          {totalEpisodes ? `EPS ${totalEpisodes}` : `Upcoming`}
+        </p>
+        {isAdult === "true" && (
+          <p className={`${styles.tag} ${styles.adult}`}>18+</p>
+        )}
+      </div>
     </Link>
   );
 }
