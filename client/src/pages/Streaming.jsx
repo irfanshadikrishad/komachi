@@ -81,22 +81,19 @@ export default function Streaming() {
         getSkipTime(1, response.malId);
         // For specific episodes
         if (providedEpisodeId) {
-          const episodePrefix = response.sub_episodes[0].id;
-          let unicornId = episodePrefix.split("-");
-          unicornId.pop(); // removing initial episode id
-          unicornId = unicornId.join("-");
-          unicornId = unicornId + `-${providedEpisodeId}`;
-          // If overwriting results in repetation of words
-          if (hasRepeatedWords(unicornId)) {
-            getStreamLink(providedEpisodeId);
-          } else {
-            getStreamLink(unicornId);
+          if (providedEpisodeId === 0) {
+            providedEpisodeId = 1;
+          }
+          try {
+            getStreamLink(response.sub_episodes[providedEpisodeId - 1].id);
+          } catch (error) {
+            getStreamLink(response.dub_episodes[0].id);
           }
         } else {
-          if (response.sub_episodes.length > 0) {
+          try {
             getStreamLink(response.sub_episodes[0].id);
-          } else {
-            setNoEpisodes(true);
+          } catch (error) {
+            getStreamLink(response.dub_episodes[0].id);
           }
         }
       } else {

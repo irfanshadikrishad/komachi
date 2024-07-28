@@ -35,14 +35,21 @@ export default function Latest() {
       <div className="latestContainer">
         {latest.length > 0 ? (
           latest.map(
-            ({ anilistId, poster, title, sub_episodes, isAdult }, index) => {
+            (
+              { anilistId, poster, title, sub_episodes, dub_episodes, isAdult },
+              index
+            ) => {
               return (
                 <LatestCard
                   key={index}
                   id={anilistId}
                   image={poster}
                   title={title.english ? title.english : title.romaji}
-                  currentEpisode={sub_episodes.length}
+                  currentEpisode={
+                    sub_episodes.length
+                      ? sub_episodes.length
+                      : dub_episodes.length
+                  }
                   isAdult={isAdult}
                 />
               );

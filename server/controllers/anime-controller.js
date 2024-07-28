@@ -63,13 +63,13 @@ const anime_Info = async (req, res) => {
 };
 
 const streamingEpisodeLink = async (req, res) => {
+  const { episodeId } = await req.body;
   try {
-    const { episodeId } = await req.body;
     const streaminLinks = await gogoanime.fetchEpisodeSources(episodeId);
     res.status(200).json(streaminLinks);
   } catch (error) {
     console.log(chalk.magenta(`streamingEpisodeLink`, error));
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message, episodeId });
   }
 };
 
