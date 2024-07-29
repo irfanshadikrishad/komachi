@@ -92,6 +92,7 @@
 }
 .status_Main {
   display: flex;
+  flex-wrap: wrap;
   gap: 5px;
   margin-top: 10px;
   margin-bottom: 5px;
@@ -134,10 +135,10 @@
     font-size: 1rem;
   }
   .description {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     line-height: 14px;
   }
   .board {
-    filter: blur(5px);
+    filter: blur(1px);
   }
 }

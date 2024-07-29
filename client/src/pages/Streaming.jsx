@@ -5,12 +5,6 @@ import Player from "../components/Player.jsx";
 import Info from "../components/Info.jsx";
 import { Helmet } from "react-helmet";
 import Loader from "../components/Loader.jsx";
-import Recommendations from "../components/Recommendations.jsx";
-import { hasRepeatedWords } from "../utils/info_modifier.js";
-import {
-  getSubEpisodesFromGoGo,
-  getDubEpisodesFromGoGo,
-} from "../utils/episodes.js";
 
 export default function Streaming() {
   const { SERVER, getSkipTime } = useAuth();
@@ -193,11 +187,6 @@ export default function Streaming() {
 
         {animeInfo.anilistId && <Info animeInfo={animeInfo} />}
       </section>
-      {/* <Recommendations
-        recommendations={
-          animeInfo.recommendations && animeInfo.recommendations.slice(0, 13)
-        }
-      /> */}
     </section>
   );
 }

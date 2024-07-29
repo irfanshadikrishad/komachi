@@ -8,10 +8,10 @@ const anilist = new META.Anilist();
 const trending = async (req, res) => {
   try {
     const { page, perPage } = req.body;
-    const topAiring = await anilist.fetchTrendingAnime(page, perPage);
-    res.status(200).json(topAiring.results);
+    const results = await Anime.find().sort({ anilistId: 1 }).limit(perPage);
+    res.status(200).json(results);
   } catch (error) {
-    console.log(chalk.magenta("trending", error));
+    console.log(chalk.magenta(`trending`, error));
     res.status(400).json({ error: error.message });
   }
 };

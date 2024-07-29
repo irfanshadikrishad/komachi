@@ -37,12 +37,12 @@ export default function Trending() {
             <p className={styles.billboard_Header}>Trending</p>
           </div>
           <section className={styles.billboard}>
-            {trending.map(({ id, image, totalEpisodes, title }) => {
+            {trending.map(({ anilistId, poster, totalEpisodes, title }) => {
               return (
                 <Card
-                  key={id}
-                  id={id}
-                  image={image}
+                  key={anilistId}
+                  id={anilistId}
+                  image={poster}
                   totalEpisodes={totalEpisodes}
                   title={title}
                 />

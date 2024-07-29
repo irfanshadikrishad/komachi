@@ -54,4 +54,8 @@
   .follow {
     justify-content: flex-start;
   }
+  .footer_links {
+    flex-direction: row;
+    gap: 5px;
+  }
 }

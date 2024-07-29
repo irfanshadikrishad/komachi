@@ -89,6 +89,7 @@
 .billboard_Title {
   font-size: 0.9rem;
   line-height: 15px;
+  overflow-wrap: anywhere;
 }
 .billboard_Header {
   font-size: 1rem;
@@ -182,4 +183,20 @@
   border: none;
   color: tomato;
   background-color: transparent;
+}
+
+@media screen and (max-width: 768px) {
+  .billboard {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media screen and (max-width: 600px) {
+  .billboard {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (max-width: 425px) {
+  .billboard {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

@@ -928,7 +928,7 @@ video {
   }
 
   .latestContainer {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 
   .latestPoster {
@@ -987,7 +987,7 @@ video {
   }
 
   .latestContainer {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .searchContainerMain {
@@ -1030,6 +1030,9 @@ video {
 
   .streamingV2_Poster {
     width: 120px;
+  }
+  .latestContainer {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

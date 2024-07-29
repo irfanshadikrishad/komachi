@@ -37,12 +37,12 @@ export default function Popular() {
             <p className={styles.billboard_Header}>popular</p>
           </div>
           <section className={styles.billboard}>
-            {popular.map(({ id, image, totalEpisodes, title }) => {
+            {popular.map(({ anilistId, poster, totalEpisodes, title }) => {
               return (
                 <Card
-                  key={id}
-                  id={id}
-                  image={image}
+                  key={anilistId}
+                  id={anilistId}
+                  image={poster}
                   totalEpisodes={totalEpisodes}
                   title={title}
                 />

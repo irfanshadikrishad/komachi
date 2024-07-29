@@ -161,7 +161,7 @@ export default function Player({
                   className={styles.ed}
                   style={{
                     display: isMouseOver ? "inline" : "none",
-                    left: ED_LEFT ? `${ED_LEFT}%` : "16px",
+                    right: "16px",
                     width: `${Number(ED_WIDTH)}%`,
                   }}
                 ></div>
