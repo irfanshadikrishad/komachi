@@ -19,7 +19,7 @@ const trending = async (req, res) => {
 const popular = async (req, res) => {
   try {
     const { page, perPage } = req.body;
-    const { results } = await anilist.fetchPopularAnime(page, perPage);
+    const results = await Anime.find().sort({ anilistId: -1 }).limit(perPage);
     res.status(200).json(results);
   } catch (error) {
     console.log(chalk.magenta(`popular`, error));
@@ -29,7 +29,7 @@ const popular = async (req, res) => {
 
 const recent_Episodes = async (req, res) => {
   try {
-    const recent = await Anime.find({}).sort({ updatedAt: -1 }).limit(25);
+    const recent = await Anime.find({}).sort({ updatedAt: -1 }).limit(24);
     res.status(200).json(recent);
   } catch (error) {
     res.status(400).json({ message: error.message });

@@ -17,7 +17,7 @@ export default function Streaming() {
   const { animeId } = useParams();
   const { search } = useLocation();
   const location = new URLSearchParams(search);
-  const providedEpisodeId = location.get("eps")
+  let providedEpisodeId = location.get("eps")
     ? location.get("eps")
     : localStorage.getItem(animeId);
   const [animeInfo, setAnimeInfo] = useState({});
