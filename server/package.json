@@ -14,7 +14,7 @@
   "name": "server",
   "module": "server.js",
   "devDependencies": {
-    "@babel/core": "^7.24.9",
+    "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.2",
     "@babel/preset-modules": "^0.1.6",
     "@types/bun": "latest",
