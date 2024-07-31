@@ -19,7 +19,7 @@
     "react-player": "^2.16.0",
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
-    "swiper": "^11.1.4",
+    "swiper": "^11.1.9",
     "uniqolor": "^1.1.1"
   },
   "devDependencies": {
