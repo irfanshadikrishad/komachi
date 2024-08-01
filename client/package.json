@@ -17,7 +17,7 @@
     "react-helmet": "^6.1.0",
     "react-icons": "^5.2.1",
     "react-player": "^2.16.0",
-    "react-router-dom": "^6.23.1",
+    "react-router-dom": "^6.26.0",
     "react-toastify": "^10.0.5",
     "swiper": "^11.1.9",
     "uniqolor": "^1.1.1"
