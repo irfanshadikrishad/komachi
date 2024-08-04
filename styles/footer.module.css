@@ -14,15 +14,20 @@
   display: flex;
   flex-direction: column;
 }
-.link_wrapper > a {
+.link_wrapper > a,
+.link_wrapper > button {
   color: var(--color);
   text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
 }
-.link_wrapper > a:hover {
-  transform: translateX(-10px);
+.link_wrapper > button {
+  background-color: transparent;
+  border: none;
+}
+.link_wrapper > a:hover,
+.link_wrapper > button:hover {
   color: var(--primary);
-  transition: 0.2s;
-  transition-timing-function: ease-in;
 }
 .follow {
   display: flex;

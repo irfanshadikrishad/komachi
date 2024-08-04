@@ -185,6 +185,11 @@
   background-color: transparent;
 }
 
+@media screen and (max-width: 1024px) {
+  .billboard {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
 @media screen and (max-width: 768px) {
   .billboard {
     grid-template-columns: repeat(5, 1fr);
@@ -195,7 +200,7 @@
     grid-template-columns: repeat(4, 1fr);
   }
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 530px) {
   .billboard {
     grid-template-columns: repeat(3, 1fr);
   }

@@ -100,7 +100,9 @@ const Info: React.FC<InfoProps> = memo(({ animeInfo }) => {
             </p>
             <p className="seperator">
               <span className="blob">Total Episodes :</span>{" "}
-              {animeInfo.totalEpisodes}
+              {animeInfo.sub_episodes.length > 0
+                ? animeInfo.sub_episodes.length
+                : animeInfo.dub_episodes.length}
             </p>
             {animeInfo?.release_date && (
               <p className="seperator">

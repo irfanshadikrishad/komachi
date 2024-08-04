@@ -15,7 +15,7 @@ export default function Search() {
   const [query, setQuery] = useState(
     searchParams.get("query") ? searchParams.get("query") : null
   );
-  const [searched, setSearched] = useState([]);
+  const [searched, setSearched] = useState<any[]>([]);
   const [trending, setTrending] = useState([]);
   const [popular, setPopular] = useState([]);
 
@@ -87,7 +87,12 @@ export default function Search() {
     <>
       <Navbar />
       <section className="container">
-        <form onSubmit={(e) => e.preventDefault()} className={styles.filter}>
+        <form
+          onChange={(e) => {
+            e.preventDefault();
+          }}
+          className={styles.filter}
+        >
           <section>
             <p className={styles.selector_Title}>Search</p>
             <div className={styles.searchFieldContainer}>
@@ -112,12 +117,23 @@ export default function Search() {
               </div>
               <section className={styles.billboard}>
                 {searched.map(
-                  ({ isAdult, anilistId, poster, totalEpisodes, title }) => (
+                  ({
+                    isAdult,
+                    anilistId,
+                    poster,
+                    sub_episodes,
+                    dub_episodes,
+                    title,
+                  }) => (
                     <Card
                       key={anilistId}
                       id={anilistId}
                       image={poster}
-                      totalEpisodes={totalEpisodes}
+                      totalEpisodes={
+                        sub_episodes?.length > 0
+                          ? sub_episodes?.length
+                          : dub_episodes?.length
+                      }
                       title={title}
                       isAdult={isAdult}
                     />

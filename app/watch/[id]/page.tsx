@@ -176,6 +176,7 @@ export default function Streaming() {
         body: JSON.stringify({ episodeId }),
       });
       const response = await request.json();
+
       if (request.status === 200) {
         setSources(response);
       } else {

@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0 3px 0;
+  padding: 0 0 5px 0;
 }
 .streamingV2_DownloadIcon {
   font-size: 1.2rem;
@@ -15,7 +15,11 @@
 }
 .streamingV2_Download {
   text-decoration: none;
-  color: var(--color);
+  color: var(--primary);
+  font-size: 0.8rem;
+  background-color: var(--background);
+  padding: 2px 8px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   gap: 5px;

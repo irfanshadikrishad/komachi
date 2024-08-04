@@ -23,7 +23,7 @@ export default function LatestCard({
         }}
         draggable="false"
       />
-      <p className="latestTitle">{slisor(title, 34)}</p>
+      <p className="latestTitle">{slisor(title, 100)}</p>
       <div className="latest_tags">
         <p className="latest_tag">EP {currentEpisode}</p>
         {isAdult === "true" && <p className="latest_tag latest_adult">18+</p>}

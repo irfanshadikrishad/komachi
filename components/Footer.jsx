@@ -46,7 +46,7 @@ export default function Footer() {
               <Link href="/">Home</Link>
             </span>
             <span className={styles.link_wrapper}>
-              <a onClick={getRandom}>Random</a>
+              <button onClick={getRandom}>Random</button>
             </span>
             <span className={styles.link_wrapper}>
               <Link href="/search/trending">Trending</Link>

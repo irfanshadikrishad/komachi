@@ -853,7 +853,7 @@ video {
   }
 
   .latestContainer {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .latestPoster {
@@ -1023,9 +1023,11 @@ video {
   .streamingV2_Poster {
     width: 150px;
   }
-
   .profile_banner_inner {
     left: 30px;
+  }
+  .latestContainer {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1040,9 +1042,6 @@ video {
 
   .streamingV2_Poster {
     width: 120px;
-  }
-  .latestContainer {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 

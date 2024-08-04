@@ -17,11 +17,11 @@ export default function Card({ id, image, title, totalEpisodes, isAdult }) {
       />
       <p className={styles.billboard_Title}>
         {title.english
-          ? title.english.length > 25
-            ? slisor(String(title.english), 25)
+          ? title.english.length > 100
+            ? slisor(String(title.english), 100)
             : title.english
-          : title.romaji.length > 25
-          ? slisor(String(title.romaji), 25)
+          : title.romaji.length > 100
+          ? slisor(String(title.romaji), 100)
           : title.romaji}
       </p>
 
