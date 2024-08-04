@@ -4,6 +4,7 @@ import { TbMicrophoneFilled } from "react-icons/tb";
 import { FaClosedCaptioning } from "react-icons/fa6";
 import { CgMediaLive } from "react-icons/cg";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Ranking({ popular, trending }) {
   const [rank, setRank] = useState(popular);
@@ -34,7 +35,7 @@ export default function Ranking({ popular, trending }) {
         </div>
         <section className={styles.ranking_wrapper}>
           {rank[0]?.anilistId && (
-            <a href={`/streaming/${rank[0].anilistId}`}>
+            <Link href={`/watch/${rank[0].anilistId}`}>
               <div className={styles.rank1_container}>
                 {rank[0]?.poster && (
                   <img
@@ -81,7 +82,7 @@ export default function Ranking({ popular, trending }) {
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
           )}
           <section className={styles.other_ranks}>
             {rank.map(
@@ -100,8 +101,8 @@ export default function Ranking({ popular, trending }) {
                 if (index !== 0) {
                   return (
                     <div key={index + 1}>
-                      <a
-                        href={`/streaming/${anilistId}`}
+                      <Link
+                        href={`/watch/${anilistId}`}
                         className={styles.rank_Main_Others}
                       >
                         <section className={styles.rankin}>
@@ -140,7 +141,7 @@ export default function Ranking({ popular, trending }) {
                           className={styles.others_Poster}
                           src={`${poster}`}
                         />
-                      </a>
+                      </Link>
                     </div>
                   );
                 }

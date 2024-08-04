@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "@/styles/board.module.css";
 // ICONS
@@ -107,12 +108,12 @@ export default function Board() {
                       : removeHtmlAndMarkdown(String(bored.description))}
                   </p>
                   <div className={styles.boardBtns}>
-                    <a
-                      href={`/streaming/${bored?.anilistId}`}
+                    <Link
+                      href={`/watch/${bored?.anilistId}`}
                       className={styles.watch}
                     >
                       {<FaRegCirclePlay />} Watch now
-                    </a>
+                    </Link>
                     <button disabled className={styles.bookmark}>
                       {<BsBookmarkStar />}
                     </button>

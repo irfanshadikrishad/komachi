@@ -17,7 +17,7 @@ export default function Footer() {
       const response = await request.json();
 
       if (request.status === 200) {
-        router.push(`/streaming/${String(response[0].anilistId)}`);
+        router.push(`/watch/${String(response[0].anilistId)}`);
       } else {
         console.log(response);
       }

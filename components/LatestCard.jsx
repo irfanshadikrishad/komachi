@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { slisor } from "@/utils/workers.ts";
 
 export default function LatestCard({
@@ -8,7 +9,10 @@ export default function LatestCard({
   isAdult,
 }) {
   return (
-    <a href={`/watch/${id}?eps=${currentEpisode}`} className="latestIndividual">
+    <Link
+      href={`/watch/${id}?eps=${currentEpisode}`}
+      className="latestIndividual"
+    >
       <img
         className="latestPoster"
         src={image}
@@ -24,6 +28,6 @@ export default function LatestCard({
         <p className="latest_tag">EP {currentEpisode}</p>
         {isAdult === "true" && <p className="latest_tag latest_adult">18+</p>}
       </div>
-    </a>
+    </Link>
   );
 }
