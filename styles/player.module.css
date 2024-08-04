@@ -1,0 +1,258 @@
+.streamingV2_ReactPlayer {
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 7px;
+}
+.streamingV2_ReactPlayerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 3px 0;
+}
+.streamingV2_DownloadIcon {
+  font-size: 1.2rem;
+  display: flex;
+}
+.streamingV2_Download {
+  text-decoration: none;
+  color: var(--color);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.streaming_options {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.streamingV2Buttons {
+  display: grid;
+  /* grid-template-columns: repeat(12, 1fr); */
+  gap: 5px;
+  overflow-y: scroll;
+  align-items: flex-start;
+  max-height: 240px;
+  margin-bottom: 5px;
+}
+.streamingV2Button {
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  border-radius: 3px;
+  padding: 10px;
+  text-align: start;
+  cursor: pointer;
+}
+.serverSources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.serverSources > button {
+  color: var(--color);
+  background-color: var(--background);
+  border: none;
+  padding: 8px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.serverSources > button > svg {
+  display: flex;
+  transform: translateY(0.5px);
+}
+#videoPlayerWrap {
+  overflow: hidden !important;
+}
+.external_sources {
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  padding: 5px;
+  border-radius: 7px;
+  margin-bottom: 5px;
+  border: 2px dashed var(--background);
+  gap: 5px;
+  align-items: center;
+}
+.external_sources_1 {
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background-color: var(--background);
+  border-radius: 4px;
+  padding: 10px 5px;
+}
+.nextAiringEpisode {
+  font-size: 0.9rem;
+  text-align: center;
+}
+.source_btns {
+  display: flex;
+  gap: 5px;
+}
+.source_btns > button {
+  border: none;
+  font-size: 0.7rem;
+  color: var(--color);
+  padding: 3px 10px;
+  border-radius: 3px;
+  background-color: var(--secondary);
+  cursor: pointer;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.recommendations {
+  padding-bottom: 30px;
+}
+.recommendations_list {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+.recommendations_image {
+  width: 100%;
+  border-radius: 5px;
+  aspect-ratio: 2 / 2.8;
+}
+.recommendations_individual {
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 7px;
+  text-decoration: none;
+  color: var(--color);
+  position: relative;
+}
+.recommendations_info {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: var(--background);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+.ctrls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+  border: 2px dashed var(--background);
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+.ctrl {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--color);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ctrl > input {
+  display: none;
+}
+.ctrl > p {
+  margin-left: 20px;
+}
+/* .ctrl:hover .checkmark {
+    background-color: var(--primary);
+  } */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  background-color: var(--background);
+  border-radius: 4px;
+}
+.ctrl > input:checked ~ .checkmark {
+  background-color: var(--primary);
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.ctrl > input:checked ~ .checkmark:after {
+  display: block;
+}
+.checkmark:after {
+  left: 5px;
+  top: 3px;
+  width: 3px;
+  height: 5px;
+  border: solid var(--background);
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.player_Wrapper {
+  position: relative;
+}
+.ed {
+  position: absolute;
+  width: 0px;
+  height: 5px;
+  background-color: var(--primary);
+  bottom: 27px;
+  opacity: 50%;
+}
+
+@media screen and (max-width: 1440px) {
+  .streamingV2 {
+    grid-template-columns: 3fr 1fr;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .recommendations_list {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .external_sources {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .recommendations_list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .recommendations_list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .recommendations_list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
