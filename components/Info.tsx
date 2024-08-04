@@ -151,4 +151,6 @@ const Info: React.FC<InfoProps> = memo(({ animeInfo }) => {
   );
 });
 
+Info.displayName = "Info";
+
 export default Info;
