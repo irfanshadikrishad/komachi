@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import styles from "@/styles/search.module.css";
@@ -85,9 +85,7 @@ export default function Search() {
 
   return (
     <>
-      <Suspense>
-        <Navbar />
-      </Suspense>
+      <Navbar />
       <section className="container">
         <form onSubmit={(e) => e.preventDefault()} className={styles.filter}>
           <section>
@@ -173,9 +171,7 @@ export default function Search() {
           </section>
         )}
       </section>
-      <Suspense>
-        <Footer />
-      </Suspense>
+      <Footer />
     </>
   );
 }
