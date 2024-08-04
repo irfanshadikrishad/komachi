@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@consumet/extensions": "^1.7.0",
+    "@consumet/extensions": "github:consumet/consumet.ts",
     "disqus-react": "^1.1.5",
     "mongoose": "^8.5.2",
     "next": "14.2.5",
