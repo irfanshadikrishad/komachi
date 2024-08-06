@@ -25,7 +25,7 @@
     "uniqolor": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-helmet": "^6.1.11",
