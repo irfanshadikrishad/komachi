@@ -309,6 +309,7 @@ input:-webkit-autofill:active {
   height: auto;
   border-radius: 7px;
   aspect-ratio: 2/3;
+  object-fit: cover;
 }
 
 .latestIndividual {
