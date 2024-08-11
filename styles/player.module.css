@@ -31,11 +31,11 @@
 }
 .streamingV2Buttons {
   display: grid;
-  /* grid-template-columns: repeat(12, 1fr); */
+  grid-template-columns: repeat(15, 1fr);
   gap: 5px;
   overflow-y: scroll;
   align-items: flex-start;
-  max-height: 240px;
+  max-height: 250px;
   margin-bottom: 5px;
 }
 .streamingV2Button {
@@ -43,9 +43,12 @@
   color: var(--color);
   background-color: var(--background);
   border-radius: 3px;
-  padding: 10px;
+  padding: 8px 0px;
   text-align: start;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .serverSources {
   display: flex;
@@ -223,6 +226,71 @@
   bottom: 27px;
   opacity: 50%;
 }
+.search {
+  background-color: var(--background);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 4px;
+}
+.search > input {
+  font-size: 1rem;
+  outline: none;
+  color: var(--color);
+  background-color: transparent;
+  border: none;
+}
+.range_Main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+.range_limit {
+  background-color: var(--background);
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.limit_Main {
+  display: flex;
+  align-items: stretch;
+  gap: 5px;
+}
+.limit_Main > button {
+  border: none;
+  color: var(--color);
+  padding: 0 10px;
+  background-color: var(--background);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.limit_details {
+  position: absolute;
+  color: var(--color);
+  background-color: var(--secondary);
+  width: 90px;
+  right: 0;
+  display: grid;
+  gap: 3px;
+  border-radius: 4px;
+  padding: 5px;
+  z-index: 10;
+}
+.limit_details button {
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 5px;
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
@@ -240,6 +308,13 @@
   .external_sources {
     display: grid;
     grid-template-columns: 1fr;
+  }
+  .streamingV2Buttons {
+    grid-template-columns: repeat(10, 1fr);
+  }
+  .range_Main {
+    flex-wrap: wrap;
+    gap: 5px;
   }
 }
 
