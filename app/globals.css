@@ -39,6 +39,9 @@ body {
   color: var(--color);
   background-color: var(--background);
   font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 iframe {
   border: 0;
