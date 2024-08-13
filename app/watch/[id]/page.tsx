@@ -6,83 +6,11 @@ import Info from "@/components/Info";
 import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { AnimeInfo } from "@/utils/workers";
 
 export default function Streaming() {
-  interface AnimeInfo {
-    season: string;
-    release_date: any;
-    anilistId: {
-      type: string;
-    };
-    malId: { type: string };
-    title: {
-      english: string;
-      romaji: string;
-      native: string;
-      userPreferred: string;
-    };
-    description: string;
-    poster: string;
-    cover: string;
-    sub_episodes: [{}];
-    dub_episodes: [{}];
-    origin: string;
-    format: string;
-    duration: string;
-    status: string;
-    airing_start: {
-      year: string;
-      month: string;
-      day: string;
-    };
-    airing_end: {
-      year: string;
-      month: string;
-      day: string;
-    };
-    genres: [string];
-    synonyms: [string];
-    isAdult: string;
-    nextAiringEpisode: [
-      {
-        airingTime: number;
-        timeUntilAiring: number;
-        episode: number;
-      }
-    ];
-    totalEpisodes: number;
-    studios: [string];
-    recommendations: [
-      {
-        animeId: string;
-        malId: string;
-        title: {
-          romaji: string;
-          english: string;
-          native: string;
-          userPreferred: string;
-        };
-        status: string;
-        episodes: number;
-        poster: string;
-        cover: string;
-        rating: number;
-        format: string;
-      }
-    ];
-    trailer: {
-      id: string;
-    };
-  }
-  //   const { SERVER, getSkipTime } = useAuth();
   const params = useParams();
   const animeId = params.id;
-  // const { search } = useLocation();
-  // const location = new URLSearchParams(search);
-  // let providedEpisodeId: any = location.get("eps")
-  //   ? location.get("eps")
-  //   : animeId && localStorage.getItem(animeId);
-  let providedEpisodeId: any = false; // temporary
   const [animeInfo, setAnimeInfo] = useState<AnimeInfo>();
   const [episodes, setEpisodes] = useState<any>([]);
   const [streamLink, setStreamLink] = useState("");
@@ -96,30 +24,22 @@ export default function Streaming() {
   const getStreamLink = async (episodeId: string) => {
     try {
       if (episodeId) {
-        // Make the fetch request
         const request = await fetch(`/api/stream`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ episodeId }),
         });
-
         const response = await request.json();
 
-        // Handle response
         if (request.status === 200) {
-          // Make the default quality to stream
           setStreamLink(response.sources[response.sources.length - 1].url);
           setCurrentEpisode(episodeId);
           setEpisodeDownloadLink(response.download);
-          // Get Sources
+          // get other external sources
           await getServerSources(episodeId);
         } else {
-          if (Number(episodeId) > episodes.length) {
-            await getStreamLink(episodes[0]?.id);
-          } else {
-            // If it falls between episode range, it should work
-            await getStreamLink(episodes[Number(episodeId) - 1]?.id);
-          }
+          console.log(response);
+          setNoEpisodes(true);
         }
       }
     } catch (error) {
@@ -140,24 +60,16 @@ export default function Streaming() {
         setNextAiringTime(response?.nextAiringEpisode);
         setAnimeInfo(response);
         setEpisodes(response?.sub_episodes);
-        setDubEpisodes(response?.dub_episodes); // Get the dub episodes
-        // getSkipTime(1, response.malId);
-        // For specific episodes
-        if (providedEpisodeId) {
-          if (Number(providedEpisodeId) === 0) {
-            providedEpisodeId = 1;
-          }
-          try {
-            getStreamLink(response.sub_episodes[providedEpisodeId - 1].id);
-          } catch (error) {
-            getStreamLink(response.dub_episodes[0].id);
-          }
-        } else {
-          try {
-            getStreamLink(response.sub_episodes[0].id);
-          } catch (error) {
-            getStreamLink(response.dub_episodes[0].id);
-          }
+        setDubEpisodes(response?.dub_episodes);
+        setCurrentEpisode(
+          response?.sub_episodes[0]?.id
+            ? response?.sub_episodes[0]?.id
+            : response?.dub_episodes[0]?.id
+        );
+        if (response?.sub_episodes[0]?.id) {
+          getStreamLink(response?.sub_episodes[0]?.id);
+        } else if (response?.dub_episodes[0]?.id) {
+          getStreamLink(response?.dub_episodes[0]?.id);
         }
       } else {
         console.log(response);
@@ -189,13 +101,13 @@ export default function Streaming() {
 
   useEffect(() => {
     if (!streamLink) {
-      getStreamLink(providedEpisodeId);
+      getStreamLink(String(currentEpisode));
     }
   }, [episodes]);
   useEffect(() => {
     setDubEpisodes([]);
     getAnimeInfo();
-    window.scrollTo({ top: 0 }); // On click recommended, scroll to top
+    window.scrollTo({ top: 0 });
   }, [animeId]);
   return (
     <>
