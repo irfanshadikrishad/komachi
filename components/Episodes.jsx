@@ -89,7 +89,7 @@ export default function Episodes({
                 <button
                   onClick={() => {
                     getStreamLink(id);
-                    localStorage.setItem(animeId, id);
+                    // localStorage.setItem(animeId, id);
                   }}
                   key={index}
                   className={styles.streamingV2Button}

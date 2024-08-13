@@ -14,9 +14,13 @@ export default function Latest() {
   const [trending, setTrending] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [render, setRender] = useState([]);
-  const [currentlyActive, setCurrentlyActive] = useState(
-    localStorage.getItem("latest") ? localStorage.getItem("latest") : "All"
-  );
+  const [currentlyActive, setCurrentlyActive] = useState("All");
+
+  useEffect(() => {
+    // Check for localStorage and update state after the component mounts
+    const activeTab = localStorage.getItem("latest") || "All";
+    setCurrentlyActive(activeTab);
+  }, []);
 
   const getPopular = async () => {
     try {
@@ -70,12 +74,14 @@ export default function Latest() {
       setChina(china);
       setKorea(korea);
       setLoaded(true);
-      if (localStorage.getItem("latest")) {
-        if (localStorage.getItem("latest") === "JP") {
+
+      const activeTab = localStorage.getItem("latest");
+      if (activeTab) {
+        if (activeTab === "JP") {
           setRender(japan);
-        } else if (localStorage.getItem("latest") === "CN") {
+        } else if (activeTab === "CN") {
           setRender(china);
-        } else if (localStorage.getItem("latest") === "KR") {
+        } else if (activeTab === "KR") {
           setRender(korea);
         } else {
           setRender(all);
@@ -93,6 +99,7 @@ export default function Latest() {
     getPopular();
     getTrending();
   }, []);
+
   return (
     <section className={`container`}>
       <section className={styles.latest_Main}>
