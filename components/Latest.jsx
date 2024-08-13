@@ -6,9 +6,17 @@ import styles from "@/styles/latest.module.css";
 import Ranking from "@/components/Ranking.jsx";
 
 export default function Latest() {
-  const [latest, setLatest] = useState([]);
+  const [all, setAll] = useState([]);
+  const [japan, setJapan] = useState([]);
+  const [china, setChina] = useState([]);
+  const [korea, setKorea] = useState([]);
   const [popular, setPopular] = useState([]);
   const [trending, setTrending] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const [render, setRender] = useState([]);
+  const [currentlyActive, setCurrentlyActive] = useState(
+    localStorage.getItem("latest") ? localStorage.getItem("latest") : "All"
+  );
 
   const getPopular = async () => {
     try {
@@ -54,10 +62,27 @@ export default function Latest() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ page: 1 }),
     });
-    const response = await request.json();
+    const { all, japan, china, korea } = await request.json();
 
     if (request.status === 200) {
-      setLatest(response);
+      setAll(all);
+      setJapan(japan);
+      setChina(china);
+      setKorea(korea);
+      setLoaded(true);
+      if (localStorage.getItem("latest")) {
+        if (localStorage.getItem("latest") === "JP") {
+          setRender(japan);
+        } else if (localStorage.getItem("latest") === "CN") {
+          setRender(china);
+        } else if (localStorage.getItem("latest") === "KR") {
+          setRender(korea);
+        } else {
+          setRender(all);
+        }
+      } else {
+        setRender(all);
+      }
     } else {
       console.log(response);
     }
@@ -72,14 +97,68 @@ export default function Latest() {
     <section className={`container`}>
       <section className={styles.latest_Main}>
         <section className={styles.latest_updates}>
-          {latest && (
+          {loaded && (
             <div className="latest_Header">
               <p className="partitionTitleII">Latest updates</p>
+              <div className={styles.switch}>
+                <button
+                  onClick={() => {
+                    setRender(all);
+                    setCurrentlyActive("All");
+                    localStorage.setItem("latest", "All");
+                  }}
+                  style={{
+                    backgroundColor:
+                      currentlyActive === "All" ? "var(--primary)" : "",
+                  }}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => {
+                    setRender(japan);
+                    setCurrentlyActive("JP");
+                    localStorage.setItem("latest", "JP");
+                  }}
+                  style={{
+                    backgroundColor:
+                      currentlyActive === "JP" ? "var(--primary)" : "",
+                  }}
+                >
+                  JP
+                </button>
+                <button
+                  onClick={() => {
+                    setRender(china);
+                    setCurrentlyActive("CN");
+                    localStorage.setItem("latest", "CN");
+                  }}
+                  style={{
+                    backgroundColor:
+                      currentlyActive === "CN" ? "var(--primary)" : "",
+                  }}
+                >
+                  CH
+                </button>
+                <button
+                  onClick={() => {
+                    setRender(korea);
+                    setCurrentlyActive("KR");
+                    localStorage.setItem("latest", "KR");
+                  }}
+                  style={{
+                    backgroundColor:
+                      currentlyActive === "KR" ? "var(--primary)" : "",
+                  }}
+                >
+                  KR
+                </button>
+              </div>
             </div>
           )}
           <div className="latestContainer">
-            {latest.length > 0 ? (
-              latest.map(
+            {render.length > 0 ? (
+              render.map(
                 (
                   {
                     anilistId,

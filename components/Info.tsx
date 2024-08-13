@@ -1,71 +1,7 @@
 import { memo } from "react";
 import uniqolor from "uniqolor";
 import { removeHtmlAndMarkdown } from "@/utils/info_modifier";
-
-interface AnimeInfo {
-  season: string;
-  release_date: any;
-  anilistId: {
-    type: string;
-  };
-  malId: { type: string };
-  title: {
-    english: string;
-    romaji: string;
-    native: string;
-    userPreferred: string;
-  };
-  description: string;
-  poster: string;
-  cover: string;
-  sub_episodes: [{}];
-  dub_episodes: [{}];
-  origin: string;
-  format: string;
-  duration: string;
-  status: string;
-  airing_start: {
-    year: string;
-    month: string;
-    day: string;
-  };
-  airing_end: {
-    year: string;
-    month: string;
-    day: string;
-  };
-  genres: [string];
-  synonyms: [string];
-  isAdult: string;
-  nextAiringEpisode: [
-    {
-      airingTime: number;
-      timeUntilAiring: number;
-      episode: number;
-    }
-  ];
-  totalEpisodes: number;
-  studios: [string];
-  recommendations: [
-    {
-      animeId: string;
-      malId: string;
-      title: {
-        romaji: string;
-        english: string;
-        native: string;
-        userPreferred: string;
-      };
-      status: string;
-      episodes: number;
-      poster: string;
-      cover: string;
-      rating: number;
-      format: string;
-    }
-  ];
-  trailer: {};
-}
+import { AnimeInfo } from "@/utils/workers";
 
 interface InfoProps {
   animeInfo: AnimeInfo;
