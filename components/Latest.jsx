@@ -115,8 +115,7 @@ export default function Latest() {
                     localStorage.setItem("latest", "All");
                   }}
                   style={{
-                    backgroundColor:
-                      currentlyActive === "All" ? "var(--primary)" : "",
+                    color: currentlyActive === "All" ? "var(--primary)" : "",
                   }}
                 >
                   All
@@ -128,8 +127,7 @@ export default function Latest() {
                     localStorage.setItem("latest", "JP");
                   }}
                   style={{
-                    backgroundColor:
-                      currentlyActive === "JP" ? "var(--primary)" : "",
+                    color: currentlyActive === "JP" ? "var(--primary)" : "",
                   }}
                 >
                   JP
@@ -141,8 +139,7 @@ export default function Latest() {
                     localStorage.setItem("latest", "CN");
                   }}
                   style={{
-                    backgroundColor:
-                      currentlyActive === "CN" ? "var(--primary)" : "",
+                    color: currentlyActive === "CN" ? "var(--primary)" : "",
                   }}
                 >
                   CH
@@ -154,8 +151,7 @@ export default function Latest() {
                     localStorage.setItem("latest", "KR");
                   }}
                   style={{
-                    backgroundColor:
-                      currentlyActive === "KR" ? "var(--primary)" : "",
+                    color: currentlyActive === "KR" ? "var(--primary)" : "",
                   }}
                 >
                   KR

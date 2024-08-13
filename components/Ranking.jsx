@@ -1,10 +1,10 @@
+import Link from "next/link";
+import { useState } from "react";
 import styles from "@/styles/latest.module.css";
 // ICONS
 import { TbMicrophoneFilled } from "react-icons/tb";
 import { FaClosedCaptioning } from "react-icons/fa6";
 import { CgMediaLive } from "react-icons/cg";
-import { useState } from "react";
-import Link from "next/link";
 
 export default function Ranking({ popular, trending }) {
   const [rank, setRank] = useState(popular);
@@ -56,8 +56,8 @@ export default function Ranking({ popular, trending }) {
                   <div>
                     <h3 className={styles.rank1_name}>
                       {rank[0].title?.english
-                        ? String(rank[0].title?.english).slice(0, 23)
-                        : String(rank[0].title?.romaji).slice(0, 23)}
+                        ? String(rank[0].title?.english)
+                        : String(rank[0].title?.romaji)}
                     </h3>
                     <div className={styles.rank_details}>
                       <div className={styles.episodes_count}>
@@ -111,7 +111,7 @@ export default function Ranking({ popular, trending }) {
                           >
                             <h4>{index + 1}</h4>
                           </div>
-                          <div>
+                          <div className={styles.ranks_2}>
                             <h4 className={styles.others_rank}>
                               {title?.english ? title?.english : title?.romaji}
                             </h4>
