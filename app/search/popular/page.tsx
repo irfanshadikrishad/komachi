@@ -41,13 +41,21 @@ export default function Popular() {
             </div>
             <section className={styles.billboard}>
               {popular.map(
-                ({ isAdult, anilistId, poster, totalEpisodes, title }) => {
+                ({
+                  isAdult,
+                  anilistId,
+                  poster,
+                  sub_episodes = [],
+                  dub_episodes = [],
+                  title,
+                }) => {
                   return (
                     <Card
                       key={anilistId}
                       id={anilistId}
                       image={poster}
-                      totalEpisodes={totalEpisodes}
+                      subCount={sub_episodes.length}
+                      dubCount={dub_episodes.length}
                       title={title}
                       isAdult={isAdult}
                     />
