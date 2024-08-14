@@ -4,7 +4,7 @@ export default function Logo() {
   return (
     <div>
       <Link href="/" className="navbar_text_logo" style={{ display: "inline" }}>
-        <p>Konami</p>
+        <p>Komachi</p>
       </Link>
     </div>
   );
