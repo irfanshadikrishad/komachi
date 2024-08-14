@@ -129,11 +129,8 @@ export default function Search() {
                       key={anilistId}
                       id={anilistId}
                       image={poster}
-                      totalEpisodes={
-                        sub_episodes?.length > 0
-                          ? sub_episodes?.length
-                          : dub_episodes?.length
-                      }
+                      subCount={sub_episodes.length}
+                      dubCount={dub_episodes.length}
                       title={title}
                       isAdult={isAdult}
                     />
@@ -151,12 +148,20 @@ export default function Search() {
               </div>
               <section className={styles.billboard}>
                 {trending.map(
-                  ({ anilistId, poster, totalEpisodes, title, isAdult }) => (
+                  ({
+                    anilistId,
+                    poster,
+                    sub_episodes = [],
+                    dub_episodes = [],
+                    title,
+                    isAdult,
+                  }) => (
                     <Card
                       key={anilistId}
                       id={anilistId}
                       image={poster}
-                      totalEpisodes={totalEpisodes}
+                      subCount={sub_episodes.length}
+                      dubCount={dub_episodes.length}
                       title={title}
                       isAdult={isAdult}
                     />
@@ -171,12 +176,20 @@ export default function Search() {
               </div>
               <section className={styles.billboard}>
                 {popular.map(
-                  ({ anilistId, poster, totalEpisodes, title, isAdult }) => (
+                  ({
+                    anilistId,
+                    poster,
+                    sub_episodes = [],
+                    dub_episodes = [],
+                    title,
+                    isAdult,
+                  }) => (
                     <Card
                       key={anilistId}
                       id={anilistId}
                       image={poster}
-                      totalEpisodes={totalEpisodes}
+                      subCount={sub_episodes.length}
+                      dubCount={dub_episodes.length}
                       title={title}
                       isAdult={isAdult}
                     />

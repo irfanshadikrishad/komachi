@@ -7,6 +7,6 @@ export async function POST(request: Request) {
     const streaminLinks = await gogoanime.fetchEpisodeSources(episodeId);
     return new Response(JSON.stringify(streaminLinks), { status: 200 });
   } catch (error) {
-    return new Response(JSON.stringify(error), { status: 400 });
+    return new Response(JSON.stringify({ error, episodeId }), { status: 400 });
   }
 }

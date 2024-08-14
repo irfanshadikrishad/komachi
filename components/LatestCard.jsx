@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { slisor } from "@/utils/workers.ts";
 
 export default function LatestCard({
@@ -13,7 +14,9 @@ export default function LatestCard({
       href={`/watch/${id}?eps=${currentEpisode}`}
       className="latestIndividual"
     >
-      <img
+      <Image
+        width={460}
+        height={690}
         className="latestPoster"
         src={image}
         alt={id}

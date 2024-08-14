@@ -23,7 +23,7 @@ export default function Streaming() {
 
   const getStreamLink = async (episodeId: string) => {
     try {
-      if (episodeId) {
+      if (episodeId && episodeId !== "undefined") {
         const request = await fetch(`/api/stream`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -39,7 +39,7 @@ export default function Streaming() {
           await getServerSources(episodeId);
         } else {
           console.log(response);
-          setNoEpisodes(true);
+          // setNoEpisodes(true);
         }
       }
     } catch (error) {

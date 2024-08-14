@@ -2,7 +2,14 @@ import Link from "next/link";
 import styles from "@/styles/search.module.css";
 import { slisor } from "@/utils/workers";
 
-export default function Card({ id, image, title, totalEpisodes, isAdult }) {
+export default function Card({
+  id,
+  image,
+  title,
+  subCount,
+  dubCount,
+  isAdult,
+}) {
   return (
     <Link
       href={`/watch/${id}`}
@@ -27,7 +34,7 @@ export default function Card({ id, image, title, totalEpisodes, isAdult }) {
 
       <div className={styles.tags}>
         <p className={styles.tag}>
-          {totalEpisodes ? `EPS ${totalEpisodes}` : `Upcoming`}
+          {subCount ? `EPS ${subCount}` : `EPS ${dubCount}`}
         </p>
         {isAdult === "true" && (
           <p className={`${styles.tag} ${styles.adult}`}>18+</p>

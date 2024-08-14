@@ -1,5 +1,5 @@
+import { useEffect, useRef, useState } from "react";
 import styles from "@/styles/player.module.css";
-import { useEffect, useState } from "react";
 // Icons
 import { LuSearch } from "react-icons/lu";
 import {
@@ -18,6 +18,7 @@ export default function Episodes({
   const [goodEpisodes, setGoodEpisodes] = useState([]);
   const [isRangeOpen, setIsRangeOpen] = useState(false);
   const [selectedEpisodeRange, setSelectedEpisodeRange] = useState(0);
+  const dropdownRef = useRef(null);
   const start = selectedEpisodeRange * 100 + 1;
   const end = (selectedEpisodeRange + 1) * 100;
 
@@ -37,6 +38,25 @@ export default function Episodes({
       setGoodEpisodes(chunks);
     }
   }, [unicornEpisodes]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsRangeOpen(false);
+      }
+    };
+
+    if (isRangeOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isRangeOpen]);
+
   return (
     <>
       <section className={styles.range_Main}>
@@ -44,14 +64,14 @@ export default function Episodes({
           <LuSearch /> <input type="text" placeholder="Search" />
         </div>
         <div className={styles.limit_Main}>
-          <div style={{ position: "relative" }}>
+          <div style={{ position: "relative" }} ref={dropdownRef}>
             <div
               className={styles.range_limit}
               onClick={() => {
                 setIsRangeOpen(!isRangeOpen);
               }}
             >
-              1-100 <IoChevronDownOutline />
+              {`${start}-${end}`} <IoChevronDownOutline />
             </div>
             {isRangeOpen && (
               <div className={styles.limit_details}>
