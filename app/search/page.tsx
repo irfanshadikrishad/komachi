@@ -32,6 +32,7 @@ export default function Search() {
       if (request.status === 200) {
         setSearched(response);
       } else {
+        setSearched([]);
         console.log(response);
       }
     }
@@ -125,7 +126,7 @@ export default function Search() {
                     sub_episodes,
                     dub_episodes,
                     totalEpisodes,
-                    title,
+                    title = { english: "", romaji: "" },
                   }) => (
                     <Card
                       key={anilistId}
@@ -134,7 +135,7 @@ export default function Search() {
                       subCount={sub_episodes.length}
                       dubCount={dub_episodes.length}
                       totalCount={totalEpisodes}
-                      title={title}
+                      title={title.english ? title.english : title.romaji}
                       isAdult={isAdult}
                     />
                   )
@@ -157,7 +158,7 @@ export default function Search() {
                     sub_episodes = [],
                     dub_episodes = [],
                     totalEpisodes,
-                    title,
+                    title = { english: "", romaji: "" },
                     isAdult,
                   }) => (
                     <Card
@@ -167,7 +168,7 @@ export default function Search() {
                       subCount={sub_episodes.length}
                       dubCount={dub_episodes.length}
                       totalCount={totalEpisodes}
-                      title={title}
+                      title={title.english ? title.english : title.romaji}
                       isAdult={isAdult}
                     />
                   )
@@ -187,7 +188,7 @@ export default function Search() {
                     sub_episodes = [],
                     dub_episodes = [],
                     totalEpisodes,
-                    title,
+                    title = { english: "", romaji: "" },
                     isAdult,
                   }) => (
                     <Card
@@ -197,7 +198,7 @@ export default function Search() {
                       subCount={sub_episodes.length}
                       dubCount={dub_episodes.length}
                       totalCount={totalEpisodes}
-                      title={title}
+                      title={title.english ? title.english : title.romaji}
                       isAdult={isAdult}
                     />
                   )

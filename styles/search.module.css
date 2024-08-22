@@ -91,6 +91,11 @@
   font-size: 0.9rem;
   line-height: 15px;
   overflow-wrap: anywhere;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .billboard_Header {
   font-size: 1rem;

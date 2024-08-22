@@ -48,7 +48,7 @@ export default function Trending() {
                   sub_episodes = [],
                   dub_episodes = [],
                   totalEpisodes,
-                  title,
+                  title = { english: "", romaji: "" },
                 }) => {
                   return (
                     <Card
@@ -58,7 +58,7 @@ export default function Trending() {
                       subCount={sub_episodes.length}
                       dubCount={dub_episodes.length}
                       totalCount={totalEpisodes}
-                      title={title}
+                      title={title.english ? title.english : title.romaji}
                       isAdult={isAdult}
                     />
                   );

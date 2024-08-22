@@ -16,29 +16,25 @@ export default function Card({
 }: {
   id: string;
   image: string;
-  title: { english: string; romaji: string };
+  title: string;
   subCount: string | number;
   dubCount: string | number;
   totalCount: string | number;
   isAdult: string;
 }) {
   return (
-    <Link href={`/watch/${id}`} className={styles.billboard_Individual}>
+    <Link
+      href={`/watch/${id}`}
+      className={styles.billboard_Individual}
+      title={`${title}`}
+    >
       <img
         src={image}
         alt={image}
         className={styles.billboard_Poster}
         draggable={false}
       />
-      <p className={styles.billboard_Title}>
-        {title.english
-          ? String(title.english).length > 100
-            ? slisor(String(title.english), 100)
-            : title.english
-          : String(title.romaji).length > 100
-          ? slisor(String(title.romaji), 100)
-          : title.romaji}
-      </p>
+      <p className={styles.billboard_Title}>{title}</p>
 
       <div className={styles.tags}>
         <p className={styles.tag}>

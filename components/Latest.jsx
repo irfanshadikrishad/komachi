@@ -165,7 +165,7 @@ export default function Latest() {
                   {
                     anilistId,
                     poster,
-                    title = { english: "", romaji: "" },
+                    title,
                     sub_episodes = [],
                     dub_episodes = [],
                     totalEpisodes,
