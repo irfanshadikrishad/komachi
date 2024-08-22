@@ -27,6 +27,7 @@ export default function Search() {
         body: JSON.stringify({ query }),
       });
       const response = await request.json();
+      console.log(response);
 
       if (request.status === 200) {
         setSearched(response);
@@ -123,6 +124,7 @@ export default function Search() {
                     poster,
                     sub_episodes,
                     dub_episodes,
+                    totalEpisodes,
                     title,
                   }) => (
                     <Card
@@ -131,6 +133,7 @@ export default function Search() {
                       image={poster}
                       subCount={sub_episodes.length}
                       dubCount={dub_episodes.length}
+                      totalCount={totalEpisodes}
                       title={title}
                       isAdult={isAdult}
                     />
@@ -153,6 +156,7 @@ export default function Search() {
                     poster,
                     sub_episodes = [],
                     dub_episodes = [],
+                    totalEpisodes,
                     title,
                     isAdult,
                   }) => (
@@ -162,6 +166,7 @@ export default function Search() {
                       image={poster}
                       subCount={sub_episodes.length}
                       dubCount={dub_episodes.length}
+                      totalCount={totalEpisodes}
                       title={title}
                       isAdult={isAdult}
                     />
@@ -181,6 +186,7 @@ export default function Search() {
                     poster,
                     sub_episodes = [],
                     dub_episodes = [],
+                    totalEpisodes,
                     title,
                     isAdult,
                   }) => (
@@ -190,6 +196,7 @@ export default function Search() {
                       image={poster}
                       subCount={sub_episodes.length}
                       dubCount={dub_episodes.length}
+                      totalCount={totalEpisodes}
                       title={title}
                       isAdult={isAdult}
                     />

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import LatestCard from "@/components/LatestCard.jsx";
+import Card from "@/components/Card";
 import Loader from "@/components/Loader.jsx";
 import styles from "@/styles/latest.module.css";
 import Ranking from "@/components/Ranking.jsx";
@@ -17,7 +17,6 @@ export default function Latest() {
   const [currentlyActive, setCurrentlyActive] = useState("All");
 
   useEffect(() => {
-    // Check for localStorage and update state after the component mounts
     const activeTab = localStorage.getItem("latest") || "All";
     setCurrentlyActive(activeTab);
   }, []);
@@ -90,7 +89,7 @@ export default function Latest() {
         setRender(all);
       }
     } else {
-      console.log(response);
+      console.log(`fetch error on latest api.`);
     }
   };
 
@@ -166,24 +165,23 @@ export default function Latest() {
                   {
                     anilistId,
                     poster,
-                    title,
-                    sub_episodes,
-                    dub_episodes,
+                    title = { english: "", romaji: "" },
+                    sub_episodes = [],
+                    dub_episodes = [],
+                    totalEpisodes,
                     isAdult,
                   },
                   index
                 ) => {
                   return (
-                    <LatestCard
+                    <Card
                       key={index}
                       id={anilistId}
                       image={poster}
                       title={title.english ? title.english : title.romaji}
-                      currentEpisode={
-                        sub_episodes.length
-                          ? sub_episodes.length
-                          : dub_episodes.length
-                      }
+                      subCount={sub_episodes.length}
+                      dubCount={dub_episodes.length}
+                      totalCount={totalEpisodes}
                       isAdult={isAdult}
                     />
                   );

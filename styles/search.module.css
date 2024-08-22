@@ -121,6 +121,9 @@
   font-size: 0.7rem;
   border-radius: 4px;
   padding: 1px 5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 .adult {
   color: var(--adult);
