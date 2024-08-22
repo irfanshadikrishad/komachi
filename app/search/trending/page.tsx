@@ -47,6 +47,7 @@ export default function Trending() {
                   poster,
                   sub_episodes = [],
                   dub_episodes = [],
+                  totalEpisodes,
                   title,
                 }) => {
                   return (
@@ -56,6 +57,7 @@ export default function Trending() {
                       image={poster}
                       subCount={sub_episodes.length}
                       dubCount={dub_episodes.length}
+                      totalCount={totalEpisodes}
                       title={title}
                       isAdult={isAdult}
                     />
