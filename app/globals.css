@@ -55,6 +55,15 @@ iframe {
   margin: 0 auto;
 }
 
+.one_line {
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Navbar Codes Start */
 nav {
   padding: 10px 0;

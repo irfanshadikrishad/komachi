@@ -1,10 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import styles from "@/styles/search.module.css";
 // ICONS
 import { RiSearchLine } from "react-icons/ri";
+import { IoChevronDownOutline } from "react-icons/io5";
+import { PiCheckCircleFill } from "react-icons/pi";
+import { HiFilter } from "react-icons/hi";
 // Components
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
@@ -19,6 +22,21 @@ export default function Search() {
   const [trending, setTrending] = useState([]);
   const [popular, setPopular] = useState([]);
 
+  // Open/Close Management
+  const [isGenreOpen, setIsGenreOpen] = useState(false);
+  const [isYearOpen, setIsYearOpen] = useState(false);
+  const [isSeasonOpen, setIsSeasonOpen] = useState(false);
+  const [isFormatOpen, setIsFormatOpen] = useState(false);
+  const [isStatusOpen, setIsStatusOpen] = useState(false);
+  const [isCountryOpen, setIsCountryOpen] = useState(false);
+  // Value Management
+  const [genre, setGenre] = useState<string[]>([]);
+  const [year, setYear] = useState<string[]>([]);
+  const [season, setSeason] = useState<string[]>([]);
+  const [format, setFormat] = useState<string[]>([]);
+  const [status, setStatus] = useState<string[]>([]);
+  const [country, setCountry] = useState<string[]>([]);
+
   const getSearched = async () => {
     if (query) {
       const request = await fetch(`/api/search`, {
@@ -27,7 +45,6 @@ export default function Search() {
         body: JSON.stringify({ query }),
       });
       const response = await request.json();
-      console.log(response);
 
       if (request.status === 200) {
         setSearched(response);
@@ -76,37 +93,375 @@ export default function Search() {
     }
   };
 
+  const insertValuesIntoState = (value: string, setValue: any) => {
+    setValue((prevValue: string[]) => {
+      if (prevValue.includes(value)) {
+        return prevValue.filter((item) => item !== value);
+      } else {
+        return [...prevValue, value];
+      }
+    });
+  };
+
   useEffect(() => {
     getTrending();
     getPopular();
   }, []);
 
   useEffect(() => {
-    getSearched();
-  }, [query]);
+    if (searchParams.get("query")) {
+      getSearched();
+    }
+  }, []);
 
   return (
     <>
       <Navbar />
       <section className="container">
         <form
-          onChange={(e) => {
+          onSubmit={(e) => {
             e.preventDefault();
           }}
           className={styles.filter}
         >
-          <section>
-            <p className={styles.selector_Title}>Search</p>
+          <section className={styles.filter_indi}>
             <div className={styles.searchFieldContainer}>
               <RiSearchLine />
               <input
                 value={query ? query : ""}
                 onChange={(e) => setQuery(e.target.value)}
                 type="text"
+                placeholder="Search..."
                 className={styles.searchField}
               />
             </div>
           </section>
+          {/* Genre */}
+          <section className={styles.filter_indi}>
+            <button
+              className={styles.filter_btn}
+              onClick={() => {
+                setIsGenreOpen(!isGenreOpen);
+              }}
+            >
+              <p className={`one_line ${styles.values}`}>
+                {genre.length > 0 ? genre.join(", ") : "Genres"}
+              </p>
+              <IoChevronDownOutline />
+            </button>
+            {isGenreOpen && (
+              <div className={styles.filter_options}>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Action", setGenre);
+                  }}
+                >
+                  <p>Action</p>
+                  {genre.includes("Action") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Adventure", setGenre);
+                  }}
+                >
+                  <p>Adventure</p>
+                  {genre.includes("Adventure") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Comedy", setGenre);
+                  }}
+                >
+                  <p>Comedy</p>
+                  {genre.includes("Comedy") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Horror", setGenre);
+                  }}
+                >
+                  <p>Horror</p>
+                  {genre.includes("Horror") && <PiCheckCircleFill />}
+                </button>
+              </div>
+            )}
+          </section>
+          {/* Year */}
+          <section className={styles.filter_indi}>
+            <button
+              className={styles.filter_btn}
+              onClick={() => {
+                setIsYearOpen(!isYearOpen);
+              }}
+            >
+              <p className={`one_line ${styles.values}`}>
+                {year.length > 0 ? year.join(", ") : "Year"}
+              </p>
+              <IoChevronDownOutline />
+            </button>
+            {isYearOpen && (
+              <div className={styles.filter_options}>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2024", setYear);
+                  }}
+                >
+                  <p>2024</p>
+                  {year.includes("2024") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2023", setYear);
+                  }}
+                >
+                  <p>2023</p>
+                  {year.includes("2023") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2022", setYear);
+                  }}
+                >
+                  <p>2022</p>
+                  {year.includes("2022") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2021", setYear);
+                  }}
+                >
+                  <p>2021</p>
+                  {year.includes("2021") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2020", setYear);
+                  }}
+                >
+                  <p>2020</p>
+                  {year.includes("2020") && <PiCheckCircleFill />}
+                </button>
+              </div>
+            )}
+          </section>
+          {/* Season */}
+          <section className={styles.filter_indi}>
+            <button
+              className={styles.filter_btn}
+              onClick={() => {
+                setIsSeasonOpen(!isSeasonOpen);
+              }}
+            >
+              <p className={`one_line ${styles.values}`}>
+                {season.length > 0 ? season.join(", ") : "Season"}
+              </p>
+              <IoChevronDownOutline />
+            </button>
+            {isSeasonOpen && (
+              <div className={styles.filter_options}>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Summer", setSeason);
+                  }}
+                >
+                  <p>Summer</p>
+                  {season.includes("Summer") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Winter", setSeason);
+                  }}
+                >
+                  <p>Winter</p>
+                  {season.includes("Winter") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Fall", setSeason);
+                  }}
+                >
+                  <p>Fall</p>
+                  {season.includes("Fall") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Spring", setSeason);
+                  }}
+                >
+                  <p>Spring</p>
+                  {season.includes("Spring") && <PiCheckCircleFill />}
+                </button>
+              </div>
+            )}
+          </section>
+          {/* Format */}
+          <section className={styles.filter_indi}>
+            <button
+              className={styles.filter_btn}
+              onClick={() => {
+                setIsFormatOpen(!isFormatOpen);
+              }}
+            >
+              <p className={`one_line ${styles.values}`}>
+                {format.length > 0 ? format.join(", ") : "Format"}
+              </p>
+              <IoChevronDownOutline />
+            </button>
+            {isFormatOpen && (
+              <div className={styles.filter_options}>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("TV", setFormat);
+                  }}
+                >
+                  <p>TV</p>
+                  {format.includes("TV") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("TV_SHORT", setFormat);
+                  }}
+                >
+                  <p>TV_SHORT</p>
+                  {format.includes("TV_SHORT") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Movie", setFormat);
+                  }}
+                >
+                  <p>Movie</p>
+                  {format.includes("Movie") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("OVA", setFormat);
+                  }}
+                >
+                  <p>OVA</p>
+                  {format.includes("OVA") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("ONA", setFormat);
+                  }}
+                >
+                  <p>ONA</p>
+                  {format.includes("ONA") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Music", setFormat);
+                  }}
+                >
+                  <p>Music</p>
+                  {format.includes("Music") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Special", setFormat);
+                  }}
+                >
+                  <p>Special</p>
+                  {format.includes("Special") && <PiCheckCircleFill />}
+                </button>
+              </div>
+            )}
+          </section>
+          {/* Status */}
+          <section className={styles.filter_indi}>
+            <button
+              className={styles.filter_btn}
+              onClick={() => {
+                setIsStatusOpen(!isStatusOpen);
+              }}
+            >
+              <p className={`one_line ${styles.values}`}>
+                {status.length > 0 ? status.join(", ") : "Status"}
+              </p>
+              <IoChevronDownOutline />
+            </button>
+            {isStatusOpen && (
+              <div className={styles.filter_options}>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Ongoing", setStatus);
+                  }}
+                >
+                  <p>Ongoing</p>
+                  {status.includes("Ongoing") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Finished", setStatus);
+                  }}
+                >
+                  <p>Finished</p>
+                  {status.includes("Finished") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Cancelled", setStatus);
+                  }}
+                >
+                  <p>Cancelled</p>
+                  {status.includes("Cancelled") && <PiCheckCircleFill />}
+                </button>
+              </div>
+            )}
+          </section>
+          {/* Country */}
+          <section className={styles.filter_indi}>
+            <button
+              className={styles.filter_btn}
+              onClick={() => {
+                setIsCountryOpen(!isCountryOpen);
+              }}
+            >
+              <p className={`one_line ${styles.values}`}>
+                {country.length > 0 ? country.join(", ") : "Country"}
+              </p>
+              <IoChevronDownOutline />
+            </button>
+            {isCountryOpen && (
+              <div className={styles.filter_options}>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("JP", setCountry);
+                  }}
+                >
+                  <p>Japan</p>
+                  {status.includes("JP") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("CN", setCountry);
+                  }}
+                >
+                  <p>China</p>
+                  {status.includes("CN") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("KR", setCountry);
+                  }}
+                >
+                  <p>Korea</p>
+                  {status.includes("KR") && <PiCheckCircleFill />}
+                </button>
+              </div>
+            )}
+          </section>
+          {/* Filter */}
+          <button
+            className={styles.submit_btn}
+            onClick={() => {
+              getSearched();
+            }}
+          >
+            <HiFilter />
+            Filter
+          </button>
         </form>
 
         {searched.length > 0 ? (

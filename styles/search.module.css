@@ -2,10 +2,11 @@
   display: flex;
   align-items: center;
   background-color: var(--secondary);
-  width: 208px;
+  width: auto;
   height: 35px;
   border-radius: 2px;
   padding: 0 5px;
+  border-radius: 4px;
 }
 .searchFieldContainer svg {
   font-size: 1.1rem;
@@ -14,12 +15,15 @@
 .searchField {
   border: none;
   border-radius: 2px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 5px;
   color: var(--text);
   background-color: transparent;
   outline: none;
   width: 100%;
+}
+.searchField::placeholder {
+  color: var(--color);
 }
 .selector {
   display: flex;
@@ -41,10 +45,8 @@
   color: var(--text);
 }
 .filter {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 5px;
 }
 .selector_Title {
@@ -193,6 +195,70 @@
   color: tomato;
   background-color: transparent;
 }
+.filter_btn {
+  height: 35px;
+  width: 100%;
+  border: none;
+  color: var(--color);
+  background-color: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.filter_indi {
+  position: relative;
+}
+.filter_options {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 5px;
+  background-color: var(--secondary);
+  z-index: 5;
+  margin-top: 5px;
+  width: 97%;
+  border-radius: 4px;
+}
+.filter_options > button {
+  font-size: 0.9rem;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  color: var(--color);
+  background-color: transparent;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter_options > button > svg {
+  color: var(--primary);
+}
+.filter_options > button:hover {
+  color: var(--primary);
+  background-color: var(--background);
+  transition: all 0.3s;
+}
+.values {
+  text-align: left;
+}
+.submit_btn {
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--color);
+  background-color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 1024px) {
   .billboard {
@@ -207,6 +273,9 @@
 @media screen and (max-width: 600px) {
   .billboard {
     grid-template-columns: repeat(4, 1fr);
+  }
+  .filter {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media screen and (max-width: 530px) {
