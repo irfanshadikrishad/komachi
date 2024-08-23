@@ -38,20 +38,27 @@ export default function Search() {
   const [country, setCountry] = useState<string[]>([]);
 
   const getSearched = async () => {
-    if (query) {
-      const request = await fetch(`/api/search`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-      const response = await request.json();
+    const request = await fetch(`/api/search`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+        genre,
+        year,
+        season,
+        format,
+        status,
+        origin: country,
+        perPage: 60,
+      }),
+    });
+    const response = await request.json();
 
-      if (request.status === 200) {
-        setSearched(response);
-      } else {
-        setSearched([]);
-        console.log(response);
-      }
+    if (request.status === 200) {
+      setSearched(response);
+    } else {
+      setSearched([]);
+      console.log(response);
     }
   };
 
@@ -142,6 +149,11 @@ export default function Search() {
               className={styles.filter_btn}
               onClick={() => {
                 setIsGenreOpen(!isGenreOpen);
+                setIsYearOpen(false);
+                setIsSeasonOpen(false);
+                setIsFormatOpen(false);
+                setIsCountryOpen(false);
+                setIsStatusOpen(false);
               }}
             >
               <p className={`one_line ${styles.values}`}>
@@ -192,6 +204,11 @@ export default function Search() {
               className={styles.filter_btn}
               onClick={() => {
                 setIsYearOpen(!isYearOpen);
+                setIsGenreOpen(false);
+                setIsSeasonOpen(false);
+                setIsFormatOpen(false);
+                setIsCountryOpen(false);
+                setIsStatusOpen(false);
               }}
             >
               <p className={`one_line ${styles.values}`}>
@@ -250,6 +267,11 @@ export default function Search() {
               className={styles.filter_btn}
               onClick={() => {
                 setIsSeasonOpen(!isSeasonOpen);
+                setIsGenreOpen(false);
+                setIsYearOpen(false);
+                setIsFormatOpen(false);
+                setIsCountryOpen(false);
+                setIsStatusOpen(false);
               }}
             >
               <p className={`one_line ${styles.values}`}>
@@ -300,6 +322,11 @@ export default function Search() {
               className={styles.filter_btn}
               onClick={() => {
                 setIsFormatOpen(!isFormatOpen);
+                setIsGenreOpen(false);
+                setIsYearOpen(false);
+                setIsSeasonOpen(false);
+                setIsCountryOpen(false);
+                setIsStatusOpen(false);
               }}
             >
               <p className={`one_line ${styles.values}`}>
@@ -322,16 +349,16 @@ export default function Search() {
                     insertValuesIntoState("TV_SHORT", setFormat);
                   }}
                 >
-                  <p>TV_SHORT</p>
+                  <p>TV Short</p>
                   {format.includes("TV_SHORT") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
-                    insertValuesIntoState("Movie", setFormat);
+                    insertValuesIntoState("MOVIE", setFormat);
                   }}
                 >
                   <p>Movie</p>
-                  {format.includes("Movie") && <PiCheckCircleFill />}
+                  {format.includes("MOVIE") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
@@ -351,19 +378,19 @@ export default function Search() {
                 </button>
                 <button
                   onClick={() => {
-                    insertValuesIntoState("Music", setFormat);
+                    insertValuesIntoState("MUSIC", setFormat);
                   }}
                 >
                   <p>Music</p>
-                  {format.includes("Music") && <PiCheckCircleFill />}
+                  {format.includes("MUSIC") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
-                    insertValuesIntoState("Special", setFormat);
+                    insertValuesIntoState("SPECIAL", setFormat);
                   }}
                 >
                   <p>Special</p>
-                  {format.includes("Special") && <PiCheckCircleFill />}
+                  {format.includes("SPECIAL") && <PiCheckCircleFill />}
                 </button>
               </div>
             )}
@@ -374,6 +401,11 @@ export default function Search() {
               className={styles.filter_btn}
               onClick={() => {
                 setIsStatusOpen(!isStatusOpen);
+                setIsGenreOpen(false);
+                setIsYearOpen(false);
+                setIsSeasonOpen(false);
+                setIsFormatOpen(false);
+                setIsCountryOpen(false);
               }}
             >
               <p className={`one_line ${styles.values}`}>
@@ -416,6 +448,11 @@ export default function Search() {
               className={styles.filter_btn}
               onClick={() => {
                 setIsCountryOpen(!isCountryOpen);
+                setIsGenreOpen(false);
+                setIsYearOpen(false);
+                setIsSeasonOpen(false);
+                setIsFormatOpen(false);
+                setIsStatusOpen(false);
               }}
             >
               <p className={`one_line ${styles.values}`}>
@@ -431,7 +468,7 @@ export default function Search() {
                   }}
                 >
                   <p>Japan</p>
-                  {status.includes("JP") && <PiCheckCircleFill />}
+                  {country.includes("JP") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
@@ -439,7 +476,7 @@ export default function Search() {
                   }}
                 >
                   <p>China</p>
-                  {status.includes("CN") && <PiCheckCircleFill />}
+                  {country.includes("CN") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
@@ -447,7 +484,7 @@ export default function Search() {
                   }}
                 >
                   <p>Korea</p>
-                  {status.includes("KR") && <PiCheckCircleFill />}
+                  {country.includes("KR") && <PiCheckCircleFill />}
                 </button>
               </div>
             )}
