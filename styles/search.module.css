@@ -251,13 +251,18 @@
   border: none;
   border-radius: 4px;
   font-size: 0.9rem;
-  color: var(--color);
+  color: var(--background);
   background-color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 3px;
   cursor: pointer;
+}
+.filter_optionYear {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
 }
 
 @media screen and (max-width: 1024px) {

@@ -189,11 +189,139 @@ export default function Search() {
                 </button>
                 <button
                   onClick={() => {
+                    insertValuesIntoState("Drama", setGenre);
+                  }}
+                >
+                  <p>Drama</p>
+                  {genre.includes("Drama") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Ecchi", setGenre);
+                  }}
+                >
+                  <p>Ecchi</p>
+                  {genre.includes("Ecchi") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Fantasy", setGenre);
+                  }}
+                >
+                  <p>Fantasy</p>
+                  {genre.includes("Fantasy") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Hentai", setGenre);
+                  }}
+                >
+                  <p>Hentai</p>
+                  {genre.includes("Hentai") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
                     insertValuesIntoState("Horror", setGenre);
                   }}
                 >
                   <p>Horror</p>
                   {genre.includes("Horror") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Mahou Shoujo", setGenre);
+                  }}
+                >
+                  <p>Mahou Shoujo</p>
+                  {genre.includes("Mahou Shoujo") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Mecha", setGenre);
+                  }}
+                >
+                  <p>Mecha</p>
+                  {genre.includes("Mecha") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Music", setGenre);
+                  }}
+                >
+                  <p>Music</p>
+                  {genre.includes("Music") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Mystery", setGenre);
+                  }}
+                >
+                  <p>Mystery</p>
+                  {genre.includes("Mystery") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Overpowered", setGenre);
+                  }}
+                >
+                  <p>Overpowered</p>
+                  {genre.includes("Overpowered") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Psychological", setGenre);
+                  }}
+                >
+                  <p>Psychological</p>
+                  {genre.includes("Psychological") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Romance", setGenre);
+                  }}
+                >
+                  <p>Romance</p>
+                  {genre.includes("Romance") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Sci-Fi", setGenre);
+                  }}
+                >
+                  <p>Sci-Fi</p>
+                  {genre.includes("Sci-Fi") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Slice of Life", setGenre);
+                  }}
+                >
+                  <p>Slice of Life</p>
+                  {genre.includes("Slice of Life") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Sports", setGenre);
+                  }}
+                >
+                  <p>Sports</p>
+                  {genre.includes("Sports") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Supernatural", setGenre);
+                  }}
+                >
+                  <p>Supernatural</p>
+                  {genre.includes("Supernatural") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("Thriller", setGenre);
+                  }}
+                >
+                  <p>Thriller</p>
+                  {genre.includes("Thriller") && <PiCheckCircleFill />}
                 </button>
               </div>
             )}
@@ -217,7 +345,9 @@ export default function Search() {
               <IoChevronDownOutline />
             </button>
             {isYearOpen && (
-              <div className={styles.filter_options}>
+              <div
+                className={`${styles.filter_options} ${styles.filter_optionYear}`}
+              >
                 <button
                   onClick={() => {
                     insertValuesIntoState("2024", setYear);
@@ -257,6 +387,158 @@ export default function Search() {
                 >
                   <p>2020</p>
                   {year.includes("2020") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2019", setYear);
+                  }}
+                >
+                  <p>2019</p>
+                  {year.includes("2019") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2018", setYear);
+                  }}
+                >
+                  <p>2018</p>
+                  {year.includes("2018") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2017", setYear);
+                  }}
+                >
+                  <p>2017</p>
+                  {year.includes("2017") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2016", setYear);
+                  }}
+                >
+                  <p>2016</p>
+                  {year.includes("2016") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2015", setYear);
+                  }}
+                >
+                  <p>2015</p>
+                  {year.includes("2015") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2014", setYear);
+                  }}
+                >
+                  <p>2014</p>
+                  {year.includes("2014") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2013", setYear);
+                  }}
+                >
+                  <p>2013</p>
+                  {year.includes("2013") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2012", setYear);
+                  }}
+                >
+                  <p>2012</p>
+                  {year.includes("2012") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2011", setYear);
+                  }}
+                >
+                  <p>2011</p>
+                  {year.includes("2011") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2010", setYear);
+                  }}
+                >
+                  <p>2010</p>
+                  {year.includes("2010") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2009", setYear);
+                  }}
+                >
+                  <p>2009</p>
+                  {year.includes("2009") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2008", setYear);
+                  }}
+                >
+                  <p>2008</p>
+                  {year.includes("2008") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2007", setYear);
+                  }}
+                >
+                  <p>2007</p>
+                  {year.includes("2007") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2006", setYear);
+                  }}
+                >
+                  <p>2006</p>
+                  {year.includes("2006") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2005", setYear);
+                  }}
+                >
+                  <p>2005</p>
+                  {year.includes("2005") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2004", setYear);
+                  }}
+                >
+                  <p>2004</p>
+                  {year.includes("2004") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2003", setYear);
+                  }}
+                >
+                  <p>2003</p>
+                  {year.includes("2003") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2002", setYear);
+                  }}
+                >
+                  <p>2002</p>
+                  {year.includes("2002") && <PiCheckCircleFill />}
+                </button>
+                <button
+                  onClick={() => {
+                    insertValuesIntoState("2001", setYear);
+                  }}
+                >
+                  <p>2001</p>
+                  {year.includes("2001") && <PiCheckCircleFill />}
                 </button>
               </div>
             )}
@@ -494,6 +776,12 @@ export default function Search() {
             className={styles.submit_btn}
             onClick={() => {
               getSearched();
+              setIsYearOpen(false);
+              setIsGenreOpen(false);
+              setIsSeasonOpen(false);
+              setIsFormatOpen(false);
+              setIsCountryOpen(false);
+              setIsStatusOpen(false);
             }}
           >
             <HiFilter />

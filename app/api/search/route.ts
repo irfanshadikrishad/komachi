@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       searchConditions.push({ origin: origin });
     }
     if (genre.length > 0) {
-      searchConditions.push({ genres: genre });
+      searchConditions.push({ genres: { $in: genre } });
     }
     if (year.length > 0) {
       searchConditions.push({ "airing_start.year": year });
