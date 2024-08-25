@@ -53,6 +53,7 @@ export default function Search() {
       }),
     });
     const response = await request.json();
+    console.log(response);
 
     if (request.status === 200) {
       setSearched(response);
@@ -707,11 +708,11 @@ export default function Search() {
                 </button>
                 <button
                   onClick={() => {
-                    insertValuesIntoState("Finished", setStatus);
+                    insertValuesIntoState("Completed", setStatus);
                   }}
                 >
-                  <p>Finished</p>
-                  {status.includes("Finished") && <PiCheckCircleFill />}
+                  <p>Completed</p>
+                  {status.includes("Completed") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
