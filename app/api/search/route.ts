@@ -44,7 +44,7 @@ export async function POST(request: Request) {
       searchConditions.push({ "airing_start.year": year });
     }
     if (season.length > 0) {
-      searchConditions.push({ season: season });
+      searchConditions.push({ season: { $in: season } });
     }
 
     const queryObject =
