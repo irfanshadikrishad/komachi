@@ -53,6 +53,7 @@ export default function Search() {
       }),
     });
     const response = await request.json();
+    console.log(response);
 
     if (request.status === 200) {
       setSearched(response);
@@ -565,35 +566,35 @@ export default function Search() {
               <div className={styles.filter_options}>
                 <button
                   onClick={() => {
-                    insertValuesIntoState("Summer", setSeason);
+                    insertValuesIntoState("SUMMER", setSeason);
                   }}
                 >
                   <p>Summer</p>
-                  {season.includes("Summer") && <PiCheckCircleFill />}
+                  {season.includes("SUMMER") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
-                    insertValuesIntoState("Winter", setSeason);
+                    insertValuesIntoState("WINTER", setSeason);
                   }}
                 >
                   <p>Winter</p>
-                  {season.includes("Winter") && <PiCheckCircleFill />}
+                  {season.includes("WINTER") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
-                    insertValuesIntoState("Fall", setSeason);
+                    insertValuesIntoState("FALL", setSeason);
                   }}
                 >
                   <p>Fall</p>
-                  {season.includes("Fall") && <PiCheckCircleFill />}
+                  {season.includes("FALL") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
-                    insertValuesIntoState("Spring", setSeason);
+                    insertValuesIntoState("SPRING", setSeason);
                   }}
                 >
                   <p>Spring</p>
-                  {season.includes("Spring") && <PiCheckCircleFill />}
+                  {season.includes("SPRING") && <PiCheckCircleFill />}
                 </button>
               </div>
             )}
@@ -707,11 +708,11 @@ export default function Search() {
                 </button>
                 <button
                   onClick={() => {
-                    insertValuesIntoState("Finished", setStatus);
+                    insertValuesIntoState("Completed", setStatus);
                   }}
                 >
-                  <p>Finished</p>
-                  {status.includes("Finished") && <PiCheckCircleFill />}
+                  <p>Completed</p>
+                  {status.includes("Completed") && <PiCheckCircleFill />}
                 </button>
                 <button
                   onClick={() => {
