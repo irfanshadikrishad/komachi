@@ -1,5 +1,5 @@
 import styles from "@/styles/search.module.css";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { PiCheckCircleFill } from "react-icons/pi";
 import { IoChevronDownOutline } from "react-icons/io5";
 
@@ -26,6 +26,25 @@ export default function Country({
   setIsFormatOpen: Dispatch<SetStateAction<boolean>>;
   setIsStatusOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+  const [distinctCountry, setDistinctCountry] = useState<string[]>([]);
+
+  const getDistinctCountry = async () => {
+    const request = await fetch(`/api/distinct/country`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const response = await request.json();
+
+    if (request.status === 200) {
+      setDistinctCountry(response);
+    } else {
+      console.log(response);
+    }
+  };
+
+  useEffect(() => {
+    getDistinctCountry();
+  }, []);
   return (
     <section className={styles.filter_indi}>
       <button
@@ -46,30 +65,19 @@ export default function Country({
       </button>
       {isCountryOpen && (
         <div className={styles.filter_options}>
-          <button
-            onClick={() => {
-              insertValuesIntoState("JP", setCountry);
-            }}
-          >
-            <p>Japan</p>
-            {country.includes("JP") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("CN", setCountry);
-            }}
-          >
-            <p>China</p>
-            {country.includes("CN") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("KR", setCountry);
-            }}
-          >
-            <p>Korea</p>
-            {country.includes("KR") && <PiCheckCircleFill />}
-          </button>
+          {distinctCountry.length > 0 &&
+            distinctCountry.map((disC, index) => {
+              return (
+                <button
+                  onClick={() => {
+                    insertValuesIntoState(disC, setCountry);
+                  }}
+                >
+                  <p>{disC}</p>
+                  {country.includes(disC) && <PiCheckCircleFill />}
+                </button>
+              );
+            })}
         </div>
       )}
     </section>

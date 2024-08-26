@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "@/styles/search.module.css";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { PiCheckCircleFill } from "react-icons/pi";
@@ -26,6 +26,25 @@ export default function Season({
   setIsStatusOpen: Dispatch<SetStateAction<boolean>>;
   insertValuesIntoState: any;
 }) {
+  const [distinctSeason, setDistinctSeason] = useState<string[]>([]);
+
+  const getDistinctSeason = async () => {
+    const request = await fetch(`/api/distinct/season`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const response = await request.json();
+
+    if (request.status === 200) {
+      setDistinctSeason(response);
+    } else {
+      console.log(response);
+    }
+  };
+
+  useEffect(() => {
+    getDistinctSeason();
+  }, []);
   return (
     <section className={styles.filter_indi}>
       <button
@@ -46,38 +65,20 @@ export default function Season({
       </button>
       {isSeasonOpen && (
         <div className={styles.filter_options}>
-          <button
-            onClick={() => {
-              insertValuesIntoState("SUMMER", setSeason);
-            }}
-          >
-            <p>Summer</p>
-            {season.includes("SUMMER") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("WINTER", setSeason);
-            }}
-          >
-            <p>Winter</p>
-            {season.includes("WINTER") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("FALL", setSeason);
-            }}
-          >
-            <p>Fall</p>
-            {season.includes("FALL") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("SPRING", setSeason);
-            }}
-          >
-            <p>Spring</p>
-            {season.includes("SPRING") && <PiCheckCircleFill />}
-          </button>
+          {distinctSeason.length > 0 &&
+            distinctSeason.map((disS, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => {
+                    insertValuesIntoState(disS, setSeason);
+                  }}
+                >
+                  <p>{String(disS)}</p>
+                  {season.includes(disS) && <PiCheckCircleFill />}
+                </button>
+              );
+            })}
         </div>
       )}
     </section>

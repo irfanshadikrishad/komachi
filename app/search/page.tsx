@@ -57,7 +57,6 @@ export default function Search() {
       }),
     });
     const response = await request.json();
-    console.log(response);
 
     if (request.status === 200) {
       setSearched(response);
