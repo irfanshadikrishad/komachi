@@ -1,4 +1,9 @@
-//@// Converts timestamp like 1120415 to readable string
+/**
+ * Converts timestamp like 1120415 to readable string
+ * @param airingTime - in timistamp format as int number
+ * @param episode - episode number (eg: 1, 2, 3 etc.)
+ * @returns formatted string
+ */
 function convertTimestampToReadable(airingTime: any, episode: any) {
   let currentDate = new Date();
 
@@ -16,9 +21,11 @@ function convertTimestampToReadable(airingTime: any, episode: any) {
   return output;
 }
 
-//@// Converts SubId to DubId
-//@// Example Input: one-piece-episode-1
-//@// Example output: one-piece-dub-episode-1
+/**
+ * Converts SubId to DubId
+ * @param subId - (eg: one-piece-episode-1)
+ * @returns dubId (eg: one-piece-dub-episode-1)
+ */
 function subToDub(subId: string) {
   if (String(subId).includes("dub")) {
     return subId;
@@ -28,8 +35,11 @@ function subToDub(subId: string) {
   }
 }
 
-//@// Checks for repeated string
-//@// use cases to identify: one-piece-episode-episode-1108
+/**
+ * Checks for repeated string (eg: one-piece-episode-episode-1108)
+ * @param str
+ * @returns true | false
+ */
 function hasRepeatedWords(str: string) {
   const words = str.split("-");
   const wordSet = new Set();
@@ -44,15 +54,21 @@ function hasRepeatedWords(str: string) {
   return false;
 }
 
-//@// Converts episodeId to episode number
-//@// exmaple input: one-piece-episode-1108
-//@// example output: 1108
+/**
+ * Converts episodeId to episode number
+ * @param episodeId - (eg: one-piece-episode-1108)
+ * @returns episode number (eg: 1108)
+ */
 const episodeIdToEpisodeNumber = (episodeId: string) => {
   const arr = String(episodeId).split("-");
   return arr[arr.length - 1];
 };
 
-//@// input like 'true' or 'false' will be returned as boolean true/false
+/**
+ * input like 'true' or 'false' will be returned as boolean true/false
+ * @param string 'true' | 'false'
+ * @returns true | false
+ */
 const stringToBoolean = (string: any) => {
   if (string === "true" || string === true) {
     return true;
@@ -61,45 +77,38 @@ const stringToBoolean = (string: any) => {
   }
 };
 
-//@// default id example: kaijuu-8-gou-episode-1
-//@// toSetId example: 8
+/**
+ * Replace episode number from episodeId
+ * @param defaultId (eg: kaijuu-8-gou-episode-1)
+ * @param toSetId (eg: 2)
+ * @returns (eg: kaijuu-8-gou-episode-2)
+ */
 const replaceId = (defaultId: string, toSetId: string) => {
   let splt = String(defaultId).split("-");
   splt[splt.length - 1] = toSetId;
-  // console.log(defaultId, toSetId, String(splt.join("-")));
+
   return String(splt.join("-"));
 };
 
-//@// This function will take input as: "<p># Header</p>\n<p>This is **bold** and *italic* text with `inline code`.</p>\n- List item\n"
-//@// Will give output: "Header This is bold and italic text with inline code. List item"
+/**
+ * Remove HTML & Markdown from string
+ * @param input - string including markdown
+ * @returns - pure string
+ */
 function removeHtmlAndMarkdown(input: string) {
   if (input) {
-    // Remove HTML tags
     input = input.replace(/<\/?[^>]+(>|$)/g, "");
-
-    // Remove headers
     input = input.replace(/(^|\n)#{1,6}\s+(.+?)(\n|$)/g, "$2 ");
-    // Remove bold and italic
-    input = input.replace(/(\*\*|__)(.*?)\1/g, "$2"); // bold
-    input = input.replace(/(\*|_)(.*?)\1/g, "$2"); // italic
-    // Remove inline code
+    input = input.replace(/(\*\*|__)(.*?)\1/g, "$2");
+    input = input.replace(/(\*|_)(.*?)\1/g, "$2");
     input = input.replace(/`(.+?)`/g, "$1");
-    // Remove links
     input = input.replace(/\[(.*?)\]\(.*?\)/g, "$1");
-    // Remove images
     input = input.replace(/!\[(.*?)\]\(.*?\)/g, "$1");
-    // Remove blockquotes
     input = input.replace(/(^|\n)>\s+(.+?)(\n|$)/g, "$2 ");
-    // Remove unordered lists
     input = input.replace(/(^|\n)-\s+(.+?)(\n|$)/g, "$2 ");
-    // Remove ordered lists
     input = input.replace(/(^|\n)\d+\.\s+(.+?)(\n|$)/g, "$2 ");
-    // Remove horizontal rules
     input = input.replace(/(^|\n)\s*([-*_]){3,}\s*(\n|$)/g, "$1");
-    // Remove strikethrough
     input = input.replace(/~~(.*?)~~/g, "$1");
-
-    // Remove newlines and excess whitespace
     input = input.replace(/\s+/g, " ").trim();
   }
   return input;
