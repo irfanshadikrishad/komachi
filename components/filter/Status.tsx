@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "@/styles/search.module.css";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { PiCheckCircleFill } from "react-icons/pi";
@@ -26,6 +26,25 @@ export default function Status({
   setIsYearOpen: Dispatch<SetStateAction<boolean>>;
   setIsSeasonOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+  const [distinctStatus, setDistinctStatus] = useState<string[]>([]);
+
+  const getDistinctStatus = async () => {
+    const request = await fetch(`/api/distinct/status`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const response = await request.json();
+
+    if (request.status === 200) {
+      setDistinctStatus(response);
+    } else {
+      console.log(response);
+    }
+  };
+
+  useEffect(() => {
+    getDistinctStatus();
+  }, []);
   return (
     <section className={styles.filter_indi}>
       <button
@@ -46,30 +65,20 @@ export default function Status({
       </button>
       {isStatusOpen && (
         <div className={styles.filter_options}>
-          <button
-            onClick={() => {
-              insertValuesIntoState("Ongoing", setStatus);
-            }}
-          >
-            <p>Ongoing</p>
-            {status.includes("Ongoing") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("Completed", setStatus);
-            }}
-          >
-            <p>Completed</p>
-            {status.includes("Completed") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("Cancelled", setStatus);
-            }}
-          >
-            <p>Cancelled</p>
-            {status.includes("Cancelled") && <PiCheckCircleFill />}
-          </button>
+          {distinctStatus.length > 0 &&
+            distinctStatus.map((disStat, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => {
+                    insertValuesIntoState(disStat, setStatus);
+                  }}
+                >
+                  <p>{disStat}</p>
+                  {status.includes(disStat) && <PiCheckCircleFill />}
+                </button>
+              );
+            })}
         </div>
       )}
     </section>

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "@/styles/search.module.css";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { PiCheckCircleFill } from "react-icons/pi";
@@ -26,6 +26,25 @@ export default function Format({
   setIsStatusOpen: Dispatch<SetStateAction<boolean>>;
   insertValuesIntoState: any;
 }) {
+  const [distinctFormat, setDistinctFormat] = useState<string[]>([]);
+
+  const getDistinctFormat = async () => {
+    const request = await fetch(`/api/distinct/format`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const response = await request.json();
+
+    if (request.status === 200) {
+      setDistinctFormat(response);
+    } else {
+      console.log(response);
+    }
+  };
+
+  useEffect(() => {
+    getDistinctFormat();
+  }, []);
   return (
     <section className={styles.filter_indi}>
       <button
@@ -46,62 +65,20 @@ export default function Format({
       </button>
       {isFormatOpen && (
         <div className={styles.filter_options}>
-          <button
-            onClick={() => {
-              insertValuesIntoState("TV", setFormat);
-            }}
-          >
-            <p>TV</p>
-            {format.includes("TV") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("TV_SHORT", setFormat);
-            }}
-          >
-            <p>TV Short</p>
-            {format.includes("TV_SHORT") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("MOVIE", setFormat);
-            }}
-          >
-            <p>Movie</p>
-            {format.includes("MOVIE") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("OVA", setFormat);
-            }}
-          >
-            <p>OVA</p>
-            {format.includes("OVA") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("ONA", setFormat);
-            }}
-          >
-            <p>ONA</p>
-            {format.includes("ONA") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("MUSIC", setFormat);
-            }}
-          >
-            <p>Music</p>
-            {format.includes("MUSIC") && <PiCheckCircleFill />}
-          </button>
-          <button
-            onClick={() => {
-              insertValuesIntoState("SPECIAL", setFormat);
-            }}
-          >
-            <p>Special</p>
-            {format.includes("SPECIAL") && <PiCheckCircleFill />}
-          </button>
+          {distinctFormat.length > 0 &&
+            distinctFormat.map((disF, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => {
+                    insertValuesIntoState(disF, setFormat);
+                  }}
+                >
+                  <p>{disF}</p>
+                  {format.includes(disF) && <PiCheckCircleFill />}
+                </button>
+              );
+            })}
         </div>
       )}
     </section>
