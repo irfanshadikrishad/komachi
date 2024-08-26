@@ -106,7 +106,7 @@
 .source_btns > button {
   border: none;
   font-size: 0.7rem;
-  color: var(--color);
+  color: var(--background);
   padding: 3px 10px;
   border-radius: 3px;
   background-color: var(--secondary);

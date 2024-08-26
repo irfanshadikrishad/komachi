@@ -14,18 +14,24 @@ export default function Episodes({
   animeId,
   malId,
   currentEpisode,
+}: {
+  unicornEpisodes: any[];
+  getStreamLink: any;
+  animeId: string;
+  malId: string;
+  currentEpisode: number | string;
 }) {
-  const [goodEpisodes, setGoodEpisodes] = useState([]);
-  const [isRangeOpen, setIsRangeOpen] = useState(false);
+  const [goodEpisodes, setGoodEpisodes] = useState<any[]>([]);
+  const [isRangeOpen, setIsRangeOpen] = useState<boolean>(false);
   const [selectedEpisodeRange, setSelectedEpisodeRange] = useState(0);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const start = selectedEpisodeRange * 100 + 1;
   const end = (selectedEpisodeRange + 1) * 100;
 
   useEffect(() => {
     // CHUNK UP ARRAY
     if (unicornEpisodes) {
-      const chunkArray = (array, size) => {
+      const chunkArray = (array: any[], size: number) => {
         const result = [];
         for (let i = 0; i < array.length; i += size) {
           const chunk = array.slice(i, i + size);
@@ -34,14 +40,17 @@ export default function Episodes({
         return result;
       };
 
-      const chunks = chunkArray(unicornEpisodes, 100);
+      const chunks: any[] = chunkArray(unicornEpisodes, 100);
       setGoodEpisodes(chunks);
     }
   }, [unicornEpisodes]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef?.current &&
+        !dropdownRef?.current?.contains(event.target as Node)
+      ) {
         setIsRangeOpen(false);
       }
     };
@@ -104,7 +113,18 @@ export default function Episodes({
       <div className={styles.streamingV2Buttons}>
         {goodEpisodes &&
           goodEpisodes[selectedEpisodeRange]?.map(
-            ({ id, title, number }, index) => {
+            (
+              {
+                id,
+                title,
+                number,
+              }: {
+                id: string;
+                title: { english: string; romaji: string };
+                number: number;
+              },
+              index: number
+            ) => {
               return (
                 <button
                   onClick={() => {
@@ -114,7 +134,14 @@ export default function Episodes({
                   key={index}
                   className={styles.streamingV2Button}
                   style={{
-                    backgroundColor: currentEpisode === id && "var(--primary)",
+                    backgroundColor:
+                      currentEpisode === id
+                        ? "var(--primary)"
+                        : "var(--background)",
+                    color:
+                      currentEpisode === id
+                        ? "var(--background)"
+                        : "var(--color)",
                   }}
                 >
                   {number}
