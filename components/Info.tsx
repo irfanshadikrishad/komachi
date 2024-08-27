@@ -1,7 +1,7 @@
 import { memo } from "react";
 import uniqolor from "uniqolor";
-import { removeHtmlAndMarkdown } from "@/utils/info_modifier";
-import { AnimeInfo } from "@/utils/workers";
+import { removeHtmlAndMarkdown } from "@/utils/helpers";
+import { AnimeInfo } from "@/utils/helpers";
 
 interface InfoProps {
   animeInfo: AnimeInfo;

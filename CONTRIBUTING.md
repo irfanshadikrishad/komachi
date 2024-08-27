@@ -3,14 +3,14 @@
 To contribute to Komachi, you need to know the following:
 
 - NodeJs/Bun
-- ReactJs
-- ExpressJs
+- NextJs
+- Mongodb (Mongoose)
 
 #### Cloning the repository
 
 in your terminal use command
 
-```
+```bash
 git clone https://github.com/irfanshadikrishad/komachi.git
 ```
 
@@ -18,13 +18,13 @@ to clone the repository.
 
 Go to the directory using -
 
-```
+```bash
 cd komachi
 ```
 
 Create a new branch
 
-```
+```bash
 git checkout -b <branch-name>
 ```
 
@@ -34,11 +34,11 @@ After cloning and updating the code, you are ready to push your code. Push your 
 
 run these from the root to commit and push. Maintain commit message guidelines.
 
-```
+```bash
 git commit -am "<prefix>: <commit-message>"
 ```
 
-```
+```bash
 git push origin <branch-name>
 ```
 

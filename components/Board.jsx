@@ -16,7 +16,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
 // Utils
-import { removeHtmlAndMarkdown } from "@/utils/info_modifier";
+import { removeHtmlAndMarkdown } from "@/utils/helpers";
 
 export default function Board() {
   const [boardInfo, setBoardInfo] = useState([]);

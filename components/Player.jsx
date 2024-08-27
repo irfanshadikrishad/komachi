@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 import styles from "@/styles/player.module.css";
 import { useEffect, useState, useRef, useCallback } from "react";
 import Disqus from "@/components/Disqus";
-import { convertTimestampToReadable } from "@/utils/info_modifier";
+import { convertTimestampToReadable } from "@/utils/helpers";
 import Episodes from "@/components/Episodes";
 import Automatics from "@/components/Automatics";
 // ICONS
@@ -123,7 +123,12 @@ export default function Player({
                   setIsSub(true);
                   setUnicornEpisodes(episodes);
                 }}
-                style={{ backgroundColor: isSub && "var(--primary)" }}
+                style={{
+                  backgroundColor: isSub
+                    ? "var(--primary)"
+                    : "var(--secondary)",
+                  color: isSub ? "var(--background)" : "var(--color)",
+                }}
               >
                 <FaRegClosedCaptioning /> sub ({episodes.length})
               </button>
@@ -133,7 +138,12 @@ export default function Player({
                     setIsSub(false);
                     setUnicornEpisodes(dubEpisodes);
                   }}
-                  style={{ backgroundColor: !isSub && "var(--primary)" }}
+                  style={{
+                    backgroundColor: !isSub
+                      ? "var(--primary)"
+                      : "var(--secondary)",
+                    color: !isSub ? "var(--background)" : "var(--color)",
+                  }}
                 >
                   <IoMic /> dub ({dubEpisodes.length})
                 </button>

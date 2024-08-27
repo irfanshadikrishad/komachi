@@ -2,6 +2,7 @@
 import Logo from "@/components/Logo";
 import styles from "@/styles/footer.module.css";
 import Link from "next/link";
+import Subscribe from "@/components/Subscribe";
 // Icons
 import { FaYoutube, FaGithub } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
@@ -23,12 +24,13 @@ export default function Footer() {
             >
               <RiInstagramFill />
             </Link>
-            <Link
+            {/* <Link
               target="_blank"
               href="https://www.youtube.com/@irfanshadikrishad"
             >
               <FaYoutube />
-            </Link>
+            </Link> */}
+            <Subscribe channelId="UCBcueHV2xtwcyZ8jz0hgO2Q" />
           </div>
         </div>
       </section>
