@@ -1,6 +1,5 @@
 import Link from "next/link";
 import styles from "@/styles/search.module.css";
-import { slisor } from "@/utils/workers";
 // Icons
 import { FaClosedCaptioning } from "react-icons/fa6";
 import { BiSolidMicrophone } from "react-icons/bi";

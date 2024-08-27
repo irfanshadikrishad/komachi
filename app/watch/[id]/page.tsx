@@ -6,7 +6,7 @@ import Info from "@/components/Info";
 import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { AnimeInfo } from "@/utils/workers";
+import { AnimeInfo } from "@/utils/helpers";
 
 export default function Streaming() {
   const params = useParams();

@@ -17,6 +17,7 @@
   margin-top: 5px;
 }
 .footer_links > a {
+  display: flex;
   text-decoration: none;
   color: var(--color);
   font-size: 1.1rem;

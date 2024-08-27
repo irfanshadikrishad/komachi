@@ -1,4 +1,3 @@
-import { stringToBoolean } from "@/utils/info_modifier";
 import styles from "@/styles/player.module.css";
 
 export default function Automatics() {
