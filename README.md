@@ -9,15 +9,13 @@
 - Clean UI.
 - Fast anime updates.
 - Multiple stream source.
-- Auto Skip Intro, Outro
-- Auto Play next episode
+- ~~Auto Skip Intro, Outro~~
+- ~~Auto Play next episode~~
 
 #### tech stacks:
 
-- ExpressJS
-- NodeJS
-- ReactJS
-- Bun
+- NextJs
+- MongoDB
 
 #### Contribution Guideline:
 
