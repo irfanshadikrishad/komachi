@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "@/styles/latest.module.css";
 // ICONS
 import { TbMicrophoneFilled } from "react-icons/tb";
@@ -7,8 +7,15 @@ import { FaClosedCaptioning } from "react-icons/fa6";
 import { CgMediaLive } from "react-icons/cg";
 
 export default function Ranking({ popular, trending }) {
-  const [rank, setRank] = useState(popular);
+  const [rank, setRank] = useState([]);
 
+  useEffect(() => {
+    if (localStorage.getItem("rank") === "trending") {
+      setRank(trending);
+    } else {
+      setRank(popular);
+    }
+  }, [popular, trending]);
   return (
     <section className="home_ranking">
       <section className="home_popular">
@@ -16,17 +23,27 @@ export default function Ranking({ popular, trending }) {
           <p className="partitionTitleII">Ranking</p>
           <div className={styles.ranking_Changers}>
             <button
-              style={{ color: rank === popular && "var(--primary)" }}
+              style={{
+                color:
+                  localStorage.getItem("rank") === "popular" &&
+                  "var(--primary)",
+              }}
               onClick={() => {
                 setRank(popular);
+                localStorage.setItem("rank", "popular");
               }}
             >
               Popular
             </button>
             <button
-              style={{ color: rank === trending && "var(--primary)" }}
+              style={{
+                color:
+                  localStorage.getItem("rank") === "trending" &&
+                  "var(--primary)",
+              }}
               onClick={() => {
                 setRank(trending);
+                localStorage.setItem("rank", "trending");
               }}
             >
               Trending
