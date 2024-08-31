@@ -27,9 +27,30 @@ export const POST = async (req: Request) => {
 
     const { data } = await request.json();
 
-    const anilistIds = data?.Page?.media.map((item: { id: number }) => item.id);
+    const anilistIds = data?.Page?.media.map((item: { id: number }) =>
+      item.id.toString()
+    );
 
-    const results = await Anime.find({ anilistId: { $in: anilistIds } });
+    const results = await Anime.aggregate([
+      {
+        $match: { anilistId: { $in: anilistIds } },
+      },
+      {
+        $addFields: {
+          sortOrder: {
+            $indexOfArray: [anilistIds, "$anilistId"],
+          },
+        },
+      },
+      {
+        $sort: { sortOrder: 1 },
+      },
+      {
+        $project: {
+          sortOrder: 0,
+        },
+      },
+    ]);
 
     return new Response(JSON.stringify(results), {
       status: 200,
