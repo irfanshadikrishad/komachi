@@ -23,9 +23,10 @@ export default function Board() {
 
   const getBoardAnimes = async () => {
     try {
-      const request = await fetch(`/api/board`, {
-        method: "GET",
+      const request = await fetch(`/api/trending`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ page: 1, perPage: 6 }),
       });
       const response = await request.json();
 
