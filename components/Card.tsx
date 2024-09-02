@@ -21,7 +21,7 @@ export default function Card({
   dubCount: string | number;
   totalCount: string | number;
   isAdult: string;
-  lastEpisode: number;
+  lastEpisode?: number;
 }) {
   return (
     <Link
