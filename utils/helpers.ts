@@ -215,6 +215,38 @@ interface AnimeInfo {
   };
 }
 
+/**
+ * Get Previous Episode Id
+ * @param currentEpisode (eg: one-piece-1117)
+ * @returns previousEpisode (eg: one-piece-1116)
+ */
+function streamPreviousEpisode(currentEpisode: string) {
+  const toSet: string = String(
+    Number(episodeIdToEpisodeNumber(currentEpisode)) - 1
+  );
+  const replacedId = replaceId(currentEpisode, toSet);
+
+  if (toSet === "0") {
+    return currentEpisode;
+  } else {
+    return replacedId;
+  }
+}
+
+/**
+ * Get Next Episode Id
+ * @param currentEpisode (eg: one-piece-1116)
+ * @returns nextEpisode (eg: one-piece-1117)
+ */
+function streamNextEpisode(currentEpisode: string) {
+  const toSet: string = String(
+    Number(episodeIdToEpisodeNumber(currentEpisode)) + 1
+  );
+  const replacedId = replaceId(currentEpisode, toSet);
+
+  return replacedId;
+}
+
 export {
   insert_Into_Array,
   slisor,
@@ -225,5 +257,7 @@ export {
   stringToBoolean,
   replaceId,
   removeHtmlAndMarkdown,
+  streamPreviousEpisode,
+  streamNextEpisode,
 };
 export type { AnimeInfo };

@@ -7,6 +7,7 @@ import {
   IoChevronForward,
   IoChevronBack,
 } from "react-icons/io5";
+import { streamNextEpisode, streamPreviousEpisode } from "@/utils/helpers";
 
 export default function Episodes({
   unicornEpisodes,
@@ -25,6 +26,8 @@ export default function Episodes({
   const [isRangeOpen, setIsRangeOpen] = useState<boolean>(false);
   const [selectedEpisodeRange, setSelectedEpisodeRange] = useState(0);
   const [filtered, setFiltered] = useState<any[]>([]);
+  const [firstEpisode, setFirstEpisode] = useState<string>("");
+  const [lastEpisode, setLastEpisode] = useState<string>("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const start = selectedEpisodeRange * 100 + 1;
   const end = (selectedEpisodeRange + 1) * 100;
@@ -44,6 +47,9 @@ export default function Episodes({
       const chunks: any[] = chunkArray(unicornEpisodes, 100);
       setGoodEpisodes(chunks);
     }
+
+    setFirstEpisode(unicornEpisodes[0].id);
+    setLastEpisode(unicornEpisodes[unicornEpisodes.length - 1].id);
   }, [unicornEpisodes]);
 
   useEffect(() => {
@@ -76,7 +82,7 @@ export default function Episodes({
             onChange={(e) => {
               setFiltered(
                 unicornEpisodes.filter(({ number }) => {
-                  return number == e.target.value;
+                  return String(number).includes(String(e.target.value));
                 })
               );
             }}
@@ -114,10 +120,34 @@ export default function Episodes({
               </div>
             )}
           </div>
-          <button>
+          <button
+            style={{
+              color:
+                currentEpisode === firstEpisode
+                  ? "rgb(50 50 50)"
+                  : "var(--color-fade)",
+            }}
+            onClick={() => {
+              if (currentEpisode !== firstEpisode) {
+                getStreamLink(streamPreviousEpisode(String(currentEpisode)));
+              }
+            }}
+          >
             <IoChevronBack />
           </button>
-          <button>
+          <button
+            style={{
+              color:
+                currentEpisode === lastEpisode
+                  ? "rgb(50 50 50)"
+                  : "var(--color-fade)",
+            }}
+            onClick={() => {
+              if (currentEpisode !== lastEpisode) {
+                getStreamLink(streamNextEpisode(String(currentEpisode)));
+              }
+            }}
+          >
             <IoChevronForward />
           </button>
         </div>
