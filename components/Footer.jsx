@@ -24,13 +24,13 @@ export default function Footer() {
             >
               <RiInstagramFill />
             </Link>
-            {/* <Link
+            <Link
               target="_blank"
               href="https://www.youtube.com/@irfanshadikrishad"
             >
               <FaYoutube />
-            </Link> */}
-            <Subscribe channelId="UCBcueHV2xtwcyZ8jz0hgO2Q" />
+            </Link>
+            {/* <Subscribe channelId="UCBcueHV2xtwcyZ8jz0hgO2Q" /> */}
           </div>
         </div>
       </section>
