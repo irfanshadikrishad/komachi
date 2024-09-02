@@ -75,7 +75,7 @@
 }
 .external_sources {
   display: grid;
-  grid-template-columns: 2fr 4fr;
+  grid-template-columns: 1fr;
   padding: 5px;
   border-radius: 7px;
   margin-bottom: 5px;

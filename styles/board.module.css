@@ -120,6 +120,7 @@
 @media screen and (max-width: 768px) {
   .title {
     font-size: 1.2rem;
+    line-height: 20px;
     width: 70%;
   }
   .description {
@@ -128,6 +129,11 @@
   }
   .board {
     background-position: top center;
+  }
+}
+@media screen and (max-width: 480px) {
+  .dub {
+    display: none;
   }
 }
 @media screen and (max-width: 425px) {

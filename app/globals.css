@@ -63,6 +63,14 @@ iframe {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.two_line {
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* Navbar Codes Start */
 nav {

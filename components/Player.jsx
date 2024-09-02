@@ -158,21 +158,6 @@ export default function Player({
               </p>
             )}
           </div>
-          <div className={styles.serverSources}>
-            {sources &&
-              sources.map(({ url, name }, index) => {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setStreamLink(url);
-                    }}
-                  >
-                    <FiPlayCircle /> {name}
-                  </button>
-                );
-              })}
-          </div>
         </div>
         <Episodes
           getStreamLink={getStreamLink}
