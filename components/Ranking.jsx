@@ -71,7 +71,7 @@ export default function Ranking({ popular, trending }) {
                     <h4>1</h4>
                   </div>
                   <div>
-                    <h3 className={styles.rank1_name}>
+                    <h3 className={`one_line ${styles.rank1_name}`}>
                       {rank[0].title?.english
                         ? String(rank[0].title?.english)
                         : String(rank[0].title?.romaji)}

@@ -64,7 +64,7 @@ export default function Board() {
                   }}
                 ></div>
                 <div className={styles.elem}>
-                  <h1 className={styles.title}>
+                  <h1 className={`two_line ${styles.title}`}>
                     {bored.title.english
                       ? bored.title.english
                       : bored.title.romaji}
@@ -93,7 +93,7 @@ export default function Board() {
                       <p>{bored.sub_episodes.length}</p>
                     </div>
                     {bored.dub_episodes.length > 0 && (
-                      <div className={styles.episode_stats}>
+                      <div className={`${styles.episode_stats} ${styles.dub}`}>
                         <button>
                           <TbMicrophoneFilled />
                         </button>
@@ -101,12 +101,8 @@ export default function Board() {
                       </div>
                     )}
                   </section>
-                  <p className={styles.description}>
-                    {bored.description && String(bored.description).length > 150
-                      ? removeHtmlAndMarkdown(
-                          `${String(bored.description).slice(0, 150)}...`
-                        )
-                      : removeHtmlAndMarkdown(String(bored.description))}
+                  <p className={`two_line ${styles.description}`}>
+                    {removeHtmlAndMarkdown(bored.description)}
                   </p>
                   <div className={styles.boardBtns}>
                     <Link

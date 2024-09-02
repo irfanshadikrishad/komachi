@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import Player from "@/components/Player";
 import Info from "@/components/Info";
 import Loader from "@/components/Loader";
@@ -11,6 +11,7 @@ import { AnimeInfo } from "@/utils/helpers";
 export default function Streaming() {
   const params = useParams();
   const animeId = params.id;
+  const eps = useSearchParams().get("eps");
   const [animeInfo, setAnimeInfo] = useState<AnimeInfo>();
   const [episodes, setEpisodes] = useState<any>([]);
   const [streamLink, setStreamLink] = useState("");
@@ -67,9 +68,17 @@ export default function Streaming() {
             : response?.dub_episodes[0]?.id
         );
         if (response?.sub_episodes[0]?.id) {
-          getStreamLink(response?.sub_episodes[0]?.id);
+          getStreamLink(
+            eps
+              ? response?.sub_episodes[Number(eps) - 1]?.id
+              : response?.sub_episodes[0]?.id
+          );
         } else if (response?.dub_episodes[0]?.id) {
-          getStreamLink(response?.dub_episodes[0]?.id);
+          getStreamLink(
+            eps
+              ? response?.dub_episodes[Number(eps) - 1]?.id
+              : response?.dub_episodes[0]?.id
+          );
         }
       } else {
         console.log(response);
@@ -108,7 +117,7 @@ export default function Streaming() {
     setDubEpisodes([]);
     getAnimeInfo();
     window.scrollTo({ top: 0 });
-  }, [animeId]);
+  }, [animeId, eps]);
   return (
     <>
       <Navbar />

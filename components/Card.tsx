@@ -12,6 +12,7 @@ export default function Card({
   dubCount,
   totalCount,
   isAdult,
+  lastEpisode,
 }: {
   id: string;
   image: string;
@@ -20,10 +21,11 @@ export default function Card({
   dubCount: string | number;
   totalCount: string | number;
   isAdult: string;
+  lastEpisode?: number;
 }) {
   return (
     <Link
-      href={`/watch/${id}`}
+      href={lastEpisode ? `/watch/${id}?eps=${lastEpisode}` : `/watch/${id}`}
       className={styles.billboard_Individual}
       title={`${title}`}
     >

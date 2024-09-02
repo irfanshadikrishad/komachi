@@ -7,6 +7,7 @@ import {
   IoChevronForward,
   IoChevronBack,
 } from "react-icons/io5";
+import { streamNextEpisode, streamPreviousEpisode } from "@/utils/helpers";
 
 export default function Episodes({
   unicornEpisodes,
@@ -24,6 +25,9 @@ export default function Episodes({
   const [goodEpisodes, setGoodEpisodes] = useState<any[]>([]);
   const [isRangeOpen, setIsRangeOpen] = useState<boolean>(false);
   const [selectedEpisodeRange, setSelectedEpisodeRange] = useState(0);
+  const [filtered, setFiltered] = useState<any[]>([]);
+  const [firstEpisode, setFirstEpisode] = useState<string>("");
+  const [lastEpisode, setLastEpisode] = useState<string>("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const start = selectedEpisodeRange * 100 + 1;
   const end = (selectedEpisodeRange + 1) * 100;
@@ -43,6 +47,9 @@ export default function Episodes({
       const chunks: any[] = chunkArray(unicornEpisodes, 100);
       setGoodEpisodes(chunks);
     }
+
+    setFirstEpisode(unicornEpisodes[0].id);
+    setLastEpisode(unicornEpisodes[unicornEpisodes.length - 1].id);
   }, [unicornEpisodes]);
 
   useEffect(() => {
@@ -70,7 +77,18 @@ export default function Episodes({
     <>
       <section className={styles.range_Main}>
         <div className={styles.search}>
-          <LuSearch /> <input type="text" placeholder="Search" />
+          <LuSearch />
+          <input
+            onChange={(e) => {
+              setFiltered(
+                unicornEpisodes.filter(({ number }) => {
+                  return String(number).includes(String(e.target.value));
+                })
+              );
+            }}
+            type="text"
+            placeholder="Search"
+          />
         </div>
         <div className={styles.limit_Main}>
           <div style={{ position: "relative" }} ref={dropdownRef}>
@@ -102,53 +120,115 @@ export default function Episodes({
               </div>
             )}
           </div>
-          <button>
+          <button
+            style={{
+              color:
+                currentEpisode === firstEpisode
+                  ? "rgb(50 50 50)"
+                  : "var(--color-fade)",
+            }}
+            onClick={() => {
+              if (currentEpisode !== firstEpisode) {
+                getStreamLink(streamPreviousEpisode(String(currentEpisode)));
+              }
+            }}
+          >
             <IoChevronBack />
           </button>
-          <button>
+          <button
+            style={{
+              color:
+                currentEpisode === lastEpisode
+                  ? "rgb(50 50 50)"
+                  : "var(--color-fade)",
+            }}
+            onClick={() => {
+              if (currentEpisode !== lastEpisode) {
+                getStreamLink(streamNextEpisode(String(currentEpisode)));
+              }
+            }}
+          >
             <IoChevronForward />
           </button>
         </div>
       </section>
       <div className={styles.streamingV2Buttons}>
-        {goodEpisodes &&
-          goodEpisodes[selectedEpisodeRange]?.map(
-            (
-              {
-                id,
-                title,
-                number,
-              }: {
-                id: string;
-                title: { english: string; romaji: string };
-                number: number;
-              },
-              index: number
-            ) => {
-              return (
-                <button
-                  onClick={() => {
-                    getStreamLink(id);
-                    // localStorage.setItem(animeId, id);
-                  }}
-                  key={index}
-                  className={styles.streamingV2Button}
-                  style={{
-                    backgroundColor:
-                      currentEpisode === id
-                        ? "var(--primary)"
-                        : "var(--background)",
-                    color:
-                      currentEpisode === id
-                        ? "var(--background)"
-                        : "var(--color)",
-                  }}
-                >
-                  {number}
-                </button>
-              );
-            }
-          )}
+        {filtered.length > 0
+          ? filtered?.map(
+              (
+                {
+                  id,
+                  title,
+                  number,
+                }: {
+                  id: string;
+                  title: { english: string; romaji: string };
+                  number: number;
+                },
+                index: number
+              ) => {
+                return (
+                  <button
+                    onClick={() => {
+                      getStreamLink(id);
+                      // localStorage.setItem(animeId, id);
+                    }}
+                    key={index}
+                    className={styles.streamingV2Button}
+                    style={{
+                      backgroundColor:
+                        currentEpisode === id
+                          ? "var(--primary)"
+                          : "var(--background)",
+                      color:
+                        currentEpisode === id
+                          ? "var(--background)"
+                          : "var(--color)",
+                    }}
+                  >
+                    {number}
+                  </button>
+                );
+              }
+            )
+          : goodEpisodes &&
+            goodEpisodes[selectedEpisodeRange]?.map(
+              (
+                {
+                  id,
+                  title,
+                  number,
+                }: {
+                  id: string;
+                  title: { english: string; romaji: string };
+                  number: number;
+                },
+                index: number
+              ) => {
+                return (
+                  <button
+                    onClick={() => {
+                      getStreamLink(id);
+                      // localStorage.setItem(animeId, id);
+                    }}
+                    key={index}
+                    className={styles.streamingV2Button}
+                    style={{
+                      backgroundColor:
+                        currentEpisode === id
+                          ? "var(--primary)"
+                          : "var(--background)",
+                      color:
+                        currentEpisode === id
+                          ? "var(--background)"
+                          : "var(--color)",
+                    }}
+                  >
+                    {number}
+                  </button>
+                );
+              }
+            )}
       </div>
     </>
   );
