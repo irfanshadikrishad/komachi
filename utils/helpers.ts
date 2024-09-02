@@ -16,7 +16,10 @@ function convertTimestampToReadable(airingTime: any, episode: any) {
   let minutes = Math.floor(timeUntilAiring / 60);
   let seconds = timeUntilAiring % 60;
 
-  let output = `Episode ${episode} will be airing in ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds.`;
+  let output =
+    seconds >= 0
+      ? `Episode ${episode} will be airing in ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds.`
+      : `Episode ${episode} will be airing soon.`;
 
   return output;
 }
