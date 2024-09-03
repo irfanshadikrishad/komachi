@@ -8,7 +8,7 @@
 - Comment functionalty through [disqus](https://disqus.com).
 - Clean UI.
 - Fast anime updates.
-- Multiple stream source.
+- ~~Multiple stream source.~~
 - ~~Auto Skip Intro, Outro~~
 - ~~Auto Play next episode~~
 
