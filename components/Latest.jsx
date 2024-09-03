@@ -64,6 +64,8 @@ export default function Latest() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ page: 1 }),
+      cache: "force-cache",
+      next: { revalidate: 120 },
     });
     const { all, japan, china, korea } = await request.json();
 

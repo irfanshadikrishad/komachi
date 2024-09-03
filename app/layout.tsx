@@ -7,7 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Komachi • Heaven for anime lovers.",
-  description: "Stream and download animes without ads.",
+  description:
+    "Your premium destination for watching animes online without ads.",
 };
 
 export default function RootLayout({
