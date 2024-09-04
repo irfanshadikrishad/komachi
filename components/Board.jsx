@@ -5,16 +5,20 @@ import styles from "@/styles/board.module.css";
 // ICONS
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { BsBookmarkStar } from "react-icons/bs";
-import { MdVerified } from "react-icons/md"; // for completed
+import { MdVerified } from "react-icons/md";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { TbMicrophoneFilled } from "react-icons/tb";
 import { FaClosedCaptioning } from "react-icons/fa6";
-import { TbLoader } from "react-icons/tb"; // Swiper
+import { TbLoader } from "react-icons/tb";
+// Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
+// Skeleton
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 // Utils
 import { removeHtmlAndMarkdown } from "@/utils/helpers";
 
@@ -53,7 +57,7 @@ export default function Board() {
         pagination={{ clickable: true }}
         navigation={false}
       >
-        {boardInfo.length > 0 &&
+        {boardInfo.length > 0 ? (
           boardInfo.map((bored, index) => {
             return (
               <SwiperSlide key={index} style={{ position: "relative" }}>
@@ -118,7 +122,14 @@ export default function Board() {
                 </div>
               </SwiperSlide>
             );
-          })}
+          })
+        ) : (
+          <Skeleton
+            height={320}
+            baseColor="var(--secondary)"
+            highlightColor="var(--background)"
+          />
+        )}
       </Swiper>
     </section>
   );

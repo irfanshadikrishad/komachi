@@ -316,7 +316,7 @@ input:-webkit-autofill:active {
 
 .latestContainer {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 5px;
   padding-bottom: 20px;
 }
@@ -871,7 +871,7 @@ video {
   }
 
   .latestContainer {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 
   .latestPoster {
