@@ -48,8 +48,8 @@ export default function Episodes({
       setGoodEpisodes(chunks);
     }
 
-    setFirstEpisode(unicornEpisodes[0].id);
-    setLastEpisode(unicornEpisodes[unicornEpisodes.length - 1].id);
+    setFirstEpisode(unicornEpisodes[0]?.id);
+    setLastEpisode(unicornEpisodes[unicornEpisodes.length - 1]?.id);
   }, [unicornEpisodes]);
 
   useEffect(() => {

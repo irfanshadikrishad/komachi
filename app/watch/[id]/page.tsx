@@ -123,42 +123,19 @@ export default function Streaming() {
       <Navbar />
       <section className="container">
         <section className="streamingV2">
-          {streamLink ? (
-            <Player
-              streamLink={streamLink}
-              currentEpisode={currentEpisode}
-              episodeDownloadLink={episodeDownloadLink}
-              episodes={episodes}
-              getStreamLink={getStreamLink}
-              setStreamLink={setStreamLink}
-              sources={sources}
-              animeId={animeId}
-              dubEpisodes={dubEpisodes}
-              nextAiringEpisode={nextAiringTime}
-              malId={animeInfo?.malId}
-            />
-          ) : noEpisodes ? (
-            animeInfo?.trailer ? (
-              <Player
-                currentEpisode={currentEpisode}
-                episodeDownloadLink={episodeDownloadLink}
-                episodes={episodes}
-                getStreamLink={getStreamLink}
-                setStreamLink={setStreamLink}
-                sources={sources}
-                animeId={animeId}
-                dubEpisodes={dubEpisodes}
-                nextAiringEpisode={nextAiringTime}
-                streamLink={`https://www.youtube.com/watch?v=${animeInfo.trailer.id}`}
-                malId={animeInfo?.malId}
-              />
-            ) : (
-              <p>No episodes or trailer available.</p>
-            )
-          ) : (
-            <Loader />
-          )}
-
+          <Player
+            streamLink={streamLink}
+            currentEpisode={currentEpisode}
+            episodeDownloadLink={episodeDownloadLink}
+            episodes={episodes}
+            getStreamLink={getStreamLink}
+            setStreamLink={setStreamLink}
+            sources={sources}
+            animeId={animeId}
+            dubEpisodes={dubEpisodes}
+            nextAiringEpisode={nextAiringTime}
+            malId={animeInfo?.malId}
+          />
           <Info animeInfo={animeInfo} />
         </section>
       </section>
