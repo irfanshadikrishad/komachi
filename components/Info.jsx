@@ -42,7 +42,7 @@ export default function Info({ animeInfo }) {
             )}
           </h1>
           <p className="streamingV2_description">
-            {animeInfo?.description ? (
+            {animeInfo?.title ? (
               removeHtmlAndMarkdown(animeInfo?.description)
             ) : (
               <Skeleton
@@ -86,8 +86,10 @@ export default function Info({ animeInfo }) {
             {animeInfo?.release_date && (
               <p className="seperator">
                 <span className="blob">Released:</span>
-                {animeInfo?.season ? (
-                  `${animeInfo?.release_date} ${animeInfo?.season}`
+                {animeInfo?.title ? (
+                  `${animeInfo?.release_date} ${
+                    animeInfo?.season ? animeInfo?.season : ""
+                  }`
                 ) : (
                   <Skeleton
                     baseColor="var(--background)"

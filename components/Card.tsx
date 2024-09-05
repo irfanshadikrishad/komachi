@@ -48,11 +48,9 @@ export default function Card({
             {dubCount}
           </p>
         )}
-        {Number(totalCount) > 0 && (
-          <p className={styles.tag}>
-            {totalCount < subCount ? subCount : totalCount}
-          </p>
-        )}
+        <p className={styles.tag}>
+          {totalCount < subCount ? subCount : totalCount}
+        </p>
         {isAdult === "true" && (
           <p className={`${styles.tag} ${styles.adult}`}>18+</p>
         )}
