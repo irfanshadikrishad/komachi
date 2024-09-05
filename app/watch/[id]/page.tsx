@@ -37,7 +37,7 @@ export default function Streaming() {
           setCurrentEpisode(episodeId);
           setEpisodeDownloadLink(response.download);
           // get other external sources
-          await getServerSources(episodeId);
+          // await getServerSources(episodeId);
         } else {
           console.log(response);
           // setNoEpisodes(true);
@@ -108,14 +108,16 @@ export default function Streaming() {
     }
   };
 
+  // useEffect(() => {
+  //   if (!streamLink) {
+  //     getStreamLink(String(currentEpisode));
+  //   }
+  // }, [episodes]);
   useEffect(() => {
-    if (!streamLink) {
-      getStreamLink(String(currentEpisode));
-    }
-  }, [episodes]);
+    getAnimeInfo();
+  }, [eps]);
   useEffect(() => {
     setDubEpisodes([]);
-    getAnimeInfo();
     window.scrollTo({ top: 0 });
   }, [animeId, eps]);
   return (
@@ -123,43 +125,20 @@ export default function Streaming() {
       <Navbar />
       <section className="container">
         <section className="streamingV2">
-          {streamLink ? (
-            <Player
-              streamLink={streamLink}
-              currentEpisode={currentEpisode}
-              episodeDownloadLink={episodeDownloadLink}
-              episodes={episodes}
-              getStreamLink={getStreamLink}
-              setStreamLink={setStreamLink}
-              sources={sources}
-              animeId={animeId}
-              dubEpisodes={dubEpisodes}
-              nextAiringEpisode={nextAiringTime}
-              malId={animeInfo?.malId}
-            />
-          ) : noEpisodes ? (
-            animeInfo?.trailer ? (
-              <Player
-                currentEpisode={currentEpisode}
-                episodeDownloadLink={episodeDownloadLink}
-                episodes={episodes}
-                getStreamLink={getStreamLink}
-                setStreamLink={setStreamLink}
-                sources={sources}
-                animeId={animeId}
-                dubEpisodes={dubEpisodes}
-                nextAiringEpisode={nextAiringTime}
-                streamLink={`https://www.youtube.com/watch?v=${animeInfo.trailer.id}`}
-                malId={animeInfo?.malId}
-              />
-            ) : (
-              <p>No episodes or trailer available.</p>
-            )
-          ) : (
-            <Loader />
-          )}
-
-          {animeInfo?.anilistId && <Info animeInfo={animeInfo} />}
+          <Player
+            streamLink={streamLink}
+            currentEpisode={currentEpisode}
+            episodeDownloadLink={episodeDownloadLink}
+            episodes={episodes}
+            getStreamLink={getStreamLink}
+            setStreamLink={setStreamLink}
+            sources={sources}
+            animeId={animeId}
+            dubEpisodes={dubEpisodes}
+            nextAiringEpisode={nextAiringTime}
+            malId={animeInfo?.malId}
+          />
+          <Info animeInfo={animeInfo} />
         </section>
       </section>
       <Footer />

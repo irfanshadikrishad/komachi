@@ -1,6 +1,6 @@
 .latest_Main {
   display: grid;
-  grid-template-columns: 4fr 2fr;
+  grid-template-columns: 1fr;
   gap: 5px;
   align-items: baseline;
 }

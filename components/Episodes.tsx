@@ -8,6 +8,8 @@ import {
   IoChevronBack,
 } from "react-icons/io5";
 import { streamNextEpisode, streamPreviousEpisode } from "@/utils/helpers";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Episodes({
   unicornEpisodes,
@@ -15,9 +17,11 @@ export default function Episodes({
   animeId,
   malId,
   currentEpisode,
+  streamLink,
 }: {
   unicornEpisodes: any[];
   getStreamLink: any;
+  streamLink: string;
   animeId: string;
   malId: string;
   currentEpisode: number | string;
@@ -48,8 +52,8 @@ export default function Episodes({
       setGoodEpisodes(chunks);
     }
 
-    setFirstEpisode(unicornEpisodes[0].id);
-    setLastEpisode(unicornEpisodes[unicornEpisodes.length - 1].id);
+    setFirstEpisode(unicornEpisodes[0]?.id);
+    setLastEpisode(unicornEpisodes[unicornEpisodes.length - 1]?.id);
   }, [unicornEpisodes]);
 
   useEffect(() => {
@@ -191,8 +195,8 @@ export default function Episodes({
                 );
               }
             )
-          : goodEpisodes &&
-            goodEpisodes[selectedEpisodeRange]?.map(
+          : goodEpisodes.length > 0
+          ? goodEpisodes[selectedEpisodeRange]?.map(
               (
                 {
                   id,
@@ -215,11 +219,11 @@ export default function Episodes({
                     className={styles.streamingV2Button}
                     style={{
                       backgroundColor:
-                        currentEpisode === id
+                        currentEpisode === id && streamLink
                           ? "var(--primary)"
                           : "var(--background)",
                       color:
-                        currentEpisode === id
+                        currentEpisode === id && streamLink
                           ? "var(--background)"
                           : "var(--color)",
                     }}
@@ -228,7 +232,17 @@ export default function Episodes({
                   </button>
                 );
               }
-            )}
+            )
+          : Array.from({ length: 10 }).map((_, index) => {
+              return (
+                <Skeleton
+                  key={index}
+                  height={35}
+                  baseColor="var(--background)"
+                  highlightColor="var(--secondary)"
+                />
+              );
+            })}
       </div>
     </>
   );

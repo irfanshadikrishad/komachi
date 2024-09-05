@@ -8,9 +8,11 @@ import Episodes from "@/components/Episodes";
 import Automatics from "@/components/Automatics";
 // ICONS
 import { ImCloudDownload } from "react-icons/im";
-import { FiPlayCircle } from "react-icons/fi";
 import { FaRegClosedCaptioning } from "react-icons/fa6";
 import { IoMic } from "react-icons/io5";
+// Skeleton
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Player({
   streamLink,
@@ -41,24 +43,34 @@ export default function Player({
   }, [streamLink]);
 
   useEffect(() => {
+    setUnicornEpisodes(episodes);
+  }, [episodes]);
+
+  useEffect(() => {
     nativeChecker();
   }, [streamLink, nativeChecker]);
   return (
     <div>
       <section className={styles.streamingV2_ReactPlayer}>
-        {streamLink && (
-          <div>
-            <div className={styles.streamingV2_ReactPlayerHeader}>
-              <p style={{ color: "var(--primary)" }}>
-                {currentEpisode
-                  ? `Episode ${
-                      String(currentEpisode).split("-")[
-                        String(currentEpisode).split("-").length - 1
-                      ]
-                    }`
-                  : `No Episodes available!`}
-              </p>
-              <div className={styles.streaming_options}>
+        <div>
+          <div className={styles.streamingV2_ReactPlayerHeader}>
+            <p style={{ color: "var(--primary)" }}>
+              {currentEpisode ? (
+                `Episode ${
+                  String(currentEpisode).split("-")[
+                    String(currentEpisode).split("-").length - 1
+                  ]
+                }`
+              ) : (
+                <Skeleton
+                  baseColor="var(--background)"
+                  highlightColor="var(--secondary)"
+                  width={150}
+                />
+              )}
+            </p>
+            <div className={styles.streaming_options}>
+              {episodeDownloadLink ? (
                 <a
                   className={styles.streamingV2_Download}
                   href={episodeDownloadLink}
@@ -69,8 +81,16 @@ export default function Player({
                     {<ImCloudDownload />}
                   </span>
                 </a>
-              </div>
+              ) : (
+                <Skeleton
+                  baseColor="var(--background)"
+                  highlightColor="var(--secondary)"
+                  width={85}
+                />
+              )}
             </div>
+          </div>
+          {streamLink ? (
             <div
               className={styles.player_Wrapper}
               onMouseOver={() => {
@@ -111,8 +131,15 @@ export default function Player({
                 ></div>
               </section>
             </div>
-          </div>
-        )}
+          ) : (
+            <Skeleton
+              baseColor="var(--background)"
+              highlightColor="var(--secondary)"
+              height={470}
+              style={{ marginBottom: "5px" }}
+            />
+          )}
+        </div>
         <Automatics />
         <div className={styles.external_sources}>
           <div className={styles.external_sources_1}>
@@ -149,11 +176,11 @@ export default function Player({
                 </button>
               )}
             </section>
-            {nextAiringEpisode.length !== 0 && (
+            {nextAiringEpisode.length !== 0 && currentEpisode && (
               <p className={styles.nextAiringEpisode}>
                 {convertTimestampToReadable(
-                  nextAiringEpisode[0].airingTime,
-                  nextAiringEpisode[0].episode
+                  nextAiringEpisode[0]?.airingTime,
+                  nextAiringEpisode[0]?.episode
                 )}
               </p>
             )}
@@ -161,6 +188,7 @@ export default function Player({
         </div>
         <Episodes
           getStreamLink={getStreamLink}
+          streamLink={streamLink}
           animeId={animeId}
           malId={malId}
           currentEpisode={currentEpisode}

@@ -20,7 +20,7 @@ export default function Footer() {
             </Link>
             <Link
               target="_blank"
-              href="https://www.instagram.com/@irfanshadikrishad"
+              href="https://www.instagram.com/irfanshadikrishad"
             >
               <RiInstagramFill />
             </Link>
