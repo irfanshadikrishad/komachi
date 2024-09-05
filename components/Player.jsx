@@ -43,6 +43,10 @@ export default function Player({
   }, [streamLink]);
 
   useEffect(() => {
+    setUnicornEpisodes(episodes);
+  }, [episodes]);
+
+  useEffect(() => {
     nativeChecker();
   }, [streamLink, nativeChecker]);
   return (
@@ -184,6 +188,7 @@ export default function Player({
         </div>
         <Episodes
           getStreamLink={getStreamLink}
+          streamLink={streamLink}
           animeId={animeId}
           malId={malId}
           currentEpisode={currentEpisode}

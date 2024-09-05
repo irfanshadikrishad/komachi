@@ -37,7 +37,7 @@ export default function Streaming() {
           setCurrentEpisode(episodeId);
           setEpisodeDownloadLink(response.download);
           // get other external sources
-          await getServerSources(episodeId);
+          // await getServerSources(episodeId);
         } else {
           console.log(response);
           // setNoEpisodes(true);
@@ -108,14 +108,16 @@ export default function Streaming() {
     }
   };
 
+  // useEffect(() => {
+  //   if (!streamLink) {
+  //     getStreamLink(String(currentEpisode));
+  //   }
+  // }, [episodes]);
   useEffect(() => {
-    if (!streamLink) {
-      getStreamLink(String(currentEpisode));
-    }
-  }, [episodes]);
+    getAnimeInfo();
+  }, [eps]);
   useEffect(() => {
     setDubEpisodes([]);
-    getAnimeInfo();
     window.scrollTo({ top: 0 });
   }, [animeId, eps]);
   return (
