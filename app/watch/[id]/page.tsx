@@ -159,7 +159,7 @@ export default function Streaming() {
             <Loader />
           )}
 
-          {animeInfo?.anilistId && <Info animeInfo={animeInfo} />}
+          <Info animeInfo={animeInfo} />
         </section>
       </section>
       <Footer />

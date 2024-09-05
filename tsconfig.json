@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "schema/anime.ts"
-  ],
+, "components/Info.jsx"  ],
   "exclude": ["node_modules"]
 }
