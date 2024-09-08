@@ -247,6 +247,29 @@ function streamNextEpisode(currentEpisode: string) {
   return replacedId;
 }
 
+/**
+ * Get available title from object
+ * @param title - {english?: string; romaji?: string; native?: string; userPreffered?: string;}
+ */
+function getTitle(title: {
+  english?: string;
+  romaji?: string;
+  native?: string;
+  userPreffered?: string;
+}): string {
+  if (title?.english) {
+    return title?.english;
+  } else if (title?.romaji) {
+    return title?.romaji;
+  } else if (title?.native) {
+    return title?.native;
+  } else if (title?.userPreffered) {
+    return title?.userPreffered;
+  } else {
+    return "null";
+  }
+}
+
 export {
   insert_Into_Array,
   slisor,
@@ -259,5 +282,6 @@ export {
   removeHtmlAndMarkdown,
   streamPreviousEpisode,
   streamNextEpisode,
+  getTitle,
 };
 export type { AnimeInfo };

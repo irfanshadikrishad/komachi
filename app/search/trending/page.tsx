@@ -4,6 +4,7 @@ import styles from "@/styles/search.module.css";
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { getTitle } from "@/utils/helpers";
 
 export default function Trending() {
   const [trending, setTrending] = useState([]);
@@ -58,7 +59,7 @@ export default function Trending() {
                       subCount={sub_episodes.length}
                       dubCount={dub_episodes.length}
                       totalCount={totalEpisodes}
-                      title={title.english ? title.english : title.romaji}
+                      title={getTitle(title)}
                       isAdult={isAdult}
                     />
                   );

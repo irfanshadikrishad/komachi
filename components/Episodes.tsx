@@ -14,8 +14,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 export default function Episodes({
   unicornEpisodes,
   getStreamLink,
-  animeId,
-  malId,
   currentEpisode,
   streamLink,
 }: {

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Player from "@/components/Player";
 import Info from "@/components/Info";
-import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { AnimeInfo } from "@/utils/helpers";
@@ -36,8 +35,6 @@ export default function Streaming() {
           setStreamLink(response.sources[response.sources.length - 1].url);
           setCurrentEpisode(episodeId);
           setEpisodeDownloadLink(response.download);
-          // get other external sources
-          // await getServerSources(episodeId);
         } else {
           console.log(response);
           // setNoEpisodes(true);

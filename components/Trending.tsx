@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Card from "@/components/Card";
 import styles from "@/styles/search.module.css";
+import { getTitle } from "@/utils/helpers";
 
 export default function Trending({ trending }: { trending: any[] }) {
   return (
@@ -27,7 +28,7 @@ export default function Trending({ trending }: { trending: any[] }) {
               subCount={sub_episodes.length}
               dubCount={dub_episodes.length}
               totalCount={totalEpisodes}
-              title={title.english ? title.english : title.romaji}
+              title={getTitle(title)}
               isAdult={isAdult}
             />
           )

@@ -8,6 +8,7 @@ import styles from "@/styles/lists.module.css";
 import footer_styles from "@/styles/footer.module.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { getTitle } from "@/utils/helpers";
 
 export default function Lists() {
   const [results, setResults] = useState<any[]>([]);
@@ -370,7 +371,7 @@ export default function Lists() {
                   return (
                     <Card
                       key={idx}
-                      title={title?.english ? title?.english : title?.romaji}
+                      title={getTitle(title)}
                       id={anilistId}
                       image={poster}
                       subCount={sub_episodes.length}
