@@ -1,9 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
-import Loader from "@/components/Loader.jsx";
 import styles from "@/styles/latest.module.css";
-import Ranking from "@/components/Ranking.jsx";
 // Skeleton
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
