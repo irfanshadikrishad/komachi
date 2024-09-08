@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Player from "@/components/Player";
@@ -19,7 +20,7 @@ export default function Streaming() {
   const [sources, setSources] = useState([]);
   const [dubEpisodes, setDubEpisodes] = useState([]);
   const [nextAiringTime, setNextAiringTime] = useState({});
-  const [noEpisodes, setNoEpisodes] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   const getStreamLink = async (episodeId: string) => {
     try {
@@ -79,6 +80,7 @@ export default function Streaming() {
         }
       } else {
         console.log(response);
+        setNotFound(true);
       }
     } catch (error) {
       console.log(error);
@@ -121,22 +123,42 @@ export default function Streaming() {
     <>
       <Navbar />
       <section className="container">
-        <section className="streamingV2">
-          <Player
-            streamLink={streamLink}
-            currentEpisode={currentEpisode}
-            episodeDownloadLink={episodeDownloadLink}
-            episodes={episodes}
-            getStreamLink={getStreamLink}
-            setStreamLink={setStreamLink}
-            sources={sources}
-            animeId={animeId}
-            dubEpisodes={dubEpisodes}
-            nextAiringEpisode={nextAiringTime}
-            malId={animeInfo?.malId}
-          />
-          <Info animeInfo={animeInfo} />
-        </section>
+        {!notFound ? (
+          <section className="streamingV2">
+            <Player
+              streamLink={streamLink}
+              currentEpisode={currentEpisode}
+              episodeDownloadLink={episodeDownloadLink}
+              episodes={episodes}
+              getStreamLink={getStreamLink}
+              setStreamLink={setStreamLink}
+              sources={sources}
+              animeId={animeId}
+              dubEpisodes={dubEpisodes}
+              nextAiringEpisode={nextAiringTime}
+              malId={animeInfo?.malId}
+            />
+            <Info animeInfo={animeInfo} />
+          </section>
+        ) : (
+          <section
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginTop: "15px",
+            }}
+          >
+            <Image
+              src={"/not_found.png"}
+              alt="not_found image"
+              width={300}
+              height={280}
+              draggable="false"
+            />
+            <h1>not-found or unavailable</h1>
+          </section>
+        )}
       </section>
       <Footer />
     </>
