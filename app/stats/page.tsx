@@ -1,21 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import Loader from "@/components/Loader.jsx";
 import styles from "@/styles/stats.module.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-interface StatsTypes {
-  total_animes: string;
-  total_ongoing: string;
-}
+// Skeleton
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Stats() {
-  const [stats, setStats] = useState<StatsTypes>({
-    total_animes: "0",
-    total_ongoing: "0",
-  });
-  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<{
+    total_animes: string;
+    total_ongoing: string;
+  }>();
 
   const getStats = async () => {
     try {
@@ -26,10 +22,8 @@ export default function Stats() {
 
       if (request.status === 200) {
         setStats(response);
-        setLoading(false);
       } else {
         console.log(response);
-        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -43,26 +37,40 @@ export default function Stats() {
     <>
       <Navbar />
       <section className="container">
-        {loading ? (
-          <Loader />
-        ) : (
-          <section className={styles.stats_Cards}>
-            <div
-              className={styles.stats_Card}
-              style={{ backgroundImage: "url(kanna.png)" }}
-            >
-              <p>Total Animes</p>
+        <section className={styles.stats_Cards}>
+          <div
+            className={styles.stats_Card}
+            style={{ backgroundImage: "url(kanna.png)" }}
+          >
+            <p>Total Animes</p>
+            {stats?.total_animes ? (
               <h1>{stats?.total_animes}</h1>
-            </div>
-            <div
-              className={styles.stats_Card}
-              style={{ backgroundImage: "url(fern.png)" }}
-            >
-              <p>Total Ongoing</p>
+            ) : (
+              <Skeleton
+                width={100}
+                height={20}
+                highlightColor="var(--secondary)"
+                baseColor="var(--background)"
+              />
+            )}
+          </div>
+          <div
+            className={styles.stats_Card}
+            style={{ backgroundImage: "url(gojo.png)" }}
+          >
+            <p>Total Ongoing</p>
+            {stats?.total_ongoing ? (
               <h1>{stats?.total_ongoing}</h1>
-            </div>
-          </section>
-        )}
+            ) : (
+              <Skeleton
+                width={100}
+                height={20}
+                highlightColor="var(--secondary)"
+                baseColor="var(--background)"
+              />
+            )}
+          </div>
+        </section>
       </section>
       <Footer />
     </>

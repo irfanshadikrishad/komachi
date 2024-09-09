@@ -1,11 +1,15 @@
+"use client";
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import styles from "@/styles/footer.module.css";
+import { usePathname } from "next/navigation";
 // Icons
 import { FaGithub } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 
 export default function Footer() {
+  const path = usePathname();
+
   return (
     <footer className={styles.footer_Main}>
       <section className={`container ${styles.footer_Wrapper}`}>
@@ -54,6 +58,13 @@ export default function Footer() {
             <Link href="">FAQ</Link>
             <Link href="">Contact</Link>
             <Link href="">Request</Link>
+            <Link
+              href="/stats"
+              prefetch={true}
+              className={`${path === "/stats" ? "primary" : ""}`}
+            >
+              Stats
+            </Link>
           </div>
           <p className={styles.disclaimer}>
             This site does not store any files on its server. All contents are
