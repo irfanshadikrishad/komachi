@@ -1,6 +1,6 @@
 #### Komachi
 
-##### An anime streaming platform to watch and download your favourite anime's online.
+##### 🌸 A minimalist anime streaming platform where users can stream or download their favorite anime effortlessly. Built for speed, simplicity, and an immersive experience. Contributors welcome to help enhance performance, add features, and improve UI/UX. Let's create the ultimate anime hub together!
 
 #### features:
 
@@ -15,7 +15,7 @@
 #### tech stacks:
 
 - NextJs
-- MongoDB
+- MongoDB (Mongoose)
 
 #### Contribution Guideline:
 

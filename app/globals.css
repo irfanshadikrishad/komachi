@@ -49,12 +49,10 @@ iframe {
   flex-direction: column;
   min-height: 100vh;
 }
-
 .container {
   width: 60%;
   margin: 0 auto;
 }
-
 .one_line {
   display: -webkit-box;
   line-clamp: 1;
@@ -70,6 +68,9 @@ iframe {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.primary {
+  color: var(--primary) !important;
 }
 
 /* Navbar Codes Start */
@@ -808,83 +809,20 @@ video {
   font-weight: 100;
   display: flex;
 }
-
-/* --------------------------------- */
-/* -----------responsive------------ */
-/* --------------------------------- */
-@media screen and (max-width: 1900px) {
-  .latestPoster {
-    height: auto;
-  }
+.embed-player {
+  border-radius: 7px;
+}
+.icon {
+  display: flex;
+}
+.comment_loader {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
-@media screen and (max-width: 1440px) {
-  .topAiringPoster {
-    height: auto;
-  }
-
-  .container {
-    width: 90%;
-  }
-
-  .searchPoster {
-    height: auto;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .navbarII {
-    display: none;
-    position: fixed;
-    right: 0;
-    top: 0;
-    background-color: var(--background);
-    z-index: 5;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    z-index: 10000000;
-    justify-content: center;
-  }
-
-  .navbar_search_form {
-    width: 80%;
-  }
-
-  .navbar_search {
-    width: 100%;
-  }
-
-  .navbarMenu {
-    display: flex;
-  }
-
-  .open {
-    display: flex;
-  }
-
-  .login,
-  .signup {
-    margin-bottom: 30px;
-  }
-
-  .searchField,
-  .searchContain {
-    background-color: var(--background);
-  }
-
-  .latestContainer {
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  .latestPoster {
-    height: 190px;
-  }
-
-  .profile_lists {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 /* Overwriting Some default CSS for Carousel */
 .swiper-button-prev,
 .swiper-button-next {
@@ -909,21 +847,85 @@ video {
   left: 18px !important;
 }
 
+/* --------------------------------- */
+/* -----------responsive------------ */
+/* --------------------------------- */
+@media screen and (max-width: 1900px) {
+  .latestPoster {
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .topAiringPoster {
+    height: auto;
+  }
+  .container {
+    width: 90%;
+  }
+  .searchPoster {
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .navbarII {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: var(--background);
+    z-index: 5;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    z-index: 10000000;
+    justify-content: center;
+  }
+  .navbar_search_form {
+    width: 80%;
+  }
+  .navbar_search {
+    width: 100%;
+  }
+  .navbarMenu {
+    display: flex;
+  }
+  .open {
+    display: flex;
+  }
+  .login,
+  .signup {
+    margin-bottom: 30px;
+  }
+  .searchField,
+  .searchContain {
+    background-color: var(--background);
+  }
+  .latestContainer {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .latestPoster {
+    height: 190px;
+  }
+  .profile_lists {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media screen and (max-width: 980px) {
   .s768seperator {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 8fr;
     align-items: flex-start;
     gap: 10px;
   }
-
   .streamingV2 {
     grid-template-columns: 1fr;
   }
-
   .streamingV2_Poster {
     width: 200px;
   }
-
   .streamingV2_PosterContainer {
     display: flex;
     align-items: center;
@@ -932,83 +934,63 @@ video {
 }
 
 @media screen and (max-width: 768px) {
+  .streamingV2_Poster {
+    width: 150px;
+  }
   .relations {
     grid-template-columns: repeat(4, 1fr);
   }
   .profile_lists {
     grid-template-columns: 1fr 1fr;
   }
-
   .profile_avatar {
     width: 100px;
     height: 100px;
   }
-
   .profile_banner_inner {
     bottom: -30px;
   }
-
   .streamingV2Buttons {
     grid-template-columns: repeat(10, 1fr);
     gap: 3px;
   }
-
   .login,
   .signup {
     grid-template-columns: 1fr 2fr;
   }
-
   .latestContainer {
     grid-template-columns: repeat(5, 1fr);
   }
-
   .latestPoster {
     height: auto;
   }
-
   .searchEngine {
     justify-content: flex-end;
   }
-
   .searchContainerMain {
     grid-template-columns: repeat(5, 1fr);
   }
-
   .streaming {
     grid-template-columns: 1fr;
   }
-
   .streamingInfoPoster {
     width: 200px;
     height: auto;
   }
-
   .streaminImageContainer {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
   .streamingPlayerEpisodeNumber {
     font-size: 14px;
   }
 }
 
-.embed-player {
-  border-radius: 7px;
-}
-.icon {
-  display: flex;
-}
-.comment_loader {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
 @media screen and (max-width: 600px) {
+  .streamingV2_Poster {
+    width: 100px;
+  }
   .relations {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1016,7 +998,6 @@ video {
   .signup {
     grid-template-columns: 1fr;
   }
-
   .latestContainer {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -1024,26 +1005,20 @@ video {
   .searchContainerMain {
     grid-template-columns: repeat(3, 1fr);
   }
-
   .streamingPlayerButtons {
     grid-template-columns: repeat(8, 1fr);
   }
-
   .imageStreaming {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 10px;
   }
-
   .streamingInfoPoster {
     width: 100%;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .streamingV2_Poster {
-    width: 150px;
-  }
   .profile_banner_inner {
     left: 30px;
   }
@@ -1053,16 +1028,15 @@ video {
 }
 
 @media screen and (max-width: 425px) {
+  .streamingV2_Poster {
+    width: 80px;
+    height: auto;
+  }
   .streamingV2Buttons {
     grid-template-columns: repeat(7, 1fr);
   }
-
   .topAiringPoster {
     height: auto;
-  }
-
-  .streamingV2_Poster {
-    width: 120px;
   }
 }
 
@@ -1071,14 +1045,7 @@ video {
   .searchContainerMain {
     grid-template-columns: 1fr 1fr;
   }
-
   .searchField {
     width: auto;
-  }
-  .s768seperator {
-    flex-direction: column;
-  }
-  .streamingV2_Poster {
-    width: 100%;
   }
 }

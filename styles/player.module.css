@@ -116,39 +116,6 @@
   align-items: center;
   gap: 5px;
 }
-.recommendations {
-  padding-bottom: 30px;
-}
-.recommendations_list {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-}
-.recommendations_image {
-  width: 100%;
-  border-radius: 5px;
-  aspect-ratio: 2 / 2.8;
-}
-.recommendations_individual {
-  padding: 5px;
-  background-color: var(--secondary);
-  border-radius: 7px;
-  text-decoration: none;
-  color: var(--color);
-  position: relative;
-}
-.recommendations_info {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-  font-size: 0.8rem;
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: var(--background);
-  padding: 2px 5px;
-  border-radius: 4px;
-}
 .ctrls {
   display: flex;
   flex-direction: row;
@@ -181,9 +148,6 @@
 .ctrl > p {
   margin-left: 20px;
 }
-/* .ctrl:hover .checkmark {
-    background-color: var(--primary);
-  } */
 .checkmark {
   position: absolute;
   top: 0;
@@ -298,12 +262,6 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .recommendations_list {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-
 @media screen and (max-width: 768px) {
   .external_sources {
     display: grid;
@@ -317,21 +275,8 @@
     gap: 5px;
   }
 }
-
-@media screen and (max-width: 700px) {
-  .recommendations_list {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .recommendations_list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .recommendations_list {
-    grid-template-columns: repeat(2, 1fr);
+@media screen and (max-width: 600px) {
+  .streamingV2Buttons {
+    grid-template-columns: repeat(8, 1fr);
   }
 }

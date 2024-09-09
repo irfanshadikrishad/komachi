@@ -1,12 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
-import Loader from "@/components/Loader.jsx";
 import styles from "@/styles/latest.module.css";
-import Ranking from "@/components/Ranking.jsx";
 // Skeleton
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { getTitle } from "@/utils/helpers";
 
 export default function Latest() {
   const [all, setAll] = useState([]);
@@ -181,7 +180,7 @@ export default function Latest() {
                         key={index}
                         id={anilistId}
                         image={poster}
-                        title={title.english ? title.english : title.romaji}
+                        title={getTitle(title)}
                         subCount={sub_episodes.length}
                         dubCount={dub_episodes.length}
                         totalCount={totalEpisodes}

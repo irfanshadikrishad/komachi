@@ -223,8 +223,8 @@ export default function Search() {
           <SearchResults query={query} searched={searched} />
         ) : (
           <section className={styles.billboard_Wrapper}>
-            {trending.length > 0 && <Trending trending={trending} />}
-            {popular.length > 0 && <Popular popular={popular} />}
+            <Trending trending={trending} />
+            <Popular popular={popular} />
           </section>
         )}
       </section>
