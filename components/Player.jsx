@@ -171,11 +171,11 @@ export default function Player({
                 </button>
               )}
             </section>
-            {nextAiringEpisode?.length !== 0 && currentEpisode && (
+            {nextAiringEpisode && currentEpisode && (
               <p className={styles.nextAiringEpisode}>
                 {convertTimestampToReadable(
-                  nextAiringEpisode[0]?.airingTime,
-                  nextAiringEpisode[0]?.episode
+                  nextAiringEpisode?.airingTime,
+                  nextAiringEpisode?.episode
                 )}
               </p>
             )}
