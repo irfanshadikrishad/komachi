@@ -17,6 +17,7 @@ export default function Lists() {
   );
 
   const getShowResults = async (show: string) => {
+    setResults([]);
     const request = await fetch(`/api/lists`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
