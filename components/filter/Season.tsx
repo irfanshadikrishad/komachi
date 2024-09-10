@@ -67,17 +67,19 @@ export default function Season({
         <div className={styles.filter_options}>
           {distinctSeason.length > 0 &&
             distinctSeason.map((disS, index) => {
-              return (
-                <button
-                  key={index}
-                  onClick={() => {
-                    insertValuesIntoState(disS, setSeason);
-                  }}
-                >
-                  <p>{String(disS)}</p>
-                  {season.includes(disS) && <PiCheckCircleFill />}
-                </button>
-              );
+              if (disS !== null) {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      insertValuesIntoState(disS, setSeason);
+                    }}
+                  >
+                    <p>{String(disS)}</p>
+                    {season.includes(disS) && <PiCheckCircleFill />}
+                  </button>
+                );
+              }
             })}
         </div>
       )}
