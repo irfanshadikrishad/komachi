@@ -149,7 +149,16 @@
   align-items: flex-start;
   justify-content: space-around;
 }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+}
 
+/**
+  RESPONSIVE
+*/
 @media screen and (max-width: 768px) {
   .rank1_name {
     font-size: 1rem;

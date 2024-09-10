@@ -67,17 +67,19 @@ export default function Year({
         <div className={`${styles.filter_options} ${styles.filter_optionYear}`}>
           {distinctYear.length > 0 &&
             distinctYear.map((disY, index) => {
-              return (
-                <button
-                  key={index}
-                  onClick={() => {
-                    insertValuesIntoState(disY, setYear);
-                  }}
-                >
-                  <p>{String(disY)}</p>
-                  {year.includes(disY) && <PiCheckCircleFill />}
-                </button>
-              );
+              if (disY !== null) {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      insertValuesIntoState(disY, setYear);
+                    }}
+                  >
+                    <p>{String(disY)}</p>
+                    {year.includes(disY) && <PiCheckCircleFill />}
+                  </button>
+                );
+              }
             })}
         </div>
       )}

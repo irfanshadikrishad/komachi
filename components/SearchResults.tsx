@@ -1,5 +1,6 @@
 import Card from "@/components/Card";
 import styles from "@/styles/search.module.css";
+import cardio from "@/styles/cardio.module.css";
 import { getTitle } from "@/utils/helpers";
 
 export default function SearchResults({
@@ -17,7 +18,7 @@ export default function SearchResults({
             {query !== null && `Search result for '${query}'`}
           </p>
         </div>
-        <section className={styles.billboard}>
+        <section className={cardio.cardsContainer}>
           {searched.map(
             ({
               isAdult,

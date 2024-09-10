@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Card from "@/components/Card";
 import styles from "@/styles/search.module.css";
+import cardio from "@/styles/cardio.module.css";
 import { getTitle } from "@/utils/helpers";
 // Skeleton
 import Skeleton from "react-loading-skeleton";
@@ -13,7 +14,7 @@ export default function Popular({ popular }: { popular: any[] }) {
         <p className={styles.billboard_Header}>Popular</p>
         <Link href={`/search/popular`}>view all</Link>
       </div>
-      <section className={styles.billboard}>
+      <section className={cardio.cardsContainer}>
         {popular.length > 0
           ? popular.map(
               ({

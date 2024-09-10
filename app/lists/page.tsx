@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Card from "@/components/Card";
 import styles from "@/styles/lists.module.css";
 import footer_styles from "@/styles/footer.module.css";
+import cardio from "@/styles/cardio.module.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { getTitle } from "@/utils/helpers";
@@ -17,6 +18,7 @@ export default function Lists() {
   );
 
   const getShowResults = async (show: string) => {
+    setResults([]);
     const request = await fetch(`/api/lists`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -353,7 +355,7 @@ export default function Lists() {
             Z
           </button>
         </section>
-        <section className={styles.result_Container}>
+        <section className={cardio.cardsContainer}>
           {results.length > 0
             ? results.map(
                 (

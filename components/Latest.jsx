@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
 import styles from "@/styles/latest.module.css";
+import cardio from "@/styles/cardio.module.css";
 // Skeleton
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -12,9 +13,6 @@ export default function Latest() {
   const [japan, setJapan] = useState([]);
   const [china, setChina] = useState([]);
   const [korea, setKorea] = useState([]);
-  const [popular, setPopular] = useState([]);
-  const [trending, setTrending] = useState([]);
-  const [loaded, setLoaded] = useState(false);
   const [render, setRender] = useState([]);
   const [currentlyActive, setCurrentlyActive] = useState("All");
 
@@ -22,44 +20,6 @@ export default function Latest() {
     const activeTab = localStorage.getItem("latest") || "All";
     setCurrentlyActive(activeTab);
   }, []);
-
-  const getPopular = async () => {
-    try {
-      const request = await fetch(`/api/popular`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: 1, perPage: 10 }),
-      });
-      const response = await request.json();
-
-      if (request.status === 200) {
-        setPopular(response);
-      } else {
-        console.log(response);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getTrending = async () => {
-    try {
-      const request = await fetch(`/api/trending`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: 1, perPage: 10 }),
-      });
-      const response = await request.json();
-
-      if (request.status === 200) {
-        setTrending(response);
-      } else {
-        console.log(response);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const getLatest = async () => {
     const request = await fetch(`/api/recent`, {
@@ -76,7 +36,6 @@ export default function Latest() {
       setJapan(japan);
       setChina(china);
       setKorea(korea);
-      setLoaded(true);
 
       const activeTab = localStorage.getItem("latest");
       if (activeTab) {
@@ -99,16 +58,14 @@ export default function Latest() {
 
   useEffect(() => {
     getLatest();
-    // getPopular();
-    // getTrending();
   }, []);
 
   return (
     <section className={`container`}>
       <section className={styles.latest_Main}>
         <section className={styles.latest_updates}>
-          <div className="latest_Header">
-            <p className="partitionTitleII">Latest updates</p>
+          <div className={styles.header}>
+            <p className={styles.partitionTitleII}>Latest updates</p>
             <div className={styles.switch}>
               <button
                 onClick={() => {
@@ -160,7 +117,7 @@ export default function Latest() {
               </button>
             </div>
           </div>
-          <div className="latestContainer">
+          <div className={cardio.cardsContainer}>
             {render.length > 0
               ? render.map(
                   (
@@ -206,9 +163,6 @@ export default function Latest() {
                 })}
           </div>
         </section>
-        {/* {popular.length > 0 && (
-          <Ranking popular={popular} trending={trending} />
-        )} */}
       </section>
     </section>
   );

@@ -105,12 +105,10 @@ export default function Player({
                 width="100%"
                 height={isNotNative ? "auto" : "400px"}
                 controls={true}
-                // playing={automatics ? stringToBoolean(automatics.play) : false}
                 playing={true}
                 url={streamLink}
                 className="react_player"
                 style={{ overflow: "hidden" }}
-                // light={true}
               />
               <section>
                 <div
@@ -118,15 +116,12 @@ export default function Player({
                   style={{
                     display: isMouseOver ? "inline" : "none",
                     right: "16px",
-                    // width: `${Number(ED_WIDTH) ? Number(ED_WIDTH) : 0}%`,
                   }}
                 ></div>
                 <div
                   className={styles.ed}
                   style={{
                     display: isMouseOver ? "inline" : "none",
-                    // left: OP_LEFT ? `${OP_LEFT}%` : "16px",
-                    // width: `${Number(OP_WIDTH) ? Number(OP_WIDTH) : 0}%`,
                   }}
                 ></div>
               </section>
@@ -176,11 +171,11 @@ export default function Player({
                 </button>
               )}
             </section>
-            {nextAiringEpisode.length !== 0 && currentEpisode && (
+            {nextAiringEpisode && currentEpisode && (
               <p className={styles.nextAiringEpisode}>
                 {convertTimestampToReadable(
-                  nextAiringEpisode[0]?.airingTime,
-                  nextAiringEpisode[0]?.episode
+                  nextAiringEpisode?.airingTime,
+                  nextAiringEpisode?.episode
                 )}
               </p>
             )}

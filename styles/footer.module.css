@@ -18,7 +18,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 3px;
-  margin-top: 12px;
+  margin: 12px 0;
 }
 .list_Links > a,
 .list_Links > button {
@@ -35,7 +35,6 @@
 .list_Links > a:hover,
 .list_Links > button:hover {
   color: var(--primary);
-  /* background: var(--primary); */
   transition-duration: 0.33s;
 }
 .footerPartTwo {

@@ -125,9 +125,9 @@ export default function Episodes({
           <button
             style={{
               color:
-                currentEpisode === firstEpisode
-                  ? "rgb(50 50 50)"
-                  : "var(--color-fade)",
+                currentEpisode && currentEpisode !== firstEpisode
+                  ? "var(--primary)"
+                  : "rgb(50 50 50)",
             }}
             onClick={() => {
               if (currentEpisode !== firstEpisode) {
@@ -140,9 +140,9 @@ export default function Episodes({
           <button
             style={{
               color:
-                currentEpisode === lastEpisode
-                  ? "rgb(50 50 50)"
-                  : "var(--color-fade)",
+                currentEpisode && currentEpisode !== lastEpisode
+                  ? "var(--primary)"
+                  : "rgb(50 50 50)",
             }}
             onClick={() => {
               if (currentEpisode !== lastEpisode) {
@@ -173,7 +173,6 @@ export default function Episodes({
                   <button
                     onClick={() => {
                       getStreamLink(id);
-                      // localStorage.setItem(animeId, id);
                     }}
                     key={index}
                     className={styles.streamingV2Button}

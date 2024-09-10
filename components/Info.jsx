@@ -1,16 +1,17 @@
 import uniqolor from "uniqolor";
+import styles from "@/styles/info.module.css";
 import { getTitle, removeHtmlAndMarkdown } from "@/utils/helpers";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Info({ animeInfo }) {
   return (
-    <section className="streamingV2_Info">
-      <section className="s768seperator">
-        <div className="streamingV2_PosterContainer">
+    <section className={styles.infoMain}>
+      <section className={styles.seperator}>
+        <div className={styles.posterContainer}>
           {animeInfo?.anilistId ? (
             <img
-              className="streamingV2_Poster"
+              className={styles.poster}
               src={animeInfo?.poster}
               alt={String(animeInfo?.anilistId)}
               draggable="false"
@@ -22,10 +23,12 @@ export default function Info({ animeInfo }) {
               height={350}
             />
           )}
-          {animeInfo?.isAdult === "true" && <p className="isAdult">18+</p>}
+          {animeInfo?.isAdult === "true" && (
+            <p className={styles.isAdult}>18+</p>
+          )}
         </div>
         <section>
-          <h1 className="streaming_title">
+          <h1 className={styles.title}>
             {animeInfo?.title ? (
               getTitle(animeInfo?.title)
             ) : (
@@ -37,7 +40,7 @@ export default function Info({ animeInfo }) {
               />
             )}
           </h1>
-          <p className="streamingV2_description">
+          <p className={styles.description}>
             {animeInfo?.anilistId ? (
               removeHtmlAndMarkdown(animeInfo?.description)
             ) : (
@@ -49,8 +52,8 @@ export default function Info({ animeInfo }) {
             )}
           </p>
           <section>
-            <p className="seperator">
-              <span className="blob">Status :</span>
+            <p className={styles.sprtr}>
+              <span className={styles.blob}>Status :</span>
               {animeInfo?.anilistId ? (
                 animeInfo?.status
               ) : (
@@ -62,8 +65,8 @@ export default function Info({ animeInfo }) {
                 />
               )}
             </p>
-            <p className="seperator">
-              <span className="blob">Total Episodes :</span>
+            <p className={styles.sprtr}>
+              <span className={styles.blob}>Total Episodes :</span>
               {animeInfo?.sub_episodes.length > 0 ? (
                 animeInfo?.sub_episodes.length > 0 ? (
                   animeInfo?.sub_episodes.length
@@ -80,8 +83,8 @@ export default function Info({ animeInfo }) {
               )}
             </p>
             {animeInfo?.release_date && (
-              <p className="seperator">
-                <span className="blob">Released:</span>
+              <p className={styles.sprtr}>
+                <span className={styles.blob}>Released:</span>
                 {animeInfo?.anilistId ? (
                   `${animeInfo?.release_date} ${
                     animeInfo?.season ? animeInfo?.season : ""
@@ -96,8 +99,8 @@ export default function Info({ animeInfo }) {
                 )}
               </p>
             )}
-            <p className="seperator">
-              <span className="blob">Type :</span>
+            <p className={styles.sprtr}>
+              <span className={styles.blob}>Type :</span>
               {animeInfo?.anilistId ? (
                 animeInfo?.format
               ) : (
@@ -110,8 +113,8 @@ export default function Info({ animeInfo }) {
               )}
             </p>
             {animeInfo?.airing_start && (
-              <p className="seperator">
-                <span className="blob">Airing Date :</span>
+              <p className={styles.sprtr}>
+                <span className={styles.blob}>Airing Date :</span>
                 {animeInfo?.airing_start ? (
                   ` ${Object.values(animeInfo?.airing_start).join("/")} ${
                     animeInfo?.airing_end.year
@@ -128,8 +131,8 @@ export default function Info({ animeInfo }) {
                 )}
               </p>
             )}
-            <p className="seperator">
-              <span className="blob">Studios:</span>
+            <p className={styles.sprtr}>
+              <span className={styles.blob}>Studios:</span>
               {animeInfo?.anilistId ? (
                 animeInfo?.studios.join(" • ")
               ) : (
@@ -141,8 +144,8 @@ export default function Info({ animeInfo }) {
                 />
               )}
             </p>
-            <p className="seperator">
-              <span className="blob">Origin:</span>
+            <p className={styles.sprtr}>
+              <span className={styles.blob}>Origin:</span>
               {animeInfo?.anilistId ? (
                 animeInfo?.origin
               ) : (
@@ -154,8 +157,8 @@ export default function Info({ animeInfo }) {
                 />
               )}
             </p>
-            <p className="seperator">
-              <span className="blob">Synonyms:</span>
+            <p className={styles.sprtr}>
+              <span className={styles.blob}>Synonyms:</span>
               {animeInfo?.anilistId ? (
                 animeInfo?.synonyms.join(" • ")
               ) : (
@@ -168,7 +171,7 @@ export default function Info({ animeInfo }) {
               )}
             </p>
             {animeInfo?.anilistId ? (
-              <div className="streamingV2InfoGenres">
+              <div className={styles.genres}>
                 {animeInfo?.genres.map((genre, index) => {
                   const { color } = uniqolor(genre);
                   return (

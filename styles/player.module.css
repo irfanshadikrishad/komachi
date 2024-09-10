@@ -50,6 +50,12 @@
   align-items: center;
   justify-content: center;
 }
+.streamingV2Button:hover {
+  background-color: var(--primary) !important;
+  color: var(--background) !important;
+  opacity: 70%;
+  transition: 0.33s all;
+}
 .serverSources {
   display: flex;
   flex-wrap: wrap;

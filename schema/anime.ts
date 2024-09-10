@@ -16,8 +16,20 @@ const animeSchema = new Schema(
     description: String,
     poster: String,
     cover: String,
-    sub_episodes: [{}],
-    dub_episodes: [{}],
+    sub_episodes: [
+      {
+        id: { type: String, required: false },
+        title: { type: String, required: false },
+        number: { type: Number, required: false },
+      },
+    ],
+    dub_episodes: [
+      {
+        id: { type: String, required: false },
+        title: { type: String, required: false },
+        number: { type: Number, required: false },
+      },
+    ],
     origin: String,
     format: String,
     duration: String,
@@ -35,38 +47,29 @@ const animeSchema = new Schema(
     genres: [String],
     synonyms: [String],
     isAdult: String,
-    nextAiringEpisode: [
-      {
-        airingTime: Number,
-        timeUntilAiring: Number,
-        episode: Number,
-      },
-    ],
+    nextAiringEpisode: {
+      airingTime: Number,
+      timeUntilAiring: Number,
+      episode: Number,
+    },
     totalEpisodes: Number,
     studios: [String],
-    recommendations: [
-      {
-        animeId: String,
-        malId: String,
-        title: {
-          romaji: String,
-          english: String,
-          native: String,
-          userPreferred: String,
-        },
-        status: String,
-        episodes: Number,
-        poster: String,
-        cover: String,
-        rating: Number,
-        format: String,
-      },
-    ],
+    season: String,
+    release_date: String,
+    isLicensed: { type: Boolean, required: false },
+    color: { type: String, required: false },
+    relations: [{}],
+    trailer: {
+      id: { type: String },
+      url: { type: String, required: false },
+      site: { type: String, required: false },
+      thumbnail: { type: String, required: false },
+    },
+    recommendations: [String],
   },
   { timestamps: true }
 );
 
-// Use the same model name in both the check and the creation
 const Anime = models.ANIME || model("ANIME", animeSchema);
 
 export default Anime;

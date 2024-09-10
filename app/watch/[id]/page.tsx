@@ -7,6 +7,7 @@ import Info from "@/components/Info";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { AnimeInfo } from "@/utils/helpers";
+import styles from "@/styles/watch.module.css";
 
 export default function Streaming() {
   const params = useParams();
@@ -38,7 +39,6 @@ export default function Streaming() {
           setEpisodeDownloadLink(response.download);
         } else {
           console.log(response);
-          // setNoEpisodes(true);
         }
       }
     } catch (error) {
@@ -107,11 +107,6 @@ export default function Streaming() {
     }
   };
 
-  // useEffect(() => {
-  //   if (!streamLink) {
-  //     getStreamLink(String(currentEpisode));
-  //   }
-  // }, [episodes]);
   useEffect(() => {
     getAnimeInfo();
   }, [eps]);
@@ -124,7 +119,7 @@ export default function Streaming() {
       <Navbar />
       <section className="container">
         {!notFound ? (
-          <section className="streamingV2">
+          <section className={styles.watchContainer}>
             <Player
               streamLink={streamLink}
               currentEpisode={currentEpisode}

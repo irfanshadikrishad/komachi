@@ -67,17 +67,19 @@ export default function Format({
         <div className={styles.filter_options}>
           {distinctFormat.length > 0 &&
             distinctFormat.map((disF, index) => {
-              return (
-                <button
-                  key={index}
-                  onClick={() => {
-                    insertValuesIntoState(disF, setFormat);
-                  }}
-                >
-                  <p>{disF}</p>
-                  {format.includes(disF) && <PiCheckCircleFill />}
-                </button>
-              );
+              if (disF !== null) {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      insertValuesIntoState(disF, setFormat);
+                    }}
+                  >
+                    <p>{disF}</p>
+                    {format.includes(disF) && <PiCheckCircleFill />}
+                  </button>
+                );
+              }
             })}
         </div>
       )}
