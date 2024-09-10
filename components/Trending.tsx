@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Card from "@/components/Card";
 import styles from "@/styles/search.module.css";
+import cardio from "@/styles/cardio.module.css";
 import { getTitle } from "@/utils/helpers";
 // Skeleton
 import Skeleton from "react-loading-skeleton";
@@ -13,7 +14,7 @@ export default function Trending({ trending }: { trending: any[] }) {
         <p className={styles.billboard_Header}>Trending</p>
         <Link href={`/search/trending`}>view all</Link>
       </div>
-      <section className={styles.billboard}>
+      <section className={cardio.cardsContainer}>
         {trending.length > 0
           ? trending.map(
               ({

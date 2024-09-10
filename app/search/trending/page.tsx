@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "@/styles/search.module.css";
+import cardio from "@/styles/cardio.module.css";
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -40,7 +41,7 @@ export default function Trending() {
             <div className={styles.billboard_HeaderMain}>
               <p className={styles.billboard_Header}>Trending</p>
             </div>
-            <section className={styles.billboard}>
+            <section className={cardio.cardsContainer}>
               {trending.map(
                 ({
                   isAdult,

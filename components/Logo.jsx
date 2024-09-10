@@ -5,7 +5,11 @@ export default function Logo() {
   return (
     <div>
       <Link href="/" className={styles.text_logo} style={{ display: "inline" }}>
-        <p>Komachi</p>
+        <p>
+          (こまち)
+          <br />
+          Komachi
+        </p>
       </Link>
     </div>
   );

@@ -70,7 +70,6 @@ const animeSchema = new Schema(
   { timestamps: true }
 );
 
-// Use the same model name in both the check and the creation
 const Anime = models.ANIME || model("ANIME", animeSchema);
 
 export default Anime;

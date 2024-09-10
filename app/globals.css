@@ -87,10 +87,6 @@ input:-webkit-autofill:active {
   padding-bottom: 10px;
 }
 
-.partitionTitleII {
-  padding: 10px 0;
-}
-
 .topAiringCard {
   display: block;
   padding: 5px;
@@ -214,13 +210,6 @@ input:-webkit-autofill:active {
   justify-content: center;
 }
 
-.latestContainer {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-  padding-bottom: 20px;
-}
-
 .latestPoster {
   width: 100%;
   height: auto;
@@ -303,12 +292,6 @@ video {
 
 .notFound > img {
   transform: translateX(-15px);
-}
-
-.latest_Header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .latest_buttons {
@@ -756,9 +739,6 @@ video {
 }
 
 @media screen and (max-width: 1440px) {
-  .topAiringPoster {
-    height: auto;
-  }
   .container {
     width: 90%;
   }
@@ -800,9 +780,6 @@ video {
   .searchField,
   .searchContain {
     background-color: var(--background);
-  }
-  .latestContainer {
-    grid-template-columns: repeat(6, 1fr);
   }
   .latestPoster {
     height: 190px;
@@ -857,9 +834,7 @@ video {
   .signup {
     grid-template-columns: 1fr 2fr;
   }
-  .latestContainer {
-    grid-template-columns: repeat(5, 1fr);
-  }
+
   .latestPoster {
     height: auto;
   }
@@ -897,9 +872,6 @@ video {
   .signup {
     grid-template-columns: 1fr;
   }
-  .latestContainer {
-    grid-template-columns: repeat(4, 1fr);
-  }
 
   .searchContainerMain {
     grid-template-columns: repeat(3, 1fr);
@@ -921,9 +893,6 @@ video {
   .profile_banner_inner {
     left: 30px;
   }
-  .latestContainer {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 @media screen and (max-width: 425px) {
@@ -934,13 +903,9 @@ video {
   .streamingV2Buttons {
     grid-template-columns: repeat(7, 1fr);
   }
-  .topAiringPoster {
-    height: auto;
-  }
 }
 
 @media screen and (max-width: 375px) {
-  .latestContainer,
   .searchContainerMain {
     grid-template-columns: 1fr 1fr;
   }
