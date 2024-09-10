@@ -27,7 +27,8 @@ export async function generateMetadata({
     title:
       `Watch ${
         data.title?.english ? data.title?.english : data.title?.romaji
-      } online in HD - No Ads • Komachi` || "Komachi • Heaven for anime lovers",
+      } online in HD - No Ads • Komachi (こまち)` ||
+      "Komachi (こまち) • Heaven for anime lovers",
     description:
       `Stream and Watch ${
         data.title?.english ? data.title?.english : data.title?.romaji
@@ -38,11 +39,13 @@ export async function generateMetadata({
         `Watch ${
           data.title?.english ? data.title?.english : data.title?.romaji
         } online in HD - No Ads • Komachi` ||
-        "Komachi • Heaven for anime lovers",
+        "Komachi (こまち) • Heaven for anime lovers",
       description:
         `Stream and Watch ${
           data.title?.english ? data.title?.english : data.title?.romaji
-        } online on Komachi. ${removeHtmlAndMarkdown(data.description)}` ||
+        } online on Komachi (こまち). ${removeHtmlAndMarkdown(
+          data.description
+        )}` ||
         "Your premium destination for watching animes online without ads.",
       images: [
         {

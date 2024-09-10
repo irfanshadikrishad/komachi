@@ -83,82 +83,28 @@ input:-webkit-autofill:active {
   box-shadow: inset 0 0 20px 20px #23232329;
 }
 
-.partitionTitle {
-  padding-bottom: 10px;
-}
-
-.topAiringCard {
-  display: block;
-  padding: 5px;
-  background-color: var(--secondary);
-  height: 97%;
-  border-radius: 7px;
-  text-decoration: none;
-  color: var(--color);
-}
-
-.topAiringTitle {
-  font-size: 14px;
-  line-height: 14px;
-}
-
-.topAiringPoster {
-  border-radius: 7px;
-  width: 100%;
-  aspect-ratio: 2/2.7;
-}
-
-.loader_center {
-  text-align: center;
-}
-
-.topRanking {
-  font-size: 10px;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  /* color: var(--success); */
-  background-color: var(--background);
-  padding: 1px 5px;
-  text-align: center;
-  border-radius: 5px;
-}
-
-.streaming {
-  display: grid;
-  grid-template-columns: 3.5fr 1fr;
-  gap: 5px;
-  padding-bottom: 50px;
-  align-items: flex-start;
-}
-
 .streamingInfo {
   background-color: var(--secondary);
   border-radius: 7px;
   padding: 5px;
 }
-
 .streamingInfoPoster {
   width: 100%;
   border-radius: 7px;
 }
-
 .streamingInfoDescription {
   opacity: 50%;
   line-height: 18px;
 }
-
 .streamingInfoDeep {
   font-size: 14px;
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 5px;
 }
-
 .streamingInfoDeepAll {
   padding: 10px 0;
 }
-
 .streamingGenres {
   font-size: 12px;
   display: flex;
@@ -183,13 +129,11 @@ input:-webkit-autofill:active {
   border-radius: 6px;
   background-color: var(--background);
 }
-
 .streamingPlayer {
   padding: 5px;
   border-radius: 7px;
   background-color: var(--secondary);
 }
-
 .streamingPlayerButtons {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -197,7 +141,6 @@ input:-webkit-autofill:active {
   max-height: 188px;
   overflow-y: scroll;
 }
-
 .streamingPlayerButton {
   background-color: var(--background);
   border: none;
@@ -209,7 +152,6 @@ input:-webkit-autofill:active {
   align-items: center;
   justify-content: center;
 }
-
 .latestPoster {
   width: 100%;
   height: auto;
@@ -217,7 +159,6 @@ input:-webkit-autofill:active {
   aspect-ratio: 2/3;
   object-fit: cover;
 }
-
 .latestIndividual {
   position: relative;
   background-color: var(--secondary);
@@ -253,20 +194,17 @@ input:-webkit-autofill:active {
   padding: 5px;
   text-transform: capitalize;
 }
-
 .searchContainerMain {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
   padding-bottom: 20px;
 }
-
 .searchPoster {
   width: 100%;
   border-radius: 7px;
   aspect-ratio: 2/3;
 }
-
 .searchIndividual {
   padding: 5px;
   background-color: var(--secondary);
@@ -276,31 +214,25 @@ input:-webkit-autofill:active {
   color: var(--color);
   overflow: hidden;
 }
-
 video {
   outline: none;
 }
-
 .e404 {
   text-align: center;
   margin-top: 50px;
 }
-
 .notFound {
   text-align: center;
 }
-
 .notFound > img {
   transform: translateX(-15px);
 }
-
 .latest_buttons {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
 }
-
 .latest_button {
   font-size: 0.7rem;
   border: none;
@@ -321,135 +253,20 @@ video {
   align-items: center;
   justify-content: space-between;
 }
-
 .streaminDownloadLink {
   color: var(--color);
   padding: 0 2px;
 }
-
-.signup_form {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 10px;
-}
-
-.signup_form > input {
-  font-size: 1rem;
-  border: none;
-  padding: 10px;
-  color: var(--color);
-  background-color: var(--background);
-  border-radius: 7px;
-  outline: none;
-}
-
-.signup_form > button {
-  font-size: 1rem;
-  padding: 10px;
-  border: none;
-  border-radius: 7px;
-  color: var(--color);
-  background-color: var(--background);
-  width: 250px;
-  cursor: pointer;
-}
-
-.signup_checkbox {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.signupImageContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.signupImage {
-  width: 200px;
-  transform: translateY(30px);
-}
-
-.signup {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 10px;
-  background-color: var(--secondary);
-  border-radius: 7px;
-}
-
-.login_form {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 10px;
-}
-
-.login_form > input {
-  font-size: 1rem;
-  padding: 10px;
-  border-radius: 7px;
-  border: none;
-  outline: none;
-  color: var(--color);
-  background-color: var(--background);
-}
-
-.login_form > button {
-  font-size: 1rem;
-  padding: 10px;
-  border-radius: 7px;
-  border: none;
-  color: var(--color);
-  background-color: var(--background);
-  width: 250px;
-  cursor: pointer;
-}
-
-.login {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  align-items: center;
-  background-color: var(--secondary);
-  border-radius: 7px;
-  overflow: hidden;
-}
-
-.loginImage {
-  width: 200px;
-  transform: translateY(20px);
-}
-
-.loginImageContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.streamingV2 {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 5px;
-  padding: 0 0 10px 0;
-  align-items: flex-start;
-}
-
 .streamingV2_Poster {
   width: 100%;
   border-radius: 7px;
 }
-
 .streamingV2_Info {
   padding: 5px;
   border-radius: 7px;
   background-color: var(--secondary);
   font-size: 0.9rem;
 }
-
 .streamingV2_description {
   font-size: 0.95rem;
   line-height: 20px;
@@ -458,7 +275,6 @@ video {
   max-height: 200px;
   overflow-y: scroll;
 }
-
 .streamingV2InfoGenres {
   display: flex;
   flex-wrap: wrap;
@@ -466,7 +282,6 @@ video {
   gap: 4px;
   margin-top: 5px;
 }
-
 .streaming_options > select {
   border: none;
   color: var(--color);
@@ -477,126 +292,20 @@ video {
   outline: none;
   font-size: 1rem;
 }
-
 .streamingV2InfoGenres > span {
   background-color: var(--background);
   padding: 1px 10px;
   border-radius: 7px;
 }
-
 .streamingV2Synonyms {
   display: flex;
   flex-wrap: wrap;
   gap: 3px;
 }
-
 .streamingV2AllSynonyms {
   display: flex;
   gap: 5px;
 }
-
-/* Profile Start */
-.profile_banner {
-  height: 200px;
-  background-color: var(--secondary);
-  border-radius: 7px;
-  position: relative;
-}
-
-.profile_avatar {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 5px solid var(--background);
-}
-
-.profile_banner_inner {
-  position: absolute;
-  bottom: -55px;
-  left: 50px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.profile_username {
-  font-size: 1.2rem;
-  font-weight: 500;
-}
-
-.profile_lists {
-  margin-top: 55px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 5px;
-  padding-bottom: 50px;
-}
-
-.list_indi {
-  background-color: var(--secondary);
-  border-radius: 7px;
-  padding: 5px;
-}
-
-.list_inner {
-  display: flex;
-  flex-direction: column;
-}
-
-.list_inner > p > a {
-  text-decoration: none;
-  color: var(--primary);
-}
-
-.profile_list_grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-}
-
-.profile_list_image {
-  width: 100%;
-  border-radius: 7px;
-}
-
-.profile_logout {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  border: none;
-  font-size: 1.2rem;
-  color: var(--color);
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.announcement {
-  background-color: var(--primary);
-  color: var(--background);
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 4px;
-  margin-top: 10px;
-}
-
-.close_announcement {
-  border: none;
-  background-color: transparent;
-  font-size: 1.1rem;
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.announcement_text {
-  line-height: 13px;
-  margin: 10px;
-}
-
-/* Profile End */
-
 .navbar_socials {
   display: flex;
   align-items: center;
@@ -795,9 +504,6 @@ video {
     grid-template-columns: 1fr 8fr;
     align-items: flex-start;
     gap: 10px;
-  }
-  .streamingV2 {
-    grid-template-columns: 1fr;
   }
   .streamingV2_Poster {
     width: 200px;
