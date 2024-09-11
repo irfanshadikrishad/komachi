@@ -1,9 +1,11 @@
 "use client";
-import ReactPlayer from "react-player";
 import styles from "@/styles/player.module.css";
 import { useEffect, useState, useRef, useCallback } from "react";
 import Disqus from "@/components/Disqus";
-import { convertTimestampToReadable } from "@/utils/helpers";
+import {
+  convertTimestampToReadable,
+  episodeIdToEpisodeNumber,
+} from "@/utils/helpers";
 import Episodes from "@/components/Episodes";
 import Automatics from "@/components/Automatics";
 // ICONS
@@ -13,6 +15,14 @@ import { IoMic } from "react-icons/io5";
 // Skeleton
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+// VIDSTACK
+import { MediaPlayer, MediaProvider } from "@vidstack/react";
+import {
+  defaultLayoutIcons,
+  DefaultVideoLayout,
+} from "@vidstack/react/player/layouts/default";
+import "@vidstack/react/player/styles/default/theme.css";
+import "@vidstack/react/player/styles/default/layouts/video.css";
 
 export default function Player({
   streamLink,
@@ -100,16 +110,22 @@ export default function Player({
                 setIsMouseOver(false);
               }}
             >
-              <ReactPlayer
-                ref={react_player}
-                width="100%"
-                height={isNotNative ? "auto" : "400px"}
-                controls={true}
-                playing={true}
-                url={streamLink}
-                className="react_player"
-                style={{ overflow: "hidden" }}
-              />
+              <MediaPlayer
+                title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
+                src={streamLink}
+                load="eager"
+                aspectRatio="16/9"
+                viewType="video"
+                streamType="on-demand"
+                logLevel="warn"
+                crossOrigin={true}
+                playsInline
+                storage="storage-key"
+                autoPlay={true}
+              >
+                <MediaProvider />
+                <DefaultVideoLayout icons={defaultLayoutIcons} />
+              </MediaPlayer>
               <section>
                 <div
                   className={styles.ed}
