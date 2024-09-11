@@ -37,69 +37,18 @@ export default function Player({
   dubEpisodes,
   nextAiringEpisode,
 }) {
-  const [isNotNative, setIsNotNative] = useState(true);
   const [isSub, setIsSub] = useState(true);
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
   const [isMouseOver, setIsMouseOver] = useState(false);
-  const react_player = useRef();
-
-  const nativeChecker = useCallback(() => {
-    const extension = String(streamLink).slice(-5);
-    if (extension !== ".m3u8") {
-      setIsNotNative(false);
-    } else {
-      setIsNotNative(true);
-    }
-  }, [streamLink]);
 
   useEffect(() => {
     setUnicornEpisodes(episodes);
   }, [episodes]);
 
-  useEffect(() => {
-    nativeChecker();
-  }, [streamLink, nativeChecker]);
   return (
     <div>
       <section className={styles.streamingV2_ReactPlayer}>
         <div>
-          <div className={styles.streamingV2_ReactPlayerHeader}>
-            <p style={{ color: "var(--primary)" }}>
-              {currentEpisode ? (
-                `Episode ${
-                  String(currentEpisode).split("-")[
-                    String(currentEpisode).split("-").length - 1
-                  ]
-                }`
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={150}
-                />
-              )}
-            </p>
-            <div className={styles.streaming_options}>
-              {episodeDownloadLink ? (
-                <a
-                  className={styles.streamingV2_Download}
-                  href={episodeDownloadLink}
-                  target="_blank"
-                >
-                  Download
-                  <span className={styles.streamingV2_DownloadIcon}>
-                    {<ImCloudDownload />}
-                  </span>
-                </a>
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={85}
-                />
-              )}
-            </div>
-          </div>
           <div
             className={styles.player_Wrapper}
             onMouseOver={() => {
@@ -123,7 +72,10 @@ export default function Player({
               autoPlay={true}
             >
               <MediaProvider />
-              <DefaultVideoLayout icons={defaultLayoutIcons} />
+              <DefaultVideoLayout
+                icons={defaultLayoutIcons}
+                download={episodeDownloadLink}
+              />
             </MediaPlayer>
             <section>
               <div

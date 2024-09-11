@@ -82,6 +82,16 @@ video {
 }
 
 /* --------------------------------- */
+/* -------VIDSTACK-OVERWRITE-------- */
+/* --------------------------------- */
+#media-menu-1 {
+  background-color: var(--secondary);
+}
+.vds-menu-item {
+  background-color: var(--background) !important;
+}
+
+/* --------------------------------- */
 /* --------DISQUS-OVERWRITE--------- */
 /* --------------------------------- */
 #disqus_thread a {
