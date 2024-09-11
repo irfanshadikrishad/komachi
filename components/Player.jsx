@@ -100,56 +100,47 @@ export default function Player({
               )}
             </div>
           </div>
-          {streamLink ? (
-            <div
-              className={styles.player_Wrapper}
-              onMouseOver={() => {
-                setIsMouseOver(true);
-              }}
-              onMouseLeave={() => {
-                setIsMouseOver(false);
-              }}
+          <div
+            className={styles.player_Wrapper}
+            onMouseOver={() => {
+              setIsMouseOver(true);
+            }}
+            onMouseLeave={() => {
+              setIsMouseOver(false);
+            }}
+          >
+            <MediaPlayer
+              title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
+              src={streamLink}
+              load="eager"
+              aspectRatio="16/9"
+              viewType="video"
+              streamType="on-demand"
+              logLevel="warn"
+              crossOrigin={true}
+              playsInline
+              storage="storage-key"
+              autoPlay={true}
             >
-              <MediaPlayer
-                title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
-                src={streamLink}
-                load="eager"
-                aspectRatio="16/9"
-                viewType="video"
-                streamType="on-demand"
-                logLevel="warn"
-                crossOrigin={true}
-                playsInline
-                storage="storage-key"
-                autoPlay={true}
-              >
-                <MediaProvider />
-                <DefaultVideoLayout icons={defaultLayoutIcons} />
-              </MediaPlayer>
-              <section>
-                <div
-                  className={styles.ed}
-                  style={{
-                    display: isMouseOver ? "inline" : "none",
-                    right: "16px",
-                  }}
-                ></div>
-                <div
-                  className={styles.ed}
-                  style={{
-                    display: isMouseOver ? "inline" : "none",
-                  }}
-                ></div>
-              </section>
-            </div>
-          ) : (
-            <Skeleton
-              baseColor="var(--background)"
-              highlightColor="var(--secondary)"
-              height={470}
-              style={{ marginBottom: "5px" }}
-            />
-          )}
+              <MediaProvider />
+              <DefaultVideoLayout icons={defaultLayoutIcons} />
+            </MediaPlayer>
+            <section>
+              <div
+                className={styles.ed}
+                style={{
+                  display: isMouseOver ? "inline" : "none",
+                  right: "16px",
+                }}
+              ></div>
+              <div
+                className={styles.ed}
+                style={{
+                  display: isMouseOver ? "inline" : "none",
+                }}
+              ></div>
+            </section>
+          </div>
         </div>
         <Automatics />
         <div className={styles.external_sources}>
