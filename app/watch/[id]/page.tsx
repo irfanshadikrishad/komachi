@@ -6,7 +6,7 @@ import Player from "@/components/Player";
 import Info from "@/components/Info";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { AnimeInfo } from "@/utils/helpers";
+import { AnimeInfo, extractDefaultSource } from "@/utils/helpers";
 import styles from "@/styles/watch.module.css";
 
 export default function Streaming() {
@@ -34,7 +34,7 @@ export default function Streaming() {
         const response = await request.json();
 
         if (request.status === 200) {
-          setStreamLink(response.sources[response.sources.length - 1].url);
+          setStreamLink(String(extractDefaultSource(response?.sources)));
           setCurrentEpisode(episodeId);
           setEpisodeDownloadLink(response.download);
         } else {

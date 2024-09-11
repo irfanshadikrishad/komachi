@@ -270,6 +270,31 @@ function getTitle(title: {
   }
 }
 
+/**
+ * Extract default source from sources
+ * @param source {quality:string, url:string}
+ * @returns single source url as string
+ */
+function extractDefaultSource(
+  source: {
+    quality: string;
+    url: string;
+  }[]
+): string | undefined {
+  if (source?.length > 0) {
+    const preferredQualities = ["default", "1080p", "720p", "480p", "360p"];
+
+    for (const preferred of preferredQualities) {
+      const sour = source.find(({ quality }) => quality === preferred);
+      if (sour) {
+        return sour.url;
+      }
+    }
+
+    return source[0].url;
+  }
+}
+
 export {
   insert_Into_Array,
   slisor,
@@ -283,5 +308,6 @@ export {
   streamPreviousEpisode,
   streamNextEpisode,
   getTitle,
+  extractDefaultSource,
 };
 export type { AnimeInfo };

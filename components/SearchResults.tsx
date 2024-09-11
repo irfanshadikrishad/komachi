@@ -27,7 +27,15 @@ export default function SearchResults({
               sub_episodes,
               dub_episodes,
               totalEpisodes,
-              title = { english: "", romaji: "" },
+              title,
+            }: {
+              anilistId: string;
+              poster: string;
+              sub_episodes: [];
+              dub_episodes: [];
+              totalEpisodes: string | number;
+              title: { english?: string; romaji?: string; native?: string };
+              isAdult: string;
             }) => (
               <Card
                 key={anilistId}

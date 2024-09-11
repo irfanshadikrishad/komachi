@@ -37,119 +37,62 @@ export default function Player({
   dubEpisodes,
   nextAiringEpisode,
 }) {
-  const [isNotNative, setIsNotNative] = useState(true);
   const [isSub, setIsSub] = useState(true);
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
   const [isMouseOver, setIsMouseOver] = useState(false);
-  const react_player = useRef();
-
-  const nativeChecker = useCallback(() => {
-    const extension = String(streamLink).slice(-5);
-    if (extension !== ".m3u8") {
-      setIsNotNative(false);
-    } else {
-      setIsNotNative(true);
-    }
-  }, [streamLink]);
 
   useEffect(() => {
     setUnicornEpisodes(episodes);
   }, [episodes]);
 
-  useEffect(() => {
-    nativeChecker();
-  }, [streamLink, nativeChecker]);
   return (
     <div>
       <section className={styles.streamingV2_ReactPlayer}>
         <div>
-          <div className={styles.streamingV2_ReactPlayerHeader}>
-            <p style={{ color: "var(--primary)" }}>
-              {currentEpisode ? (
-                `Episode ${
-                  String(currentEpisode).split("-")[
-                    String(currentEpisode).split("-").length - 1
-                  ]
-                }`
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={150}
-                />
-              )}
-            </p>
-            <div className={styles.streaming_options}>
-              {episodeDownloadLink ? (
-                <a
-                  className={styles.streamingV2_Download}
-                  href={episodeDownloadLink}
-                  target="_blank"
-                >
-                  Download
-                  <span className={styles.streamingV2_DownloadIcon}>
-                    {<ImCloudDownload />}
-                  </span>
-                </a>
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={85}
-                />
-              )}
-            </div>
-          </div>
-          {streamLink ? (
-            <div
-              className={styles.player_Wrapper}
-              onMouseOver={() => {
-                setIsMouseOver(true);
-              }}
-              onMouseLeave={() => {
-                setIsMouseOver(false);
-              }}
+          <div
+            className={styles.player_Wrapper}
+            onMouseOver={() => {
+              setIsMouseOver(true);
+            }}
+            onMouseLeave={() => {
+              setIsMouseOver(false);
+            }}
+          >
+            <MediaPlayer
+              title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
+              src={streamLink}
+              load="eager"
+              aspectRatio="16/9"
+              viewType="video"
+              streamType="on-demand"
+              logLevel="warn"
+              crossOrigin={true}
+              playsInline
+              storage="storage-key"
+              autoPlay={true}
             >
-              <MediaPlayer
-                title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
-                src={streamLink}
-                load="eager"
-                aspectRatio="16/9"
-                viewType="video"
-                streamType="on-demand"
-                logLevel="warn"
-                crossOrigin={true}
-                playsInline
-                storage="storage-key"
-                autoPlay={true}
-              >
-                <MediaProvider />
-                <DefaultVideoLayout icons={defaultLayoutIcons} />
-              </MediaPlayer>
-              <section>
-                <div
-                  className={styles.ed}
-                  style={{
-                    display: isMouseOver ? "inline" : "none",
-                    right: "16px",
-                  }}
-                ></div>
-                <div
-                  className={styles.ed}
-                  style={{
-                    display: isMouseOver ? "inline" : "none",
-                  }}
-                ></div>
-              </section>
-            </div>
-          ) : (
-            <Skeleton
-              baseColor="var(--background)"
-              highlightColor="var(--secondary)"
-              height={470}
-              style={{ marginBottom: "5px" }}
-            />
-          )}
+              <MediaProvider />
+              <DefaultVideoLayout
+                icons={defaultLayoutIcons}
+                download={episodeDownloadLink}
+              />
+            </MediaPlayer>
+            <section>
+              <div
+                className={styles.ed}
+                style={{
+                  display: isMouseOver ? "inline" : "none",
+                  right: "16px",
+                }}
+              ></div>
+              <div
+                className={styles.ed}
+                style={{
+                  display: isMouseOver ? "inline" : "none",
+                }}
+              ></div>
+            </section>
+          </div>
         </div>
         <Automatics />
         <div className={styles.external_sources}>

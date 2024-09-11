@@ -20,11 +20,19 @@ export default function Popular({ popular }: { popular: any[] }) {
               ({
                 anilistId,
                 poster,
-                sub_episodes = [],
-                dub_episodes = [],
+                sub_episodes,
+                dub_episodes,
                 totalEpisodes,
-                title = { english: "", romaji: "" },
+                title,
                 isAdult,
+              }: {
+                anilistId: string;
+                poster: string;
+                sub_episodes: [];
+                dub_episodes: [];
+                totalEpisodes: string | number;
+                title: { english?: string; romaji?: string; native?: string };
+                isAdult: string;
               }) => (
                 <Card
                   key={anilistId}
@@ -38,7 +46,7 @@ export default function Popular({ popular }: { popular: any[] }) {
                 />
               )
             )
-          : Array.from({ length: 7 }).map((_, index) => {
+          : Array.from({ length: 7 }).map((_, index: number) => {
               return (
                 <Skeleton
                   key={index}
