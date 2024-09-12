@@ -27,12 +27,18 @@ export default function Episodes({
   const [goodEpisodes, setGoodEpisodes] = useState<any[]>([]);
   const [isRangeOpen, setIsRangeOpen] = useState<boolean>(false);
   const [selectedEpisodeRange, setSelectedEpisodeRange] = useState(0);
+  const [lastEpisodeRange, setLastEpisodeRange] = useState(false);
   const [filtered, setFiltered] = useState<any[]>([]);
   const [firstEpisode, setFirstEpisode] = useState<string>("");
   const [lastEpisode, setLastEpisode] = useState<string>("");
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const start = selectedEpisodeRange * 100 + 1;
-  const end = (selectedEpisodeRange + 1) * 100;
+  let start = selectedEpisodeRange * 100 + 1;
+  let end =
+    unicornEpisodes?.length <= 100
+      ? unicornEpisodes?.length
+      : !lastEpisodeRange
+      ? (selectedEpisodeRange + 1) * 100
+      : unicornEpisodes.length;
 
   useEffect(() => {
     // CHUNK UP ARRAY
@@ -100,19 +106,36 @@ export default function Episodes({
                 setIsRangeOpen(!isRangeOpen);
               }}
             >
-              {`${start}-${end}`} <IoChevronDownOutline />
+              {unicornEpisodes?.length > 0 ? (
+                `${start}-${end}`
+              ) : (
+                <Skeleton
+                  width={35}
+                  baseColor="var(--secondary)"
+                  highlightColor="var(--background)"
+                />
+              )}
+              <IoChevronDownOutline />
             </div>
             {isRangeOpen && (
               <div className={styles.limit_details}>
-                {goodEpisodes.map((_, index) => {
-                  const start = index * 100 + 1;
-                  const end = (index + 1) * 100;
+                {goodEpisodes.map((_, index: number) => {
+                  start = index * 100 + 1;
+                  end = (index + 1) * 100;
+                  const isLastIndex = index === goodEpisodes.length - 1;
+                  end = isLastIndex ? unicornEpisodes?.length : end;
+
                   return (
                     <button
                       key={index}
                       onClick={() => {
                         setSelectedEpisodeRange(index);
                         setIsRangeOpen(false);
+                        if (isLastIndex) {
+                          setLastEpisodeRange(true);
+                        } else {
+                          setLastEpisodeRange(false);
+                        }
                       }}
                     >
                       {`${start}-${end}`}
