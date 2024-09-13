@@ -84,11 +84,14 @@ video {
 /* --------------------------------- */
 /* -------VIDSTACK-OVERWRITE-------- */
 /* --------------------------------- */
-#media-menu-1 {
-  background-color: var(--secondary);
+#media-menu-4,
+#media-menu-1,
+.vds-settings-menu-items .vds-menu-items {
+  background-color: var(--background);
+  --player-height: 520px !important;
 }
 .vds-menu-item {
-  background-color: var(--background) !important;
+  background-color: var(--secondary) !important;
 }
 
 /* --------------------------------- */
