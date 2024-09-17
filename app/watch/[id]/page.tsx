@@ -3,12 +3,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Player from "@/components/Player";
-import Info from "@/components/Info";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { AnimeInfo, extractDefaultSource } from "@/utils/helpers";
 import styles from "@/styles/watch.module.css";
-import Episodes from "@/components/Episodes";
 
 export default function Streaming() {
   const params = useParams();

@@ -9,12 +9,8 @@ import {
 import Episodes from "@/components/Episodes";
 import Automatics from "@/components/Automatics";
 // ICONS
-import { ImCloudDownload } from "react-icons/im";
 import { FaRegClosedCaptioning } from "react-icons/fa6";
 import { IoMic } from "react-icons/io5";
-// Skeleton
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 // VIDSTACK
 import { MediaPlayer, MediaProvider } from "@vidstack/react";
 import {

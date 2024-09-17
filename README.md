@@ -1,6 +1,6 @@
 #### Komachi
 
-##### 🌸 A minimalist anime streaming platform where users can stream or download their favorite anime effortlessly. Built for speed, simplicity, and an immersive experience. Contributors welcome to help enhance performance, add features, and improve UI/UX. Let's create the ultimate anime hub together!
+##### A minimalist anime streaming platform where users can stream or download their favorite anime effortlessly. Built for speed, simplicity, and an immersive experience. Contributors welcome to help enhance performance, add features, and improve UI/UX. Let's create the ultimate anime hub together!
 
 #### features:
 

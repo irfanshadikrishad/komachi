@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 // Icons
 import { FaGithub } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
+import { IoGlobeSharp } from "react-icons/io5";
 
 export default function Footer() {
   const path = usePathname();
@@ -130,6 +131,9 @@ export default function Footer() {
         <section className={styles.copyright}>
           <p>Copyright © Irfan Shadik Rishad • All Rights Reserved</p>
           <section className={styles.social_media}>
+            <Link href="https://irfanshadikrishad.github.io" target="_blank">
+              <IoGlobeSharp />
+            </Link>
             <Link href="https://github.com/irfanshadikrishad" target="_blank">
               <FaGithub />
             </Link>
