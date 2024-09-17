@@ -17,6 +17,7 @@ export default function Stats() {
     try {
       const request = await fetch(`/api/stats`, {
         method: "GET",
+        cache: "force-cache",
       });
       const response = await request.json();
 

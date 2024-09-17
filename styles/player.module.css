@@ -33,8 +33,9 @@
   background-color: var(--secondary);
   padding: 0 5px;
   border-radius: 5px;
-  display: grid;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 .playerTrajectory {
   display: grid;
@@ -282,7 +283,28 @@
     grid-template-columns: 3fr 1fr;
   }
 }
+@media screen and (max-width: 1024px) {
+  .range_Main {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .search {
+    width: -webkit-fill-available;
+  }
+  .limit_Main {
+    width: -webkit-fill-available;
+  }
+}
 @media screen and (max-width: 960px) {
+  .range_Main {
+    flex-direction: row;
+  }
+  .search {
+    width: 150px;
+  }
+  .limit_Main {
+    width: auto;
+  }
   .playerTrajectory {
     grid-template-columns: 1fr;
   }
