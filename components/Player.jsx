@@ -24,6 +24,7 @@ import {
 import "@vidstack/react/player/styles/default/theme.css";
 import "@vidstack/react/player/styles/default/layouts/video.css";
 import Info from "@/components/Info";
+import Recommendations from "./Recommendations";
 
 export default function Player({
   streamLink,
@@ -150,6 +151,11 @@ export default function Player({
       </section>
       <Disqus url={streamLink} currentEpisode={currentEpisode} />
       <Info animeInfo={animeInfo} />
+      <Recommendations
+        recommendations={
+          animeInfo?.recommendations ? animeInfo?.recommendations : []
+        }
+      />
     </div>
   );
 }
