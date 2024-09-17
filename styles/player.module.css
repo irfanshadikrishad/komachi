@@ -34,6 +34,7 @@
   padding: 0 5px;
   border-radius: 5px;
   display: grid;
+  align-items: start;
 }
 .playerTrajectory {
   display: grid;
@@ -45,7 +46,7 @@
   grid-template-columns: 1fr;
   gap: 5px;
   overflow-y: scroll;
-  align-items: flex-start;
+  align-items: start;
   max-height: 560px;
   margin-bottom: 5px;
 }
