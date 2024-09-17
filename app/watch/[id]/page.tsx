@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { AnimeInfo, extractDefaultSource } from "@/utils/helpers";
 import styles from "@/styles/watch.module.css";
+import Episodes from "@/components/Episodes";
 
 export default function Streaming() {
   const params = useParams();
@@ -132,8 +133,8 @@ export default function Streaming() {
               dubEpisodes={dubEpisodes}
               nextAiringEpisode={nextAiringTime}
               malId={animeInfo?.malId}
+              animeInfo={animeInfo}
             />
-            <Info animeInfo={animeInfo} />
           </section>
         ) : (
           <section

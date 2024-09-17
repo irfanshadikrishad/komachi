@@ -29,13 +29,24 @@
   align-items: center;
   gap: 5px;
 }
+.episodes_Wrapper {
+  background-color: var(--secondary);
+  padding: 0 5px;
+  border-radius: 5px;
+  display: grid;
+}
+.playerTrajectory {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 5px;
+}
 .streamingV2Buttons {
   display: grid;
-  grid-template-columns: repeat(15, 1fr);
+  grid-template-columns: 1fr;
   gap: 5px;
   overflow-y: scroll;
   align-items: flex-start;
-  max-height: 250px;
+  max-height: 560px;
   margin-bottom: 5px;
 }
 .streamingV2Button {
@@ -43,12 +54,12 @@
   color: var(--color);
   background-color: var(--background);
   border-radius: 3px;
-  padding: 8px 0px;
-  text-align: start;
+  padding: 8px 8px;
+  text-align: left;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .streamingV2Button:hover {
   background-color: var(--primary) !important;
@@ -210,6 +221,7 @@
   color: var(--color);
   background-color: transparent;
   border: none;
+  width: 67px;
 }
 .range_Main {
   display: flex;
@@ -225,7 +237,9 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: right;
   gap: 2px;
+  width: 77px;
 }
 .limit_Main {
   display: flex;
@@ -267,14 +281,22 @@
     grid-template-columns: 3fr 1fr;
   }
 }
-
+@media screen and (max-width: 960px) {
+  .playerTrajectory {
+    grid-template-columns: 1fr;
+  }
+  .streamingV2Buttons {
+    max-height: 285px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 @media screen and (max-width: 768px) {
   .external_sources {
     display: grid;
     grid-template-columns: 1fr;
   }
   .streamingV2Buttons {
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   .range_Main {
     flex-wrap: wrap;
@@ -283,6 +305,6 @@
 }
 @media screen and (max-width: 600px) {
   .streamingV2Buttons {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }

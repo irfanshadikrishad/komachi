@@ -9,7 +9,7 @@ export default function Info({ animeInfo }) {
     <section className={styles.infoMain}>
       <section className={styles.seperator}>
         <div className={styles.posterContainer}>
-          {animeInfo?.anilistId ? (
+          {animeInfo?.poster ? (
             <img
               className={styles.poster}
               src={animeInfo?.poster}
@@ -20,7 +20,8 @@ export default function Info({ animeInfo }) {
             <Skeleton
               baseColor="var(--background)"
               highlightColor="var(--secondary)"
-              height={350}
+              width={150}
+              height={200}
             />
           )}
           {animeInfo?.isAdult === "true" && (

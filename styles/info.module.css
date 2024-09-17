@@ -13,12 +13,13 @@
   border-radius: 7px;
   background-color: var(--secondary);
   font-size: 0.9rem;
+  margin-top: 5px;
 }
 .posterContainer {
   position: relative;
 }
 .poster {
-  width: 100%;
+  width: 150px;
   border-radius: 7px;
 }
 .title {
@@ -57,14 +58,14 @@
   padding: 1px 10px;
   border-radius: 7px;
 }
+.seperator {
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+  align-items: flex-start;
+  gap: 10px;
+}
 
 @media screen and (max-width: 980px) {
-  .seperator {
-    display: grid;
-    grid-template-columns: 1fr 8fr;
-    align-items: flex-start;
-    gap: 10px;
-  }
   .posterContainer {
     display: flex;
     align-items: center;
