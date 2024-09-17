@@ -5,7 +5,10 @@ export async function POST(request: Request) {
   try {
     await database();
     const { animeId } = await request.json();
-    const info = await Anime.findOne({ anilistId: animeId });
+    const info = await Anime.findOne({ anilistId: animeId }).populate({
+      path: "recommendations",
+      model: "ANIME",
+    });
     if (info) {
       return new Response(JSON.stringify(info), { status: 200 });
     } else {
@@ -14,7 +17,7 @@ export async function POST(request: Request) {
       });
     }
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
     return new Response(JSON.stringify({ message: "Internal Server Error" }), {
       status: 500,
     });

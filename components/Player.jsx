@@ -9,12 +9,8 @@ import {
 import Episodes from "@/components/Episodes";
 import Automatics from "@/components/Automatics";
 // ICONS
-import { ImCloudDownload } from "react-icons/im";
 import { FaRegClosedCaptioning } from "react-icons/fa6";
 import { IoMic } from "react-icons/io5";
-// Skeleton
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 // VIDSTACK
 import { MediaPlayer, MediaProvider } from "@vidstack/react";
 import {
@@ -23,6 +19,8 @@ import {
 } from "@vidstack/react/player/layouts/default";
 import "@vidstack/react/player/styles/default/theme.css";
 import "@vidstack/react/player/styles/default/layouts/video.css";
+import Info from "@/components/Info";
+import Recommendations from "./Recommendations";
 
 export default function Player({
   streamLink,
@@ -36,19 +34,19 @@ export default function Player({
   malId,
   dubEpisodes,
   nextAiringEpisode,
+  animeInfo,
 }) {
   const [isSub, setIsSub] = useState(true);
-  const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
   const [isMouseOver, setIsMouseOver] = useState(false);
+  const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
 
   useEffect(() => {
     setUnicornEpisodes(episodes);
   }, [episodes]);
-
   return (
     <div>
-      <section className={styles.streamingV2_ReactPlayer}>
-        <div>
+      <section className={styles.playerTrajectory}>
+        <section className={styles.streamingV2_ReactPlayer}>
           <div
             className={styles.player_Wrapper}
             onMouseOver={() => {
@@ -93,63 +91,67 @@ export default function Player({
               ></div>
             </section>
           </div>
-        </div>
-        <Automatics />
-        <div className={styles.external_sources}>
-          <div className={styles.external_sources_1}>
-            <p>Source Types</p>
-            <section className={styles.source_btns}>
-              <button
-                onClick={() => {
-                  setIsSub(true);
-                  setUnicornEpisodes(episodes);
-                }}
-                style={{
-                  backgroundColor: isSub
-                    ? "var(--primary)"
-                    : "var(--secondary)",
-                  color: isSub ? "var(--background)" : "var(--color)",
-                }}
-              >
-                <FaRegClosedCaptioning /> sub ({episodes.length})
-              </button>
-              {dubEpisodes && dubEpisodes.length > 0 && (
+          <Automatics />
+          <div className={styles.external_sources}>
+            <div className={styles.external_sources_1}>
+              <p>Source Types</p>
+              <section className={styles.source_btns}>
                 <button
                   onClick={() => {
-                    setIsSub(false);
-                    setUnicornEpisodes(dubEpisodes);
+                    setIsSub(true);
+                    setUnicornEpisodes(episodes);
                   }}
                   style={{
-                    backgroundColor: !isSub
+                    backgroundColor: isSub
                       ? "var(--primary)"
                       : "var(--secondary)",
-                    color: !isSub ? "var(--background)" : "var(--color)",
+                    color: isSub ? "var(--background)" : "var(--color)",
                   }}
                 >
-                  <IoMic /> dub ({dubEpisodes.length})
+                  <FaRegClosedCaptioning /> sub ({episodes.length})
                 </button>
-              )}
-            </section>
-            {nextAiringEpisode && currentEpisode && (
-              <p className={styles.nextAiringEpisode}>
-                {convertTimestampToReadable(
-                  nextAiringEpisode?.airingTime,
-                  nextAiringEpisode?.episode
+                {dubEpisodes && dubEpisodes.length > 0 && (
+                  <button
+                    onClick={() => {
+                      setIsSub(false);
+                      setUnicornEpisodes(dubEpisodes);
+                    }}
+                    style={{
+                      backgroundColor: !isSub
+                        ? "var(--primary)"
+                        : "var(--secondary)",
+                      color: !isSub ? "var(--background)" : "var(--color)",
+                    }}
+                  >
+                    <IoMic /> dub ({dubEpisodes.length})
+                  </button>
                 )}
-              </p>
-            )}
+              </section>
+              {nextAiringEpisode && currentEpisode && (
+                <p className={styles.nextAiringEpisode}>
+                  {convertTimestampToReadable(
+                    nextAiringEpisode?.airingTime,
+                    nextAiringEpisode?.episode
+                  )}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
+        </section>
         <Episodes
-          getStreamLink={getStreamLink}
-          streamLink={streamLink}
-          animeId={animeId}
-          malId={malId}
-          currentEpisode={currentEpisode}
           unicornEpisodes={unicornEpisodes}
+          getStreamLink={getStreamLink}
+          currentEpisode={currentEpisode}
+          streamLink={streamLink}
         />
       </section>
       <Disqus url={streamLink} currentEpisode={currentEpisode} />
+      <Info animeInfo={animeInfo} />
+      <Recommendations
+        recommendations={
+          animeInfo?.recommendations ? animeInfo?.recommendations : []
+        }
+      />
     </div>
   );
 }

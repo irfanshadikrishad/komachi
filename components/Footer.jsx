@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 // Icons
 import { FaGithub } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
+import { IoGlobeSharp } from "react-icons/io5";
 
 export default function Footer() {
   const path = usePathname();
@@ -19,34 +20,90 @@ export default function Footer() {
             <p>Searching anime order by alphabet name A to Z</p>
           </section>
           <section className={styles.list_Links}>
-            <Link href="/lists/?show=all">All</Link>
-            <Link href="/lists/?show=0-9">0-9</Link>
-            <Link href="/lists/?show=A">A</Link>
-            <Link href="/lists/?show=B">B</Link>
-            <Link href="/lists/?show=C">C</Link>
-            <Link href="/lists/?show=D">D</Link>
-            <Link href="/lists/?show=E">E</Link>
-            <Link href="/lists/?show=F">F</Link>
-            <Link href="/lists/?show=G">G</Link>
-            <Link href="/lists/?show=H">H</Link>
-            <Link href="/lists/?show=I">I</Link>
-            <Link href="/lists/?show=J">J</Link>
-            <Link href="/lists/?show=K">K</Link>
-            <Link href="/lists/?show=L">L</Link>
-            <Link href="/lists/?show=M">M</Link>
-            <Link href="/lists/?show=N">N</Link>
-            <Link href="/lists/?show=O">O</Link>
-            <Link href="/lists/?show=P">P</Link>
-            <Link href="/lists/?show=Q">Q</Link>
-            <Link href="/lists/?show=R">R</Link>
-            <Link href="/lists/?show=S">S</Link>
-            <Link href="/lists/?show=T">T</Link>
-            <Link href="/lists/?show=U">U</Link>
-            <Link href="/lists/?show=V">V</Link>
-            <Link href="/lists/?show=W">W</Link>
-            <Link href="/lists/?show=X">X</Link>
-            <Link href="/lists/?show=Y">Y</Link>
-            <Link href="/lists/?show=Z">Z</Link>
+            <Link prefetch={true} href="/lists/?show=all">
+              All
+            </Link>
+            <Link prefetch={true} href="/lists/?show=0-9">
+              0-9
+            </Link>
+            <Link prefetch={true} href="/lists/?show=A">
+              A
+            </Link>
+            <Link prefetch={true} href="/lists/?show=B">
+              B
+            </Link>
+            <Link prefetch={true} href="/lists/?show=C">
+              C
+            </Link>
+            <Link prefetch={true} href="/lists/?show=D">
+              D
+            </Link>
+            <Link prefetch={true} href="/lists/?show=E">
+              E
+            </Link>
+            <Link prefetch={true} href="/lists/?show=F">
+              F
+            </Link>
+            <Link prefetch={true} href="/lists/?show=G">
+              G
+            </Link>
+            <Link prefetch={true} href="/lists/?show=H">
+              H
+            </Link>
+            <Link prefetch={true} href="/lists/?show=I">
+              I
+            </Link>
+            <Link prefetch={true} href="/lists/?show=J">
+              J
+            </Link>
+            <Link prefetch={true} href="/lists/?show=K">
+              K
+            </Link>
+            <Link prefetch={true} href="/lists/?show=L">
+              L
+            </Link>
+            <Link prefetch={true} href="/lists/?show=M">
+              M
+            </Link>
+            <Link prefetch={true} href="/lists/?show=N">
+              N
+            </Link>
+            <Link prefetch={true} href="/lists/?show=O">
+              O
+            </Link>
+            <Link prefetch={true} href="/lists/?show=P">
+              P
+            </Link>
+            <Link prefetch={true} href="/lists/?show=Q">
+              Q
+            </Link>
+            <Link prefetch={true} href="/lists/?show=R">
+              R
+            </Link>
+            <Link prefetch={true} href="/lists/?show=S">
+              S
+            </Link>
+            <Link prefetch={true} href="/lists/?show=T">
+              T
+            </Link>
+            <Link prefetch={true} href="/lists/?show=U">
+              U
+            </Link>
+            <Link prefetch={true} href="/lists/?show=V">
+              V
+            </Link>
+            <Link prefetch={true} href="/lists/?show=W">
+              W
+            </Link>
+            <Link prefetch={true} href="/lists/?show=X">
+              X
+            </Link>
+            <Link prefetch={true} href="/lists/?show=Y">
+              Y
+            </Link>
+            <Link prefetch={true} href="/lists/?show=Z">
+              Z
+            </Link>
           </section>
         </section>
         <section className={styles.footerPartTwo}>
@@ -74,6 +131,9 @@ export default function Footer() {
         <section className={styles.copyright}>
           <p>Copyright © Irfan Shadik Rishad • All Rights Reserved</p>
           <section className={styles.social_media}>
+            <Link href="https://irfanshadikrishad.github.io" target="_blank">
+              <IoGlobeSharp />
+            </Link>
             <Link href="https://github.com/irfanshadikrishad" target="_blank">
               <FaGithub />
             </Link>

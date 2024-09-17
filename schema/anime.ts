@@ -5,6 +5,7 @@ const animeSchema = new Schema(
     anilistId: {
       type: String,
       required: true,
+      unique: true,
     },
     malId: { type: String },
     title: {
@@ -65,7 +66,7 @@ const animeSchema = new Schema(
       site: { type: String, required: false },
       thumbnail: { type: String, required: false },
     },
-    recommendations: [String],
+    recommendations: [{ type: Schema.Types.ObjectId, ref: "ANIME" }],
   },
   { timestamps: true }
 );

@@ -1,13 +1,7 @@
 .watchContainer {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 1fr;
   gap: 5px;
   padding: 0 0 10px 0;
   align-items: flex-start;
-}
-
-@media screen and (max-width: 980px) {
-  .watchContainer {
-    grid-template-columns: 1fr;
-  }
 }

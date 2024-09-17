@@ -22,7 +22,7 @@ export default function Episodes({
   streamLink: string;
   animeId: string;
   malId: string;
-  currentEpisode: number | string;
+  currentEpisode: number | string | undefined;
 }) {
   const [goodEpisodes, setGoodEpisodes] = useState<any[]>([]);
   const [isRangeOpen, setIsRangeOpen] = useState<boolean>(false);
@@ -82,7 +82,7 @@ export default function Episodes({
   }, [isRangeOpen]);
 
   return (
-    <>
+    <div className={styles.episodes_Wrapper}>
       <section className={styles.range_Main}>
         <div className={styles.search}>
           <LuSearch />
@@ -187,7 +187,7 @@ export default function Episodes({
                   number,
                 }: {
                   id: string;
-                  title: { english: string; romaji: string };
+                  title: string;
                   number: number;
                 },
                 index: number
@@ -210,7 +210,7 @@ export default function Episodes({
                           : "var(--color)",
                     }}
                   >
-                    {number}
+                    {title ? title : `Episode ${number}`}
                   </button>
                 );
               }
@@ -224,7 +224,7 @@ export default function Episodes({
                   number,
                 }: {
                   id: string;
-                  title: { english: string; romaji: string };
+                  title: string;
                   number: number;
                 },
                 index: number
@@ -233,7 +233,6 @@ export default function Episodes({
                   <button
                     onClick={() => {
                       getStreamLink(id);
-                      // localStorage.setItem(animeId, id);
                     }}
                     key={index}
                     className={styles.streamingV2Button}
@@ -248,12 +247,12 @@ export default function Episodes({
                           : "var(--color)",
                     }}
                   >
-                    {number}
+                    {title ? title : `Episode ${number}`}
                   </button>
                 );
               }
             )
-          : Array.from({ length: 10 }).map((_, index) => {
+          : Array.from({ length: 14 }).map((_, index) => {
               return (
                 <Skeleton
                   key={index}
@@ -264,6 +263,6 @@ export default function Episodes({
               );
             })}
       </div>
-    </>
+    </div>
   );
 }
