@@ -87,3 +87,12 @@
   color: var(--primary);
   transition: all 0.33s;
 }
+.tandc_h3 {
+  margin-top: 10px;
+}
+.tandc_p {
+  text-align: justify;
+}
+.tandc_p > a {
+  color: var(--primary);
+}
