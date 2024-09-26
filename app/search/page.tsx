@@ -144,7 +144,7 @@ export default function Search() {
           }}
           className={styles.filter}
         >
-          <Input query={query} setQuery={setQuery} />
+          <Input query={query} setQuery={setQuery} getSearched={getSearched} />
           <Genre
             genre={genre}
             setGenre={setGenre}
