@@ -6,21 +6,33 @@ import Card from "@/components/Card";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { getTitle } from "@/utils/helpers";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-export default function Popular() {
-  const [popular, setPopular] = useState([]);
+export default function Trending() {
+  const [trending, setTrending] = useState([]);
+  const [totalCount, setTotalCount] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(60);
 
-  const getPopular = async () => {
+  const getTrending = async (page?: number, perPage?: number) => {
     try {
       const request = await fetch(`/api/popular`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: 1, perPage: 60 }),
+        body: JSON.stringify({
+          page: page ? page : 1,
+          perPage: perPage ? perPage : 60,
+        }),
       });
       const response = await request.json();
 
       if (request.status === 200) {
-        setPopular(response);
+        setTrending(response.results);
+        setCurrentPage(response.currentPage);
+        setTotalCount(response.totalCount);
+        setTotalPages(response.totalPages);
+        setPerPage(response.perPage);
       } else {
         console.log(response);
       }
@@ -30,7 +42,7 @@ export default function Popular() {
   };
 
   useEffect(() => {
-    getPopular();
+    getTrending();
   }, []);
   return (
     <>
@@ -39,10 +51,32 @@ export default function Popular() {
         <section className={styles.billboard_Wrapper}>
           <section className={styles.billboard_Main}>
             <div className={styles.billboard_HeaderMain}>
-              <p className={styles.billboard_Header}>popular</p>
+              <p className={styles.billboard_Header}>Popular</p>
+              <div className={styles.pageBtns}>
+                <button
+                  className={`${currentPage > 1 ? "primary" : ""}`}
+                  onClick={() => {
+                    if (Number(currentPage) > 1) {
+                      getTrending(Number(currentPage) - 1);
+                    }
+                  }}
+                >
+                  <FaChevronLeft />
+                </button>
+                <button
+                  className={`${currentPage <= totalPages ? "primary" : ""}`}
+                  onClick={() => {
+                    if (Number(currentPage) < totalPages) {
+                      getTrending(Number(currentPage) + 1);
+                    }
+                  }}
+                >
+                  <FaChevronRight />
+                </button>
+              </div>
             </div>
             <section className={cardio.cardsContainer}>
-              {popular.map(
+              {trending.map(
                 ({
                   isAdult,
                   anilistId,
