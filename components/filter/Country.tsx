@@ -69,6 +69,7 @@ export default function Country({
             distinctCountry.map((disC, index) => {
               return (
                 <button
+                  key={index}
                   onClick={() => {
                     insertValuesIntoState(disC, setCountry);
                   }}
