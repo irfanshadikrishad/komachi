@@ -1,6 +1,6 @@
 "use client";
 import styles from "@/styles/player.module.css";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Disqus from "@/components/Disqus";
 import {
   convertTimestampToReadable,

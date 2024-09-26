@@ -3,8 +3,7 @@ import styles from "@/styles/search.module.css";
 import cardio from "@/styles/cardio.module.css";
 import { getTitle } from "@/utils/helpers";
 // Icons
-import { FaChevronLeft } from "react-icons/fa6";
-import { FaChevronRight } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 export default function SearchResults({
   query,
