@@ -11,6 +11,13 @@ export const POST = async (req: Request) => {
                       media(type: ANIME, sort: POPULARITY_DESC) {
                         id
                       }
+                      pageInfo {
+                        total
+                        currentPage
+                        lastPage
+                        hasNextPage
+                        perPage
+                      }
                     }
                   }`;
 
@@ -30,6 +37,9 @@ export const POST = async (req: Request) => {
     const anilistIds = data?.Page?.media.map((item: { id: number }) =>
       item.id.toString()
     );
+
+    // Get the total count from the AniList API pageInfo
+    const { total, currentPage, lastPage } = data.Page.pageInfo;
 
     const results = await Anime.aggregate([
       {
@@ -52,10 +62,19 @@ export const POST = async (req: Request) => {
       },
     ]);
 
-    return new Response(JSON.stringify(results), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        results,
+        totalCount: total,
+        totalPages: lastPage,
+        currentPage,
+        perPage,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
     return new Response(
       JSON.stringify({ message: error || "An error occurred" }),

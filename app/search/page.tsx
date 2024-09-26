@@ -22,7 +22,11 @@ export default function Search() {
   const [query, setQuery] = useState(
     searchParams.get("query") ? searchParams.get("query") : null
   );
-  const [searched, setSearched] = useState<any[]>([]);
+  const [searched, setSearched] = useState<any>({});
+  const [results, setResults] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
   const [trending, setTrending] = useState([]);
   const [popular, setPopular] = useState([]);
 
@@ -41,7 +45,7 @@ export default function Search() {
   const [status, setStatus] = useState<string[]>([]);
   const [country, setCountry] = useState<string[]>([]);
 
-  const getSearched = async () => {
+  const getSearched = async (page?: number, perPage?: number) => {
     const request = await fetch(`/api/search`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -53,13 +57,18 @@ export default function Search() {
         format,
         status,
         origin: country,
-        perPage: 60,
+        page: page ? page : 1,
+        perPage: perPage ? perPage : 60,
       }),
     });
     const response = await request.json();
 
     if (request.status === 200) {
       setSearched(response);
+      setResults(response.results);
+      setCurrentPage(response.currentPage);
+      setTotalPages(response.totalPages);
+      setTotalCount(response.totalCount);
     } else {
       setSearched([]);
       console.log(response);
@@ -135,7 +144,7 @@ export default function Search() {
           }}
           className={styles.filter}
         >
-          <Input query={query} setQuery={setQuery} />
+          <Input query={query} setQuery={setQuery} getSearched={getSearched} />
           <Genre
             genre={genre}
             setGenre={setGenre}
@@ -219,8 +228,15 @@ export default function Search() {
           />
         </form>
 
-        {searched.length > 0 ? (
-          <SearchResults query={query} searched={searched} />
+        {results.length > 0 ? (
+          <SearchResults
+            query={query}
+            results={results}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalCount={totalCount}
+            getSearched={getSearched}
+          />
         ) : (
           <section className={styles.billboard_Wrapper}>
             <Trending trending={trending} />

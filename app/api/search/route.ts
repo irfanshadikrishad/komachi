@@ -12,6 +12,7 @@ export async function POST(request: Request) {
       origin,
       season,
       status,
+      page = 1,
       perPage = 5,
     } = await request.json();
 
@@ -29,19 +30,19 @@ export async function POST(request: Request) {
     }
 
     if (status.length > 0) {
-      searchConditions.push({ status: status });
+      searchConditions.push({ status: { $in: status } });
     }
     if (format.length > 0) {
-      searchConditions.push({ format: format });
+      searchConditions.push({ format: { $in: format } });
     }
     if (origin.length > 0) {
-      searchConditions.push({ origin: origin });
+      searchConditions.push({ origin: { $in: origin } });
     }
     if (genre.length > 0) {
       searchConditions.push({ genres: { $in: genre } });
     }
     if (year.length > 0) {
-      searchConditions.push({ "airing_start.year": year });
+      searchConditions.push({ "airing_start.year": { $in: year } });
     }
     if (season.length > 0) {
       searchConditions.push({ season: { $in: season } });
@@ -52,10 +53,31 @@ export async function POST(request: Request) {
         ? { $and: searchConditions }
         : searchConditions[0] || {};
 
-    const results = await Anime.find(queryObject).limit(perPage);
+    // Calculate the number of documents to skip
+    const skip = (page - 1) * perPage;
 
-    return new Response(JSON.stringify(results), { status: 200 });
+    // Fetch results with pagination
+    const results = await Anime.find(queryObject).skip(skip).limit(perPage);
+
+    // Get total count for pagination
+    const totalCount = await Anime.countDocuments(queryObject);
+
+    return new Response(
+      JSON.stringify({
+        results,
+        totalCount,
+        totalPages: Math.ceil(totalCount / perPage),
+        currentPage: page,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
   } catch (error) {
-    return new Response(JSON.stringify(error), { status: 500 });
+    return new Response(
+      JSON.stringify({ message: (error as Error).message || error }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }

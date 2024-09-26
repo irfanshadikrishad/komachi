@@ -3,13 +3,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "@/styles/board.module.css";
 // ICONS
-import { FaRegCirclePlay } from "react-icons/fa6";
+import { FaRegCirclePlay, FaClosedCaptioning } from "react-icons/fa6";
 import { BsBookmarkStar } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { AiFillThunderbolt } from "react-icons/ai";
-import { TbMicrophoneFilled } from "react-icons/tb";
-import { FaClosedCaptioning } from "react-icons/fa6";
-import { TbLoader } from "react-icons/tb";
+import { TbMicrophoneFilled, TbLoader } from "react-icons/tb";
 // Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -35,7 +33,7 @@ export default function Board() {
       const response = await request.json();
 
       if (request.status === 200) {
-        setBoardInfo(response);
+        setBoardInfo(response.results);
       } else {
         console.log(response);
       }

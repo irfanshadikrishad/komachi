@@ -4,8 +4,7 @@ import Logo from "@/components/Logo";
 import styles from "@/styles/footer.module.css";
 import { usePathname } from "next/navigation";
 // Icons
-import { FaGithub } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa";
+import { FaGithub, FaYoutube } from "react-icons/fa";
 import { IoGlobeSharp } from "react-icons/io5";
 
 export default function Footer() {

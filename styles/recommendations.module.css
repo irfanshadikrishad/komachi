@@ -9,6 +9,21 @@
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
 }
+.recHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.downBtn {
+  border: none;
+  color: var(--color);
+  background-color: var(--secondary);
+  padding: 2px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 1024px) {
   .cards {
