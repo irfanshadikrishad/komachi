@@ -33,7 +33,7 @@ export default function Board() {
       const response = await request.json();
 
       if (request.status === 200) {
-        setBoardInfo(response);
+        setBoardInfo(response.results);
       } else {
         console.log(response);
       }
