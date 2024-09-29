@@ -21,6 +21,7 @@ import {
 } from "@vidstack/react/player/layouts/default";
 import "@vidstack/react/player/styles/default/theme.css";
 import "@vidstack/react/player/styles/default/layouts/video.css";
+import Link from "next/link";
 
 export default function Player({
   streamLink,
@@ -168,8 +169,25 @@ export default function Player({
           streamLink={streamLink}
         />
       </section>
-      <Disqus url={streamLink} currentEpisode={currentEpisode} />
-      <Info animeInfo={animeInfo} />
+      <section className={styles.playerTrajectory}>
+        <div>
+          <Disqus url={streamLink} currentEpisode={currentEpisode} />
+          <Info animeInfo={animeInfo} />
+        </div>
+        <div className={styles.thanks_Main}>
+          <p>
+            Thanks for watching. Consider subscribing to my{" "}
+            <Link
+              href="https://www.youtube.com/@irfanshadikrishad"
+              target="_blank"
+              className={styles.yt}
+            >
+              youtube
+            </Link>{" "}
+            channel.
+          </p>
+        </div>
+      </section>
       <Recommendations
         recommendations={
           animeInfo?.recommendations ? animeInfo?.recommendations : []

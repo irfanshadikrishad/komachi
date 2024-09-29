@@ -319,6 +319,22 @@
   margin-top: 5px;
   font-size: 0.9rem;
 }
+.thanks_Main {
+  background-color: var(--secondary);
+  border-radius: 4px;
+  margin-top: 5px;
+  background: url(/gojo.png) no-repeat bottom right var(--secondary);
+}
+.thanks_Main > p {
+  padding: 5px;
+  text-align: center;
+}
+.yt {
+  color: var(--primary);
+  text-decoration: underline; /* Fallback */
+  text-decoration: underline wavy var(--primary);
+  text-decoration-skip-ink: none;
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
@@ -355,6 +371,12 @@
   }
   .playerTrajectory {
     grid-template-columns: 1fr;
+  }
+  .thanks_Main {
+    min-height: 200px;
+  }
+  .thanks_Main > p {
+    text-align: left;
   }
 }
 @media screen and (max-width: 768px) {
