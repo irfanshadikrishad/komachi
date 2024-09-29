@@ -223,6 +223,7 @@ export default function Episodes({
           : Array.from({ length: 24 }).map((_, idx) => {
               return (
                 <Skeleton
+                  key={idx}
                   baseColor="var(--background)"
                   highlightColor="var(--secondary)"
                   height={25}

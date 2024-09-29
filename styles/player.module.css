@@ -31,7 +31,7 @@
 }
 .episodes_Wrapper {
   background-color: var(--secondary);
-  padding: 0 5px;
+  padding: 0 5px 5px 5px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -41,15 +41,6 @@
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 5px;
-}
-.streamingV2Buttons {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 5px;
-  overflow-y: scroll;
-  align-items: start;
-  max-height: 560px;
-  margin-bottom: 5px;
 }
 .streamingV2Button {
   border: none;
@@ -320,6 +311,14 @@
 .btn:hover {
   background-color: #03040f82;
 }
+.nae {
+  color: var(--color-fade);
+  background-color: var(--background);
+  border-radius: 4px;
+  padding: 5px 5px;
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
@@ -327,6 +326,9 @@
   }
 }
 @media screen and (max-width: 1024px) {
+  .external_sources {
+    grid-template-columns: 4fr 6fr;
+  }
   .range_Main {
     flex-direction: column;
     gap: 5px;
@@ -339,6 +341,9 @@
   }
 }
 @media screen and (max-width: 960px) {
+  .btns {
+    grid-template-columns: repeat(13, 1fr);
+  }
   .range_Main {
     flex-direction: row;
   }
@@ -351,22 +356,29 @@
   .playerTrajectory {
     grid-template-columns: 1fr;
   }
-  .streamingV2Buttons {
-    max-height: 285px;
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 @media screen and (max-width: 768px) {
-  .streamingV2Buttons {
-    grid-template-columns: repeat(3, 1fr);
+  .external_sources {
+    grid-template-columns: 4fr 7fr;
+  }
+  .btns {
+    grid-template-columns: repeat(10, 1fr);
   }
   .range_Main {
     flex-wrap: wrap;
     gap: 5px;
   }
 }
-@media screen and (max-width: 600px) {
-  .streamingV2Buttons {
-    grid-template-columns: repeat(2, 1fr);
+@media screen and (max-width: 650px) {
+  .external_sources {
+    grid-template-columns: 1fr;
+  }
+  .btns {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+@media screen and (max-width: 500px) {
+  .btns {
+    grid-template-columns: repeat(6, 1fr);
   }
 }

@@ -125,6 +125,14 @@ export default function Player({
               </div>
             </div>
           </div>
+          {nextAiringEpisode && currentEpisode && (
+            <div className={styles.nae}>
+              {`🚀 ${convertTimestampToReadable(
+                nextAiringEpisode?.airingTime,
+                nextAiringEpisode?.episode
+              )}`}
+            </div>
+          )}
         </section>
         <Episodes
           unicornEpisodes={unicornEpisodes}
