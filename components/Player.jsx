@@ -9,7 +9,7 @@ import {
 import Episodes from "@/components/Episodes";
 import Automatics from "@/components/Automatics";
 // ICONS
-import { FaRegClosedCaptioning } from "react-icons/fa6";
+import { FaClosedCaptioning } from "react-icons/fa6";
 import { IoMic } from "react-icons/io5";
 // VIDSTACK
 import { MediaPlayer, MediaProvider } from "@vidstack/react";
@@ -93,48 +93,36 @@ export default function Player({
           </div>
           <Automatics />
           <div className={styles.external_sources}>
-            <div className={styles.external_sources_1}>
-              <p>Source Types</p>
-              <section className={styles.source_btns}>
-                <button
-                  onClick={() => {
-                    setIsSub(true);
-                    setUnicornEpisodes(episodes);
-                  }}
-                  style={{
-                    backgroundColor: isSub
-                      ? "var(--primary)"
-                      : "var(--secondary)",
-                    color: isSub ? "var(--background)" : "var(--color)",
-                  }}
-                >
-                  <FaRegClosedCaptioning /> sub ({episodes.length})
-                </button>
-                {dubEpisodes && dubEpisodes.length > 0 && (
-                  <button
-                    onClick={() => {
-                      setIsSub(false);
-                      setUnicornEpisodes(dubEpisodes);
-                    }}
-                    style={{
-                      backgroundColor: !isSub
-                        ? "var(--primary)"
-                        : "var(--secondary)",
-                      color: !isSub ? "var(--background)" : "var(--color)",
-                    }}
-                  >
-                    <IoMic /> dub ({dubEpisodes.length})
-                  </button>
-                )}
-              </section>
-              {nextAiringEpisode && currentEpisode && (
-                <p className={styles.nextAiringEpisode}>
-                  {convertTimestampToReadable(
-                    nextAiringEpisode?.airingTime,
-                    nextAiringEpisode?.episode
-                  )}
+            <div className={styles.es1}>
+              <p>
+                You are watching Episode
+                {` ${episodeIdToEpisodeNumber(currentEpisode)}`}
+              </p>
+              <p>
+                If current server doesn't work please try other servers beside.
+              </p>
+            </div>
+            <div className={styles.es2}>
+              <div>
+                <p>
+                  <FaClosedCaptioning /> SUB
                 </p>
-              )}
+                <div>
+                  <button style={{ color: isSub ? "var(--primary)" : "" }}>
+                    Komachi 1
+                  </button>
+                </div>
+              </div>
+              <div>
+                <p>
+                  <IoMic /> DUB
+                </p>
+                <div>
+                  <button style={{ color: !isSub ? "var(--primary)" : "" }}>
+                    Komachi 1
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </section>

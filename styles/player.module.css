@@ -94,25 +94,50 @@
 }
 .external_sources {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 5px;
-  border-radius: 7px;
-  margin-bottom: 5px;
-  border: 2px dashed var(--background);
+  grid-template-columns: 3fr 7fr;
   gap: 5px;
-  align-items: center;
 }
-.external_sources_1 {
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.es1 {
+  padding: 20px 6px;
+  border-radius: 4px;
+  color: var(--color-fade);
+  background-color: var(--background);
+  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 5px;
+  line-height: 17px;
+  font-size: 0.9rem;
+}
+.es2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 5px;
+  font-size: 0.8rem;
+}
+.es2 > div {
+  display: grid;
+  grid-template-columns: 1fr 9fr;
+  gap: 10px;
+}
+.es2 > div > p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.es2 > div > p > svg {
+  display: flex;
+  font-size: 0.8rem;
+}
+.es2 > div > div > button {
+  border: none;
+  padding: 5px 10px;
+  color: var(--color);
   background-color: var(--background);
   border-radius: 4px;
-  padding: 10px 5px;
+  cursor: pointer;
 }
 .nextAiringEpisode {
   font-size: 0.9rem;
@@ -277,6 +302,24 @@
   cursor: pointer;
   padding: 5px;
 }
+.btns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  max-height: 570px;
+  overflow-y: scroll;
+}
+.btn {
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  padding: 6px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #03040f82;
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
@@ -314,10 +357,6 @@
   }
 }
 @media screen and (max-width: 768px) {
-  .external_sources {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
   .streamingV2Buttons {
     grid-template-columns: repeat(3, 1fr);
   }
