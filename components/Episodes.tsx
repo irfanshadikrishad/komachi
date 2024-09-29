@@ -178,27 +178,57 @@ export default function Episodes({
         </div>
       </section>
       <div className={styles.btns}>
-        {goodEpisodes.length > 0 &&
-          goodEpisodes[selectedEpisodeRange].map(
-            ({ id, number }: { id: string; number: number }, idx: number) => {
+        {filtered.length > 0
+          ? filtered.map(
+              ({ id, number }: { id: string; number: number }, idx: number) => {
+                return (
+                  <button
+                    key={idx}
+                    className={styles.btn}
+                    style={{
+                      backgroundColor:
+                        id === currentEpisode ? "var(--primary)" : "",
+                      color: id === currentEpisode ? "var(--background)" : "",
+                    }}
+                    onClick={() => {
+                      getStreamLink(streamNextEpisode(String(currentEpisode)));
+                    }}
+                  >
+                    {number}
+                  </button>
+                );
+              }
+            )
+          : goodEpisodes.length > 0
+          ? goodEpisodes[selectedEpisodeRange].map(
+              ({ id, number }: { id: string; number: number }, idx: number) => {
+                return (
+                  <button
+                    key={idx}
+                    className={styles.btn}
+                    style={{
+                      backgroundColor:
+                        id === currentEpisode ? "var(--primary)" : "",
+                      color: id === currentEpisode ? "var(--background)" : "",
+                    }}
+                    onClick={() => {
+                      getStreamLink(streamNextEpisode(String(currentEpisode)));
+                    }}
+                  >
+                    {number}
+                  </button>
+                );
+              }
+            )
+          : Array.from({ length: 24 }).map((_, idx) => {
               return (
-                <button
-                  key={idx}
-                  className={styles.btn}
-                  style={{
-                    backgroundColor:
-                      id === currentEpisode ? "var(--primary)" : "",
-                    color: id === currentEpisode ? "var(--background)" : "",
-                  }}
-                  onClick={() => {
-                    getStreamLink(streamNextEpisode(String(currentEpisode)));
-                  }}
-                >
-                  {number}
-                </button>
+                <Skeleton
+                  baseColor="var(--background)"
+                  highlightColor="var(--secondary)"
+                  height={25}
+                />
               );
-            }
-          )}
+            })}
       </div>
     </div>
   );
