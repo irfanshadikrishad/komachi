@@ -110,15 +110,17 @@ export default function Episodes({
                 setIsRangeOpen(!isRangeOpen);
               }}
             >
-              {unicornEpisodes?.length > 0 ? (
-                `${start}-${end}`
-              ) : (
-                <Skeleton
-                  width={35}
-                  baseColor="var(--secondary)"
-                  highlightColor="var(--background)"
-                />
-              )}
+              <span className="one_line">
+                {unicornEpisodes?.length > 0 ? (
+                  `${start}-${end}`
+                ) : (
+                  <Skeleton
+                    width={35}
+                    baseColor="var(--secondary)"
+                    highlightColor="var(--background)"
+                  />
+                )}
+              </span>
               <IoChevronDownOutline />
             </div>
             {isRangeOpen && (

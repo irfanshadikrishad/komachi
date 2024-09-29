@@ -15,7 +15,7 @@ export default function Streaming() {
   const [animeInfo, setAnimeInfo] = useState<AnimeInfo>();
   const [episodes, setEpisodes] = useState<any>([]);
   const [streamLink, setStreamLink] = useState("");
-  const [dubLink, setDubLink] = useState("");
+  const [dubLink, setDubLink] = useState<string | null>(null);
   const [currentEpisode, setCurrentEpisode] = useState<string>();
   const [episodeDownloadLink, setEpisodeDownloadLink] = useState("");
   const [sources, setSources] = useState([]);
@@ -35,7 +35,6 @@ export default function Streaming() {
           }),
         });
         const response = await request.json();
-        console.log(response);
 
         if (request.status === 200) {
           setStreamLink(
@@ -45,6 +44,8 @@ export default function Streaming() {
             setDubLink(
               String(extractDefaultSource(response?.dubLink?.sources))
             );
+          } else {
+            setDubLink(null);
           }
           setCurrentEpisode(subEpisodeId);
           setEpisodeDownloadLink(response.download);
@@ -142,11 +143,7 @@ export default function Streaming() {
               episodes={episodes}
               getStreamLink={getStreamLink}
               setStreamLink={setStreamLink}
-              sources={sources}
-              animeId={animeId}
-              dubEpisodes={dubEpisodes}
               nextAiringEpisode={nextAiringTime}
-              malId={animeInfo?.malId}
               animeInfo={animeInfo}
             />
           </section>
