@@ -96,3 +96,8 @@
 .tandc_p > a {
   color: var(--primary);
 }
+.tandc_Main {
+  background-color: var(--secondary);
+  padding: 15px;
+  border-radius: 8px;
+}

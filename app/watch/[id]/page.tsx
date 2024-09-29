@@ -15,6 +15,7 @@ export default function Streaming() {
   const [animeInfo, setAnimeInfo] = useState<AnimeInfo>();
   const [episodes, setEpisodes] = useState<any>([]);
   const [streamLink, setStreamLink] = useState("");
+  const [dubLink, setDubLink] = useState<string | null>(null);
   const [currentEpisode, setCurrentEpisode] = useState<string>();
   const [episodeDownloadLink, setEpisodeDownloadLink] = useState("");
   const [sources, setSources] = useState([]);
@@ -22,26 +23,38 @@ export default function Streaming() {
   const [nextAiringTime, setNextAiringTime] = useState({});
   const [notFound, setNotFound] = useState(false);
 
-  const getStreamLink = async (episodeId: string) => {
+  const getStreamLink = async (subEpisodeId: string, dubEpisodeId?: string) => {
     try {
-      if (episodeId && episodeId !== "undefined") {
+      if (subEpisodeId && subEpisodeId !== "undefined") {
         const request = await fetch(`/api/stream`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ episodeId }),
+          body: JSON.stringify({
+            subEpisodeId,
+            dubEpisodeId: dubEpisodeId ? dubEpisodeId : null,
+          }),
         });
         const response = await request.json();
 
         if (request.status === 200) {
-          setStreamLink(String(extractDefaultSource(response?.sources)));
-          setCurrentEpisode(episodeId);
+          setStreamLink(
+            String(extractDefaultSource(response?.subLink?.sources))
+          );
+          if (response?.dubLink !== null) {
+            setDubLink(
+              String(extractDefaultSource(response?.dubLink?.sources))
+            );
+          } else {
+            setDubLink(null);
+          }
+          setCurrentEpisode(subEpisodeId);
           setEpisodeDownloadLink(response.download);
         } else {
           console.log(response);
         }
       }
     } catch (error) {
-      console.error("Error fetching stream link:", error, episodeId);
+      console.error("Error fetching stream link:", error, subEpisodeId);
     }
   };
 
@@ -68,7 +81,10 @@ export default function Streaming() {
           getStreamLink(
             eps
               ? response?.sub_episodes[Number(eps) - 1]?.id
-              : response?.sub_episodes[0]?.id
+              : response?.sub_episodes[0]?.id,
+            eps
+              ? response?.dub_episodes[Number(eps) - 1]?.id
+              : response?.dub_episodes[0]?.id
           );
         } else if (response?.dub_episodes[0]?.id) {
           getStreamLink(
@@ -121,16 +137,13 @@ export default function Streaming() {
           <section className={styles.watchContainer}>
             <Player
               streamLink={streamLink}
+              dubLink={dubLink}
               currentEpisode={currentEpisode}
               episodeDownloadLink={episodeDownloadLink}
               episodes={episodes}
               getStreamLink={getStreamLink}
               setStreamLink={setStreamLink}
-              sources={sources}
-              animeId={animeId}
-              dubEpisodes={dubEpisodes}
               nextAiringEpisode={nextAiringTime}
-              malId={animeInfo?.malId}
               animeInfo={animeInfo}
             />
           </section>

@@ -31,7 +31,7 @@
 }
 .episodes_Wrapper {
   background-color: var(--secondary);
-  padding: 0 5px;
+  padding: 0 5px 5px 5px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -41,15 +41,6 @@
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 5px;
-}
-.streamingV2Buttons {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 5px;
-  overflow-y: scroll;
-  align-items: start;
-  max-height: 560px;
-  margin-bottom: 5px;
 }
 .streamingV2Button {
   border: none;
@@ -94,25 +85,50 @@
 }
 .external_sources {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 5px;
-  border-radius: 7px;
-  margin-bottom: 5px;
-  border: 2px dashed var(--background);
+  grid-template-columns: 3fr 7fr;
   gap: 5px;
-  align-items: center;
 }
-.external_sources_1 {
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.es1 {
+  padding: 20px 6px;
+  border-radius: 4px;
+  color: var(--color-fade);
+  background-color: var(--background);
+  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 5px;
+  line-height: 17px;
+  font-size: 0.9rem;
+}
+.es2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 5px;
+  font-size: 0.8rem;
+}
+.es2 > div {
+  display: grid;
+  grid-template-columns: 1fr 9fr;
+  gap: 10px;
+}
+.es2 > div > p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.es2 > div > p > svg {
+  display: flex;
+  font-size: 0.8rem;
+}
+.es2 > div > div > button {
+  border: none;
+  padding: 5px 10px;
+  color: var(--color);
   background-color: var(--background);
   border-radius: 4px;
-  padding: 10px 5px;
+  cursor: pointer;
 }
 .nextAiringEpisode {
   font-size: 0.9rem;
@@ -277,6 +293,48 @@
   cursor: pointer;
   padding: 5px;
 }
+.btns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  max-height: 570px;
+  overflow-y: scroll;
+}
+.btn {
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  padding: 6px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #03040f82;
+}
+.nae {
+  color: var(--color-fade);
+  background-color: var(--background);
+  border-radius: 4px;
+  padding: 5px 5px;
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+.thanks_Main {
+  background-color: var(--secondary);
+  border-radius: 4px;
+  margin-top: 5px;
+  background: url(/gojo.png) no-repeat bottom right var(--secondary);
+}
+.thanks_Main > p {
+  padding: 5px;
+  text-align: center;
+}
+.yt {
+  color: var(--primary);
+  text-decoration: underline; /* Fallback */
+  text-decoration: underline wavy var(--primary);
+  text-decoration-skip-ink: none;
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
@@ -284,6 +342,9 @@
   }
 }
 @media screen and (max-width: 1024px) {
+  .external_sources {
+    grid-template-columns: 4fr 6fr;
+  }
   .range_Main {
     flex-direction: column;
     gap: 5px;
@@ -296,6 +357,9 @@
   }
 }
 @media screen and (max-width: 960px) {
+  .btns {
+    grid-template-columns: repeat(13, 1fr);
+  }
   .range_Main {
     flex-direction: row;
   }
@@ -308,26 +372,35 @@
   .playerTrajectory {
     grid-template-columns: 1fr;
   }
-  .streamingV2Buttons {
-    max-height: 285px;
-    grid-template-columns: repeat(4, 1fr);
+  .thanks_Main {
+    min-height: 200px;
+  }
+  .thanks_Main > p {
+    text-align: left;
   }
 }
 @media screen and (max-width: 768px) {
   .external_sources {
-    display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 4fr 7fr;
   }
-  .streamingV2Buttons {
-    grid-template-columns: repeat(3, 1fr);
+  .btns {
+    grid-template-columns: repeat(10, 1fr);
   }
   .range_Main {
     flex-wrap: wrap;
     gap: 5px;
   }
 }
-@media screen and (max-width: 600px) {
-  .streamingV2Buttons {
-    grid-template-columns: repeat(2, 1fr);
+@media screen and (max-width: 650px) {
+  .external_sources {
+    grid-template-columns: 1fr;
+  }
+  .btns {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+@media screen and (max-width: 500px) {
+  .btns {
+    grid-template-columns: repeat(6, 1fr);
   }
 }

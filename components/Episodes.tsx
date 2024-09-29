@@ -7,7 +7,11 @@ import {
   IoChevronForward,
   IoChevronBack,
 } from "react-icons/io5";
-import { streamNextEpisode, streamPreviousEpisode } from "@/utils/helpers";
+import {
+  streamNextEpisode,
+  streamPreviousEpisode,
+  subToDub,
+} from "@/utils/helpers";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -106,15 +110,17 @@ export default function Episodes({
                 setIsRangeOpen(!isRangeOpen);
               }}
             >
-              {unicornEpisodes?.length > 0 ? (
-                `${start}-${end}`
-              ) : (
-                <Skeleton
-                  width={35}
-                  baseColor="var(--secondary)"
-                  highlightColor="var(--background)"
-                />
-              )}
+              <span className="one_line">
+                {unicornEpisodes?.length > 0 ? (
+                  `${start}-${end}`
+                ) : (
+                  <Skeleton
+                    width={35}
+                    baseColor="var(--secondary)"
+                    highlightColor="var(--background)"
+                  />
+                )}
+              </span>
               <IoChevronDownOutline />
             </div>
             {isRangeOpen && (
@@ -177,88 +183,56 @@ export default function Episodes({
           </button>
         </div>
       </section>
-      <div className={styles.streamingV2Buttons}>
+      <div className={styles.btns}>
         {filtered.length > 0
-          ? filtered?.map(
-              (
-                {
-                  id,
-                  title,
-                  number,
-                }: {
-                  id: string;
-                  title: string;
-                  number: number;
-                },
-                index: number
-              ) => {
+          ? filtered.map(
+              ({ id, number }: { id: string; number: number }, idx: number) => {
                 return (
                   <button
-                    onClick={() => {
-                      getStreamLink(id);
-                    }}
-                    key={index}
-                    className={styles.streamingV2Button}
+                    key={idx}
+                    className={styles.btn}
                     style={{
                       backgroundColor:
-                        currentEpisode === id
-                          ? "var(--primary)"
-                          : "var(--background)",
-                      color:
-                        currentEpisode === id
-                          ? "var(--background)"
-                          : "var(--color)",
+                        id === currentEpisode ? "var(--primary)" : "",
+                      color: id === currentEpisode ? "var(--background)" : "",
+                    }}
+                    onClick={() => {
+                      getStreamLink(id, subToDub(id));
                     }}
                   >
-                    {title ? title : `Episode ${number}`}
+                    {number}
                   </button>
                 );
               }
             )
           : goodEpisodes.length > 0
-          ? goodEpisodes[selectedEpisodeRange]?.map(
-              (
-                {
-                  id,
-                  title,
-                  number,
-                }: {
-                  id: string;
-                  title: string;
-                  number: number;
-                },
-                index: number
-              ) => {
+          ? goodEpisodes[selectedEpisodeRange].map(
+              ({ id, number }: { id: string; number: number }, idx: number) => {
                 return (
                   <button
-                    onClick={() => {
-                      getStreamLink(id);
-                    }}
-                    key={index}
-                    className={styles.streamingV2Button}
+                    key={idx}
+                    className={styles.btn}
                     style={{
                       backgroundColor:
-                        currentEpisode === id && streamLink
-                          ? "var(--primary)"
-                          : "var(--background)",
-                      color:
-                        currentEpisode === id && streamLink
-                          ? "var(--background)"
-                          : "var(--color)",
+                        id === currentEpisode ? "var(--primary)" : "",
+                      color: id === currentEpisode ? "var(--background)" : "",
+                    }}
+                    onClick={() => {
+                      getStreamLink(id, subToDub(id));
                     }}
                   >
-                    {title ? title : `Episode ${number}`}
+                    {number}
                   </button>
                 );
               }
             )
-          : Array.from({ length: 14 }).map((_, index) => {
+          : Array.from({ length: 24 }).map((_, idx) => {
               return (
                 <Skeleton
-                  key={index}
-                  height={35}
+                  key={idx}
                   baseColor="var(--background)"
                   highlightColor="var(--secondary)"
+                  height={25}
                 />
               );
             })}
