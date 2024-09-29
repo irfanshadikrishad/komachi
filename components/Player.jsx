@@ -24,6 +24,7 @@ import Recommendations from "./Recommendations";
 
 export default function Player({
   streamLink,
+  dubLink,
   currentEpisode,
   episodeDownloadLink,
   episodes,
@@ -108,21 +109,35 @@ export default function Player({
                   <FaClosedCaptioning /> SUB
                 </p>
                 <div>
-                  <button style={{ color: isSub ? "var(--primary)" : "" }}>
+                  <button
+                    style={{ color: isSub ? "var(--primary)" : "" }}
+                    onClick={() => {
+                      setStreamLink(streamLink);
+                      setIsSub(true);
+                    }}
+                  >
                     Komachi 1
                   </button>
                 </div>
               </div>
-              <div>
-                <p>
-                  <IoMic /> DUB
-                </p>
+              {dubLink && (
                 <div>
-                  <button style={{ color: !isSub ? "var(--primary)" : "" }}>
-                    Komachi 1
-                  </button>
+                  <p>
+                    <IoMic /> DUB
+                  </p>
+                  <div>
+                    <button
+                      style={{ color: !isSub ? "var(--primary)" : "" }}
+                      onClick={() => {
+                        setStreamLink(dubLink);
+                        setIsSub(false);
+                      }}
+                    >
+                      Komachi 1
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
           {nextAiringEpisode && currentEpisode && (

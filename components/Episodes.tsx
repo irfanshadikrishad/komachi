@@ -7,7 +7,11 @@ import {
   IoChevronForward,
   IoChevronBack,
 } from "react-icons/io5";
-import { streamNextEpisode, streamPreviousEpisode } from "@/utils/helpers";
+import {
+  streamNextEpisode,
+  streamPreviousEpisode,
+  subToDub,
+} from "@/utils/helpers";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -191,7 +195,7 @@ export default function Episodes({
                       color: id === currentEpisode ? "var(--background)" : "",
                     }}
                     onClick={() => {
-                      getStreamLink(streamNextEpisode(String(currentEpisode)));
+                      getStreamLink(id, subToDub(id));
                     }}
                   >
                     {number}
@@ -212,7 +216,7 @@ export default function Episodes({
                       color: id === currentEpisode ? "var(--background)" : "",
                     }}
                     onClick={() => {
-                      getStreamLink(streamNextEpisode(String(currentEpisode)));
+                      getStreamLink(id, subToDub(id));
                     }}
                   >
                     {number}

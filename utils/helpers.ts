@@ -34,7 +34,7 @@ function subToDub(subId: string) {
     return subId;
   } else {
     const dubId = subId.split("-episode-").slice(0, -1);
-    return `${String(dubId)}-dub`;
+    return `${String(dubId)}-dub-episode-${episodeIdToEpisodeNumber(subId)}`;
   }
 }
 
