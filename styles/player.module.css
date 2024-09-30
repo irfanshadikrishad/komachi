@@ -359,6 +359,7 @@
 @media screen and (max-width: 960px) {
   .btns {
     grid-template-columns: repeat(13, 1fr);
+    max-height: 245px;
   }
   .range_Main {
     flex-direction: row;
@@ -397,6 +398,7 @@
   }
   .btns {
     grid-template-columns: repeat(8, 1fr);
+    max-height: 150px;
   }
 }
 @media screen and (max-width: 500px) {
