@@ -1,0 +1,49 @@
+.header {
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+  gap: 5px;
+}
+.day {
+  height: 35px;
+  border: 2px solid var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--secondary);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.schedules {
+  margin-top: 5px;
+}
+.schedule {
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 4px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.active {
+  color: var(--primary);
+  background-color: var(--background);
+}
+.episode_link {
+  text-decoration: none;
+  color: var(--color);
+  background-color: var(--background);
+  padding: 1px 5px;
+  border-radius: 4px;
+  width: 130px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
