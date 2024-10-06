@@ -48,7 +48,7 @@ export default function Schedule() {
       }),
     });
     const response = await request.json();
-    console.log(response);
+    // console.log(response);
 
     if (request.status === 200) {
       setPageInfo(response.pageInfo);
@@ -235,7 +235,7 @@ export default function Schedule() {
           })
         ) : (
           <div className={styles.schedule}>
-            <p>No schedule for today.</p>
+            <p>No schedule for {today}.</p>
           </div>
         )}
       </div>

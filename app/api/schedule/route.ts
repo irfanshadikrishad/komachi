@@ -21,7 +21,6 @@ export async function POST(request: Request) {
       weekEnd,
     }: RequestBody = await request.json();
 
-    // Validate inputs
     if (!page || !perPage || !weekStart || !weekEnd) {
       return NextResponse.json(
         { error: "Invalid input parameters" },
@@ -83,7 +82,7 @@ export async function POST(request: Request) {
       throw new Error("No schedules found in response.");
     }
 
-    await database(); // Ensure DB connection is initialized
+    await database();
 
     // Extract media IDs from the fetched schedules
     const mediaIds = data.data.Page.airingSchedules.map(
@@ -116,7 +115,11 @@ export async function POST(request: Request) {
     const scheduleByDay = groupScheduleByDay(updatedSchedules);
 
     return NextResponse.json(
-      { schedule: scheduleByDay, pageInfo: data.data.Page.pageInfo },
+      {
+        schedule: scheduleByDay,
+        pageInfo: data.data.Page.pageInfo,
+        raw: data.data.Page,
+      },
       { status: 200 }
     );
   } catch (error: any) {
