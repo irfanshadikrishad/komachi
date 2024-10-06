@@ -1,7 +1,12 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getWeekEnd, getWeekStart } from "@/utils/helpers";
+import {
+  getTimeFromUnixTimestamp,
+  getTitle,
+  getWeekEnd,
+  getWeekStart,
+} from "@/utils/helpers";
 import styles from "@/styles/schedule.module.css";
 import { FaPlay } from "react-icons/fa6";
 
@@ -206,17 +211,27 @@ export default function Schedule() {
       <div className={styles.schedules}>
         {showSchedule?.length > 0 ? (
           showSchedule?.map((show, index) => {
-            return (
-              <div key={index} className={styles.schedule}>
-                <p>{show?.media?.title?.romaji}</p>
-                <Link
-                  href={`/watch/${show?.media?.id}`}
-                  className={styles.episode_link}
-                >
-                  <FaPlay /> Episode {show?.episode}
-                </Link>
-              </div>
-            );
+            // To filter out animes not in database
+            if (show?.media?.anilistId) {
+              return (
+                <div key={index} className={styles.schedule}>
+                  <div>
+                    <p className="one_line">
+                      <span className={styles.time}>
+                        {String(getTimeFromUnixTimestamp(show?.airingAt))}
+                      </span>
+                      {`${String(getTitle(show?.media?.title))}`}
+                    </p>
+                  </div>
+                  <Link
+                    href={`/watch/${show?.media?.anilistId}`}
+                    className={styles.episode_link}
+                  >
+                    <FaPlay /> Episode {show?.episode}
+                  </Link>
+                </div>
+              );
+            }
           })
         ) : (
           <div className={styles.schedule}>

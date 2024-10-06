@@ -297,14 +297,15 @@ function extractDefaultSource(
   }
 }
 
-function getWeekStart() {
+function getWeekStart(): number {
   const today = new Date();
-  return Math.floor(startOfWeek(today).getTime() / 1000);
+  return Math.floor(startOfWeek(today, { weekStartsOn: 1 }).getTime() / 1000);
 }
 
-function getWeekEnd() {
+function getWeekEnd(): number {
   const today = new Date();
-  return Math.floor(addWeeks(startOfWeek(today), 1).getTime() / 1000);
+  const startOfNextWeek = addWeeks(startOfWeek(today, { weekStartsOn: 1 }), 1);
+  return Math.floor(startOfNextWeek.getTime() / 1000) - 1;
 }
 
 interface AnimeSchedule {
@@ -343,6 +344,21 @@ const groupScheduleByDay = (schedules: AnimeSchedule[]): ScheduleByDay => {
   return grouped;
 };
 
+function getTimeFromUnixTimestamp(unix_Timestamp: number): String {
+  if (unix_Timestamp) {
+    const date = new Date(unix_Timestamp * 1000);
+    const time = date.toLocaleTimeString("en-US", {
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    return String(time);
+  } else {
+    return "??:??:?? ??";
+  }
+}
+
 export {
   insert_Into_Array,
   slisor,
@@ -360,5 +376,6 @@ export {
   getWeekStart,
   getWeekEnd,
   groupScheduleByDay,
+  getTimeFromUnixTimestamp,
 };
 export type { AnimeInfo };

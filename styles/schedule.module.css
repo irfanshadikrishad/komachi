@@ -28,9 +28,9 @@
   background-color: var(--secondary);
   border-radius: 4px;
   margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 7fr 1fr;
+  gap: 5px;
 }
 .active {
   color: var(--primary);
@@ -46,4 +46,25 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  height: 24px;
+  cursor: pointer;
+}
+.episode_link:hover {
+  color: var(--primary);
+  transition: all 0.5s fade-in;
+}
+.time {
+  color: var(--primary);
+  margin-right: 15px;
+}
+
+@media screen and (max-width: 650px) {
+  .days {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media screen and (max-width: 425px) {
+  .days {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
