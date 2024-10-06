@@ -42,7 +42,7 @@ export default function Player({
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedType = localStorage.getItem("type");
-      setIsSub(storedType ? JSON.parse(storedType) : true);
+      setIsSub(storedType ? storedType === "Sub" : true);
     }
   }, [dubLink, streamLink]);
 

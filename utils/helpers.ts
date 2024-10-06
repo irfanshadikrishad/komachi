@@ -1,3 +1,5 @@
+import { startOfWeek, addWeeks, format, addDays } from "date-fns";
+
 /**
  * Converts timestamp like 1120415 to readable string
  * @param airingTime - in timistamp format as int number
@@ -295,6 +297,68 @@ function extractDefaultSource(
   }
 }
 
+function getWeekStart(): number {
+  const today = new Date();
+  return Math.floor(startOfWeek(today, { weekStartsOn: 1 }).getTime() / 1000);
+}
+
+function getWeekEnd(): number {
+  const today = new Date();
+  const startOfNextWeek = addWeeks(startOfWeek(today, { weekStartsOn: 1 }), 1);
+  return Math.floor(startOfNextWeek.getTime() / 1000) - 1;
+}
+
+interface AnimeSchedule {
+  id: number;
+  airingAt: number;
+  episode: number;
+  media: {
+    id: number;
+    title: {
+      romaji: string;
+    };
+  };
+}
+
+interface ScheduleByDay {
+  [key: string]: AnimeSchedule[];
+}
+const groupScheduleByDay = (schedules: AnimeSchedule[]): ScheduleByDay => {
+  const DAYS_OF_WEEK = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const grouped: ScheduleByDay = {};
+  DAYS_OF_WEEK.forEach((day) => {
+    grouped[day] = [];
+  });
+  schedules.forEach((anime) => {
+    const day = format(new Date(anime.airingAt * 1000), "EEEE");
+    grouped[day].push(anime);
+  });
+  return grouped;
+};
+
+function getTimeFromUnixTimestamp(unix_Timestamp: number): String {
+  if (unix_Timestamp) {
+    const date = new Date(unix_Timestamp * 1000);
+    const time = date.toLocaleTimeString("en-US", {
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    return String(time);
+  } else {
+    return "??:??:?? ??";
+  }
+}
+
 export {
   insert_Into_Array,
   slisor,
@@ -309,5 +373,9 @@ export {
   streamNextEpisode,
   getTitle,
   extractDefaultSource,
+  getWeekStart,
+  getWeekEnd,
+  groupScheduleByDay,
+  getTimeFromUnixTimestamp,
 };
 export type { AnimeInfo };
