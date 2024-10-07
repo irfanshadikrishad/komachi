@@ -348,7 +348,6 @@ function getTimeFromUnixTimestamp(unix_Timestamp: number): String {
   if (unix_Timestamp) {
     const date = new Date(unix_Timestamp * 1000);
     const time = date.toLocaleTimeString("en-US", {
-      day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
