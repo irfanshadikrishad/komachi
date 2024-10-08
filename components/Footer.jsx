@@ -110,13 +110,6 @@ export default function Footer() {
             <Logo />
           </div>
           <div className={styles.moreLinks}>
-            <Link
-              href="/terms-and-conditions"
-              prefetch={true}
-              className={`${path === "/terms-and-conditions" ? "primary" : ""}`}
-            >
-              Terms & Conditions
-            </Link>
             <Link href="">FAQ</Link>
             <Link href="">Contact</Link>
             <Link href="">Request</Link>

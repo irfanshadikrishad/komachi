@@ -85,7 +85,7 @@ export default function Search() {
       const response = await request.json();
 
       if (request.status === 200) {
-        setTrending(response);
+        setTrending(response.results);
       } else {
         console.log(response);
       }
@@ -104,7 +104,7 @@ export default function Search() {
       const response = await request.json();
 
       if (request.status === 200) {
-        setPopular(response);
+        setPopular(response.results);
       } else {
         console.log(response);
       }
