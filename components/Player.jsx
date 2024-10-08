@@ -105,8 +105,14 @@ export default function Player({
           <div className={styles.external_sources}>
             <div className={styles.es1}>
               <p>
-                You are watching Episode
-                {` ${episodeIdToEpisodeNumber(currentEpisode)}`}
+                You are watching
+                <span className="primary">
+                  {` Episode ${
+                    currentEpisode
+                      ? episodeIdToEpisodeNumber(currentEpisode)
+                      : "?"
+                  }`}
+                </span>
               </p>
               <p>
                 If current server doesn't work please try other servers beside.

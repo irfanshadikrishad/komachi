@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "@/styles/player.module.css";
+import {
+  streamNextEpisode,
+  streamPreviousEpisode,
+  subToDub,
+} from "@/utils/helpers";
 // Icons
 import { LuSearch } from "react-icons/lu";
 import {
@@ -7,11 +12,7 @@ import {
   IoChevronForward,
   IoChevronBack,
 } from "react-icons/io5";
-import {
-  streamNextEpisode,
-  streamPreviousEpisode,
-  subToDub,
-} from "@/utils/helpers";
+// Skeleton
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -190,12 +191,9 @@ export default function Episodes({
                 return (
                   <button
                     key={idx}
-                    className={styles.btn}
-                    style={{
-                      backgroundColor:
-                        id === currentEpisode ? "var(--primary)" : "",
-                      color: id === currentEpisode ? "var(--background)" : "",
-                    }}
+                    className={`${styles.btn} ${
+                      currentEpisode === id ? styles.active_Episode : ""
+                    }`}
                     onClick={() => {
                       getStreamLink(id, subToDub(id));
                     }}
@@ -211,12 +209,9 @@ export default function Episodes({
                 return (
                   <button
                     key={idx}
-                    className={styles.btn}
-                    style={{
-                      backgroundColor:
-                        id === currentEpisode ? "var(--primary)" : "",
-                      color: id === currentEpisode ? "var(--background)" : "",
-                    }}
+                    className={`${styles.btn} ${
+                      currentEpisode === id ? styles.active_Episode : ""
+                    }`}
                     onClick={() => {
                       getStreamLink(id, subToDub(id));
                     }}
