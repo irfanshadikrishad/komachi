@@ -53,24 +53,25 @@ export async function POST(request: Request) {
         ? { $and: searchConditions }
         : searchConditions[0] || {};
 
-    // Calculate the number of documents to skip
     const skip = (page - 1) * perPage;
-
-    // Fetch results with pagination
     const results = await Anime.find(queryObject).skip(skip).limit(perPage);
-
-    // Get total count for pagination
     const totalCount = await Anime.countDocuments(queryObject);
 
-    return new Response(
-      JSON.stringify({
-        results,
-        totalCount,
-        totalPages: Math.ceil(totalCount / perPage),
-        currentPage: page,
-      }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
-    );
+    if (results.length === 0) {
+      return new Response(JSON.stringify({ message: "0 results found" }), {
+        status: 404,
+      });
+    } else {
+      return new Response(
+        JSON.stringify({
+          results,
+          totalCount,
+          totalPages: Math.ceil(totalCount / perPage),
+          currentPage: page,
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    }
   } catch (error) {
     return new Response(
       JSON.stringify({ message: (error as Error).message || error }),

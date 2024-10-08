@@ -335,6 +335,10 @@
   text-decoration: underline wavy var(--primary);
   text-decoration-skip-ink: none;
 }
+.active_Episode {
+  color: var(--background) !important;
+  background-color: var(--primary) !important;
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
