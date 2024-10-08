@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import styles from "@/styles/search.module.css";
 // Components
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -16,13 +15,18 @@ import Season from "@/components/filter/Season";
 import Year from "@/components/filter/Year";
 import Genre from "@/components/filter/Genre";
 import Input from "@/components/filter/Input";
+// Styles
+import styles from "@/styles/search.module.css";
+import cardio from "@/styles/cardio.module.css";
+// Skeleton
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Search() {
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(
-    searchParams.get("query") ? searchParams.get("query") : null
-  );
-  const [searched, setSearched] = useState<any>({});
+  const [query, setQuery] = useState<string | null>(searchParams.get("query"));
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [notFound, setNotFound] = useState<boolean>(false);
   const [results, setResults] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,6 +50,9 @@ export default function Search() {
   const [country, setCountry] = useState<string[]>([]);
 
   const getSearched = async (page?: number, perPage?: number) => {
+    setIsLoading(true);
+    setNotFound(false);
+    setResults([]);
     const request = await fetch(`/api/search`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -62,16 +69,15 @@ export default function Search() {
       }),
     });
     const response = await request.json();
+    setIsLoading(false);
 
     if (request.status === 200) {
-      setSearched(response);
       setResults(response.results);
       setCurrentPage(response.currentPage);
       setTotalPages(response.totalPages);
       setTotalCount(response.totalCount);
     } else {
-      setSearched([]);
-      console.log(response);
+      setNotFound(true);
     }
   };
 
@@ -132,7 +138,7 @@ export default function Search() {
     if (searchParams.get("query")) {
       getSearched();
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <>
@@ -228,7 +234,25 @@ export default function Search() {
           />
         </form>
 
-        {results.length > 0 ? (
+        {isLoading ? (
+          <section className={styles.loading_Main}>
+            <p className={styles.loading_title}>
+              Searching result {query ? `for '${query}'` : `...`}
+            </p>
+            <div className={cardio.cardsContainer}>
+              {Array.from({ length: 20 }).map((_, index) => {
+                return (
+                  <Skeleton
+                    key={index}
+                    height={273}
+                    baseColor="var(--secondary)"
+                    highlightColor="var(--background)"
+                  />
+                );
+              })}
+            </div>
+          </section>
+        ) : results.length > 0 ? (
           <SearchResults
             query={query}
             results={results}
@@ -237,11 +261,15 @@ export default function Search() {
             totalCount={totalCount}
             getSearched={getSearched}
           />
+        ) : notFound ? (
+          <p className={styles.loading_title}>
+            No search result {query && `for '${query}'`}
+          </p>
         ) : (
-          <section className={styles.billboard_Wrapper}>
+          <>
             <Trending trending={trending} />
             <Popular popular={popular} />
-          </section>
+          </>
         )}
       </section>
       <Footer />
