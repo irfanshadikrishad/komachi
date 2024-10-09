@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Logo from "@/components/Logo";
 import styles from "@/styles/navbar.module.css";
 import { useRouter } from "next/navigation";
@@ -9,16 +9,23 @@ import { RiUser6Line } from "react-icons/ri";
 
 export default function Navbar() {
   const router = useRouter();
-  const [query, setQuery] = useState(false);
+  const searchRef = useRef(null);
+  const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (query) {
+    if (query.trim()) {
       router.push(`/search?query=${query}`);
       setQuery("");
     }
   };
+
+  useEffect(() => {
+    if (searchOpen && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [searchOpen]);
 
   return (
     <nav className={`container ${styles.navbar}`}>
@@ -29,23 +36,21 @@ export default function Navbar() {
         <form onSubmit={handleSubmit} className={styles.query}>
           {searchOpen && (
             <input
-              onChange={(e) => {
-                setQuery(e.target.value);
-              }}
+              ref={searchRef}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               placeholder="Search..."
               type="text"
-              autoComplete="false"
+              autoComplete="off"
             />
           )}
-          <button
-            onClick={() => {
-              setSearchOpen(!searchOpen);
-            }}
-          >
-            {<FiSearch />}
+          <button type="button" onClick={() => setSearchOpen(!searchOpen)}>
+            <FiSearch />
           </button>
         </form>
-        <button disabled>{<RiUser6Line />}</button>
+        <button disabled>
+          <RiUser6Line />
+        </button>
       </section>
     </nav>
   );

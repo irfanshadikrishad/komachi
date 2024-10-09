@@ -40,7 +40,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {children}
-        <Analytics />
+        <Analytics mode="auto" />
       </body>
     </html>
   );
