@@ -70,7 +70,11 @@ export default function Streaming() {
       if (request.status === 200) {
         setNextAiringTime(response?.nextAiringEpisode);
         setAnimeInfo(response);
-        setEpisodes(response?.sub_episodes);
+        setEpisodes(
+          response?.sub_episodes.length > 0
+            ? response?.sub_episodes
+            : response?.dub_episodes
+        );
         setDubEpisodes(response?.dub_episodes);
         setCurrentEpisode(
           response?.sub_episodes[0]?.id

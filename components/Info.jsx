@@ -68,17 +68,19 @@ export default function Info({ animeInfo }) {
             </p>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Total Episodes :</span>
-              {animeInfo?.sub_episodes.length > 0 ? (
-                animeInfo?.sub_episodes.length > 0 ? (
-                  animeInfo?.sub_episodes.length
+              {animeInfo ? (
+                animeInfo.sub_episodes.length > 0 ? (
+                  animeInfo.sub_episodes.length
+                ) : animeInfo.dub_episodes.length > 0 ? (
+                  animeInfo.dub_episodes.length
                 ) : (
-                  animeInfo?.dub_episodes.length
+                  "?"
                 )
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
                   highlightColor="var(--secondary)"
-                  width={90}
+                  width={50}
                   height={16}
                 />
               )}

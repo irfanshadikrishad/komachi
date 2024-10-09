@@ -415,11 +415,6 @@ export default function Lists() {
                       dubCount={dub_episodes.length}
                       totalCount={totalEpisodes}
                       isAdult={isAdult}
-                      lastEpisode={
-                        sub_episodes.length > 0
-                          ? sub_episodes[sub_episodes.length - 1].number
-                          : dub_episodes[dub_episodes.length - 1].number
-                      }
                     />
                   );
                 }
