@@ -16,8 +16,8 @@
     "date-fns": "^4.1.0",
     "disqus-react": "^1.1.5",
     "eslint-config-next": "^14.2.15",
-    "hls.js": "^1.5.15",
-    "mongoose": "^8.7.0",
+    "hls.js": "^1.5.16",
+    "mongoose": "^8.7.1",
     "next": "^14.2.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -30,6 +30,6 @@
     "@types/node": "^22.7.5",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.3"
   }
 }
