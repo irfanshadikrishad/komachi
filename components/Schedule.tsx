@@ -8,7 +8,7 @@ import {
   getWeekStart,
 } from "@/utils/helpers";
 import styles from "@/styles/schedule.module.css";
-import { FaPlay } from "react-icons/fa6";
+import { FaPlay, FaAngleDown, FaAngleUp } from "react-icons/fa6";
 
 export default function Schedule() {
   const [schedule, setSchedule] = useState<{
@@ -32,6 +32,7 @@ export default function Schedule() {
   const [currentGMT, setCurrentGMT] = useState("");
   const [today, setToday] = useState("");
   const [showSchedule, setShowSchedule] = useState<any[]>([]);
+  const [itemsToShow, setItemsToShow] = useState(15);
 
   const getSchedule = async () => {
     const request = await fetch(`/api/schedule`, {
@@ -54,7 +55,7 @@ export default function Schedule() {
       setPageInfo(response.pageInfo);
       setSchedule(response.schedule);
     } else {
-      console.log(response);
+      // console.log(response);
     }
   };
 
@@ -210,33 +211,46 @@ export default function Schedule() {
       </div>
       <div className={styles.schedules}>
         {showSchedule?.length > 0 ? (
-          showSchedule?.map((show, index) => {
-            // To filter out animes not in database
-            if (show?.media?.anilistId) {
-              return (
-                <div key={index} className={styles.schedule}>
-                  <div>
-                    <p className="one_line">
-                      <span className={styles.time}>
-                        {String(getTimeFromUnixTimestamp(show?.airingAt))}
-                      </span>
-                      {`${String(getTitle(show?.media?.title))}`}
-                    </p>
-                  </div>
-                  <Link
-                    href={`/watch/${show?.media?.anilistId}`}
-                    className={styles.episode_link}
-                  >
-                    <FaPlay /> Episode {show?.episode}
-                  </Link>
+          showSchedule.slice(0, itemsToShow)?.map((d_le, index) => {
+            return (
+              <div key={index} className={styles.schedule}>
+                <div>
+                  <p className={styles.schedule_p1}>
+                    <span className={styles.time}>
+                      {String(getTimeFromUnixTimestamp(d_le?.airingTime))}
+                    </span>
+                    <span className="one_line">{`${String(
+                      getTitle(d_le?.title)
+                    )}`}</span>
+                  </p>
                 </div>
-              );
-            }
+                <Link
+                  href={`/watch/${d_le?.anilistId}?eps=${d_le?.episode}`}
+                  className={styles.episode_link}
+                >
+                  <FaPlay /> Episode {d_le?.episode}
+                </Link>
+              </div>
+            );
           })
         ) : (
           <div className={styles.schedule}>
-            <p>No schedule for {today}.</p>
+            <p>No schedule for {today ? today : "today"}.</p>
           </div>
+        )}
+        {showSchedule.length > 15 && (
+          <button
+            className={styles.showMore}
+            onClick={() => {
+              if (itemsToShow === 15) {
+                setItemsToShow(121);
+              } else {
+                setItemsToShow(15);
+              }
+            }}
+          >
+            Show More {itemsToShow === 15 ? <FaAngleDown /> : <FaAngleUp />}
+          </button>
         )}
       </div>
     </section>

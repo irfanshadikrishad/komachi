@@ -1,131 +1,67 @@
-import { NextResponse } from "next/server";
-import { groupScheduleByDay } from "@/utils/helpers";
-import { database } from "@/utils/database";
 import Anime from "@/schema/anime";
-
-interface RequestBody {
-  page: number;
-  perPage: number;
-  notYetAired?: boolean;
-  weekStart: number;
-  weekEnd: number;
-}
+import { database } from "@/utils/database";
 
 export async function POST(request: Request) {
   try {
-    const {
-      page,
-      perPage,
-      notYetAired = false,
-      weekStart,
-      weekEnd,
-    }: RequestBody = await request.json();
+    await database();
+    const schedule = await Anime.find({
+      nextAiringEpisode: {
+        $exists: true,
+        $ne: null,
+      },
+    });
 
-    if (!page || !perPage || !weekStart || !weekEnd) {
-      return NextResponse.json(
-        { error: "Invalid input parameters" },
-        { status: 400 }
-      );
-    }
+    const weekdays = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
 
-    const ALGQL_URI = "https://graphql.anilist.co";
-    const query = `
-      query ($page: Int, $perPage: Int, $startDate: Int, $endDate: Int, $notYetAired: Boolean) {
-        Page(page: $page, perPage: $perPage) {
-          pageInfo {
-            total
-            perPage
-            currentPage
-            lastPage
-            hasNextPage
-          }
-          airingSchedules(airingAt_greater: $startDate, airingAt_lesser: $endDate, notYetAired: $notYetAired) {
-            id
-            airingAt
-            episode
-            media {
-              id
-              title {
-                romaji
-                english
-                native
-              }
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
-      page: parseInt(page as unknown as string),
-      perPage: parseInt(perPage as unknown as string),
-      startDate: parseInt(weekStart as unknown as string),
-      endDate: parseInt(weekEnd as unknown as string),
-      notYetAired: Boolean(notYetAired),
+    // Function to convert Unix timestamp to weekday
+    const getWeekday = (timestamp: any) => {
+      const date = new Date(timestamp * 1000); // Convert from seconds to milliseconds
+      return weekdays[date.getUTCDay()]; // Get the day of the week (0 for Sunday, 6 for Saturday)
     };
 
-    const response = await fetch(ALGQL_URI, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ query, variables }),
-    });
+    // Group schedule by weekdays
+    const groupedSchedule = schedule.reduce((acc, anime) => {
+      const { nextAiringEpisode } = anime;
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data: ${response.statusText}`);
-    }
+      if (nextAiringEpisode && nextAiringEpisode.airingTime) {
+        const weekday = getWeekday(nextAiringEpisode.airingTime);
 
-    const data = await response.json();
-    if (!data?.data?.Page?.airingSchedules) {
-      throw new Error("No schedules found in response.");
-    }
-
-    await database();
-
-    // Extract media IDs from the fetched schedules
-    const mediaIds = data.data.Page.airingSchedules.map(
-      (schedule: any) => schedule.media.id
-    );
-
-    // Query the database for media data based on `anilistId`
-    const existingMedia = await Anime.find({
-      anilistId: { $in: mediaIds.map(String) }, // Convert to string for querying
-    });
-
-    // Create a map for quick access to media data from the database
-    const mediaMap = existingMedia.reduce((acc: any, media: any) => {
-      acc[media.anilistId] = media;
-      return acc;
-    }, {});
-
-    const updatedSchedules = data.data.Page.airingSchedules.map(
-      (schedule: any) => {
-        const mediaFromDB = mediaMap[schedule.media.id];
-        if (mediaFromDB) {
-          // Replace media field with the one from the database
-          schedule.media = mediaFromDB;
+        if (!acc[weekday]) {
+          acc[weekday] = [];
         }
-        return schedule;
+
+        // Push the anime information to the respective weekday
+        acc[weekday].push({
+          anilistId: anime.anilistId,
+          title: anime.title,
+          episode: nextAiringEpisode.episode,
+          airingTime: nextAiringEpisode.airingTime,
+        });
       }
-    );
 
-    // Group the updated schedules by day
-    const scheduleByDay = groupScheduleByDay(updatedSchedules);
+      return acc;
+    }, {} as { [key: string]: any[] });
 
-    return NextResponse.json(
-      {
-        schedule: scheduleByDay,
-        pageInfo: data.data.Page.pageInfo,
-        raw: data.data.Page,
-      },
-      { status: 200 }
-    );
-  } catch (error: any) {
-    return NextResponse.json(
-      { error: `Error fetching anime schedule.\n${error.message || error}` },
-      { status: 500 }
+    // Sort the anime by airingTime within each weekday
+    Object.keys(groupedSchedule).forEach((day) => {
+      groupedSchedule[day].sort(
+        (a: any, b: any) => a.airingTime - b.airingTime
+      );
+    });
+
+    return Response.json({ schedule: groupedSchedule }, { status: 200 });
+  } catch (error) {
+    return Response.json(
+      { message: (error as Error).message },
+      { status: 400 }
     );
   }
 }
