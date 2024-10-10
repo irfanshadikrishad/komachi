@@ -8,7 +8,7 @@ import {
   getWeekStart,
 } from "@/utils/helpers";
 import styles from "@/styles/schedule.module.css";
-import { FaPlay } from "react-icons/fa6";
+import { FaPlay, FaAngleDown, FaAngleUp } from "react-icons/fa6";
 
 export default function Schedule() {
   const [schedule, setSchedule] = useState<{
@@ -32,6 +32,7 @@ export default function Schedule() {
   const [currentGMT, setCurrentGMT] = useState("");
   const [today, setToday] = useState("");
   const [showSchedule, setShowSchedule] = useState<any[]>([]);
+  const [itemsToShow, setItemsToShow] = useState(15);
 
   const getSchedule = async () => {
     const request = await fetch(`/api/schedule`, {
@@ -48,7 +49,7 @@ export default function Schedule() {
       }),
     });
     const response = await request.json();
-    console.log(response);
+    // console.log(response);
 
     if (request.status === 200) {
       setPageInfo(response.pageInfo);
@@ -210,7 +211,7 @@ export default function Schedule() {
       </div>
       <div className={styles.schedules}>
         {showSchedule?.length > 0 ? (
-          showSchedule?.map((d_le, index) => {
+          showSchedule.slice(0, itemsToShow)?.map((d_le, index) => {
             return (
               <div key={index} className={styles.schedule}>
                 <div>
@@ -224,7 +225,7 @@ export default function Schedule() {
                   </p>
                 </div>
                 <Link
-                  href={`/watch/${d_le?.anilistId}`}
+                  href={`/watch/${d_le?.anilistId}?eps=${d_le?.episode}`}
                   className={styles.episode_link}
                 >
                   <FaPlay /> Episode {d_le?.episode}
@@ -234,8 +235,22 @@ export default function Schedule() {
           })
         ) : (
           <div className={styles.schedule}>
-            <p>No schedule for {today}.</p>
+            <p>No schedule for {today ? today : "today"}.</p>
           </div>
+        )}
+        {showSchedule.length > 15 && (
+          <button
+            className={styles.showMore}
+            onClick={() => {
+              if (itemsToShow === 15) {
+                setItemsToShow(121);
+              } else {
+                setItemsToShow(15);
+              }
+            }}
+          >
+            Show More {itemsToShow === 15 ? <FaAngleDown /> : <FaAngleUp />}
+          </button>
         )}
       </div>
     </section>
