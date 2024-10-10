@@ -216,11 +216,13 @@ export default function Schedule() {
               return (
                 <div key={index} className={styles.schedule}>
                   <div>
-                    <p className="one_line">
+                    <p className={styles.schedule_p1}>
                       <span className={styles.time}>
                         {String(getTimeFromUnixTimestamp(show?.airingAt))}
                       </span>
-                      {`${String(getTitle(show?.media?.title))}`}
+                      <span className="one_line">{`${String(
+                        getTitle(show?.media?.title)
+                      )}`}</span>
                     </p>
                   </div>
                   <Link
