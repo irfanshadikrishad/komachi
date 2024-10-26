@@ -1,27 +1,27 @@
-"use client";
-import { useEffect, useState } from "react";
-import styles from "@/styles/player.module.css";
-import Disqus from "@/components/Disqus";
+"use client"
+import Automatics from "@/components/Automatics"
+import Disqus from "@/components/Disqus"
+import Episodes from "@/components/Episodes"
+import Info from "@/components/Info"
+import Recommendations from "@/components/Recommendations"
+import styles from "@/styles/player.module.css"
 import {
   convertTimestampToReadable,
   episodeIdToEpisodeNumber,
-} from "@/utils/helpers";
-import Episodes from "@/components/Episodes";
-import Automatics from "@/components/Automatics";
-import Info from "@/components/Info";
-import Recommendations from "@/components/Recommendations";
+} from "@/utils/helpers"
+import { useEffect, useState } from "react"
 // ICONS
-import { FaClosedCaptioning } from "react-icons/fa6";
-import { IoMic } from "react-icons/io5";
+import { FaClosedCaptioning } from "react-icons/fa6"
+import { IoMic } from "react-icons/io5"
 // VIDSTACK
-import { MediaPlayer, MediaProvider } from "@vidstack/react";
+import { MediaPlayer, MediaProvider } from "@vidstack/react"
 import {
   defaultLayoutIcons,
   DefaultVideoLayout,
-} from "@vidstack/react/player/layouts/default";
-import "@vidstack/react/player/styles/default/theme.css";
-import "@vidstack/react/player/styles/default/layouts/video.css";
-import Link from "next/link";
+} from "@vidstack/react/player/layouts/default"
+import "@vidstack/react/player/styles/default/layouts/video.css"
+import "@vidstack/react/player/styles/default/theme.css"
+import Link from "next/link"
 
 export default function Player({
   streamLink,
@@ -34,28 +34,28 @@ export default function Player({
   nextAiringEpisode,
   animeInfo,
 }) {
-  const [isSub, setIsSub] = useState(true); // Default state is true
-  const [isMouseOver, setIsMouseOver] = useState(false);
-  const [unicornEpisodes, setUnicornEpisodes] = useState(episodes);
+  const [isSub, setIsSub] = useState(true) // Default state is true
+  const [isMouseOver, setIsMouseOver] = useState(false)
+  const [unicornEpisodes, setUnicornEpisodes] = useState(episodes)
 
   // Use useEffect to handle localStorage on the client side only
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedType = localStorage.getItem("type");
-      setIsSub(storedType ? storedType === "Sub" : true);
+      const storedType = localStorage.getItem("type")
+      setIsSub(storedType ? storedType === "Sub" : true)
     }
-  }, [dubLink, streamLink]);
+  }, [dubLink, streamLink])
 
   useEffect(() => {
-    setUnicornEpisodes(episodes);
-  }, [episodes]);
+    setUnicornEpisodes(episodes)
+  }, [episodes])
 
   useEffect(() => {
-    const player = document.querySelector("vds-media-player");
+    const player = document.querySelector("vds-media-player")
     if (player) {
-      player.load();
+      player.load()
     }
-  }, [streamLink, dubLink]);
+  }, [streamLink, dubLink])
 
   return (
     <div>
@@ -64,8 +64,7 @@ export default function Player({
           <div
             className={styles.player_Wrapper}
             onMouseOver={() => setIsMouseOver(true)}
-            onMouseLeave={() => setIsMouseOver(false)}
-          >
+            onMouseLeave={() => setIsMouseOver(false)}>
             <MediaPlayer
               title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
               src={isSub || !dubLink ? streamLink : dubLink}
@@ -77,8 +76,7 @@ export default function Player({
               crossOrigin={true}
               playsInline
               storage="storage-key"
-              autoPlay={true}
-            >
+              autoPlay={true}>
               <MediaProvider />
               <DefaultVideoLayout
                 icons={defaultLayoutIcons}
@@ -91,14 +89,12 @@ export default function Player({
                 style={{
                   display: isMouseOver ? "inline" : "none",
                   right: "16px",
-                }}
-              ></div>
+                }}></div>
               <div
                 className={styles.ed}
                 style={{
                   display: isMouseOver ? "inline" : "none",
-                }}
-              ></div>
+                }}></div>
             </section>
           </div>
           <Automatics />
@@ -129,11 +125,10 @@ export default function Player({
                       color: isSub || !dubLink ? "var(--primary)" : "",
                     }}
                     onClick={() => {
-                      setStreamLink(streamLink);
-                      setIsSub(true);
-                      localStorage.setItem("type", "true");
-                    }}
-                  >
+                      setStreamLink(streamLink)
+                      setIsSub(true)
+                      localStorage.setItem("type", "true")
+                    }}>
                     Komachi 1
                   </button>
                 </div>
@@ -147,11 +142,10 @@ export default function Player({
                     <button
                       style={{ color: !isSub ? "var(--primary)" : "" }}
                       onClick={() => {
-                        setStreamLink(dubLink);
-                        setIsSub(false);
-                        localStorage.setItem("type", "false");
-                      }}
-                    >
+                        setStreamLink(dubLink)
+                        setIsSub(false)
+                        localStorage.setItem("type", "false")
+                      }}>
                       Komachi 1
                     </button>
                   </div>
@@ -186,8 +180,7 @@ export default function Player({
             <Link
               href="https://www.youtube.com/@irfanshadikrishad"
               target="_blank"
-              className={styles.yt}
-            >
+              className={styles.yt}>
               youtube
             </Link>{" "}
             channel.
@@ -200,5 +193,5 @@ export default function Player({
         }
       />
     </div>
-  );
+  )
 }

@@ -1,19 +1,19 @@
-"use client";
-import { useEffect, useState } from "react";
-import styles from "@/styles/search.module.css";
-import cardio from "@/styles/cardio.module.css";
-import Card from "@/components/Card";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import { getTitle } from "@/utils/helpers";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+"use client"
+import Card from "@/components/Card"
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
+import cardio from "@/styles/cardio.module.css"
+import styles from "@/styles/search.module.css"
+import { getTitle } from "@/utils/helpers"
+import { useEffect, useState } from "react"
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
 
 export default function Trending() {
-  const [trending, setTrending] = useState([]);
-  const [totalCount, setTotalCount] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(60);
+  const [trending, setTrending] = useState([])
+  const [totalCount, setTotalCount] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [perPage, setPerPage] = useState(60)
 
   const getTrending = async (page?: number, perPage?: number) => {
     try {
@@ -24,26 +24,26 @@ export default function Trending() {
           page: page ? page : 1,
           perPage: perPage ? perPage : 60,
         }),
-      });
-      const response = await request.json();
+      })
+      const response = await request.json()
 
       if (request.status === 200) {
-        setTrending(response.results);
-        setCurrentPage(response.currentPage);
-        setTotalCount(response.totalCount);
-        setTotalPages(response.totalPages);
-        setPerPage(response.perPage);
+        setTrending(response.results)
+        setCurrentPage(response.currentPage)
+        setTotalCount(response.totalCount)
+        setTotalPages(response.totalPages)
+        setPerPage(response.perPage)
       } else {
-        console.log(response);
+        console.log(response)
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   useEffect(() => {
-    getTrending();
-  }, []);
+    getTrending()
+  }, [])
   return (
     <>
       <Navbar />
@@ -57,20 +57,18 @@ export default function Trending() {
                   className={`${currentPage > 1 ? "primary" : ""}`}
                   onClick={() => {
                     if (Number(currentPage) > 1) {
-                      getTrending(Number(currentPage) - 1);
+                      getTrending(Number(currentPage) - 1)
                     }
-                  }}
-                >
+                  }}>
                   <FaChevronLeft />
                 </button>
                 <button
                   className={`${currentPage <= totalPages ? "primary" : ""}`}
                   onClick={() => {
                     if (Number(currentPage) < totalPages) {
-                      getTrending(Number(currentPage) + 1);
+                      getTrending(Number(currentPage) + 1)
                     }
-                  }}
-                >
+                  }}>
                   <FaChevronRight />
                 </button>
               </div>
@@ -97,7 +95,7 @@ export default function Trending() {
                       title={getTitle(title)}
                       isAdult={isAdult}
                     />
-                  );
+                  )
                 }
               )}
             </section>
@@ -106,5 +104,5 @@ export default function Trending() {
       </section>
       <Footer />
     </>
-  );
+  )
 }

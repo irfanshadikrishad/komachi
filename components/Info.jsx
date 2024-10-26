@@ -1,8 +1,8 @@
-import uniqolor from "uniqolor";
-import styles from "@/styles/info.module.css";
-import { getTitle, removeHtmlAndMarkdown } from "@/utils/helpers";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import styles from "@/styles/info.module.css"
+import { getTitle, removeHtmlAndMarkdown } from "@/utils/helpers"
+import Skeleton from "react-loading-skeleton"
+import "react-loading-skeleton/dist/skeleton.css"
+import uniqolor from "uniqolor"
 
 export default function Info({ animeInfo }) {
   return (
@@ -176,12 +176,12 @@ export default function Info({ animeInfo }) {
             {animeInfo?.anilistId ? (
               <div className={styles.genres}>
                 {animeInfo?.genres.map((genre, index) => {
-                  const { color } = uniqolor(genre);
+                  const { color } = uniqolor(genre)
                   return (
                     <span key={index} style={{ color: color }}>
                       {genre}
                     </span>
-                  );
+                  )
                 })}
               </div>
             ) : (
@@ -196,5 +196,5 @@ export default function Info({ animeInfo }) {
         </section>
       </section>
     </section>
-  );
+  )
 }

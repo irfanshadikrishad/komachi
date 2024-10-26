@@ -1,11 +1,11 @@
-import Link from "next/link";
-import Card from "@/components/Card";
-import styles from "@/styles/search.module.css";
-import cardio from "@/styles/cardio.module.css";
-import { getTitle } from "@/utils/helpers";
+import Card from "@/components/Card"
+import cardio from "@/styles/cardio.module.css"
+import styles from "@/styles/search.module.css"
+import { getTitle } from "@/utils/helpers"
+import Link from "next/link"
 // Skeleton
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton"
+import "react-loading-skeleton/dist/skeleton.css"
 
 export default function Popular({ popular }: { popular: any[] }) {
   return (
@@ -26,13 +26,13 @@ export default function Popular({ popular }: { popular: any[] }) {
                 title,
                 isAdult,
               }: {
-                anilistId: string;
-                poster: string;
-                sub_episodes: [];
-                dub_episodes: [];
-                totalEpisodes: string | number;
-                title: { english?: string; romaji?: string; native?: string };
-                isAdult: string;
+                anilistId: string
+                poster: string
+                sub_episodes: []
+                dub_episodes: []
+                totalEpisodes: string | number
+                title: { english?: string; romaji?: string; native?: string }
+                isAdult: string
               }) => (
                 <Card
                   key={anilistId}
@@ -54,9 +54,9 @@ export default function Popular({ popular }: { popular: any[] }) {
                   baseColor="var(--secondary)"
                   highlightColor="var(--background)"
                 />
-              );
+              )
             })}
       </section>
     </section>
-  );
+  )
 }

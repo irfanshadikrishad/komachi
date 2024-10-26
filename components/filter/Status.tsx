@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import styles from "@/styles/search.module.css";
-import { IoChevronDownOutline } from "react-icons/io5";
-import { PiCheckCircleFill } from "react-icons/pi";
+import styles from "@/styles/search.module.css"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { IoChevronDownOutline } from "react-icons/io5"
+import { PiCheckCircleFill } from "react-icons/pi"
 
 export default function Status({
   status,
@@ -15,49 +15,48 @@ export default function Status({
   setIsYearOpen,
   setIsSeasonOpen,
 }: {
-  status: string[];
-  setStatus: Dispatch<SetStateAction<string[]>>;
-  isStatusOpen: boolean;
-  insertValuesIntoState: any;
-  setIsCountryOpen: Dispatch<SetStateAction<boolean>>;
-  setIsFormatOpen: Dispatch<SetStateAction<boolean>>;
-  setIsStatusOpen: Dispatch<SetStateAction<boolean>>;
-  setIsGenreOpen: Dispatch<SetStateAction<boolean>>;
-  setIsYearOpen: Dispatch<SetStateAction<boolean>>;
-  setIsSeasonOpen: Dispatch<SetStateAction<boolean>>;
+  status: string[]
+  setStatus: Dispatch<SetStateAction<string[]>>
+  isStatusOpen: boolean
+  insertValuesIntoState: any
+  setIsCountryOpen: Dispatch<SetStateAction<boolean>>
+  setIsFormatOpen: Dispatch<SetStateAction<boolean>>
+  setIsStatusOpen: Dispatch<SetStateAction<boolean>>
+  setIsGenreOpen: Dispatch<SetStateAction<boolean>>
+  setIsYearOpen: Dispatch<SetStateAction<boolean>>
+  setIsSeasonOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const [distinctStatus, setDistinctStatus] = useState<string[]>([]);
+  const [distinctStatus, setDistinctStatus] = useState<string[]>([])
 
   const getDistinctStatus = async () => {
     const request = await fetch(`/api/distinct/status`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-    });
-    const response = await request.json();
+    })
+    const response = await request.json()
 
     if (request.status === 200) {
-      setDistinctStatus(response);
+      setDistinctStatus(response)
     } else {
-      console.log(response);
+      console.log(response)
     }
-  };
+  }
 
   useEffect(() => {
-    getDistinctStatus();
-  }, []);
+    getDistinctStatus()
+  }, [])
   return (
     <section className={styles.filter_indi}>
       <button
         className={styles.filter_btn}
         onClick={() => {
-          setIsStatusOpen(!isStatusOpen);
-          setIsGenreOpen(false);
-          setIsYearOpen(false);
-          setIsSeasonOpen(false);
-          setIsFormatOpen(false);
-          setIsCountryOpen(false);
-        }}
-      >
+          setIsStatusOpen(!isStatusOpen)
+          setIsGenreOpen(false)
+          setIsYearOpen(false)
+          setIsSeasonOpen(false)
+          setIsFormatOpen(false)
+          setIsCountryOpen(false)
+        }}>
         <p className={`one_line ${styles.values}`}>
           {status.length > 0 ? status.join(", ") : "Status"}
         </p>
@@ -71,16 +70,15 @@ export default function Status({
                 <button
                   key={index}
                   onClick={() => {
-                    insertValuesIntoState(disStat, setStatus);
-                  }}
-                >
+                    insertValuesIntoState(disStat, setStatus)
+                  }}>
                   <p>{disStat}</p>
                   {status.includes(disStat) && <PiCheckCircleFill />}
                 </button>
-              );
+              )
             })}
         </div>
       )}
     </section>
-  );
+  )
 }

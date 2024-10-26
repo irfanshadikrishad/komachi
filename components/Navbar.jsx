@@ -1,31 +1,31 @@
-"use client";
-import { useState, useRef, useEffect } from "react";
-import Logo from "@/components/Logo";
-import styles from "@/styles/navbar.module.css";
-import { useRouter } from "next/navigation";
+"use client"
+import Logo from "@/components/Logo"
+import styles from "@/styles/navbar.module.css"
+import { useRouter } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
 // ICONS
-import { FiSearch } from "react-icons/fi";
-import { RiUser6Line } from "react-icons/ri";
+import { FiSearch } from "react-icons/fi"
+import { RiUser6Line } from "react-icons/ri"
 
 export default function Navbar() {
-  const router = useRouter();
-  const searchRef = useRef(null);
-  const [query, setQuery] = useState("");
-  const [searchOpen, setSearchOpen] = useState(false);
+  const router = useRouter()
+  const searchRef = useRef(null)
+  const [query, setQuery] = useState("")
+  const [searchOpen, setSearchOpen] = useState(false)
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (query.trim()) {
-      router.push(`/search?query=${query}`);
-      setQuery("");
+      router.push(`/search?query=${query}`)
+      setQuery("")
     }
-  };
+  }
 
   useEffect(() => {
     if (searchOpen && searchRef.current) {
-      searchRef.current.focus();
+      searchRef.current.focus()
     }
-  }, [searchOpen]);
+  }, [searchOpen])
 
   return (
     <nav className={`container ${styles.navbar}`}>
@@ -53,5 +53,5 @@ export default function Navbar() {
         </button>
       </section>
     </nav>
-  );
+  )
 }

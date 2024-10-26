@@ -1,27 +1,27 @@
-"use client";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
-import Player from "@/components/Player";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { AnimeInfo, extractDefaultSource } from "@/utils/helpers";
-import styles from "@/styles/watch.module.css";
+"use client"
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
+import Player from "@/components/Player"
+import styles from "@/styles/watch.module.css"
+import { AnimeInfo, extractDefaultSource } from "@/utils/helpers"
+import Image from "next/image"
+import { useParams, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function Streaming() {
-  const params = useParams();
-  const animeId = params.id;
-  const eps = useSearchParams().get("eps");
-  const [animeInfo, setAnimeInfo] = useState<AnimeInfo>();
-  const [episodes, setEpisodes] = useState<any>([]);
-  const [streamLink, setStreamLink] = useState("");
-  const [dubLink, setDubLink] = useState<string | null>(null);
-  const [currentEpisode, setCurrentEpisode] = useState<string>();
-  const [episodeDownloadLink, setEpisodeDownloadLink] = useState("");
-  const [sources, setSources] = useState([]);
-  const [dubEpisodes, setDubEpisodes] = useState([]);
-  const [nextAiringTime, setNextAiringTime] = useState({});
-  const [notFound, setNotFound] = useState(false);
+  const params = useParams()
+  const animeId = params.id
+  const eps = useSearchParams().get("eps")
+  const [animeInfo, setAnimeInfo] = useState<AnimeInfo>()
+  const [episodes, setEpisodes] = useState<any>([])
+  const [streamLink, setStreamLink] = useState("")
+  const [dubLink, setDubLink] = useState<string | null>(null)
+  const [currentEpisode, setCurrentEpisode] = useState<string>()
+  const [episodeDownloadLink, setEpisodeDownloadLink] = useState("")
+  const [sources, setSources] = useState([])
+  const [dubEpisodes, setDubEpisodes] = useState([])
+  const [nextAiringTime, setNextAiringTime] = useState({})
+  const [notFound, setNotFound] = useState(false)
 
   const getStreamLink = async (subEpisodeId: string, dubEpisodeId?: string) => {
     try {
@@ -33,30 +33,28 @@ export default function Streaming() {
             subEpisodeId,
             dubEpisodeId: dubEpisodeId ? dubEpisodeId : null,
           }),
-        });
-        const response = await request.json();
+        })
+        const response = await request.json()
 
         if (request.status === 200) {
           setStreamLink(
             String(extractDefaultSource(response?.subLink?.sources))
-          );
+          )
           if (response?.dubLink !== null) {
-            setDubLink(
-              String(extractDefaultSource(response?.dubLink?.sources))
-            );
+            setDubLink(String(extractDefaultSource(response?.dubLink?.sources)))
           } else {
-            setDubLink(null);
+            setDubLink(null)
           }
-          setCurrentEpisode(subEpisodeId);
-          setEpisodeDownloadLink(response.download);
+          setCurrentEpisode(subEpisodeId)
+          setEpisodeDownloadLink(response.download)
         } else {
-          console.log(response);
+          console.log(response)
         }
       }
     } catch (error) {
-      console.error("Error fetching stream link:", error, subEpisodeId);
+      console.error("Error fetching stream link:", error, subEpisodeId)
     }
-  };
+  }
 
   const getAnimeInfo = async () => {
     try {
@@ -64,23 +62,23 @@ export default function Streaming() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ animeId }),
-      });
-      const response = await request.json();
+      })
+      const response = await request.json()
 
       if (request.status === 200) {
-        setNextAiringTime(response?.nextAiringEpisode);
-        setAnimeInfo(response);
+        setNextAiringTime(response?.nextAiringEpisode)
+        setAnimeInfo(response)
         setEpisodes(
           response?.sub_episodes.length > 0
             ? response?.sub_episodes
             : response?.dub_episodes
-        );
-        setDubEpisodes(response?.dub_episodes);
+        )
+        setDubEpisodes(response?.dub_episodes)
         setCurrentEpisode(
           response?.sub_episodes[0]?.id
             ? response?.sub_episodes[0]?.id
             : response?.dub_episodes[0]?.id
-        );
+        )
         if (response?.sub_episodes[0]?.id) {
           getStreamLink(
             eps
@@ -89,22 +87,22 @@ export default function Streaming() {
             eps
               ? response?.dub_episodes[Number(eps) - 1]?.id
               : response?.dub_episodes[0]?.id
-          );
+          )
         } else if (response?.dub_episodes[0]?.id) {
           getStreamLink(
             eps
               ? response?.dub_episodes[Number(eps) - 1]?.id
               : response?.dub_episodes[0]?.id
-          );
+          )
         }
       } else {
-        console.log(response);
-        setNotFound(true);
+        console.log(response)
+        setNotFound(true)
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   // Individual Episode Sources
   const getServerSources = async (episodeId: string) => {
@@ -113,26 +111,26 @@ export default function Streaming() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ episodeId }),
-      });
-      const response = await request.json();
+      })
+      const response = await request.json()
 
       if (request.status === 200) {
-        setSources(response);
+        setSources(response)
       } else {
-        console.log(response, episodeId);
+        console.log(response, episodeId)
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   useEffect(() => {
-    getAnimeInfo();
-  }, [eps]);
+    getAnimeInfo()
+  }, [eps])
   useEffect(() => {
-    setDubEpisodes([]);
-    window.scrollTo({ top: 0 });
-  }, [animeId, eps]);
+    setDubEpisodes([])
+    window.scrollTo({ top: 0 })
+  }, [animeId, eps])
   return (
     <>
       <Navbar />
@@ -158,8 +156,7 @@ export default function Streaming() {
               flexDirection: "column",
               alignItems: "center",
               marginTop: "15px",
-            }}
-          >
+            }}>
             <Image
               src={"/not_found.png"}
               alt="not_found image"
@@ -173,5 +170,5 @@ export default function Streaming() {
       </section>
       <Footer />
     </>
-  );
+  )
 }

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "@consumet/extensions": "github:consumet/consumet.ts",
@@ -15,10 +16,9 @@
     "chalk": "^5.3.0",
     "date-fns": "^4.1.0",
     "disqus-react": "^1.1.5",
-    "eslint-config-next": "^15.0.1",
     "hls.js": "^1.5.17",
     "mongoose": "^8.7.2",
-    "next": "^15.0.1",
+    "next": "14.x.x",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
@@ -30,6 +30,9 @@
     "@types/node": "^22.8.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "eslint-config-next": "^15.0.1",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "^5.6.3"
   }
 }
