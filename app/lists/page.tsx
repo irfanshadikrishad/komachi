@@ -1,32 +1,30 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import Card from "@/components/Card";
-import styles from "@/styles/lists.module.css";
-import footer_styles from "@/styles/footer.module.css";
-import cardio from "@/styles/cardio.module.css";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { getTitle } from "@/utils/helpers";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+"use client"
+import Card from "@/components/Card"
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
+import cardio from "@/styles/cardio.module.css"
+import footer_styles from "@/styles/footer.module.css"
+import styles from "@/styles/lists.module.css"
+import { getTitle } from "@/utils/helpers"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
+import Skeleton from "react-loading-skeleton"
+import "react-loading-skeleton/dist/skeleton.css"
 
 export default function Lists() {
-  const [results, setResults] = useState<any[]>([]);
-  const [totalCount, setTotalCount] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [show, setShow] = useState<string | null>(
-    useSearchParams().get("show")
-  );
+  const [results, setResults] = useState<any[]>([])
+  const [totalCount, setTotalCount] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [show, setShow] = useState<string | null>(useSearchParams().get("show"))
 
   const getShowResults = async (
     show: string,
     page?: number,
     perPage?: number
   ) => {
-    setResults([]);
+    setResults([])
     const request = await fetch(`/api/lists`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -35,23 +33,23 @@ export default function Lists() {
         page: page ? page : 1,
         perPage: perPage ? perPage : 27,
       }),
-    });
-    const response = await request.json();
+    })
+    const response = await request.json()
 
     if (request.status === 200) {
-      setResults(response.results);
-      setCurrentPage(response.currentPage);
-      setTotalCount(response.totalCount);
-      setTotalPages(response.totalPages);
-      setShow(show);
+      setResults(response.results)
+      setCurrentPage(response.currentPage)
+      setTotalCount(response.totalCount)
+      setTotalPages(response.totalPages)
+      setShow(show)
     } else {
-      console.log(results);
+      console.log(results)
     }
-  };
+  }
 
   useEffect(() => {
-    getShowResults(show ? show : "all");
-  }, []);
+    getShowResults(show ? show : "all")
+  }, [])
   return (
     <>
       <Navbar />
@@ -63,10 +61,9 @@ export default function Lists() {
                 color: show === "all" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("all");
-                getShowResults("all");
-              }}
-            >
+                setShow("all")
+                getShowResults("all")
+              }}>
               All
             </button>
             <button
@@ -74,10 +71,9 @@ export default function Lists() {
                 color: show === "0-9" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("0-9");
-                getShowResults("0-9");
-              }}
-            >
+                setShow("0-9")
+                getShowResults("0-9")
+              }}>
               0-9
             </button>
             <button
@@ -85,10 +81,9 @@ export default function Lists() {
                 color: show === "A" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("A");
-                getShowResults("A");
-              }}
-            >
+                setShow("A")
+                getShowResults("A")
+              }}>
               A
             </button>
             <button
@@ -96,10 +91,9 @@ export default function Lists() {
                 color: show === "B" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("B");
-                getShowResults("B");
-              }}
-            >
+                setShow("B")
+                getShowResults("B")
+              }}>
               B
             </button>
             <button
@@ -107,10 +101,9 @@ export default function Lists() {
                 color: show === "C" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("C");
-                getShowResults("C");
-              }}
-            >
+                setShow("C")
+                getShowResults("C")
+              }}>
               C
             </button>
             <button
@@ -118,10 +111,9 @@ export default function Lists() {
                 color: show === "D" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("D");
-                getShowResults("D");
-              }}
-            >
+                setShow("D")
+                getShowResults("D")
+              }}>
               D
             </button>
             <button
@@ -129,10 +121,9 @@ export default function Lists() {
                 color: show === "E" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("E");
-                getShowResults("E");
-              }}
-            >
+                setShow("E")
+                getShowResults("E")
+              }}>
               E
             </button>
             <button
@@ -140,10 +131,9 @@ export default function Lists() {
                 color: show === "F" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("F");
-                getShowResults("F");
-              }}
-            >
+                setShow("F")
+                getShowResults("F")
+              }}>
               F
             </button>
             <button
@@ -151,10 +141,9 @@ export default function Lists() {
                 color: show === "G" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("G");
-                getShowResults("G");
-              }}
-            >
+                setShow("G")
+                getShowResults("G")
+              }}>
               G
             </button>
             <button
@@ -162,10 +151,9 @@ export default function Lists() {
                 color: show === "H" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("H");
-                getShowResults("H");
-              }}
-            >
+                setShow("H")
+                getShowResults("H")
+              }}>
               H
             </button>
             <button
@@ -173,10 +161,9 @@ export default function Lists() {
                 color: show === "I" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("I");
-                getShowResults("I");
-              }}
-            >
+                setShow("I")
+                getShowResults("I")
+              }}>
               I
             </button>
             <button
@@ -184,10 +171,9 @@ export default function Lists() {
                 color: show === "J" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("J");
-                getShowResults("J");
-              }}
-            >
+                setShow("J")
+                getShowResults("J")
+              }}>
               J
             </button>
             <button
@@ -195,10 +181,9 @@ export default function Lists() {
                 color: show === "K" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("K");
-                getShowResults("K");
-              }}
-            >
+                setShow("K")
+                getShowResults("K")
+              }}>
               K
             </button>
             <button
@@ -206,10 +191,9 @@ export default function Lists() {
                 color: show === "L" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("L");
-                getShowResults("L");
-              }}
-            >
+                setShow("L")
+                getShowResults("L")
+              }}>
               L
             </button>
             <button
@@ -217,10 +201,9 @@ export default function Lists() {
                 color: show === "M" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("M");
-                getShowResults("M");
-              }}
-            >
+                setShow("M")
+                getShowResults("M")
+              }}>
               M
             </button>
             <button
@@ -228,10 +211,9 @@ export default function Lists() {
                 color: show === "N" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("N");
-                getShowResults("N");
-              }}
-            >
+                setShow("N")
+                getShowResults("N")
+              }}>
               N
             </button>
             <button
@@ -239,10 +221,9 @@ export default function Lists() {
                 color: show === "O" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("O");
-                getShowResults("O");
-              }}
-            >
+                setShow("O")
+                getShowResults("O")
+              }}>
               O
             </button>
             <button
@@ -250,10 +231,9 @@ export default function Lists() {
                 color: show === "P" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("P");
-                getShowResults("P");
-              }}
-            >
+                setShow("P")
+                getShowResults("P")
+              }}>
               P
             </button>
             <button
@@ -261,10 +241,9 @@ export default function Lists() {
                 color: show === "Q" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("Q");
-                getShowResults("Q");
-              }}
-            >
+                setShow("Q")
+                getShowResults("Q")
+              }}>
               Q
             </button>
             <button
@@ -272,10 +251,9 @@ export default function Lists() {
                 color: show === "R" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("R");
-                getShowResults("R");
-              }}
-            >
+                setShow("R")
+                getShowResults("R")
+              }}>
               R
             </button>
             <button
@@ -283,10 +261,9 @@ export default function Lists() {
                 color: show === "S" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("S");
-                getShowResults("S");
-              }}
-            >
+                setShow("S")
+                getShowResults("S")
+              }}>
               S
             </button>
             <button
@@ -294,10 +271,9 @@ export default function Lists() {
                 color: show === "T" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("T");
-                getShowResults("T");
-              }}
-            >
+                setShow("T")
+                getShowResults("T")
+              }}>
               T
             </button>
             <button
@@ -305,10 +281,9 @@ export default function Lists() {
                 color: show === "U" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("U");
-                getShowResults("U");
-              }}
-            >
+                setShow("U")
+                getShowResults("U")
+              }}>
               U
             </button>
             <button
@@ -316,10 +291,9 @@ export default function Lists() {
                 color: show === "V" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("V");
-                getShowResults("V");
-              }}
-            >
+                setShow("V")
+                getShowResults("V")
+              }}>
               V
             </button>
             <button
@@ -327,10 +301,9 @@ export default function Lists() {
                 color: show === "W" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("W");
-                getShowResults("W");
-              }}
-            >
+                setShow("W")
+                getShowResults("W")
+              }}>
               W
             </button>
             <button
@@ -338,10 +311,9 @@ export default function Lists() {
                 color: show === "X" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("X");
-                getShowResults("X");
-              }}
-            >
+                setShow("X")
+                getShowResults("X")
+              }}>
               X
             </button>
             <button
@@ -349,10 +321,9 @@ export default function Lists() {
                 color: show === "Y" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("Y");
-                getShowResults("Y");
-              }}
-            >
+                setShow("Y")
+                getShowResults("Y")
+              }}>
               Y
             </button>
             <button
@@ -360,10 +331,9 @@ export default function Lists() {
                 color: show === "Z" ? "var(--primary)" : "var(--color)",
               }}
               onClick={() => {
-                setShow("Z");
-                getShowResults("Z");
-              }}
-            >
+                setShow("Z")
+                getShowResults("Z")
+              }}>
               Z
             </button>
           </section>
@@ -372,20 +342,18 @@ export default function Lists() {
               className={`${currentPage > 1 ? "primary" : ""}`}
               onClick={() => {
                 if (Number(currentPage) > 1) {
-                  getShowResults(show ? show : "all", Number(currentPage) - 1);
+                  getShowResults(show ? show : "all", Number(currentPage) - 1)
                 }
-              }}
-            >
+              }}>
               <FaChevronLeft />
             </button>
             <button
               className={`${currentPage < totalPages ? "primary" : ""}`}
               onClick={() => {
                 if (totalPages >= currentPage) {
-                  getShowResults(show ? show : "all", Number(currentPage) + 1);
+                  getShowResults(show ? show : "all", Number(currentPage) + 1)
                 }
-              }}
-            >
+              }}>
               <FaChevronRight />
             </button>
           </div>
@@ -416,7 +384,7 @@ export default function Lists() {
                       totalCount={totalEpisodes}
                       isAdult={isAdult}
                     />
-                  );
+                  )
                 }
               )
             : Array.from({ length: 20 }).map((_, index) => {
@@ -427,11 +395,11 @@ export default function Lists() {
                     baseColor="var(--secondary)"
                     highlightColor="var(--background)"
                   />
-                );
+                )
               })}
         </section>
       </section>
       <Footer />
     </>
-  );
+  )
 }

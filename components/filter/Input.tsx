@@ -1,15 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
-import styles from "@/styles/search.module.css";
-import { RiSearchLine } from "react-icons/ri";
+import styles from "@/styles/search.module.css"
+import { Dispatch, SetStateAction } from "react"
+import { RiSearchLine } from "react-icons/ri"
 
 export default function Input({
   query,
   setQuery,
   getSearched,
 }: {
-  query: null | string;
-  setQuery: Dispatch<SetStateAction<string | null>>;
-  getSearched: any;
+  query: null | string
+  setQuery: Dispatch<SetStateAction<string | null>>
+  getSearched: any
 }) {
   return (
     <section className={styles.filter_indi}>
@@ -23,12 +23,12 @@ export default function Input({
           className={styles.searchField}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              e.preventDefault();
-              getSearched();
+              e.preventDefault()
+              getSearched()
             }
           }}
         />
       </div>
     </section>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import { database } from "@/utils/database";
-import Anime from "@/schema/anime";
+import Anime from "@/schema/anime"
+import { database } from "@/utils/database"
 
 export const POST = async (req: Request) => {
   try {
-    await database();
-    const { page = 1, perPage = 10 } = await req.json();
+    await database()
+    const { page = 1, perPage = 10 } = await req.json()
 
     const query = `query ($page: Int, $perPage: Int) {
                     Page(page: $page, perPage: $perPage) {
@@ -19,7 +19,7 @@ export const POST = async (req: Request) => {
                         perPage
                       }
                     }
-                  }`;
+                  }`
 
     const request = await fetch(`https://graphql.anilist.co`, {
       method: "POST",
@@ -30,16 +30,16 @@ export const POST = async (req: Request) => {
         query,
         variables: { page, perPage },
       }),
-    });
+    })
 
-    const { data } = await request.json();
+    const { data } = await request.json()
 
     const anilistIds = data?.Page?.media.map((item: { id: number }) =>
       item.id.toString()
-    );
+    )
 
     // Get the total count from the AniList API pageInfo
-    const { total, currentPage, lastPage } = data.Page.pageInfo;
+    const { total, currentPage, lastPage } = data.Page.pageInfo
 
     const results = await Anime.aggregate([
       {
@@ -60,7 +60,7 @@ export const POST = async (req: Request) => {
           sortOrder: 0,
         },
       },
-    ]);
+    ])
 
     return new Response(
       JSON.stringify({
@@ -74,7 +74,7 @@ export const POST = async (req: Request) => {
         status: 200,
         headers: { "Content-Type": "application/json" },
       }
-    );
+    )
   } catch (error) {
     return new Response(
       JSON.stringify({ message: error || "An error occurred" }),
@@ -82,6 +82,6 @@ export const POST = async (req: Request) => {
         status: 500,
         headers: { "Content-Type": "application/json" },
       }
-    );
+    )
   }
-};
+}

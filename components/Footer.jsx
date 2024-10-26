@@ -1,14 +1,14 @@
-"use client";
-import Link from "next/link";
-import Logo from "@/components/Logo";
-import styles from "@/styles/footer.module.css";
-import { usePathname } from "next/navigation";
+"use client"
+import Logo from "@/components/Logo"
+import styles from "@/styles/footer.module.css"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 // Icons
-import { FaGithub, FaYoutube } from "react-icons/fa";
-import { IoGlobeSharp } from "react-icons/io5";
+import { FaGithub, FaYoutube } from "react-icons/fa"
+import { IoGlobeSharp } from "react-icons/io5"
 
 export default function Footer() {
-  const path = usePathname();
+  const path = usePathname()
 
   return (
     <footer className={styles.footer_Main}>
@@ -116,8 +116,7 @@ export default function Footer() {
             <Link
               href="/stats"
               prefetch={true}
-              className={`${path === "/stats" ? "primary" : ""}`}
-            >
+              className={`${path === "/stats" ? "primary" : ""}`}>
               Stats
             </Link>
           </div>
@@ -142,5 +141,5 @@ export default function Footer() {
         </section>
       </section>
     </footer>
-  );
+  )
 }

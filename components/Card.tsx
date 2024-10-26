@@ -1,8 +1,8 @@
-import Link from "next/link";
-import styles from "@/styles/search.module.css";
+import styles from "@/styles/search.module.css"
+import Link from "next/link"
 // Icons
-import { FaClosedCaptioning } from "react-icons/fa6";
-import { BiSolidMicrophone } from "react-icons/bi";
+import { BiSolidMicrophone } from "react-icons/bi"
+import { FaClosedCaptioning } from "react-icons/fa6"
 
 export default function Card({
   id,
@@ -14,21 +14,20 @@ export default function Card({
   isAdult,
   lastEpisode,
 }: {
-  id: string;
-  image: string;
-  title: string;
-  subCount: string | number;
-  dubCount: string | number;
-  totalCount: string | number;
-  isAdult: string;
-  lastEpisode?: number;
+  id: string
+  image: string
+  title: string
+  subCount: string | number
+  dubCount: string | number
+  totalCount: string | number
+  isAdult: string
+  lastEpisode?: number
 }) {
   return (
     <Link
       href={lastEpisode ? `/watch/${id}?eps=${lastEpisode}` : `/watch/${id}`}
       className={styles.billboard_Individual}
-      title={`${title}`}
-    >
+      title={`${title}`}>
       <img
         src={image}
         alt={image}
@@ -56,5 +55,5 @@ export default function Card({
         )}
       </div>
     </Link>
-  );
+  )
 }

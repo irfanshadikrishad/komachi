@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import styles from "@/styles/search.module.css";
-import { IoChevronDownOutline } from "react-icons/io5";
-import { PiCheckCircleFill } from "react-icons/pi";
+import styles from "@/styles/search.module.css"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { IoChevronDownOutline } from "react-icons/io5"
+import { PiCheckCircleFill } from "react-icons/pi"
 
 export default function Genre({
   genre,
@@ -15,49 +15,48 @@ export default function Genre({
   setIsCountryOpen,
   setIsStatusOpen,
 }: {
-  genre: string[];
-  setGenre: Dispatch<SetStateAction<string[]>>;
-  isGenreOpen: boolean;
-  insertValuesIntoState: any;
-  setIsGenreOpen: Dispatch<SetStateAction<boolean>>;
-  setIsYearOpen: Dispatch<SetStateAction<boolean>>;
-  setIsSeasonOpen: Dispatch<SetStateAction<boolean>>;
-  setIsFormatOpen: Dispatch<SetStateAction<boolean>>;
-  setIsCountryOpen: Dispatch<SetStateAction<boolean>>;
-  setIsStatusOpen: Dispatch<SetStateAction<boolean>>;
+  genre: string[]
+  setGenre: Dispatch<SetStateAction<string[]>>
+  isGenreOpen: boolean
+  insertValuesIntoState: any
+  setIsGenreOpen: Dispatch<SetStateAction<boolean>>
+  setIsYearOpen: Dispatch<SetStateAction<boolean>>
+  setIsSeasonOpen: Dispatch<SetStateAction<boolean>>
+  setIsFormatOpen: Dispatch<SetStateAction<boolean>>
+  setIsCountryOpen: Dispatch<SetStateAction<boolean>>
+  setIsStatusOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const [distinctGenres, setDistinctGenres] = useState<string[]>([]);
+  const [distinctGenres, setDistinctGenres] = useState<string[]>([])
 
   const getDistinctGenres = async () => {
     const request = await fetch(`/api/distinct/genre`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-    });
-    const response = await request.json();
+    })
+    const response = await request.json()
 
     if (request.status === 200) {
-      setDistinctGenres(response);
+      setDistinctGenres(response)
     } else {
-      console.log(response);
+      console.log(response)
     }
-  };
+  }
 
   useEffect(() => {
-    getDistinctGenres();
-  }, []);
+    getDistinctGenres()
+  }, [])
   return (
     <section className={styles.filter_indi}>
       <button
         className={styles.filter_btn}
         onClick={() => {
-          setIsGenreOpen(!isGenreOpen);
-          setIsYearOpen(false);
-          setIsSeasonOpen(false);
-          setIsFormatOpen(false);
-          setIsCountryOpen(false);
-          setIsStatusOpen(false);
-        }}
-      >
+          setIsGenreOpen(!isGenreOpen)
+          setIsYearOpen(false)
+          setIsSeasonOpen(false)
+          setIsFormatOpen(false)
+          setIsCountryOpen(false)
+          setIsStatusOpen(false)
+        }}>
         <p className={`one_line ${styles.values}`}>
           {genre.length > 0 ? genre.join(", ") : "Genres"}
         </p>
@@ -71,16 +70,15 @@ export default function Genre({
                 <button
                   key={index}
                   onClick={() => {
-                    insertValuesIntoState(disG, setGenre);
-                  }}
-                >
+                    insertValuesIntoState(disG, setGenre)
+                  }}>
                   <p>{disG}</p>
                   {genre.includes(disG) && <PiCheckCircleFill />}
                 </button>
-              );
+              )
             })}
         </div>
       )}
     </section>
-  );
+  )
 }

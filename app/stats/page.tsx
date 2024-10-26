@@ -1,39 +1,39 @@
-"use client";
-import { useEffect, useState } from "react";
-import styles from "@/styles/stats.module.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+"use client"
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
+import styles from "@/styles/stats.module.css"
+import { useEffect, useState } from "react"
 // Skeleton
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton"
+import "react-loading-skeleton/dist/skeleton.css"
 
 export default function Stats() {
   const [stats, setStats] = useState<{
-    total_animes: string;
-    total_ongoing: string;
-  }>();
+    total_animes: string
+    total_ongoing: string
+  }>()
 
   const getStats = async () => {
     try {
       const request = await fetch(`/api/stats`, {
         method: "GET",
         cache: "default",
-      });
-      const response = await request.json();
+      })
+      const response = await request.json()
 
       if (request.status === 200) {
-        setStats(response);
+        setStats(response)
       } else {
-        console.log(response);
+        console.log(response)
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   useEffect(() => {
-    getStats();
-  }, []);
+    getStats()
+  }, [])
   return (
     <>
       <Navbar />
@@ -41,8 +41,7 @@ export default function Stats() {
         <section className={styles.stats_Cards}>
           <div
             className={styles.stats_Card}
-            style={{ backgroundImage: "url(kanna.png)" }}
-          >
+            style={{ backgroundImage: "url(kanna.png)" }}>
             <p>Total Animes</p>
             {stats?.total_animes ? (
               <h1>{stats?.total_animes}</h1>
@@ -57,8 +56,7 @@ export default function Stats() {
           </div>
           <div
             className={styles.stats_Card}
-            style={{ backgroundImage: "url(gojo.png)" }}
-          >
+            style={{ backgroundImage: "url(gojo.png)" }}>
             <p>Total Ongoing</p>
             {stats?.total_ongoing ? (
               <h1>{stats?.total_ongoing}</h1>
@@ -75,5 +73,5 @@ export default function Stats() {
       </section>
       <Footer />
     </>
-  );
+  )
 }

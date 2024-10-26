@@ -1,21 +1,21 @@
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import styles from "@/styles/latest.module.css";
+import styles from "@/styles/latest.module.css"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 // ICONS
-import { TbMicrophoneFilled } from "react-icons/tb";
-import { FaClosedCaptioning } from "react-icons/fa6";
-import { CgMediaLive } from "react-icons/cg";
+import { CgMediaLive } from "react-icons/cg"
+import { FaClosedCaptioning } from "react-icons/fa6"
+import { TbMicrophoneFilled } from "react-icons/tb"
 
 export default function Ranking({ popular, trending }) {
-  const [rank, setRank] = useState([]);
+  const [rank, setRank] = useState([])
 
   useEffect(() => {
     if (localStorage.getItem("rank") === "trending") {
-      setRank(trending);
+      setRank(trending)
     } else {
-      setRank(popular);
+      setRank(popular)
     }
-  }, [popular, trending]);
+  }, [popular, trending])
   return (
     <section className="home_ranking">
       <section className="home_popular">
@@ -29,10 +29,9 @@ export default function Ranking({ popular, trending }) {
                   "var(--primary)",
               }}
               onClick={() => {
-                setRank(popular);
-                localStorage.setItem("rank", "popular");
-              }}
-            >
+                setRank(popular)
+                localStorage.setItem("rank", "popular")
+              }}>
               Popular
             </button>
             <button
@@ -42,10 +41,9 @@ export default function Ranking({ popular, trending }) {
                   "var(--primary)",
               }}
               onClick={() => {
-                setRank(trending);
-                localStorage.setItem("rank", "trending");
-              }}
-            >
+                setRank(trending)
+                localStorage.setItem("rank", "trending")
+              }}>
               Trending
             </button>
           </div>
@@ -120,12 +118,10 @@ export default function Ranking({ popular, trending }) {
                     <div key={index + 1}>
                       <Link
                         href={`/watch/${anilistId}`}
-                        className={styles.rank_Main_Others}
-                      >
+                        className={styles.rank_Main_Others}>
                         <section className={styles.rankin}>
                           <div
-                            className={`${styles.rank_Number} ${styles.rank_Number_Others}`}
-                          >
+                            className={`${styles.rank_Number} ${styles.rank_Number_Others}`}>
                             <h4>{index + 1}</h4>
                           </div>
                           <div className={styles.ranks_2}>
@@ -160,7 +156,7 @@ export default function Ranking({ popular, trending }) {
                         />
                       </Link>
                     </div>
-                  );
+                  )
                 }
               }
             )}
@@ -168,5 +164,5 @@ export default function Ranking({ popular, trending }) {
         </section>
       </section>
     </section>
-  );
+  )
 }

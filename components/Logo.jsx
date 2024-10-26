@@ -1,5 +1,5 @@
-import Link from "next/link";
-import styles from "@/styles/navbar.module.css";
+import styles from "@/styles/navbar.module.css"
+import Link from "next/link"
 
 export default function Logo() {
   return (
@@ -8,8 +8,7 @@ export default function Logo() {
         prefetch={true}
         href="/"
         className={styles.text_logo}
-        style={{ display: "inline" }}
-      >
+        style={{ display: "inline" }}>
         <p>
           (こまち)
           <br />
@@ -17,5 +16,5 @@ export default function Logo() {
         </p>
       </Link>
     </div>
-  );
+  )
 }

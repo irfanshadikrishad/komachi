@@ -1,20 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import styles from "@/styles/player.module.css";
+import styles from "@/styles/player.module.css"
 import {
   streamNextEpisode,
   streamPreviousEpisode,
   subToDub,
-} from "@/utils/helpers";
+} from "@/utils/helpers"
+import { useEffect, useRef, useState } from "react"
 // Icons
-import { LuSearch } from "react-icons/lu";
 import {
+  IoChevronBack,
   IoChevronDownOutline,
   IoChevronForward,
-  IoChevronBack,
-} from "react-icons/io5";
+} from "react-icons/io5"
+import { LuSearch } from "react-icons/lu"
 // Skeleton
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton"
+import "react-loading-skeleton/dist/skeleton.css"
 
 export default function Episodes({
   unicornEpisodes,
@@ -22,48 +22,48 @@ export default function Episodes({
   currentEpisode,
   streamLink,
 }: {
-  unicornEpisodes: any[];
-  getStreamLink: any;
-  streamLink: string;
-  animeId: string;
-  malId: string;
-  currentEpisode: number | string | undefined;
+  unicornEpisodes: any[]
+  getStreamLink: any
+  streamLink: string
+  animeId: string
+  malId: string
+  currentEpisode: number | string | undefined
 }) {
-  const [goodEpisodes, setGoodEpisodes] = useState<any[]>([]);
-  const [isRangeOpen, setIsRangeOpen] = useState<boolean>(false);
-  const [selectedEpisodeRange, setSelectedEpisodeRange] = useState(0);
-  const [lastEpisodeRange, setLastEpisodeRange] = useState(false);
-  const [filtered, setFiltered] = useState<any[]>([]);
-  const [firstEpisode, setFirstEpisode] = useState<string>("");
-  const [lastEpisode, setLastEpisode] = useState<string>("");
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  let start = selectedEpisodeRange * 100 + 1;
+  const [goodEpisodes, setGoodEpisodes] = useState<any[]>([])
+  const [isRangeOpen, setIsRangeOpen] = useState<boolean>(false)
+  const [selectedEpisodeRange, setSelectedEpisodeRange] = useState(0)
+  const [lastEpisodeRange, setLastEpisodeRange] = useState(false)
+  const [filtered, setFiltered] = useState<any[]>([])
+  const [firstEpisode, setFirstEpisode] = useState<string>("")
+  const [lastEpisode, setLastEpisode] = useState<string>("")
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  let start = selectedEpisodeRange * 100 + 1
   let end =
     unicornEpisodes?.length <= 100
       ? unicornEpisodes?.length
       : !lastEpisodeRange
-      ? (selectedEpisodeRange + 1) * 100
-      : unicornEpisodes.length;
+        ? (selectedEpisodeRange + 1) * 100
+        : unicornEpisodes.length
 
   useEffect(() => {
     // CHUNK UP ARRAY
     if (unicornEpisodes) {
       const chunkArray = (array: any[], size: number) => {
-        const result = [];
+        const result = []
         for (let i = 0; i < array.length; i += size) {
-          const chunk = array.slice(i, i + size);
-          result.push(chunk);
+          const chunk = array.slice(i, i + size)
+          result.push(chunk)
         }
-        return result;
-      };
+        return result
+      }
 
-      const chunks: any[] = chunkArray(unicornEpisodes, 100);
-      setGoodEpisodes(chunks);
+      const chunks: any[] = chunkArray(unicornEpisodes, 100)
+      setGoodEpisodes(chunks)
     }
 
-    setFirstEpisode(unicornEpisodes[0]?.id);
-    setLastEpisode(unicornEpisodes[unicornEpisodes.length - 1]?.id);
-  }, [unicornEpisodes]);
+    setFirstEpisode(unicornEpisodes[0]?.id)
+    setLastEpisode(unicornEpisodes[unicornEpisodes.length - 1]?.id)
+  }, [unicornEpisodes])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -71,20 +71,20 @@ export default function Episodes({
         dropdownRef?.current &&
         !dropdownRef?.current?.contains(event.target as Node)
       ) {
-        setIsRangeOpen(false);
+        setIsRangeOpen(false)
       }
-    };
+    }
 
     if (isRangeOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside)
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside)
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isRangeOpen]);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [isRangeOpen])
 
   return (
     <div className={styles.episodes_Wrapper}>
@@ -95,9 +95,9 @@ export default function Episodes({
             onChange={(e) => {
               setFiltered(
                 unicornEpisodes.filter(({ number }) => {
-                  return String(number).includes(String(e.target.value));
+                  return String(number).includes(String(e.target.value))
                 })
-              );
+              )
             }}
             type="text"
             placeholder="Search"
@@ -108,9 +108,8 @@ export default function Episodes({
             <div
               className={styles.range_limit}
               onClick={() => {
-                setIsRangeOpen(!isRangeOpen);
-              }}
-            >
+                setIsRangeOpen(!isRangeOpen)
+              }}>
               <span className="one_line">
                 {unicornEpisodes?.length > 0 ? (
                   `${start}-${end}`
@@ -127,27 +126,26 @@ export default function Episodes({
             {isRangeOpen && (
               <div className={styles.limit_details}>
                 {goodEpisodes.map((_, index: number) => {
-                  start = index * 100 + 1;
-                  end = (index + 1) * 100;
-                  const isLastIndex = index === goodEpisodes.length - 1;
-                  end = isLastIndex ? unicornEpisodes?.length : end;
+                  start = index * 100 + 1
+                  end = (index + 1) * 100
+                  const isLastIndex = index === goodEpisodes.length - 1
+                  end = isLastIndex ? unicornEpisodes?.length : end
 
                   return (
                     <button
                       key={index}
                       onClick={() => {
-                        setSelectedEpisodeRange(index);
-                        setIsRangeOpen(false);
+                        setSelectedEpisodeRange(index)
+                        setIsRangeOpen(false)
                         if (isLastIndex) {
-                          setLastEpisodeRange(true);
+                          setLastEpisodeRange(true)
                         } else {
-                          setLastEpisodeRange(false);
+                          setLastEpisodeRange(false)
                         }
-                      }}
-                    >
+                      }}>
                       {`${start}-${end}`}
                     </button>
-                  );
+                  )
                 })}
               </div>
             )}
@@ -161,10 +159,9 @@ export default function Episodes({
             }}
             onClick={() => {
               if (currentEpisode !== firstEpisode) {
-                getStreamLink(streamPreviousEpisode(String(currentEpisode)));
+                getStreamLink(streamPreviousEpisode(String(currentEpisode)))
               }
-            }}
-          >
+            }}>
             <IoChevronBack />
           </button>
           <button
@@ -176,10 +173,9 @@ export default function Episodes({
             }}
             onClick={() => {
               if (currentEpisode !== lastEpisode) {
-                getStreamLink(streamNextEpisode(String(currentEpisode)));
+                getStreamLink(streamNextEpisode(String(currentEpisode)))
               }
-            }}
-          >
+            }}>
             <IoChevronForward />
           </button>
         </div>
@@ -195,43 +191,44 @@ export default function Episodes({
                       currentEpisode === id ? styles.active_Episode : ""
                     }`}
                     onClick={() => {
-                      getStreamLink(id, subToDub(id));
-                    }}
-                  >
+                      getStreamLink(id, subToDub(id))
+                    }}>
                     {number}
                   </button>
-                );
+                )
               }
             )
           : goodEpisodes.length > 0
-          ? goodEpisodes[selectedEpisodeRange].map(
-              ({ id, number }: { id: string; number: number }, idx: number) => {
+            ? goodEpisodes[selectedEpisodeRange].map(
+                (
+                  { id, number }: { id: string; number: number },
+                  idx: number
+                ) => {
+                  return (
+                    <button
+                      key={idx}
+                      className={`${styles.btn} ${
+                        currentEpisode === id ? styles.active_Episode : ""
+                      }`}
+                      onClick={() => {
+                        getStreamLink(id, subToDub(id))
+                      }}>
+                      {number}
+                    </button>
+                  )
+                }
+              )
+            : Array.from({ length: 24 }).map((_, idx) => {
                 return (
-                  <button
+                  <Skeleton
                     key={idx}
-                    className={`${styles.btn} ${
-                      currentEpisode === id ? styles.active_Episode : ""
-                    }`}
-                    onClick={() => {
-                      getStreamLink(id, subToDub(id));
-                    }}
-                  >
-                    {number}
-                  </button>
-                );
-              }
-            )
-          : Array.from({ length: 24 }).map((_, idx) => {
-              return (
-                <Skeleton
-                  key={idx}
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  height={25}
-                />
-              );
-            })}
+                    baseColor="var(--background)"
+                    highlightColor="var(--secondary)"
+                    height={25}
+                  />
+                )
+              })}
       </div>
     </div>
-  );
+  )
 }

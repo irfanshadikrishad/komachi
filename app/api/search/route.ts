@@ -1,9 +1,9 @@
-import { database } from "@/utils/database";
-import Anime from "@/schema/anime";
+import Anime from "@/schema/anime"
+import { database } from "@/utils/database"
 
 export async function POST(request: Request) {
   try {
-    await database();
+    await database()
     const {
       query,
       format,
@@ -14,9 +14,9 @@ export async function POST(request: Request) {
       status,
       page = 1,
       perPage = 5,
-    } = await request.json();
+    } = await request.json()
 
-    const searchConditions = [];
+    const searchConditions = []
 
     if (query) {
       searchConditions.push({
@@ -26,41 +26,41 @@ export async function POST(request: Request) {
           { "title.native": { $regex: query, $options: "i" } },
           { synonyms: { $elemMatch: { $regex: query, $options: "i" } } },
         ],
-      });
+      })
     }
 
     if (status.length > 0) {
-      searchConditions.push({ status: { $in: status } });
+      searchConditions.push({ status: { $in: status } })
     }
     if (format.length > 0) {
-      searchConditions.push({ format: { $in: format } });
+      searchConditions.push({ format: { $in: format } })
     }
     if (origin.length > 0) {
-      searchConditions.push({ origin: { $in: origin } });
+      searchConditions.push({ origin: { $in: origin } })
     }
     if (genre.length > 0) {
-      searchConditions.push({ genres: { $in: genre } });
+      searchConditions.push({ genres: { $in: genre } })
     }
     if (year.length > 0) {
-      searchConditions.push({ "airing_start.year": { $in: year } });
+      searchConditions.push({ "airing_start.year": { $in: year } })
     }
     if (season.length > 0) {
-      searchConditions.push({ season: { $in: season } });
+      searchConditions.push({ season: { $in: season } })
     }
 
     const queryObject =
       searchConditions.length > 1
         ? { $and: searchConditions }
-        : searchConditions[0] || {};
+        : searchConditions[0] || {}
 
-    const skip = (page - 1) * perPage;
-    const results = await Anime.find(queryObject).skip(skip).limit(perPage);
-    const totalCount = await Anime.countDocuments(queryObject);
+    const skip = (page - 1) * perPage
+    const results = await Anime.find(queryObject).skip(skip).limit(perPage)
+    const totalCount = await Anime.countDocuments(queryObject)
 
     if (results.length === 0) {
       return new Response(JSON.stringify({ message: "0 results found" }), {
         status: 404,
-      });
+      })
     } else {
       return new Response(
         JSON.stringify({
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
           currentPage: page,
         }),
         { status: 200, headers: { "Content-Type": "application/json" } }
-      );
+      )
     }
   } catch (error) {
     return new Response(
@@ -79,6 +79,6 @@ export async function POST(request: Request) {
         status: 500,
         headers: { "Content-Type": "application/json" },
       }
-    );
+    )
   }
 }

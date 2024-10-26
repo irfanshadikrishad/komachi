@@ -1,15 +1,15 @@
-import Card from "@/components/Card";
-import styles from "@/styles/recommendations.module.css";
-import { getTitle } from "@/utils/helpers";
-import { useState } from "react";
-import { FaChevronDown } from "react-icons/fa6";
+import Card from "@/components/Card"
+import styles from "@/styles/recommendations.module.css"
+import { getTitle } from "@/utils/helpers"
+import { useState } from "react"
+import { FaChevronDown } from "react-icons/fa6"
 
 export default function Recommendations({
   recommendations,
 }: {
-  recommendations: any[];
+  recommendations: any[]
 }) {
-  const [to, setTo] = useState(7);
+  const [to, setTo] = useState(7)
 
   return (
     <section className={styles.wrapper}>
@@ -21,12 +21,11 @@ export default function Recommendations({
               className={styles.downBtn}
               onClick={() => {
                 if (to === 7) {
-                  setTo(recommendations.length);
+                  setTo(recommendations.length)
                 } else {
-                  setTo(7);
+                  setTo(7)
                 }
-              }}
-            >
+              }}>
               <FaChevronDown />
             </button>
           </div>
@@ -60,10 +59,10 @@ export default function Recommendations({
                     totalCount={totalEpisodes}
                     isAdult={isAdult}
                   />
-                );
+                )
               }
             )}
       </div>
     </section>
-  );
+  )
 }

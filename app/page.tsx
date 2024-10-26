@@ -1,8 +1,8 @@
-import Board from "@/components/Board";
-import Latest from "@/components/Latest";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Schedule from "@/components/Schedule";
+import Board from "@/components/Board"
+import Footer from "@/components/Footer"
+import Latest from "@/components/Latest"
+import Navbar from "@/components/Navbar"
+import Schedule from "@/components/Schedule"
 
 export default function Home() {
   return (
@@ -13,5 +13,5 @@ export default function Home() {
       <Schedule />
       <Footer />
     </>
-  );
+  )
 }

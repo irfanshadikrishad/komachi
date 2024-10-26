@@ -10,6 +10,6 @@ const nextConfig = {
       { hostname: "cdn.myanimelist.net" },
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

@@ -1,27 +1,27 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "@/app/globals.css";
-import { removeHtmlAndMarkdown } from "@/utils/helpers";
+import "@/app/globals.css"
+import { removeHtmlAndMarkdown } from "@/utils/helpers"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] })
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
   params: {
-    id: string;
-  };
+    id: string
+  }
 }
 
 export async function generateMetadata({
   params,
 }: LayoutProps): Promise<Metadata> {
-  const { id } = params;
+  const { id } = params
 
   const data = await fetch(`${process.env.BASE_URL}/api/info`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ animeId: id }),
-  }).then((res) => res.json());
+  }).then((res) => res.json())
 
   return {
     title:
@@ -60,16 +60,16 @@ export async function generateMetadata({
       type: "video.tv_show",
       url: `${process.env.BASE_URL}/watch/${data?.anilistId}`,
     },
-  };
+  }
 }
 
 export default async function RootLayout({ children, params }: LayoutProps) {
-  const metadata = await generateMetadata({ params, children });
+  const metadata = await generateMetadata({ params, children })
 
   return (
     <html lang="en">
       <head></head>
       <body className={inter.className}>{children}</body>
     </html>
-  );
+  )
 }

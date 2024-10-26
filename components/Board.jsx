@@ -1,27 +1,27 @@
-"use client";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import styles from "@/styles/board.module.css";
+"use client"
+import styles from "@/styles/board.module.css"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 // ICONS
-import { FaRegCirclePlay, FaClosedCaptioning } from "react-icons/fa6";
-import { BsBookmarkStar } from "react-icons/bs";
-import { MdVerified } from "react-icons/md";
-import { AiFillThunderbolt } from "react-icons/ai";
-import { TbMicrophoneFilled, TbLoader } from "react-icons/tb";
+import { AiFillThunderbolt } from "react-icons/ai"
+import { BsBookmarkStar } from "react-icons/bs"
+import { FaClosedCaptioning, FaRegCirclePlay } from "react-icons/fa6"
+import { MdVerified } from "react-icons/md"
+import { TbLoader, TbMicrophoneFilled } from "react-icons/tb"
 // Swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { Pagination, Autoplay, Navigation } from "swiper/modules";
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import { Autoplay, Navigation, Pagination } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/react"
 // Skeleton
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton"
+import "react-loading-skeleton/dist/skeleton.css"
 // Utils
-import { removeHtmlAndMarkdown } from "@/utils/helpers";
+import { removeHtmlAndMarkdown } from "@/utils/helpers"
 
 export default function Board() {
-  const [boardInfo, setBoardInfo] = useState([]);
+  const [boardInfo, setBoardInfo] = useState([])
 
   const getBoardAnimes = async () => {
     try {
@@ -29,22 +29,22 @@ export default function Board() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ page: 1, perPage: 6 }),
-      });
-      const response = await request.json();
+      })
+      const response = await request.json()
 
       if (request.status === 200) {
-        setBoardInfo(response.results);
+        setBoardInfo(response.results)
       } else {
-        console.log(response);
+        console.log(response)
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   useEffect(() => {
-    getBoardAnimes();
-  }, []);
+    getBoardAnimes()
+  }, [])
   return (
     <section className="container">
       <Swiper
@@ -53,8 +53,7 @@ export default function Board() {
         slidesPerView={1}
         autoplay={{ delay: 3000 }}
         pagination={{ clickable: true }}
-        navigation={false}
-      >
+        navigation={false}>
         {boardInfo.length > 0 ? (
           boardInfo.map((bored, index) => {
             return (
@@ -63,8 +62,7 @@ export default function Board() {
                   className={styles.board}
                   style={{
                     backgroundImage: `url(${bored.cover})`,
-                  }}
-                ></div>
+                  }}></div>
                 <div className={styles.elem}>
                   <h1 className={`two_line ${styles.title}`}>
                     {bored.title.english
@@ -109,8 +107,7 @@ export default function Board() {
                   <div className={styles.boardBtns}>
                     <Link
                       href={`/watch/${bored?.anilistId}`}
-                      className={styles.watch}
-                    >
+                      className={styles.watch}>
                       {<FaRegCirclePlay />} Watch now
                     </Link>
                     <button disabled className={styles.bookmark}>
@@ -119,7 +116,7 @@ export default function Board() {
                   </div>
                 </div>
               </SwiperSlide>
-            );
+            )
           })
         ) : (
           <Skeleton
@@ -130,5 +127,5 @@ export default function Board() {
         )}
       </Swiper>
     </section>
-  );
+  )
 }

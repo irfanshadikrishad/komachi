@@ -1,11 +1,11 @@
-"use client";
-import { useState } from "react";
-import styles from "@/styles/player.module.css";
+"use client"
+import styles from "@/styles/player.module.css"
+import { useState } from "react"
 
 export default function Automatics() {
-  const [autoPlay, setAutoPlay] = useState(false);
-  const [autoSkip, setAutoSkip] = useState(false);
-  const [autoNext, setAutoNext] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(false)
+  const [autoSkip, setAutoSkip] = useState(false)
+  const [autoNext, setAutoNext] = useState(false)
 
   return (
     <section className={styles.ctrls}>
@@ -14,7 +14,7 @@ export default function Automatics() {
           type="checkbox"
           name="play"
           onChange={(e) => {
-            setAutoPlay(e.target.checked);
+            setAutoPlay(e.target.checked)
           }}
         />
         <p style={{ textDecoration: "line-through" }}>Auto Play</p>
@@ -25,7 +25,7 @@ export default function Automatics() {
           type="checkbox"
           name="skip"
           onChange={(e) => {
-            setAutoSkip(e.target.checked);
+            setAutoSkip(e.target.checked)
           }}
         />
         <p style={{ textDecoration: "line-through" }}>Auto Skip</p>
@@ -36,12 +36,12 @@ export default function Automatics() {
           type="checkbox"
           name="next"
           onChange={(e) => {
-            setAutoNext(e.target.checked);
+            setAutoNext(e.target.checked)
           }}
         />
         <p style={{ textDecoration: "line-through" }}>Auto Next</p>
         <span className={styles.checkmark}></span>
       </label>
     </section>
-  );
+  )
 }

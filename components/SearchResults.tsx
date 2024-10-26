@@ -1,9 +1,9 @@
-import Card from "@/components/Card";
-import styles from "@/styles/search.module.css";
-import cardio from "@/styles/cardio.module.css";
-import { getTitle } from "@/utils/helpers";
+import Card from "@/components/Card"
+import cardio from "@/styles/cardio.module.css"
+import styles from "@/styles/search.module.css"
+import { getTitle } from "@/utils/helpers"
 // Icons
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
 
 export default function SearchResults({
   query,
@@ -13,12 +13,12 @@ export default function SearchResults({
   totalCount,
   getSearched,
 }: {
-  query: null | string;
-  results: any[];
-  currentPage: number | undefined;
-  totalPages: number | undefined;
-  totalCount: number | undefined;
-  getSearched: any;
+  query: null | string
+  results: any[]
+  currentPage: number | undefined
+  totalPages: number | undefined
+  totalCount: number | undefined
+  getSearched: any
 }) {
   return (
     <section className={styles.billboard_Wrapper}>
@@ -33,20 +33,18 @@ export default function SearchResults({
               className={`${Number(currentPage) <= 1 ? "" : "primary"}`}
               onClick={() => {
                 if (Number(currentPage) > 1) {
-                  getSearched(Number(currentPage) - 1);
+                  getSearched(Number(currentPage) - 1)
                 }
-              }}
-            >
+              }}>
               <FaChevronLeft />
             </button>
             <button
               className={`${currentPage === totalPages ? "" : "primary"}`}
               onClick={() => {
                 if (Number(currentPage) + 1 <= Number(totalPages)) {
-                  getSearched(Number(currentPage) + 1);
+                  getSearched(Number(currentPage) + 1)
                 }
-              }}
-            >
+              }}>
               <FaChevronRight />
             </button>
           </div>
@@ -62,13 +60,13 @@ export default function SearchResults({
               totalEpisodes,
               title,
             }: {
-              anilistId: string;
-              poster: string;
-              sub_episodes: [];
-              dub_episodes: [];
-              totalEpisodes: string | number;
-              title: { english?: string; romaji?: string; native?: string };
-              isAdult: string;
+              anilistId: string
+              poster: string
+              sub_episodes: []
+              dub_episodes: []
+              totalEpisodes: string | number
+              title: { english?: string; romaji?: string; native?: string }
+              isAdult: string
             }) => (
               <Card
                 key={anilistId}
@@ -85,5 +83,5 @@ export default function SearchResults({
         </section>
       </section>
     </section>
-  );
+  )
 }
