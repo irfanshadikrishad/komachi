@@ -7,14 +7,13 @@ const inter = Inter({ subsets: ["latin"] })
 
 interface LayoutProps {
   children: React.ReactNode
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export async function generateMetadata({
-  params,
-}: LayoutProps): Promise<Metadata> {
+export async function generateMetadata(props: LayoutProps): Promise<Metadata> {
+  const params = await props.params
   const { id } = params
 
   const data = await fetch(`${process.env.BASE_URL}/api/info`, {
