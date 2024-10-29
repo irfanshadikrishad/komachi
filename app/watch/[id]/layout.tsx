@@ -62,8 +62,12 @@ export async function generateMetadata(props: LayoutProps): Promise<Metadata> {
   }
 }
 
-export default async function RootLayout({ children, params }: LayoutProps) {
-  const metadata = await generateMetadata({ params, children })
+export default async function RootLayout(props: LayoutProps) {
+  const params = await props.params
+
+  const { children } = props
+
+  // const metadata = await generateMetadata({ params, children })
 
   return (
     <html lang="en">
