@@ -17,7 +17,7 @@ export default function Lists() {
   const [totalCount, setTotalCount] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
-  const [show, setShow] = useState<string | null>(null)
+  const [show, setShow] = useState<string | null>("")
   const searchParams = useSearchParams()
 
   const getShowResults = async (
@@ -45,9 +45,12 @@ export default function Lists() {
   }
 
   useEffect(() => {
-    const showParam = searchParams.get("show") || "all"
-    setShow(showParam)
-    getShowResults(showParam)
+    if (typeof window !== "undefined") {
+      // Ensure it runs on the client-side
+      const showParam = searchParams.get("show") || "all"
+      setShow(showParam)
+      getShowResults(showParam)
+    }
   }, [searchParams])
 
   return (
