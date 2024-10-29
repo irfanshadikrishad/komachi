@@ -1,119 +1,172 @@
 "use client"
-import Card from "@/components/Card"
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
-import cardio from "@/styles/cardio.module.css"
-import footer_styles from "@/styles/footer.module.css"
-import styles from "@/styles/lists.module.css"
-import { getTitle } from "@/utils/helpers"
-import { useSearchParams } from "next/navigation"
+import Player from "@/components/Player"
+import styles from "@/styles/watch.module.css"
+import { AnimeInfo, extractDefaultSource } from "@/utils/helpers"
+import Image from "next/image"
+import { useParams, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
-import Skeleton from "react-loading-skeleton"
-import "react-loading-skeleton/dist/skeleton.css"
 
-export default function Lists() {
-  const [results, setResults] = useState<any[]>([])
-  const [totalCount, setTotalCount] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [show, setShow] = useState<string | null>("")
-  const searchParams = useSearchParams()
+export default function Streaming() {
+  const params = useParams()
+  const animeId = params.id
+  const eps = useSearchParams().get("eps")
+  const [animeInfo, setAnimeInfo] = useState<AnimeInfo>()
+  const [episodes, setEpisodes] = useState<any>([])
+  const [streamLink, setStreamLink] = useState("")
+  const [dubLink, setDubLink] = useState<string | null>(null)
+  const [currentEpisode, setCurrentEpisode] = useState<string>()
+  const [episodeDownloadLink, setEpisodeDownloadLink] = useState("")
+  const [sources, setSources] = useState([])
+  const [dubEpisodes, setDubEpisodes] = useState([])
+  const [nextAiringTime, setNextAiringTime] = useState({})
+  const [notFound, setNotFound] = useState(false)
 
-  const getShowResults = async (
-    show: string,
-    page: number = 1,
-    perPage: number = 27
-  ) => {
-    setResults([])
-    const request = await fetch(`/api/lists`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ show: show || "all", page, perPage }),
-    })
-    const response = await request.json()
+  const getStreamLink = async (subEpisodeId: string, dubEpisodeId?: string) => {
+    try {
+      if (subEpisodeId && subEpisodeId !== "undefined") {
+        const request = await fetch(`/api/stream`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            subEpisodeId,
+            dubEpisodeId: dubEpisodeId ? dubEpisodeId : null,
+          }),
+        })
+        const response = await request.json()
 
-    if (request.status === 200) {
-      setResults(response.results)
-      setCurrentPage(response.currentPage)
-      setTotalCount(response.totalCount)
-      setTotalPages(response.totalPages)
-      setShow(show)
-    } else {
-      console.log("Error fetching results:", response)
+        if (request.status === 200) {
+          setStreamLink(
+            String(extractDefaultSource(response?.subLink?.sources))
+          )
+          if (response?.dubLink !== null) {
+            setDubLink(String(extractDefaultSource(response?.dubLink?.sources)))
+          } else {
+            setDubLink(null)
+          }
+          setCurrentEpisode(subEpisodeId)
+          setEpisodeDownloadLink(response.download)
+        } else {
+          console.log(response)
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching stream link:", error, subEpisodeId)
+    }
+  }
+
+  const getAnimeInfo = async () => {
+    try {
+      const request = await fetch(`/api/info`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ animeId }),
+      })
+      const response = await request.json()
+
+      if (request.status === 200) {
+        setNextAiringTime(response?.nextAiringEpisode)
+        setAnimeInfo(response)
+        setEpisodes(
+          response?.sub_episodes.length > 0
+            ? response?.sub_episodes
+            : response?.dub_episodes
+        )
+        setDubEpisodes(response?.dub_episodes)
+        setCurrentEpisode(
+          response?.sub_episodes[0]?.id
+            ? response?.sub_episodes[0]?.id
+            : response?.dub_episodes[0]?.id
+        )
+        if (response?.sub_episodes[0]?.id) {
+          getStreamLink(
+            eps
+              ? response?.sub_episodes[Number(eps) - 1]?.id
+              : response?.sub_episodes[0]?.id,
+            eps
+              ? response?.dub_episodes[Number(eps) - 1]?.id
+              : response?.dub_episodes[0]?.id
+          )
+        } else if (response?.dub_episodes[0]?.id) {
+          getStreamLink(
+            eps
+              ? response?.dub_episodes[Number(eps) - 1]?.id
+              : response?.dub_episodes[0]?.id
+          )
+        }
+      } else {
+        console.log(response)
+        setNotFound(true)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // Individual Episode Sources
+  const getServerSources = async (episodeId: string) => {
+    try {
+      const request = await fetch(`/api/sources`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ episodeId }),
+      })
+      const response = await request.json()
+
+      if (request.status === 200) {
+        setSources(response)
+      } else {
+        console.log(response, episodeId)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      // Ensure it runs on the client-side
-      const showParam = searchParams.get("show") || "all"
-      setShow(showParam)
-      getShowResults(showParam)
-    }
-  }, [searchParams])
-
+    getAnimeInfo()
+  }, [eps])
+  useEffect(() => {
+    setDubEpisodes([])
+    window.scrollTo({ top: 0 })
+  }, [animeId, eps])
   return (
     <>
       <Navbar />
       <section className="container">
-        <section className={styles.listsHeader}>
-          <section className={footer_styles.list_Links}>
-            {Array.from("0-9ABCDEFGHIJKLMNOPQRSTUVWXYZ").map((char) => (
-              <button
-                key={char}
-                style={{
-                  color: show === char ? "var(--primary)" : "var(--color)",
-                }}
-                onClick={() => {
-                  setShow(char)
-                  getShowResults(char)
-                }}>
-                {char}
-              </button>
-            ))}
+        {!notFound ? (
+          <section className={styles.watchContainer}>
+            <Player
+              streamLink={streamLink}
+              dubLink={dubLink}
+              currentEpisode={currentEpisode}
+              episodeDownloadLink={episodeDownloadLink}
+              episodes={episodes}
+              getStreamLink={getStreamLink}
+              setStreamLink={setStreamLink}
+              nextAiringEpisode={nextAiringTime}
+              animeInfo={animeInfo}
+            />
           </section>
-          <div className={styles.pageBtns}>
-            <button
-              className={`${currentPage > 1 ? "primary" : ""}`}
-              onClick={() =>
-                currentPage > 1 && getShowResults(String(show), currentPage - 1)
-              }>
-              <FaChevronLeft />
-            </button>
-            <button
-              className={`${currentPage < totalPages ? "primary" : ""}`}
-              onClick={() =>
-                currentPage < totalPages &&
-                getShowResults(String(show), currentPage + 1)
-              }>
-              <FaChevronRight />
-            </button>
-          </div>
-        </section>
-        <section className={cardio.cardsContainer}>
-          {results.length > 0
-            ? results.map((item, idx) => (
-                <Card
-                  key={idx}
-                  title={getTitle(item.title)}
-                  id={item.anilistId}
-                  image={item.poster}
-                  subCount={item.sub_episodes.length}
-                  dubCount={item.dub_episodes.length}
-                  totalCount={item.totalEpisodes}
-                  isAdult={item.isAdult}
-                />
-              ))
-            : Array.from({ length: 20 }).map((_, index) => (
-                <Skeleton
-                  key={index}
-                  height={273}
-                  baseColor="var(--secondary)"
-                  highlightColor="var(--background)"
-                />
-              ))}
-        </section>
+        ) : (
+          <section
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginTop: "15px",
+            }}>
+            <Image
+              src={"/not_found.png"}
+              alt="not_found image"
+              width={300}
+              height={280}
+              draggable="false"
+            />
+            <h1>not-found or unavailable</h1>
+          </section>
+        )}
       </section>
       <Footer />
     </>
