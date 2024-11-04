@@ -7,7 +7,7 @@ import footer_styles from "@/styles/footer.module.css"
 import styles from "@/styles/lists.module.css"
 import { getTitle } from "@/utils/helpers"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
@@ -54,7 +54,7 @@ export default function Lists() {
   }, [searchParams])
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Navbar />
       <section className="container">
         <section className={styles.listsHeader}>
@@ -116,6 +116,6 @@ export default function Lists() {
         </section>
       </section>
       <Footer />
-    </>
+    </Suspense>
   )
 }
