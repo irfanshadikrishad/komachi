@@ -1,9 +1,12 @@
 import Anime from "@/schema/anime"
 import { database } from "@/utils/database"
+import { client, redis } from "@/utils/redis"
 
 export async function POST(request: Request) {
   try {
     await database()
+    await redis.Connect()
+
     const {
       query,
       format,
@@ -15,6 +18,30 @@ export async function POST(request: Request) {
       page = 1,
       perPage = 5,
     } = await request.json()
+
+    const cacheKey = `anime_search:${JSON.stringify({
+      query,
+      format,
+      genre,
+      year,
+      origin,
+      season,
+      status,
+      page,
+      perPage,
+    })}`
+
+    let cachedData = await client.get(cacheKey)
+
+    if (cachedData) {
+      console.warn("[REDIS] Cache hit")
+      return new Response(cachedData, {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
+
+    console.warn("[REDIS] Cache miss")
 
     const searchConditions = []
 
@@ -57,20 +84,24 @@ export async function POST(request: Request) {
     const results = await Anime.find(queryObject).skip(skip).limit(perPage)
     const totalCount = await Anime.countDocuments(queryObject)
 
+    const responseBody = {
+      results,
+      totalCount,
+      totalPages: Math.ceil(totalCount / perPage),
+      currentPage: page,
+    }
+
+    await client.set(cacheKey, JSON.stringify(responseBody), { EX: 21600 })
+
     if (results.length === 0) {
       return new Response(JSON.stringify({ message: "0 results found" }), {
         status: 404,
       })
     } else {
-      return new Response(
-        JSON.stringify({
-          results,
-          totalCount,
-          totalPages: Math.ceil(totalCount / perPage),
-          currentPage: page,
-        }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
-      )
+      return new Response(JSON.stringify(responseBody), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
     }
   } catch (error) {
     return new Response(

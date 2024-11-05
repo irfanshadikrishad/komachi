@@ -1,12 +1,28 @@
 import Anime from "@/schema/anime"
 import { database } from "@/utils/database"
+import { client, redis } from "@/utils/redis"
 
 export const POST = async (req: Request) => {
   try {
     await database()
-    const { page = 1, perPage = 24 } = await req.json()
+    await redis.Connect()
 
-    // Calculate the number of documents to skip
+    const { page = 1, perPage = 24 } = await req.json()
+    const cache_Key = `re_${page}-${perPage}`
+
+    // Check if the data is in the cache
+    let cachedData = await client.get(cache_Key)
+
+    if (cachedData) {
+      console.warn("[REDIS] Cache hit")
+      return new Response(cachedData, {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
+
+    console.warn("[REDIS] Cache miss")
+
     const skip = (page - 1) * perPage
 
     const all = await Anime.find({})
@@ -29,24 +45,30 @@ export const POST = async (req: Request) => {
       .skip(skip)
       .limit(perPage)
 
+    const responseData = {
+      page,
+      perPage,
+      all,
+      japan,
+      china,
+      korea,
+    }
+
+    await client.set(cache_Key, JSON.stringify(responseData), {
+      EX: 300,
+    })
+
+    return new Response(JSON.stringify(responseData), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
+  } catch (error) {
     return new Response(
-      JSON.stringify({
-        page,
-        perPage,
-        all,
-        japan,
-        china,
-        korea,
-      }),
+      JSON.stringify({ message: error || "An error occurred" }),
       {
-        status: 200,
+        status: 500,
         headers: { "Content-Type": "application/json" },
       }
     )
-  } catch (error) {
-    return new Response(JSON.stringify({ message: error || error }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    })
   }
 }

@@ -1,10 +1,29 @@
 import Anime from "@/schema/anime"
 import { database } from "@/utils/database"
+import { client, redis } from "@/utils/redis"
 
 export const POST = async (req: Request) => {
   try {
+    // Connect to the database and Redis
     await database()
+    await redis.Connect()
+
+    const cache_Key = "tr_board"
     const { page = 1, perPage = 10 } = await req.json()
+
+    // Check if the data is in the cache
+    let cachedData = await client.get(cache_Key)
+
+    if (cachedData) {
+      console.warn(`[REDIS] ${cache_Key} Cache hit`)
+      cachedData = JSON.parse(cachedData)
+      return new Response(JSON.stringify(cachedData), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
+
+    console.warn(`[REDIS] ${cache_Key} Cache miss`)
 
     // AniList GraphQL query to get trending anime
     const query = `query ($page: Int, $perPage: Int) {
@@ -28,6 +47,7 @@ export const POST = async (req: Request) => {
                     }
                   }`
 
+    // Fetch data from AniList API
     const request = await fetch(`https://graphql.anilist.co`, {
       method: "POST",
       headers: {
@@ -71,20 +91,25 @@ export const POST = async (req: Request) => {
       },
     ])
 
-    // Return the results along with pagination info from AniList
-    return new Response(
-      JSON.stringify({
-        results,
-        totalCount: total,
-        totalPages: lastPage,
-        currentPage,
-        perPage,
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    )
+    // Create a response object with results and pagination info
+    const responseData = {
+      results,
+      totalCount: total,
+      totalPages: lastPage,
+      currentPage,
+      perPage,
+    }
+
+    // Cache the data in Redis, setting an expiration time (e.g., 60 seconds)
+    await client.set(cache_Key, JSON.stringify(responseData), {
+      EX: 60 * 5, // Cache expiration time in seconds
+    })
+
+    // Return the results
+    return new Response(JSON.stringify(responseData), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
   } catch (error) {
     return new Response(
       JSON.stringify({ message: error || "An error occurred" }),
