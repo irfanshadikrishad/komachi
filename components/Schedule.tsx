@@ -49,7 +49,6 @@ export default function Schedule() {
       }),
     })
     const response = await request.json()
-    // console.log(response);
 
     if (request.status === 200) {
       setPageInfo(response.pageInfo)
@@ -83,39 +82,25 @@ export default function Schedule() {
   function getTodaaay() {
     const today = new Date().getDay()
 
-    switch (today) {
-      case 0:
-        setToday("Sunday")
-        setShowSchedule(schedule.Sunday)
-        break
-      case 1:
-        setToday("Monday")
-        setShowSchedule(schedule.Monday)
-        break
-      case 2:
-        setToday("Tuesday")
-        setShowSchedule(schedule.Tuesday)
-        break
-      case 3:
-        setToday("Wednesday")
-        setShowSchedule(schedule.Wednesday)
-        break
-      case 4:
-        setToday("Thursday")
-        setShowSchedule(schedule.Thursday)
-        break
-      case 5:
-        setToday("Friday")
-        setShowSchedule(schedule.Friday)
-        break
-      case 6:
-        setToday("Saturday")
-        setShowSchedule(schedule.Saturday)
-        break
-      default:
-        setToday("Saturday")
-        setShowSchedule(schedule.Saturday)
-        break
+    const days = [
+      { name: "Sunday", schedule: schedule.Sunday || [] },
+      { name: "Monday", schedule: schedule.Monday || [] },
+      { name: "Tuesday", schedule: schedule.Tuesday || [] },
+      { name: "Wednesday", schedule: schedule.Wednesday || [] },
+      { name: "Thursday", schedule: schedule.Thursday || [] },
+      { name: "Friday", schedule: schedule.Friday || [] },
+      { name: "Saturday", schedule: schedule.Saturday || [] },
+    ]
+
+    const currentDay = days[today]
+
+    if (currentDay) {
+      setToday(currentDay.name)
+      setShowSchedule(currentDay.schedule)
+    } else {
+      // Fallback to Saturday if there's an unexpected value
+      setToday("Saturday")
+      setShowSchedule(schedule.Saturday || [])
     }
   }
 

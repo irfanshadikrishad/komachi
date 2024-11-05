@@ -1,9 +1,27 @@
 import Anime from "@/schema/anime"
 import { database } from "@/utils/database"
+import { client, redis } from "@/utils/redis"
 
 export async function POST(request: Request) {
   try {
     await database()
+    await redis.Connect()
+
+    const cache_Key = "schedule_0"
+    let cachedData = await client.get(cache_Key)
+
+    if (cachedData) {
+      console.warn("[REDIS] Cache hit")
+      return Response.json(
+        { schedule: JSON.parse(cachedData) },
+        {
+          status: 200,
+        }
+      )
+    }
+
+    console.warn("[REDIS] Cache miss")
+
     const schedule = await Anime.find({
       nextAiringEpisode: {
         $exists: true,
@@ -21,13 +39,11 @@ export async function POST(request: Request) {
       "Saturday",
     ]
 
-    // Function to convert Unix timestamp to weekday
     const getWeekday = (timestamp: any) => {
-      const date = new Date(timestamp * 1000) // Convert from seconds to milliseconds
-      return weekdays[date.getUTCDay()] // Get the day of the week (0 for Sunday, 6 for Saturday)
+      const date = new Date(timestamp * 1000)
+      return weekdays[date.getUTCDay()]
     }
 
-    // Group schedule by weekdays
     const groupedSchedule = schedule.reduce(
       (acc, anime) => {
         const { nextAiringEpisode } = anime
@@ -39,7 +55,6 @@ export async function POST(request: Request) {
             acc[weekday] = []
           }
 
-          // Push the anime information to the respective weekday
           acc[weekday].push({
             anilistId: anime.anilistId,
             title: anime.title,
@@ -53,9 +68,12 @@ export async function POST(request: Request) {
       {} as { [key: string]: any[] }
     )
 
-    // Sort the anime by airingTime within each weekday
     Object.keys(groupedSchedule).forEach((day) => {
       groupedSchedule[day].sort((a: any, b: any) => a.airingTime - b.airingTime)
+    })
+
+    await client.set(cache_Key, JSON.stringify(groupedSchedule), {
+      EX: 21600,
     })
 
     return Response.json({ schedule: groupedSchedule }, { status: 200 })

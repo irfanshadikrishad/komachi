@@ -1,10 +1,12 @@
 import Anime from "@/schema/anime"
 import { database } from "@/utils/database"
+import { client, redis } from "@/utils/redis"
 
 export async function POST(request: Request) {
   try {
     const { show, page = 1, perPage = 10 } = await request.json()
     await database()
+    await redis.Connect()
 
     let matchCondition = {}
 
@@ -27,11 +29,18 @@ export async function POST(request: Request) {
       )
     }
 
-    // Get total count for the match condition
+    const cache_Key = `search_${show}.${page}.${perPage}`
+    let cachedData = await client.get(cache_Key)
+
+    if (cachedData) {
+      console.warn("[REDIS] Cache hit")
+      return new Response(cachedData, { status: 200 })
+    }
+
+    console.warn("[REDIS] Cache miss")
+
     const totalCount = await Anime.countDocuments(matchCondition)
     const totalPages = Math.ceil(totalCount / perPage)
-
-    // Handle cases where the requested page exceeds total pages
     const currentPage = Math.min(page, totalPages)
 
     const results = await Anime.aggregate([
@@ -79,15 +88,16 @@ export async function POST(request: Request) {
       { $limit: perPage },
     ])
 
-    return new Response(
-      JSON.stringify({
-        results,
-        totalCount,
-        totalPages,
-        currentPage,
-      }),
-      { status: 200 }
-    )
+    const responseData = JSON.stringify({
+      results,
+      totalCount,
+      totalPages,
+      currentPage,
+    })
+
+    await client.set(cache_Key, responseData, { EX: 21600 })
+
+    return new Response(responseData, { status: 200 })
   } catch (error) {
     console.error("Error in POST handler:", error)
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {

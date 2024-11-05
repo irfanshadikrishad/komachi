@@ -1,4 +1,4 @@
-name: Lint and Format
+name: Preetier
 
 on:
   pull_request:
@@ -25,9 +25,6 @@ jobs:
 
       - name: Run Prettier
         run: npm run format
-
-      - name: Run ESLint with fix
-        run: npm run lint:fix
 
       - name: Commit and push changes back to PR
         run: |

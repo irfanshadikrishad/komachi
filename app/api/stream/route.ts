@@ -1,3 +1,4 @@
+import { client, redis } from "@/utils/redis"
 import { ANIME } from "@consumet/extensions"
 
 export async function POST(request: Request) {
@@ -5,10 +6,17 @@ export async function POST(request: Request) {
   const { subEpisodeId, dubEpisodeId } = await request.json()
 
   try {
-    // Fetch subbed episode source
+    await redis.Connect()
+
+    const cacheKey = `stream:${subEpisodeId}.${dubEpisodeId || "none"}`
+    let cachedData = await client.get(cacheKey)
+
+    if (cachedData) {
+      return new Response(cachedData, { status: 200 })
+    }
+
     const subLink = await gogoanime.fetchEpisodeSources(subEpisodeId)
 
-    // Fetch dubbed episode source, only if dubEpisodeId exists
     let dubLink = null
     if (dubEpisodeId) {
       try {
@@ -22,10 +30,10 @@ export async function POST(request: Request) {
       }
     }
 
-    return new Response(
-      JSON.stringify({ subLink, dubLink: dubLink?.sources ? dubLink : null }),
-      { status: 200 }
-    )
+    const responseData = { subLink, dubLink: dubLink?.sources ? dubLink : null }
+    await client.set(cacheKey, JSON.stringify(responseData), { EX: 21600 })
+
+    return new Response(JSON.stringify(responseData), { status: 200 })
   } catch (error) {
     console.error(
       "Error fetching episode sources:",
@@ -36,9 +44,7 @@ export async function POST(request: Request) {
 
     return new Response(
       JSON.stringify({ error: "Failed to fetch episode sources" }),
-      {
-        status: 400,
-      }
+      { status: 400 }
     )
   }
 }

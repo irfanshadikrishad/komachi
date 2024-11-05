@@ -1,10 +1,22 @@
 import Anime from "@/schema/anime"
 import { database } from "@/utils/database"
+import { client, redis } from "@/utils/redis"
 
 export const POST = async (req: Request) => {
   try {
     await database()
+    await redis.Connect()
+
     const { page = 1, perPage = 10 } = await req.json()
+    const cache_Key = `popular_${page}.${perPage}`
+    let cachedData = await client.get(cache_Key)
+
+    if (cachedData) {
+      console.warn("[REDIS] Cache hit")
+      return new Response(cachedData, { status: 200 })
+    }
+
+    console.warn("[REDIS] Cache miss")
 
     const query = `query ($page: Int, $perPage: Int) {
                     Page(page: $page, perPage: $perPage) {
@@ -33,12 +45,10 @@ export const POST = async (req: Request) => {
     })
 
     const { data } = await request.json()
-
     const anilistIds = data?.Page?.media.map((item: { id: number }) =>
       item.id.toString()
     )
 
-    // Get the total count from the AniList API pageInfo
     const { total, currentPage, lastPage } = data.Page.pageInfo
 
     const results = await Anime.aggregate([
@@ -62,19 +72,20 @@ export const POST = async (req: Request) => {
       },
     ])
 
-    return new Response(
-      JSON.stringify({
-        results,
-        totalCount: total,
-        totalPages: lastPage,
-        currentPage,
-        perPage,
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    )
+    const responseData = JSON.stringify({
+      results,
+      totalCount: total,
+      totalPages: lastPage,
+      currentPage,
+      perPage,
+    })
+
+    await client.set(cache_Key, responseData, { EX: 21600 })
+
+    return new Response(responseData, {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
   } catch (error) {
     return new Response(
       JSON.stringify({ message: error || "An error occurred" }),
