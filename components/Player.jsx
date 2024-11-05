@@ -37,12 +37,15 @@ export default function Player({
   const [isSub, setIsSub] = useState(true) // Default state is true
   const [isMouseOver, setIsMouseOver] = useState(false)
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes)
+  const [origin, setOrigin] = useState("")
 
   // Use useEffect to handle localStorage on the client side only
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedType = localStorage.getItem("type")
+
       setIsSub(storedType ? storedType === "Sub" : true)
+      setOrigin(window.location.href)
     }
   }, [dubLink, streamLink])
 
@@ -171,7 +174,7 @@ export default function Player({
       </section>
       <section className={styles.playerTrajectory}>
         <div>
-          <Disqus url={streamLink} currentEpisode={currentEpisode} />
+          <Disqus url={origin} currentEpisode={currentEpisode} />
           <Info animeInfo={animeInfo} />
         </div>
         <div className={styles.thanks_Main}>
