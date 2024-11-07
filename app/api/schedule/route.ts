@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     await redis.Connect()
 
     const cache_Key = "schedule_0"
-    let cachedData = await client.get(cache_Key)
+    const cachedData = await client.get(cache_Key)
 
     if (cachedData) {
       console.warn("[REDIS] Cache hit")

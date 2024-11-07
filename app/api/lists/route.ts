@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     }
 
     const cache_Key = `search_${show}.${page}.${perPage}`
-    let cachedData = await client.get(cache_Key)
+    const cachedData = await client.get(cache_Key)
 
     if (cachedData) {
       console.warn("[REDIS] Cache hit")
@@ -95,7 +95,7 @@ export async function POST(request: Request) {
       currentPage,
     })
 
-    await client.set(cache_Key, responseData, { EX: 21600 })
+    await client.set(cache_Key, responseData, { EX: 21600 }) // 6hrs
 
     return new Response(responseData, { status: 200 })
   } catch (error) {

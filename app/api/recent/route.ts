@@ -11,7 +11,7 @@ export const POST = async (req: Request) => {
     const cache_Key = `re_${page}-${perPage}`
 
     // Check if the data is in the cache
-    let cachedData = await client.get(cache_Key)
+    const cachedData = await client.get(cache_Key)
 
     if (cachedData) {
       console.warn("[REDIS] Cache hit")
@@ -55,7 +55,7 @@ export const POST = async (req: Request) => {
     }
 
     await client.set(cache_Key, JSON.stringify(responseData), {
-      EX: 300,
+      EX: 10800, // 3hrs
     })
 
     return new Response(JSON.stringify(responseData), {

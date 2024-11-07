@@ -20,7 +20,6 @@ export default function Episodes({
   unicornEpisodes,
   getStreamLink,
   currentEpisode,
-  streamLink,
 }: {
   unicornEpisodes: any[]
   getStreamLink: any

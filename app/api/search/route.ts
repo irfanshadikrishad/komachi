@@ -31,7 +31,7 @@ export async function POST(request: Request) {
       perPage,
     })}`
 
-    let cachedData = await client.get(cacheKey)
+    const cachedData = await client.get(cacheKey)
 
     if (cachedData) {
       console.warn("[REDIS] Cache hit")

@@ -9,7 +9,7 @@ export const POST = async (req: Request) => {
 
     const { page = 1, perPage = 10 } = await req.json()
     const cache_Key = `popular_${page}.${perPage}`
-    let cachedData = await client.get(cache_Key)
+    const cachedData = await client.get(cache_Key)
 
     if (cachedData) {
       console.warn("[REDIS] Cache hit")
@@ -80,7 +80,7 @@ export const POST = async (req: Request) => {
       perPage,
     })
 
-    await client.set(cache_Key, responseData, { EX: 21600 })
+    await client.set(cache_Key, responseData, { EX: 21600 }) // 6hrs
 
     return new Response(responseData, {
       status: 200,

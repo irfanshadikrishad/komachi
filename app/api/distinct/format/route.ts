@@ -2,13 +2,13 @@ import Anime from "@/schema/anime"
 import { database } from "@/utils/database"
 import { client, redis } from "@/utils/redis"
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     await database()
     await redis.Connect()
 
     const cache_Key = "distinct.format"
-    let cachedData = await client.get(cache_Key)
+    const cachedData = await client.get(cache_Key)
 
     if (cachedData) {
       console.warn("[REDIS] Cache hit")
