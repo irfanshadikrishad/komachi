@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     await redis.Connect()
 
     const cacheKey = `stream:${subEpisodeId}.${dubEpisodeId || "none"}`
-    let cachedData = await client.get(cacheKey)
+    const cachedData = await client.get(cacheKey)
 
     if (cachedData) {
       return new Response(cachedData, { status: 200 })
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     }
 
     const responseData = { subLink, dubLink: dubLink?.sources ? dubLink : null }
-    await client.set(cacheKey, JSON.stringify(responseData), { EX: 21600 })
+    await client.set(cacheKey, JSON.stringify(responseData), { EX: 43200 }) // 12hrs
 
     return new Response(JSON.stringify(responseData), { status: 200 })
   } catch (error) {

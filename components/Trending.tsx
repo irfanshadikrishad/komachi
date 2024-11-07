@@ -16,36 +16,38 @@ export default function Trending({ trending }: { trending: any[] }) {
       </div>
       <section className={cardio.cardsContainer}>
         {trending.length > 0
-          ? trending.map(
-              ({
-                anilistId,
-                poster,
-                sub_episodes,
-                dub_episodes,
-                totalEpisodes,
-                title,
-                isAdult,
-              }: {
-                anilistId: string
-                poster: string
-                sub_episodes: []
-                dub_episodes: []
-                totalEpisodes: string | number
-                title: { english?: string; romaji?: string; native?: string }
-                isAdult: string
-              }) => (
-                <Card
-                  key={anilistId}
-                  id={anilistId}
-                  image={poster}
-                  subCount={sub_episodes.length}
-                  dubCount={dub_episodes.length}
-                  totalCount={totalEpisodes}
-                  title={getTitle(title)}
-                  isAdult={isAdult}
-                />
+          ? trending
+              .slice(0, 7)
+              .map(
+                ({
+                  anilistId,
+                  poster,
+                  sub_episodes,
+                  dub_episodes,
+                  totalEpisodes,
+                  title,
+                  isAdult,
+                }: {
+                  anilistId: string
+                  poster: string
+                  sub_episodes: []
+                  dub_episodes: []
+                  totalEpisodes: string | number
+                  title: { english?: string; romaji?: string; native?: string }
+                  isAdult: string
+                }) => (
+                  <Card
+                    key={anilistId}
+                    id={anilistId}
+                    image={poster}
+                    subCount={sub_episodes.length}
+                    dubCount={dub_episodes.length}
+                    totalCount={totalEpisodes}
+                    title={getTitle(title)}
+                    isAdult={isAdult}
+                  />
+                )
               )
-            )
           : Array.from({ length: 7 }).map((_, index: number) => {
               return (
                 <Skeleton

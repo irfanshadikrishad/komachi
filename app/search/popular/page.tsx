@@ -10,10 +10,10 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
 
 export default function Trending() {
   const [trending, setTrending] = useState([])
-  const [totalCount, setTotalCount] = useState(1)
+  // const [totalCount, setTotalCount] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
-  const [perPage, setPerPage] = useState(60)
+  // const [perPage, setPerPage] = useState(60)
 
   const getTrending = async (page?: number, perPage?: number) => {
     try {
@@ -30,9 +30,9 @@ export default function Trending() {
       if (request.status === 200) {
         setTrending(response.results)
         setCurrentPage(response.currentPage)
-        setTotalCount(response.totalCount)
+        // setTotalCount(response.totalCount)
         setTotalPages(response.totalPages)
-        setPerPage(response.perPage)
+        // setPerPage(response.perPage)
       } else {
         console.log(response)
       }

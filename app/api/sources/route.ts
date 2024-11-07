@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const { episodeId } = await req.json()
     const cacheKey = `gogo.sources.${episodeId}`
 
-    let cachedData = await client.get(cacheKey)
+    const cachedData = await client.get(cacheKey)
 
     if (cachedData) {
       console.warn("[REDIS] Cache hit")

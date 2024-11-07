@@ -4,14 +4,12 @@ import { client, redis } from "@/utils/redis"
 
 export const POST = async (req: Request) => {
   try {
-    // Connect to the database and Redis
     await database()
     await redis.Connect()
 
     const cache_Key = "tr_board"
     const { page = 1, perPage = 10 } = await req.json()
 
-    // Check if the data is in the cache
     let cachedData = await client.get(cache_Key)
 
     if (cachedData) {
@@ -61,15 +59,12 @@ export const POST = async (req: Request) => {
 
     const { data } = await request.json()
 
-    // Get list of anilist IDs from AniList API
     const anilistIds = data?.Page?.media.map((item: { id: number }) =>
       item.id.toString()
     )
 
-    // Get the pagination information from AniList API pageInfo
     const { total, currentPage, lastPage } = data.Page.pageInfo
 
-    // Query MongoDB for corresponding anime by anilistId and sort based on their order from AniList
     const results = await Anime.aggregate([
       {
         $match: { anilistId: { $in: anilistIds } },
@@ -91,7 +86,6 @@ export const POST = async (req: Request) => {
       },
     ])
 
-    // Create a response object with results and pagination info
     const responseData = {
       results,
       totalCount: total,
@@ -100,9 +94,8 @@ export const POST = async (req: Request) => {
       perPage,
     }
 
-    // Cache the data in Redis, setting an expiration time (e.g., 60 seconds)
     await client.set(cache_Key, JSON.stringify(responseData), {
-      EX: 60 * 5, // Cache expiration time in seconds
+      EX: 10800, // 3hrs
     })
 
     // Return the results

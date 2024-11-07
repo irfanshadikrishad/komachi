@@ -1,6 +1,7 @@
 import styles from "@/styles/latest.module.css"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { getTitle } from "../utils/helpers"
 // ICONS
 import { CgMediaLive } from "react-icons/cg"
 import { FaClosedCaptioning } from "react-icons/fa6"
@@ -153,6 +154,7 @@ export default function Ranking({ popular, trending }) {
                         <img
                           className={styles.others_Poster}
                           src={`${poster}`}
+                          alt={`${getTitle(title)}-poster`}
                         />
                       </Link>
                     </div>

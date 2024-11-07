@@ -9,7 +9,7 @@ export async function POST(request: Request) {
 
     const { animeId } = await request.json()
     const cache_Key = `info_${animeId}`
-    let cachedData = await client.get(cache_Key)
+    const cachedData = await client.get(cache_Key)
 
     if (cachedData) {
       console.warn("[REDIS] Cache hit")
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     })
 
     if (info) {
-      await client.set(cache_Key, JSON.stringify(info), { EX: 21600 })
+      await client.set(cache_Key, JSON.stringify(info), { EX: 86400 }) // 24 hrs
       return new Response(JSON.stringify(info), { status: 200 })
     } else {
       return new Response(JSON.stringify({ message: "Anime not found" }), {

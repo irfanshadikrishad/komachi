@@ -28,7 +28,7 @@ export default function Schedule() {
     Thursday: [],
     Friday: [],
   })
-  const [pageInfo, setPageInfo] = useState({})
+  // const [pageInfo, setPageInfo] = useState({})
   const [currentGMT, setCurrentGMT] = useState("")
   const [today, setToday] = useState("")
   const [showSchedule, setShowSchedule] = useState<any[]>([])
@@ -51,7 +51,7 @@ export default function Schedule() {
     const response = await request.json()
 
     if (request.status === 200) {
-      setPageInfo(response.pageInfo)
+      // setPageInfo(response.pageInfo)
       setSchedule(response.schedule)
     } else {
       // console.log(response);

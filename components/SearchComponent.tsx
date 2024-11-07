@@ -86,7 +86,7 @@ export default function SearchComponent() {
       const request = await fetch(`/api/trending`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: 1, perPage: 7 }),
+        body: JSON.stringify({ page: 1, perPage: 15 }),
       })
       const response = await request.json()
 
@@ -105,7 +105,7 @@ export default function SearchComponent() {
       const request = await fetch(`/api/popular`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: 1, perPage: 7 }),
+        body: JSON.stringify({ page: 1, perPage: 15 }),
       })
       const response = await request.json()
 

@@ -1,4 +1,4 @@
-import { addDays, addWeeks, format, startOfWeek } from "date-fns"
+import { addWeeks, format, startOfWeek } from "date-fns"
 
 /**
  * Converts timestamp like 1120415 to readable string

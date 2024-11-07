@@ -14,12 +14,11 @@ interface LayoutProps {
 
 export async function generateMetadata(props: LayoutProps): Promise<Metadata> {
   const params = await props.params
-  const { id } = params
 
   const data = await fetch(`${process.env.BASE_URL}/api/info`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ animeId: id }),
+    body: JSON.stringify({ animeId: params.id }),
   }).then((res) => res.json())
 
   return {
@@ -63,7 +62,7 @@ export async function generateMetadata(props: LayoutProps): Promise<Metadata> {
 }
 
 export default async function RootLayout(props: LayoutProps) {
-  const params = await props.params
+  // const params = await props.params
 
   const { children } = props
 
