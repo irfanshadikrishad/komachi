@@ -1,7 +1,7 @@
 import Anime from "@/schema/anime"
 import { database } from "@/utils/database"
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     await database()
     const random_Anime = await Anime.aggregate([{ $sample: { size: 1 } }])

@@ -2,7 +2,7 @@ import Anime from "@/schema/anime"
 import { database } from "@/utils/database"
 import { client, redis } from "@/utils/redis"
 
-export async function POST(request: Request) {
+export async function POST() {
   try {
     await database()
     await redis.Connect()
