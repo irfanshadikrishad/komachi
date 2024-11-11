@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
     const sources = await gogoanime.fetchEpisodeServers(episodeId)
 
-    await client.set(cacheKey, JSON.stringify(sources), { EX: 21600 })
+    await client.set(cacheKey, JSON.stringify(sources), { EX: 3600 })
 
     return new Response(JSON.stringify(sources), { status: 200 })
   } catch (error) {

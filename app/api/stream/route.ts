@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   try {
     await redis.Connect()
 
-    const cacheKey = `stream:${subEpisodeId}.${dubEpisodeId || "none"}`
+    const cacheKey = `stream:${subEpisodeId}-${dubEpisodeId || "none"}`
     const cachedData = await client.get(cacheKey)
 
     if (cachedData) {
@@ -30,10 +30,13 @@ export async function POST(request: Request) {
       }
     }
 
-    const responseData = { subLink, dubLink: dubLink?.sources ? dubLink : null }
-    await client.set(cacheKey, JSON.stringify(responseData), { EX: 43200 }) // 12hrs
+    const response_data = {
+      subLink,
+      dubLink: dubLink?.sources ? dubLink : null,
+    }
+    await client.set(cacheKey, JSON.stringify(response_data), { EX: 3600 }) // 1hrs
 
-    return new Response(JSON.stringify(responseData), { status: 200 })
+    return new Response(JSON.stringify(response_data), { status: 200 })
   } catch (error) {
     console.error(
       "Error fetching episode sources:",
