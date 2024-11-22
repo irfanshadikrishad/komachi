@@ -8,6 +8,7 @@ import styles from "@/styles/player.module.css"
 import {
   convertTimestampToReadable,
   episodeIdToEpisodeNumber,
+  originWithEps,
 } from "@/utils/helpers"
 import { useEffect, useState } from "react"
 // ICONS
@@ -45,7 +46,10 @@ export default function Player({
       const storedType = localStorage.getItem("type")
 
       setIsSub(storedType ? storedType === "Sub" : true)
-      setOrigin(window.location.href)
+      if (window.location.href) {
+        let o = originWithEps(window.location.href, currentEpisode)
+        setOrigin(o)
+      }
     }
   }, [dubLink, streamLink])
 

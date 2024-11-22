@@ -1,7 +1,14 @@
 {
   "name": "komachi",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
+  "author": {
+    "name": "Irfan Shadik Rishad"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/irfanshadikrishad/komachi"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -37,5 +44,8 @@
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "^5.7.2"
-  }
+  },
+  "keywords": [
+    "streaming-service"
+  ]
 }
