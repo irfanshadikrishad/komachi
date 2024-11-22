@@ -21,12 +21,8 @@ export async function POST(request: Request) {
     if (dubEpisodeId) {
       try {
         dubLink = await gogoanime.fetchEpisodeSources(dubEpisodeId)
-      } catch (dubError) {
-        console.warn(
-          "Dub link not found or failed to fetch:",
-          dubEpisodeId,
-          dubError
-        )
+      } catch (error) {
+        console.warn("Dub link not found or failed to fetch:", dubEpisodeId)
       }
     }
 
@@ -38,12 +34,7 @@ export async function POST(request: Request) {
 
     return new Response(JSON.stringify(response_data), { status: 200 })
   } catch (error) {
-    console.error(
-      "Error fetching episode sources:",
-      error,
-      subEpisodeId,
-      dubEpisodeId
-    )
+    console.error("Error fetching episode sources:", subEpisodeId, dubEpisodeId)
 
     return new Response(
       JSON.stringify({ error: "Failed to fetch episode sources" }),

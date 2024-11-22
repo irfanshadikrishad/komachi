@@ -46,7 +46,7 @@ export default function Streaming() {
             setDubLink(null)
           }
           setCurrentEpisode(subEpisodeId)
-          setEpisodeDownloadLink(response.download)
+          setEpisodeDownloadLink(response.subLink.download)
         } else {
           console.log(response)
         }
