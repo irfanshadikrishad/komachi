@@ -70,16 +70,18 @@ export default function Player({
             onMouseLeave={() => setIsMouseOver(false)}>
             <MediaPlayer
               title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
-              src={isSub || !dubLink ? streamLink : dubLink}
+              src={`https://goodproxy.goodproxy.workers.dev/fetch?url=${
+                isSub || !dubLink ? streamLink : dubLink
+              }`}
               load="eager"
               aspectRatio="16/9"
               viewType="video"
               streamType="on-demand"
               logLevel="warn"
-              crossOrigin={true}
+              crossOrigin="anonymous"
               playsInline
               storage="storage-key"
-              autoPlay={true}>
+              autoPlay>
               <MediaProvider />
               <DefaultVideoLayout
                 icons={defaultLayoutIcons}
