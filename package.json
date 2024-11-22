@@ -1,6 +1,6 @@
 {
   "name": "komachi",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,30 +12,30 @@
   },
   "dependencies": {
     "@consumet/extensions": "github:consumet/consumet.ts",
-    "@vercel/analytics": "^1.3.2",
+    "@vercel/analytics": "^1.4.1",
     "@vidstack/react": "^1.12.11",
     "chalk": "^5.3.0",
     "date-fns": "^4.1.0",
     "disqus-react": "^1.1.5",
     "hls.js": "^1.5.17",
-    "mongoose": "^8.8.1",
+    "mongoose": "^8.8.2",
     "next": "^15.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
     "react-loading-skeleton": "^3.5.0",
     "redis": "^4.7.0",
-    "swiper": "^11.1.14",
+    "swiper": "^11.1.15",
     "uniqolor": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.9.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "eslint": "^9.14.0",
+    "eslint": "^9.15.0",
     "eslint-config-next": "^15.0.3",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   }
 }
