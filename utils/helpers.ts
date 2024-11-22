@@ -358,9 +358,36 @@ function getTimeFromUnixTimestamp(unix_Timestamp: number): String {
   }
 }
 
+/**
+ *
+ * @param origin - eg: https://komachi-x0.vercel.app/watch/20
+ * @param episode - naruto-episode-1
+ * @returns https://komachi-x0.vercel.app/watch/20?eps=1
+ */
+function originWithEps(origin: string, episode: string): string {
+  const url = new URL(origin, window.location.origin)
+  if (!url.searchParams.has("eps")) {
+    url.searchParams.set("eps", episodeIdToEpisodeNumber(episode))
+  }
+  return url.toString()
+}
+
+/**
+ * Converts episodeId to episode string
+ * @param episodeId - eg: naruto-episode-1
+ * @returns - Naruto Episode 1
+ */
+function episodeIdToString(episodeId: string): string {
+  return episodeId
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ")
+}
+
 export {
   convertTimestampToReadable,
   episodeIdToEpisodeNumber,
+  episodeIdToString,
   extractDefaultSource,
   getTimeFromUnixTimestamp,
   getTitle,
@@ -369,6 +396,7 @@ export {
   groupScheduleByDay,
   hasRepeatedWords,
   insert_Into_Array,
+  originWithEps,
   removeHtmlAndMarkdown,
   replaceId,
   slisor,

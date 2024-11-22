@@ -1,3 +1,8 @@
+import {
+  episodeIdToEpisodeNumber,
+  episodeIdToString,
+  originWithEps,
+} from "@/utils/helpers"
 import { DiscussionEmbed } from "disqus-react"
 import { useEffect, useState } from "react"
 import { FaChevronDown } from "react-icons/fa"
@@ -16,9 +21,9 @@ export default function Disqus({ url, currentEpisode }) {
         <DiscussionEmbed
           shortname="komachi-1"
           config={{
-            url: url,
-            identifier: currentEpisode,
-            title: currentEpisode,
+            url: originWithEps(url),
+            identifier: episodeIdToEpisodeNumber(currentEpisode),
+            title: episodeIdToString(currentEpisode),
           }}
         />
       ) : (
