@@ -10,35 +10,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
+      # 2. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "18"
 
+      # 3. Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # 4. Run Prettier
       - name: Run Prettier
         run: npm run format
 
-      - name: Debug Git State
+      # 5. Debug git state before adding changes
+      - name: Debug Git State (Before git add)
         run: |
           echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
-          echo "Current changes:"
+          echo "Current changes before git add:"
           git status
           git diff
 
+      # 6. Stage all changes explicitly
+      - name: Stage changes
+        run: |
+          git add -A
+          echo "Changes after git add:"
+          git status
+          git diff
+
+      # 7. Commit and push changes if necessary
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add -A  # Explicitly stage all changes
           git diff --quiet || git commit -m "chore: apply lint fixes and prettier formatting"
+          echo "Pushing changes to PR branch"
           git push --force origin "${{ github.head_ref }}"
+          echo "done"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
