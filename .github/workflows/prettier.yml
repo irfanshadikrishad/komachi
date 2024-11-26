@@ -51,9 +51,12 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git diff --quiet || git commit -m "chore: apply lint fixes and prettier formatting"
+
+          # Force commit changes even if `git diff` doesn't show any
+          git add -A
+          git commit -m "chore: apply lint fixes and prettier formatting" || echo "No changes to commit"
           echo "Pushing changes to PR branch"
           git push --force origin "${{ github.head_ref }}"
-          echo "done"
+          
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

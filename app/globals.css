@@ -4,10 +4,10 @@
   --background: #03040f;
   --color: #adadad;
   --color-fade: #adadad70;
-    --primary: #d4a373; /* 17a8cc */
-    --secondary: #12131f;
-  --success: palegreen;
-  --adult: #ff006e;
+  --primary: #d4a373; /* 17a8cc */
+  --secondary: #12131f;
+    --success: palegreen;
+    --adult: #ff006e;
 }
 
 * {
