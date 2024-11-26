@@ -10,33 +10,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
 
-      # 2. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "18"
 
-      # 3. Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # 4. Run Prettier
       - name: Run Prettier
         run: npm run format
 
-      # 5. Commit and push changes back to PR
+      - name: Debug Git State
+        run: |
+          echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
+          echo "Current changes:"
+          git status
+          git diff
+
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
           git diff --quiet || git commit -m "chore: apply lint fixes and prettier formatting"
-          git push origin HEAD:${{ github.head_ref }}
+          git push --force origin "${{ github.head_ref }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
