@@ -8,7 +8,7 @@ export const POST = async (req: Request) => {
     await redis.Connect()
 
     const { page = 1, perPage = 10 } = await req.json()
-    const cache_Key = `popular_${page}.${perPage}`
+    const cache_Key = `popular.${page}.${perPage}`
     const cachedData = await client.get(cache_Key)
 
     if (cachedData) {
@@ -80,7 +80,7 @@ export const POST = async (req: Request) => {
       perPage,
     })
 
-    await client.set(cache_Key, responseData, { EX: 21600 }) // 6hrs
+    await client.set(cache_Key, responseData, { EX: 43200 }) // 12hrs
 
     return new Response(responseData, {
       status: 200,
