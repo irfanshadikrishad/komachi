@@ -2,18 +2,17 @@
 
 :root {
   --background: #03040f;
-  --color: #adadad;
+    --color: #adadad;
   --color-fade: #adadad70;
-  --primary: #d4a373; /* 17a8cc */
+    --primary: #d4a373; /* 17a8cc */
   --secondary: #12131f;
-  --success: palegreen;
+    --success: palegreen;
   --adult: #ff006e;
 }
 
 * {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 ::-webkit-scrollbar {
   width: 3px;
