@@ -3,7 +3,7 @@ import { Suspense } from "react"
 
 export default function Lists() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <ListsComponent />
     </Suspense>
   )

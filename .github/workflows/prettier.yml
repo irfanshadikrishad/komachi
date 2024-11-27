@@ -26,12 +26,13 @@ jobs:
       - name: Run Prettier
         run: npm run format
 
-      - name: Commit and push changes back to PR
+      - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add .
-          git diff --quiet || git commit -m "chore: apply lint fixes and prettier formatting"
-          git push origin HEAD:$(git rev-parse --abbrev-ref HEAD)
+          
+          git add -A
+          git commit -m "chore: apply prettier formatting" || echo "No changes to commit"
+          git push --force origin "${{ github.head_ref }}"
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

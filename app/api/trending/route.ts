@@ -7,8 +7,8 @@ export const POST = async (req: Request) => {
     await database()
     await redis.Connect()
 
-    const cache_Key = "tr_board"
     const { page = 1, perPage = 10 } = await req.json()
+    const cache_Key = `trending.${page}.${perPage}`
 
     let cachedData = await client.get(cache_Key)
 
@@ -95,7 +95,7 @@ export const POST = async (req: Request) => {
     }
 
     await client.set(cache_Key, JSON.stringify(responseData), {
-      EX: 10800, // 3hrs
+      EX: 43200, // 12hrs
     })
 
     // Return the results
