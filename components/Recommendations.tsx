@@ -1,56 +1,44 @@
-import Card from "@/components/Card"
 import styles from "@/styles/recommendations.module.css"
 import { getTitle } from "@/utils/helpers"
-import { useState } from "react"
-import { FaChevronDown } from "react-icons/fa6"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import { Swiper, SwiperSlide } from "swiper/react"
+import Card from "./Card"
 
 export default function Recommendations({
   recommendations,
 }: {
   recommendations: any[]
 }) {
-  const [to, setTo] = useState(7)
-
   return (
-    <section className={styles.wrapper}>
-      {recommendations.length > 0 && (
-        <div className={styles.recHeader}>
-          <h1>Recommendations</h1>
-          <div>
-            <button
-              className={styles.downBtn}
-              onClick={() => {
-                if (to === 7) {
-                  setTo(recommendations.length)
-                } else {
-                  setTo(7)
-                }
-              }}>
-              <FaChevronDown />
-            </button>
-          </div>
-        </div>
-      )}
-      <div className={styles.cards}>
+    <section>
+      <div className={styles.wrapper}>
+        <p>Recommendations</p>
+      </div>
+      <Swiper
+        className="container"
+        slidesPerView={7}
+        spaceBetween={5}
+        style={{ position: "absolute" }}>
         {recommendations.length > 0 &&
-          recommendations
-            .slice(0, to)
-            .map(
-              (
-                {
-                  anilistId,
-                  poster,
-                  sub_episodes,
-                  dub_episodes,
-                  totalEpisodes,
-                  isAdult,
-                  title,
-                },
-                index: number
-              ) => {
-                return (
+          recommendations.map(
+            (
+              {
+                anilistId,
+                poster,
+                sub_episodes,
+                dub_episodes,
+                totalEpisodes,
+                isAdult,
+                title,
+              },
+              idx: number
+            ) => {
+              return (
+                <SwiperSlide>
                   <Card
-                    key={index}
+                    key={idx}
                     id={anilistId}
                     image={poster}
                     title={getTitle(title)}
@@ -59,10 +47,11 @@ export default function Recommendations({
                     totalCount={totalEpisodes}
                     isAdult={isAdult}
                   />
-                )
-              }
-            )}
-      </div>
+                </SwiperSlide>
+              )
+            }
+          )}
+      </Swiper>
     </section>
   )
 }
