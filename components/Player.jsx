@@ -196,11 +196,11 @@ export default function Player({
           </p>
         </div>
       </section>
-      <Recommendations
+      {/* <Recommendations
         recommendations={
           animeInfo?.recommendations ? animeInfo?.recommendations : []
         }
-      />
+      /> */}
     </div>
   )
 }
