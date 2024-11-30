@@ -19,10 +19,10 @@ export default function Disqus({ url, currentEpisode }) {
       style={{ padding: isCommentLoaded ? "15px" : "5px" }}>
       {isCommentLoaded ? (
         <DiscussionEmbed
-          shortname="komachi-1"
+          shortname="komachi-2"
           config={{
-            url: originWithEps(url),
-            identifier: episodeIdToEpisodeNumber(currentEpisode),
+            url: originWithEps(url, currentEpisode),
+            identifier: originWithEps(url, currentEpisode),
             title: episodeIdToString(currentEpisode),
           }}
         />

@@ -368,6 +368,9 @@ function originWithEps(origin: string, episode: string): string {
   const url = new URL(origin, window.location.origin)
   if (!url.searchParams.has("eps")) {
     url.searchParams.set("eps", episodeIdToEpisodeNumber(episode))
+  } else {
+    url.searchParams.delete("eps")
+    url.searchParams.set("eps", episodeIdToEpisodeNumber(episode))
   }
   return url.toString()
 }
