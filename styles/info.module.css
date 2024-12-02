@@ -64,6 +64,10 @@
   align-items: flex-start;
   gap: 10px;
 }
+.studio {
+  text-decoration: none;
+  color: var(--color);
+}
 
 @media screen and (max-width: 980px) {
   .posterContainer {
