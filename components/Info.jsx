@@ -1,10 +1,13 @@
 import styles from "@/styles/info.module.css"
 import { getTitle, removeHtmlAndMarkdown } from "@/utils/helpers"
+import Link from "next/link"
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
 import uniqolor from "uniqolor"
 
 export default function Info({ animeInfo }) {
+  const { color } = uniqolor(animeInfo?.anilistId)
+
   return (
     <section className={styles.infoMain}>
       <section className={styles.seperator}>
@@ -134,10 +137,19 @@ export default function Info({ animeInfo }) {
                 )}
               </p>
             )}
-            <p className={styles.sprtr}>
+            <div style={{ display: "flex", gap: "5px" }}>
               <span className={styles.blob}>Studios:</span>
-              {animeInfo?.anilistId ? (
-                animeInfo?.studios.join(" • ")
+              {Array.isArray(animeInfo?.studios) &&
+              animeInfo.studios.length >= 0 ? (
+                animeInfo.studios.map((std, idx) => (
+                  <Link
+                    className={styles.studio}
+                    style={{ color: color }}
+                    key={idx}
+                    href={`/studios/${std}`}>
+                    {std}
+                  </Link>
+                ))
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
@@ -146,7 +158,7 @@ export default function Info({ animeInfo }) {
                   height={16}
                 />
               )}
-            </p>
+            </div>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Origin:</span>
               {animeInfo?.anilistId ? (
