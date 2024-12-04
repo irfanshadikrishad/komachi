@@ -27,12 +27,12 @@ export async function POST(request: Request) {
 
     const skip = (page - 1) * perPage
     const genreAnimes = await Anime.find({
-      genres: { $in: { genres: [decodeURIComponent(genre)] } },
+      genres: { $in: [decodeURIComponent(genre)] },
     })
       .skip(skip)
       .limit(perPage)
     const totalDocuments = await Anime.countDocuments({
-      genres: { $in: { genres: [decodeURIComponent(genre)] } },
+      genres: { $in: [decodeURIComponent(genre)] },
     })
     const totalPages = Math.ceil(totalDocuments / perPage)
 
