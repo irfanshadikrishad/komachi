@@ -190,9 +190,12 @@ export default function Info({ animeInfo }) {
                 {animeInfo?.genres.map((genre, index) => {
                   const { color } = uniqolor(genre)
                   return (
-                    <span key={index} style={{ color: color }}>
+                    <Link
+                      href={`/genres/${genre}`}
+                      key={index}
+                      style={{ color: color }}>
                       {genre}
-                    </span>
+                    </Link>
                   )
                 })}
               </div>

@@ -53,7 +53,8 @@
   gap: 4px;
   margin-top: 5px;
 }
-.genres > span {
+.genres > a {
+  text-decoration: underline wavy;
   background-color: var(--background);
   padding: 1px 10px;
   border-radius: 7px;

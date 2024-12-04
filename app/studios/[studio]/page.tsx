@@ -93,7 +93,7 @@ export default function Studio() {
       <section className="container">
         <div className={styles.header}>
           <div>
-            <h1>{`${decodeURIComponent(studio)} (${pagination.totalItems})`}</h1>
+            <h1>{`${decodeURIComponent(studio)} (${pagination.totalItems}) [${pagination.currentPage}/${pagination.totalPages}]`}</h1>
           </div>
           <div className={styles.navigation}>
             <button
@@ -123,7 +123,7 @@ export default function Studio() {
         </div>
         <section className={cardio.cardsContainer}>
           {isLoading ? (
-            Array.from({ length: perPage }).map((_, index) => (
+            Array.from({ length: 20 }).map((_, index) => (
               <Skeleton
                 key={index}
                 height={273}
