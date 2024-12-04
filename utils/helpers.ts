@@ -387,6 +387,12 @@ function episodeIdToString(episodeId: string): string {
     .join(" ")
 }
 
+function isZoroId(input: string): boolean {
+  const zoroIdPattern = /-\d+$/
+
+  return zoroIdPattern.test(input)
+}
+
 export {
   convertTimestampToReadable,
   episodeIdToEpisodeNumber,
@@ -399,6 +405,7 @@ export {
   groupScheduleByDay,
   hasRepeatedWords,
   insert_Into_Array,
+  isZoroId,
   originWithEps,
   removeHtmlAndMarkdown,
   replaceId,

@@ -1,4 +1,5 @@
 import styles from "@/styles/search.module.css"
+import { isZoroId } from "@/utils/helpers"
 import Link from "next/link"
 // Icons
 import { BiSolidMicrophone } from "react-icons/bi"
@@ -25,7 +26,13 @@ export default function Card({
 }) {
   return (
     <Link
-      href={lastEpisode ? `/watch/${id}?eps=${lastEpisode}` : `/watch/${id}`}
+      href={
+        isZoroId(id)
+          ? `/watch/${id}`
+          : lastEpisode
+            ? `/watch/${id}?eps=${lastEpisode}`
+            : `/watch/${id}`
+      }
       className={styles.billboard_Individual}
       title={`${title}`}>
       <img

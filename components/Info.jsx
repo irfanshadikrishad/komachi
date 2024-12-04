@@ -1,5 +1,5 @@
 import styles from "@/styles/info.module.css"
-import { getTitle, removeHtmlAndMarkdown } from "@/utils/helpers"
+import { getTitle, isZoroId, removeHtmlAndMarkdown } from "@/utils/helpers"
 import Link from "next/link"
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
@@ -12,12 +12,17 @@ export default function Info({ animeInfo }) {
     <section className={styles.infoMain}>
       <section className={styles.seperator}>
         <div className={styles.posterContainer}>
-          {animeInfo?.poster ? (
+          {animeInfo && (animeInfo.poster || animeInfo.image) ? (
             <img
               className={styles.poster}
-              src={animeInfo?.poster}
-              alt={String(animeInfo?.anilistId)}
+              src={animeInfo.poster || animeInfo.image || ""}
+              alt={
+                animeInfo.anilistId
+                  ? String(animeInfo.anilistId)
+                  : "Anime Poster"
+              }
               draggable="false"
+              onError={(e) => (e.currentTarget.src = "/fallback-image.png")} // Optional fallback for broken images
             />
           ) : (
             <Skeleton
@@ -27,14 +32,18 @@ export default function Info({ animeInfo }) {
               height={200}
             />
           )}
-          {animeInfo?.isAdult === "true" && (
+          {(animeInfo?.isAdult === "true" || animeInfo?.nsfw === true) && (
             <p className={styles.isAdult}>18+</p>
           )}
         </div>
         <section>
           <h1 className={styles.title}>
             {animeInfo?.title ? (
-              getTitle(animeInfo?.title)
+              animeInfo?.anilistId ? (
+                getTitle(animeInfo?.title)
+              ) : (
+                animeInfo?.title
+              )
             ) : (
               <Skeleton
                 baseColor="var(--background)"
@@ -45,7 +54,7 @@ export default function Info({ animeInfo }) {
             )}
           </h1>
           <p className={styles.description}>
-            {animeInfo?.anilistId ? (
+            {animeInfo?.description ? (
               removeHtmlAndMarkdown(animeInfo?.description)
             ) : (
               <Skeleton
@@ -56,28 +65,34 @@ export default function Info({ animeInfo }) {
             )}
           </p>
           <section>
-            <p className={styles.sprtr}>
-              <span className={styles.blob}>Status :</span>
-              {animeInfo?.anilistId ? (
-                animeInfo?.status
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={90}
-                  height={16}
-                />
-              )}
-            </p>
+            {animeInfo?.anilistId && (
+              <p className={styles.sprtr}>
+                <span className={styles.blob}>Status :</span>
+                {animeInfo?.anilistId ? (
+                  animeInfo?.status
+                ) : (
+                  <Skeleton
+                    baseColor="var(--background)"
+                    highlightColor="var(--secondary)"
+                    width={90}
+                    height={16}
+                  />
+                )}
+              </p>
+            )}
             <p className={styles.sprtr}>
               <span className={styles.blob}>Total Episodes :</span>
               {animeInfo ? (
-                animeInfo.sub_episodes.length > 0 ? (
-                  animeInfo.sub_episodes.length
-                ) : animeInfo.dub_episodes.length > 0 ? (
-                  animeInfo.dub_episodes.length
+                animeInfo?.anilistId ? (
+                  animeInfo.sub_episodes.length > 0 ? (
+                    animeInfo.sub_episodes.length
+                  ) : animeInfo.dub_episodes.length > 0 ? (
+                    animeInfo.dub_episodes.length
+                  ) : (
+                    "?"
+                  )
                 ) : (
-                  "?"
+                  animeInfo?.totalEpisodes
                 )
               ) : (
                 <Skeleton
@@ -107,16 +122,23 @@ export default function Info({ animeInfo }) {
             )}
             <p className={styles.sprtr}>
               <span className={styles.blob}>Type :</span>
-              {animeInfo?.anilistId ? (
-                animeInfo?.format
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={90}
-                  height={16}
-                />
-              )}
+              {animeInfo?.anilistId
+                ? animeInfo?.format || (
+                    <Skeleton
+                      baseColor="var(--background)"
+                      highlightColor="var(--secondary)"
+                      width={90}
+                      height={16}
+                    />
+                  )
+                : animeInfo?.type || (
+                    <Skeleton
+                      baseColor="var(--background)"
+                      highlightColor="var(--secondary)"
+                      width={90}
+                      height={16}
+                    />
+                  )}
             </p>
             {animeInfo?.airing_start && (
               <p className={styles.sprtr}>
@@ -137,54 +159,60 @@ export default function Info({ animeInfo }) {
                 )}
               </p>
             )}
-            <div style={{ display: "flex", gap: "5px" }}>
-              <span className={styles.blob}>Studios:</span>
-              {Array.isArray(animeInfo?.studios) &&
-              animeInfo.studios.length >= 0 ? (
-                animeInfo.studios.map((std, idx) => (
-                  <Link
-                    className={styles.studio}
-                    style={{ color: color }}
-                    key={idx}
-                    href={`/studios/${std}`}>
-                    {std}
-                  </Link>
-                ))
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={90}
-                  height={16}
-                />
-              )}
-            </div>
-            <p className={styles.sprtr}>
-              <span className={styles.blob}>Origin:</span>
-              {animeInfo?.anilistId ? (
-                animeInfo?.origin
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={90}
-                  height={16}
-                />
-              )}
-            </p>
-            <p className={styles.sprtr}>
-              <span className={styles.blob}>Synonyms:</span>
-              {animeInfo?.anilistId ? (
-                animeInfo?.synonyms.join(" • ")
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={90}
-                  height={16}
-                />
-              )}
-            </p>
+            {animeInfo?.anilistId && (
+              <div style={{ display: "flex", gap: "5px" }}>
+                <span className={styles.blob}>Studios:</span>
+                {Array.isArray(animeInfo?.studios) &&
+                animeInfo.studios.length >= 0 ? (
+                  animeInfo.studios.map((std, idx) => (
+                    <Link
+                      className={styles.studio}
+                      style={{ color: color }}
+                      key={idx}
+                      href={`/studios/${std}`}>
+                      {std}
+                    </Link>
+                  ))
+                ) : (
+                  <Skeleton
+                    baseColor="var(--background)"
+                    highlightColor="var(--secondary)"
+                    width={90}
+                    height={16}
+                  />
+                )}
+              </div>
+            )}
+            {animeInfo?.anilistId && (
+              <p className={styles.sprtr}>
+                <span className={styles.blob}>Origin:</span>
+                {animeInfo?.anilistId ? (
+                  animeInfo?.origin
+                ) : (
+                  <Skeleton
+                    baseColor="var(--background)"
+                    highlightColor="var(--secondary)"
+                    width={90}
+                    height={16}
+                  />
+                )}
+              </p>
+            )}
+            {animeInfo?.anilistId && (
+              <p className={styles.sprtr}>
+                <span className={styles.blob}>Synonyms:</span>
+                {animeInfo?.anilistId ? (
+                  animeInfo?.synonyms.join(" • ")
+                ) : (
+                  <Skeleton
+                    baseColor="var(--background)"
+                    highlightColor="var(--secondary)"
+                    width={90}
+                    height={16}
+                  />
+                )}
+              </p>
+            )}
             {animeInfo?.anilistId ? (
               <div className={styles.genres}>
                 {animeInfo?.genres.map((genre, index) => {
@@ -200,12 +228,14 @@ export default function Info({ animeInfo }) {
                 })}
               </div>
             ) : (
-              <Skeleton
-                baseColor="var(--background)"
-                highlightColor="var(--secondary)"
-                width={90}
-                height={16}
-              />
+              animeInfo?.anilistId && (
+                <Skeleton
+                  baseColor="var(--background)"
+                  highlightColor="var(--secondary)"
+                  width={90}
+                  height={16}
+                />
+              )
             )}
           </section>
         </section>

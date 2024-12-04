@@ -16,18 +16,21 @@ import Season from "@/components/filter/Season"
 import Status from "@/components/filter/Status"
 import Year from "@/components/filter/Year"
 // Styles
+import ZoroResults from "@/components/ZoroResults"
 import cardio from "@/styles/cardio.module.css"
 import styles from "@/styles/search.module.css"
-// Skeleton
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
 
 export default function SearchComponent() {
   const searchParams = useSearchParams()
-  const [query, setQuery] = useState<string | null>(searchParams.get("query"))
+  const [query, setQuery] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [notFound, setNotFound] = useState<boolean>(false)
   const [results, setResults] = useState([])
+  const [zoroResults, setZoroResults] = useState([])
+  const [zoroCurrentPage, setZoroCurrentPage] = useState()
+  const [zoroTotalPages, setZoroTotalPages] = useState()
   const [totalPages, setTotalPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalCount, setTotalCount] = useState(1)
@@ -129,16 +132,46 @@ export default function SearchComponent() {
     })
   }
 
+  async function getZoroSearchResults() {
+    console.log("getZoroSearchResults called")
+    try {
+      setZoroResults([])
+      const request = await fetch(`/api/zoro/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query }),
+      })
+      const response = await request.json()
+      console.log(response)
+      if (request.status === 200) {
+        setZoroResults(response.results)
+        setZoroCurrentPage(response.currentPage)
+        setZoroTotalPages(response.totalPages)
+      }
+    } catch (error) {
+      console.log(`[getZoroSearchResults] ${error}`)
+    }
+  }
+
+  // Sync query state with searchParams
+  useEffect(() => {
+    setQuery(searchParams.get("query"))
+  }, [searchParams])
+
+  // Trigger searches when query changes
+  useEffect(() => {
+    if (query) {
+      getZoroSearchResults()
+      getSearched()
+    }
+  }, [query])
+
   useEffect(() => {
     getTrending()
     getPopular()
   }, [])
-
-  useEffect(() => {
-    if (searchParams.get("query")) {
-      getSearched()
-    }
-  }, [searchParams])
 
   return (
     <>
@@ -252,14 +285,25 @@ export default function SearchComponent() {
             </div>
           </section>
         ) : results.length > 0 ? (
-          <SearchResults
-            query={query}
-            results={results}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            totalCount={totalCount}
-            getSearched={getSearched}
-          />
+          <>
+            <SearchResults
+              query={query}
+              results={results}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalCount={totalCount}
+              getSearched={getSearched}
+            />
+            <p>Zoro</p>
+            <ZoroResults
+              query={query}
+              results={zoroResults}
+              currentPage={zoroCurrentPage}
+              totalPages={zoroTotalPages}
+              totalCount={zoroResults.length}
+              getSearched={getZoroSearchResults}
+            />
+          </>
         ) : notFound ? (
           <p className={styles.loading_title}>
             No search result {query && `for '${query}'`}

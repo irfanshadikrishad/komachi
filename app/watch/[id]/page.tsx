@@ -3,7 +3,7 @@ import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import Player from "@/components/Player"
 import styles from "@/styles/watch.module.css"
-import { AnimeInfo, extractDefaultSource } from "@/utils/helpers"
+import { AnimeInfo, extractDefaultSource, isZoroId } from "@/utils/helpers"
 import Image from "next/image"
 import { useParams, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -56,48 +56,89 @@ export default function Streaming() {
     }
   }
 
-  const getAnimeInfo = async () => {
+  async function getZoroSources(episodeId: string) {
     try {
-      const request = await fetch(`/api/info`, {
+      const request = await fetch(`/api/zoro/stream`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ animeId }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ episodeId }),
       })
       const response = await request.json()
-
+      console.log(response)
       if (request.status === 200) {
-        setNextAiringTime(response?.nextAiringEpisode)
-        setAnimeInfo(response)
-        setEpisodes(
-          response?.sub_episodes.length > 0
-            ? response?.sub_episodes
-            : response?.dub_episodes
-        )
-        setDubEpisodes(response?.dub_episodes)
-        setCurrentEpisode(
-          response?.sub_episodes[0]?.id
-            ? response?.sub_episodes[0]?.id
-            : response?.dub_episodes[0]?.id
-        )
-        if (response?.sub_episodes[0]?.id) {
-          getStreamLink(
-            eps
-              ? response?.sub_episodes[Number(eps) - 1]?.id
-              : response?.sub_episodes[0]?.id,
-            eps
-              ? response?.dub_episodes[Number(eps) - 1]?.id
-              : response?.dub_episodes[0]?.id
-          )
-        } else if (response?.dub_episodes[0]?.id) {
-          getStreamLink(
-            eps
-              ? response?.dub_episodes[Number(eps) - 1]?.id
-              : response?.dub_episodes[0]?.id
-          )
-        }
+        setStreamLink(String(extractDefaultSource(response.sources)))
       } else {
         console.log(response)
-        setNotFound(true)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getAnimeInfo = async () => {
+    try {
+      if (isZoroId(String(animeId))) {
+        const request = await fetch(`/api/zoro/info`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: animeId }),
+        })
+        const response = await request.json()
+        console.log(response)
+        if (request.status === 200) {
+          setAnimeInfo(response)
+          setEpisodes(response.episodes)
+          setCurrentEpisode(response.episodes[0].id)
+          getZoroSources(response.episodes[0].id)
+        } else {
+          console.log(response)
+        }
+      } else {
+        const request = await fetch(`/api/info`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ animeId }),
+        })
+        const response = await request.json()
+
+        if (request.status === 200) {
+          setNextAiringTime(response?.nextAiringEpisode)
+          setAnimeInfo(response)
+          setEpisodes(
+            response?.sub_episodes.length > 0
+              ? response?.sub_episodes
+              : response?.dub_episodes
+          )
+          setDubEpisodes(response?.dub_episodes)
+          setCurrentEpisode(
+            response?.sub_episodes[0]?.id
+              ? response?.sub_episodes[0]?.id
+              : response?.dub_episodes[0]?.id
+          )
+          if (response?.sub_episodes[0]?.id) {
+            getStreamLink(
+              eps
+                ? response?.sub_episodes[Number(eps) - 1]?.id
+                : response?.sub_episodes[0]?.id,
+              eps
+                ? response?.dub_episodes[Number(eps) - 1]?.id
+                : response?.dub_episodes[0]?.id
+            )
+          } else if (response?.dub_episodes[0]?.id) {
+            getStreamLink(
+              eps
+                ? response?.dub_episodes[Number(eps) - 1]?.id
+                : response?.dub_episodes[0]?.id
+            )
+          }
+        } else {
+          console.log(response)
+          setNotFound(true)
+        }
       }
     } catch (error) {
       console.log(error)
