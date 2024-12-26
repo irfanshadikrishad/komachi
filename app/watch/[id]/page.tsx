@@ -23,8 +23,10 @@ export default function Streaming() {
   const [nextAiringTime, setNextAiringTime] = useState({})
   const [notFound, setNotFound] = useState(false)
   const [episode, setEpisode] = useState({})
+  const [VTT, setVTT] = useState([])
 
   const getStreamLink = async (subEpisodeId: string, episode?: any) => {
+    setVTT([])
     try {
       if (subEpisodeId && subEpisodeId !== "undefined") {
         const request = await fetch(`/api/stream`, {
@@ -49,6 +51,7 @@ export default function Streaming() {
               console.warn("Sub source URL is missing.")
               setStreamLink("")
             }
+            setVTT(response.sub.tracks)
           } else {
             console.warn("Sub sources are invalid or unavailable.")
             setStreamLink("")
@@ -67,7 +70,7 @@ export default function Streaming() {
               setDubLink(null)
             }
           } else {
-            console.warn("Dub sources are invalid or unavailable.")
+            // console.warn("Dub sources are invalid or unavailable.")
             setDubLink(null)
           }
 
@@ -156,6 +159,7 @@ export default function Streaming() {
               nextAiringEpisode={nextAiringTime}
               animeInfo={animeInfo}
               episode={episode}
+              vtt={VTT}
             />
           </section>
         ) : (

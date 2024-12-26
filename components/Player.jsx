@@ -3,7 +3,6 @@ import Automatics from "@/components/Automatics"
 import Disqus from "@/components/Disqus"
 import Episodes from "@/components/Episodes"
 import Info from "@/components/Info"
-import Recommendations from "@/components/Recommendations"
 import styles from "@/styles/player.module.css"
 import {
   convertTimestampToReadable,
@@ -15,7 +14,7 @@ import { useEffect, useState } from "react"
 import { FaClosedCaptioning } from "react-icons/fa6"
 import { IoMic } from "react-icons/io5"
 // VIDSTACK
-import { MediaPlayer, MediaProvider } from "@vidstack/react"
+import { MediaPlayer, MediaProvider, Track } from "@vidstack/react"
 import {
   defaultLayoutIcons,
   DefaultVideoLayout,
@@ -35,8 +34,9 @@ export default function Player({
   nextAiringEpisode,
   animeInfo,
   episode,
+  vtt,
 }) {
-  const [isSub, setIsSub] = useState(true) // Default state is true
+  const [isSub, setIsSub] = useState(true)
   const [isMouseOver, setIsMouseOver] = useState(false)
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes)
   const [origin, setOrigin] = useState("")
@@ -64,6 +64,7 @@ export default function Player({
       player.load()
     }
   }, [streamLink, dubLink])
+  console.log(vtt)
 
   return (
     <div>
@@ -88,17 +89,16 @@ export default function Player({
               storage="storage-key"
               autoPlay>
               <MediaProvider />
-              {/* Render subtitle tracks dynamically */}
-              {/* {subtitlesArray.map((subtitle, index) => (
-                <track
-                  key={index}
-                  src={subtitle.src} // Path to the subtitle file
-                  kind="subtitles"
-                  srclang={subtitle.language} // Language code (e.g., "en", "es")
-                  label={subtitle.label} // Descriptive label (e.g., "English", "Spanish")
-                  default={subtitle.default} // Set the default subtitle
-                />
-              ))} */}
+              {vtt.map((vT, idx) => {
+                return (
+                  <Track
+                    key={idx}
+                    src={vT.file}
+                    label={vT.label}
+                    kind={vT.kind}
+                  />
+                )
+              })}
               <DefaultVideoLayout
                 icons={defaultLayoutIcons}
                 download={episodeDownloadLink}
@@ -202,11 +202,6 @@ export default function Player({
           </p>
         </div>
       </section>
-      {/* <Recommendations
-        recommendations={
-          animeInfo?.recommendations ? animeInfo?.recommendations : []
-        }
-      /> */}
     </div>
   )
 }
