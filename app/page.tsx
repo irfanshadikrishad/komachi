@@ -3,6 +3,7 @@ import Footer from "@/components/Footer"
 import Latest from "@/components/Latest"
 import Navbar from "@/components/Navbar"
 import Schedule from "@/components/Schedule"
+import TopAiring from "@/components/TopAiring"
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <Board />
       <Latest />
       {/* <Schedule /> */}
+      <TopAiring />
       <Footer />
     </>
   )

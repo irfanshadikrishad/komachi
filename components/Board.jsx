@@ -31,7 +31,7 @@ export default function Board() {
         // body: JSON.stringify({ page: 1, perPage: 6 }),
       })
       const response = await request.json()
-      console.log(response)
+      // console.log(response)
 
       if (request.status === 200) {
         setBoardInfo(response)
