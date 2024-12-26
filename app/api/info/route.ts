@@ -8,31 +8,24 @@ export async function POST(request: Request) {
     await redis.Connect()
 
     const { animeId } = await request.json()
-    const cache_Key = `info_${animeId}`
-    const cachedData = await client.get(cache_Key)
 
-    if (cachedData) {
-      console.warn("[REDIS] Cache hit")
-      return new Response(cachedData, { status: 200 })
-    }
+    const resp = await fetch(
+      `${process.env.HIANIME}/api/v2/hianime/anime/${animeId}`
+    )
+    const { data } = await resp.json()
 
-    console.warn("[REDIS] Cache miss")
+    const episodes = await fetch(
+      `${process.env.HIANIME}/api/v2/hianime/anime/${animeId}/episodes`
+    )
+    const episodesJSON = await episodes.json()
 
-    const info = await Anime.findOne({ anilistId: animeId }).populate({
-      path: "recommendations",
-      model: "ANIME",
-    })
-
-    if (info) {
-      await client.set(cache_Key, JSON.stringify(info), { EX: 86400 }) // 24 hrs
-      return new Response(JSON.stringify(info), { status: 200 })
-    } else {
-      return new Response(JSON.stringify({ message: "Anime not found" }), {
-        status: 404,
-      })
-    }
+    return new Response(
+      JSON.stringify({ info: data, episodes: episodesJSON.data }),
+      {
+        status: 200,
+      }
+    )
   } catch (error) {
-    console.error(error)
     return new Response(JSON.stringify({ message: "Internal Server Error" }), {
       status: 500,
     })

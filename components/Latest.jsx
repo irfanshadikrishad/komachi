@@ -35,37 +35,40 @@ export default function Latest() {
         cache: "force-cache",
         next: { revalidate: 120 },
       })
-      const {
-        all,
-        japan,
-        china,
-        korea,
-        p = page,
-        pp = perPage,
-      } = await request.json()
+      // const {
+      //   all,
+      //   japan,
+      //   china,
+      //   korea,
+      //   p = page,
+      //   pp = perPage,
+      //   hi,
+      // } = await request.json()
+      const data = await request.json()
+      // console.log(data)
 
       if (request.status === 200) {
-        setAll(all)
-        setJapan(japan)
-        setChina(china)
-        setKorea(korea)
-        setCurrentPage(p)
-        setCurrentPerPage(pp)
-
-        const activeTab = localStorage.getItem("latest")
-        if (activeTab) {
-          if (activeTab === "JP") {
-            setRender(japan)
-          } else if (activeTab === "CN") {
-            setRender(china)
-          } else if (activeTab === "KR") {
-            setRender(korea)
-          } else {
-            setRender(all)
-          }
-        } else {
-          setRender(all)
-        }
+        setAll(data)
+        setRender(data)
+        // setJapan(data.japan)
+        // setChina(data.china)
+        // setKorea(data.korea)
+        // setCurrentPage(data.p)
+        // setCurrentPerPage(data.pp)
+        // const activeTab = localStorage.getItem("latest")
+        // if (activeTab) {
+        //   if (activeTab === "JP") {
+        //     setRender(data.japan)
+        //   } else if (activeTab === "CN") {
+        //     setRender(data.china)
+        //   } else if (activeTab === "KR") {
+        //     setRender(data.korea)
+        //   } else {
+        //     setRender(data.all)
+        //   }
+        // } else {
+        //   setRender(data.all)
+        // }
       } else {
         console.log(`fetch error on latest api.`)
       }
@@ -94,39 +97,45 @@ export default function Latest() {
                 }}>
                 All
               </button>
-              <button
-                onClick={() => {
-                  setRender(japan)
-                  setCurrentlyActive("JP")
-                  localStorage.setItem("latest", "JP")
-                }}
-                style={{
-                  color: currentlyActive === "JP" ? "var(--primary)" : "",
-                }}>
-                JP
-              </button>
-              <button
-                onClick={() => {
-                  setRender(china)
-                  setCurrentlyActive("CN")
-                  localStorage.setItem("latest", "CN")
-                }}
-                style={{
-                  color: currentlyActive === "CN" ? "var(--primary)" : "",
-                }}>
-                CH
-              </button>
-              <button
-                onClick={() => {
-                  setRender(korea)
-                  setCurrentlyActive("KR")
-                  localStorage.setItem("latest", "KR")
-                }}
-                style={{
-                  color: currentlyActive === "KR" ? "var(--primary)" : "",
-                }}>
-                KR
-              </button>
+              {japan.length > 0 && (
+                <button
+                  onClick={() => {
+                    setRender(japan)
+                    setCurrentlyActive("JP")
+                    localStorage.setItem("latest", "JP")
+                  }}
+                  style={{
+                    color: currentlyActive === "JP" ? "var(--primary)" : "",
+                  }}>
+                  JP
+                </button>
+              )}
+              {china.length > 0 && (
+                <button
+                  onClick={() => {
+                    setRender(china)
+                    setCurrentlyActive("CN")
+                    localStorage.setItem("latest", "CN")
+                  }}
+                  style={{
+                    color: currentlyActive === "CN" ? "var(--primary)" : "",
+                  }}>
+                  CH
+                </button>
+              )}
+              {korea.length > 0 && (
+                <button
+                  onClick={() => {
+                    setRender(korea)
+                    setCurrentlyActive("KR")
+                    localStorage.setItem("latest", "KR")
+                  }}
+                  style={{
+                    color: currentlyActive === "KR" ? "var(--primary)" : "",
+                  }}>
+                  KR
+                </button>
+              )}
               <button
                 className={`${currentPage > 1 ? "primary" : ""}`}
                 onClick={() => {
@@ -147,32 +156,24 @@ export default function Latest() {
             {render.length > 0
               ? render.map(
                   (
-                    {
-                      anilistId,
-                      poster,
-                      title,
-                      sub_episodes = [],
-                      dub_episodes = [],
-                      totalEpisodes,
-                      isAdult,
-                    },
+                    { id, poster, name, episodes, totalEpisodes, isAdult },
                     index
                   ) => {
                     return (
                       <Card
                         key={index}
-                        id={anilistId}
+                        id={id}
                         image={poster}
-                        title={getTitle(title)}
-                        subCount={sub_episodes.length}
-                        dubCount={dub_episodes.length}
-                        totalCount={totalEpisodes}
-                        isAdult={isAdult}
-                        lastEpisode={
-                          sub_episodes.length > 0
-                            ? sub_episodes[sub_episodes.length - 1].number
-                            : dub_episodes[dub_episodes.length - 1].number
-                        }
+                        title={name}
+                        subCount={episodes.sub}
+                        dubCount={episodes.dub}
+                        totalCount={episodes.sub}
+                        isAdult={false}
+                        // lastEpisode={
+                        //   sub_episodes.length > 0
+                        //     ? sub_episodes[sub_episodes.length - 1].number
+                        //     : dub_episodes[dub_episodes.length - 1].number
+                        // }
                       />
                     )
                   }

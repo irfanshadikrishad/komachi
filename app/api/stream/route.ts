@@ -1,44 +1,45 @@
 import { client, redis } from "@/utils/redis"
-import { ANIME } from "@consumet/extensions"
 
 export async function POST(request: Request) {
-  const gogoanime = new ANIME.Gogoanime()
-  const { subEpisodeId, dubEpisodeId } = await request.json()
+  const { subEpisodeId } = await request.json()
+  console.log(subEpisodeId)
 
   try {
     await redis.Connect()
 
-    const cacheKey = `stream:${subEpisodeId}-${dubEpisodeId || "none"}`
-    const cachedData = await client.get(cacheKey)
+    // Fetch subtitles (sub) data
+    const subRequest = await fetch(
+      `${process.env.HIANIME}/api/v2/hianime/episode/sources?animeEpisodeId=${subEpisodeId}&category=sub`
+    )
+    const sub = await subRequest.json()
 
-    if (cachedData) {
-      return new Response(cachedData, { status: 200 })
+    let dub = null
+
+    try {
+      // Fetch dubbed (dub) data
+      const dubRequest = await fetch(
+        `${process.env.HIANIME}/api/v2/hianime/episode/sources?animeEpisodeId=${subEpisodeId}&category=dub`
+      )
+      const dubData = await dubRequest.json()
+      dub = dubData.data // Only assign if successful
+    } catch (dubError) {
+      console.error("Error fetching dub sources:", dubError)
+      dub = null // Explicitly set dub to null on error
     }
 
-    const subLink = await gogoanime.fetchEpisodeSources(subEpisodeId)
-
-    let dubLink = null
-    if (dubEpisodeId) {
-      try {
-        dubLink = await gogoanime.fetchEpisodeSources(dubEpisodeId)
-      } catch (error) {
-        console.warn("Dub link not found or failed to fetch:", dubEpisodeId)
-      }
-    }
-
-    const response_data = {
-      subLink,
-      dubLink: dubLink?.sources ? dubLink : null,
-    }
-    await client.set(cacheKey, JSON.stringify(response_data), { EX: 3600 }) // 1hrs
-
-    return new Response(JSON.stringify(response_data), { status: 200 })
+    return new Response(JSON.stringify({ sub: sub.data, dub }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
   } catch (error) {
-    console.error("Error fetching episode sources:", subEpisodeId, dubEpisodeId)
+    console.error("Error fetching episode sources:", error)
 
     return new Response(
       JSON.stringify({ error: "Failed to fetch episode sources" }),
-      { status: 400 }
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      }
     )
   }
 }

@@ -200,17 +200,36 @@ export default function Episodes({
           : goodEpisodes.length > 0
             ? goodEpisodes[selectedEpisodeRange].map(
                 (
-                  { id, number }: { id: string; number: number },
+                  {
+                    episodeId,
+                    number,
+                    title,
+                    isFiller,
+                  }: {
+                    episodeId: string
+                    number: number
+                    title: string
+                    isFiller: boolean
+                  },
                   idx: number
                 ) => {
                   return (
                     <button
                       key={idx}
                       className={`${styles.btn} ${
-                        currentEpisode === id ? styles.active_Episode : ""
+                        currentEpisode === episodeId
+                          ? styles.active_Episode
+                          : ""
                       }`}
                       onClick={() => {
-                        getStreamLink(id, subToDub(id))
+                        getStreamLink(
+                          episodeId,
+                          goodEpisodes[selectedEpisodeRange][idx]
+                        )
+                        console.log(
+                          goodEpisodes,
+                          goodEpisodes[selectedEpisodeRange][idx]
+                        )
                       }}>
                       {number}
                     </button>

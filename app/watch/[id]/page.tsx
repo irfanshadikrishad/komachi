@@ -22,34 +22,63 @@ export default function Streaming() {
   const [dubEpisodes, setDubEpisodes] = useState([])
   const [nextAiringTime, setNextAiringTime] = useState({})
   const [notFound, setNotFound] = useState(false)
+  const [episode, setEpisode] = useState({})
 
-  const getStreamLink = async (subEpisodeId: string, dubEpisodeId?: string) => {
+  const getStreamLink = async (subEpisodeId: string, episode?: any) => {
     try {
       if (subEpisodeId && subEpisodeId !== "undefined") {
         const request = await fetch(`/api/stream`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            subEpisodeId,
-            dubEpisodeId: dubEpisodeId ? dubEpisodeId : null,
-          }),
+          body: JSON.stringify({ subEpisodeId }),
         })
+
         const response = await request.json()
+        console.log(response, subEpisodeId, episode)
 
         if (request.status === 200) {
-          setStreamLink(
-            String(extractDefaultSource(response?.subLink?.sources))
-          )
-          if (response?.dubLink !== null) {
-            setDubLink(String(extractDefaultSource(response?.dubLink?.sources)))
+          // Validate and set sub link
+          if (
+            response.sub &&
+            Array.isArray(response.sub.sources) &&
+            response.sub.sources.length > 0
+          ) {
+            if (response.sub.sources[0].url) {
+              setStreamLink(String(response.sub.sources[0].url))
+            } else {
+              console.warn("Sub source URL is missing.")
+              setStreamLink("")
+            }
           } else {
+            console.warn("Sub sources are invalid or unavailable.")
+            setStreamLink("")
+          }
+
+          // Validate and set dub link
+          if (
+            response.dub &&
+            Array.isArray(response.dub.sources) &&
+            response.dub.sources.length > 0
+          ) {
+            if (response.dub.sources[0].url) {
+              setDubLink(response.dub.sources[0].url)
+            } else {
+              console.warn("Dub source URL is missing.")
+              setDubLink(null)
+            }
+          } else {
+            console.warn("Dub sources are invalid or unavailable.")
             setDubLink(null)
           }
+
+          // Set current episode and metadata
           setCurrentEpisode(subEpisodeId)
-          setEpisodeDownloadLink(response.subLink.download)
+          setEpisode(episode)
         } else {
-          console.log(response)
+          console.error("Failed to fetch stream link:", response)
         }
+      } else {
+        console.warn("Invalid subEpisodeId:", subEpisodeId)
       }
     } catch (error) {
       console.error("Error fetching stream link:", error, subEpisodeId)
@@ -64,37 +93,16 @@ export default function Streaming() {
         body: JSON.stringify({ animeId }),
       })
       const response = await request.json()
+      console.log(response)
 
       if (request.status === 200) {
-        setNextAiringTime(response?.nextAiringEpisode)
-        setAnimeInfo(response)
-        setEpisodes(
-          response?.sub_episodes.length > 0
-            ? response?.sub_episodes
-            : response?.dub_episodes
+        setAnimeInfo(response.info.anime.info)
+        setEpisodes(response?.episodes?.episodes)
+        setCurrentEpisode(response?.episodes?.episodes[0]?.episodeId)
+        getStreamLink(
+          response?.episodes?.episodes[0]?.episodeId,
+          response?.episodes?.episodes[0]
         )
-        setDubEpisodes(response?.dub_episodes)
-        setCurrentEpisode(
-          response?.sub_episodes[0]?.id
-            ? response?.sub_episodes[0]?.id
-            : response?.dub_episodes[0]?.id
-        )
-        if (response?.sub_episodes[0]?.id) {
-          getStreamLink(
-            eps
-              ? response?.sub_episodes[Number(eps) - 1]?.id
-              : response?.sub_episodes[0]?.id,
-            eps
-              ? response?.dub_episodes[Number(eps) - 1]?.id
-              : response?.dub_episodes[0]?.id
-          )
-        } else if (response?.dub_episodes[0]?.id) {
-          getStreamLink(
-            eps
-              ? response?.dub_episodes[Number(eps) - 1]?.id
-              : response?.dub_episodes[0]?.id
-          )
-        }
       } else {
         console.log(response)
         setNotFound(true)
@@ -147,6 +155,7 @@ export default function Streaming() {
               setStreamLink={setStreamLink}
               nextAiringEpisode={nextAiringTime}
               animeInfo={animeInfo}
+              episode={episode}
             />
           </section>
         ) : (

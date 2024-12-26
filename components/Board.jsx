@@ -25,15 +25,16 @@ export default function Board() {
 
   const getBoardAnimes = async () => {
     try {
-      const request = await fetch(`/api/trending`, {
-        method: "POST",
+      const request = await fetch(`/api/spotlight`, {
+        method: "GET",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: 1, perPage: 6 }),
+        // body: JSON.stringify({ page: 1, perPage: 6 }),
       })
       const response = await request.json()
+      console.log(response)
 
       if (request.status === 200) {
-        setBoardInfo(response.results)
+        setBoardInfo(response)
       } else {
         console.log(response)
       }
@@ -61,16 +62,12 @@ export default function Board() {
                 <div
                   className={styles.board}
                   style={{
-                    backgroundImage: `url(${bored.cover})`,
+                    backgroundImage: `url(${bored.poster})`,
                   }}></div>
                 <div className={styles.elem}>
-                  <h1 className={`two_line ${styles.title}`}>
-                    {bored.title.english
-                      ? bored.title.english
-                      : bored.title.romaji}
-                  </h1>
+                  <h1 className={`two_line ${styles.title}`}>{bored.name}</h1>
                   <section className={styles.status_Main}>
-                    <div className={styles.status_Board}>
+                    {/* <div className={styles.status_Board}>
                       <button>
                         {bored.status === "Completed" ? (
                           <MdVerified />
@@ -79,25 +76,25 @@ export default function Board() {
                         )}
                       </button>
                       <p>{bored.status}</p>
-                    </div>
+                    </div> */}
                     <div className={styles.status_Board}>
                       <button>
                         <AiFillThunderbolt />
                       </button>
-                      <p>{`Ranking #${index + 1}`}</p>
+                      <p>{`Ranking #${bored.rank}`}</p>
                     </div>
                     <div className={styles.episode_stats}>
                       <button>
                         <FaClosedCaptioning />
                       </button>
-                      <p>{bored.sub_episodes.length}</p>
+                      <p>{bored.episodes.sub}</p>
                     </div>
-                    {bored.dub_episodes.length > 0 && (
+                    {bored.episodes.dub > 0 && (
                       <div className={`${styles.episode_stats} ${styles.dub}`}>
                         <button>
                           <TbMicrophoneFilled />
                         </button>
-                        <p>{bored.dub_episodes.length}</p>
+                        <p>{bored.episodes.dub}</p>
                       </div>
                     )}
                   </section>
@@ -105,9 +102,7 @@ export default function Board() {
                     {removeHtmlAndMarkdown(bored.description)}
                   </p>
                   <div className={styles.boardBtns}>
-                    <Link
-                      href={`/watch/${bored?.anilistId}`}
-                      className={styles.watch}>
+                    <Link href={`/watch/${bored?.id}`} className={styles.watch}>
                       {<FaRegCirclePlay />} Watch now
                     </Link>
                     <button disabled className={styles.bookmark}>

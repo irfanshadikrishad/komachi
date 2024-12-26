@@ -23,24 +23,20 @@ export async function generateMetadata(props: LayoutProps): Promise<Metadata> {
 
   return {
     title:
-      `Watch ${
-        data.title?.english ? data.title?.english : data.title?.romaji
-      } online in HD - No Ads • Komachi (こまち)` ||
+      `Watch ${data.name} online in HD - No Ads • Komachi (こまち)` ||
       "Komachi (こまち) • Heaven for anime lovers",
     description:
       `Stream and Watch ${
-        data.title?.english ? data.title?.english : data.title?.romaji
+        data.name
       } online on Komachi. ${removeHtmlAndMarkdown(data.description)}` ||
       "Your premium destination for watching animes online without ads.",
     openGraph: {
       title:
-        `Watch ${
-          data.title?.english ? data.title?.english : data.title?.romaji
-        } online in HD - No Ads • Komachi` ||
+        `Watch ${data.name} online in HD - No Ads • Komachi` ||
         "Komachi (こまち) • Heaven for anime lovers",
       description:
         `Stream and Watch ${
-          data.title?.english ? data.title?.english : data.title?.romaji
+          data.name
         } online on Komachi (こまち). ${removeHtmlAndMarkdown(
           data.description
         )}` ||
@@ -50,13 +46,11 @@ export async function generateMetadata(props: LayoutProps): Promise<Metadata> {
           url: data?.poster,
           width: 1200,
           height: 630,
-          alt: `Stream and Watch ${
-            data.title?.english ? data.title?.english : data.title?.romaji
-          } online in HD • Komachi`,
+          alt: `Stream and Watch ${data.name} online in HD • Komachi`,
         },
       ],
       type: "video.tv_show",
-      url: `${process.env.BASE_URL}/watch/${data?.anilistId}`,
+      url: `${process.env.BASE_URL}/watch/${data?.id}`,
     },
   }
 }

@@ -34,6 +34,7 @@ export default function Player({
   setStreamLink,
   nextAiringEpisode,
   animeInfo,
+  episode,
 }) {
   const [isSub, setIsSub] = useState(true) // Default state is true
   const [isMouseOver, setIsMouseOver] = useState(false)
@@ -73,7 +74,7 @@ export default function Player({
             onMouseOver={() => setIsMouseOver(true)}
             onMouseLeave={() => setIsMouseOver(false)}>
             <MediaPlayer
-              title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
+              title={episode?.title || ""}
               src={`https://goodproxy.goodproxy.workers.dev/fetch?url=${
                 isSub || !dubLink ? streamLink : dubLink
               }`}
@@ -111,13 +112,7 @@ export default function Player({
             <div className={styles.es1}>
               <p>
                 You are watching
-                <span className="primary">
-                  {` Episode ${
-                    currentEpisode
-                      ? episodeIdToEpisodeNumber(currentEpisode)
-                      : "?"
-                  }`}
-                </span>
+                <span className="primary">{` ${episode?.title}`}</span>
               </p>
               <p>
                 If current server doesn't work please try other servers beside.
@@ -162,14 +157,14 @@ export default function Player({
               )}
             </div>
           </div>
-          {nextAiringEpisode && currentEpisode && (
+          {/* {nextAiringEpisode && currentEpisode && (
             <div className={styles.nae}>
               {`🚀 ${convertTimestampToReadable(
                 nextAiringEpisode?.airingTime,
                 nextAiringEpisode?.episode
               )}`}
             </div>
-          )}
+          )} */}
         </section>
         <Episodes
           unicornEpisodes={unicornEpisodes}
