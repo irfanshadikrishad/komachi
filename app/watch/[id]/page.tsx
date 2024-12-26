@@ -34,7 +34,7 @@ export default function Streaming() {
         })
 
         const response = await request.json()
-        console.log(response, subEpisodeId, episode)
+        // console.log(response, subEpisodeId, episode)
 
         if (request.status === 200) {
           // Validate and set sub link
@@ -93,10 +93,10 @@ export default function Streaming() {
         body: JSON.stringify({ animeId }),
       })
       const response = await request.json()
-      console.log(response)
+      // console.log(response)
 
       if (request.status === 200) {
-        setAnimeInfo(response.info.anime.info)
+        setAnimeInfo(response.info.anime)
         setEpisodes(response?.episodes?.episodes)
         setCurrentEpisode(response?.episodes?.episodes[0]?.episodeId)
         getStreamLink(

@@ -88,6 +88,17 @@ export default function Player({
               storage="storage-key"
               autoPlay>
               <MediaProvider />
+              {/* Render subtitle tracks dynamically */}
+              {/* {subtitlesArray.map((subtitle, index) => (
+                <track
+                  key={index}
+                  src={subtitle.src} // Path to the subtitle file
+                  kind="subtitles"
+                  srclang={subtitle.language} // Language code (e.g., "en", "es")
+                  label={subtitle.label} // Descriptive label (e.g., "English", "Spanish")
+                  default={subtitle.default} // Set the default subtitle
+                />
+              ))} */}
               <DefaultVideoLayout
                 icons={defaultLayoutIcons}
                 download={episodeDownloadLink}
@@ -112,7 +123,7 @@ export default function Player({
             <div className={styles.es1}>
               <p>
                 You are watching
-                <span className="primary">{` ${episode?.title}`}</span>
+                <span className="primary">{` Episode ${episode?.number}`}</span>
               </p>
               <p>
                 If current server doesn't work please try other servers beside.

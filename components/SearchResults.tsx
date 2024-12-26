@@ -53,29 +53,27 @@ export default function SearchResults({
           {results.map(
             ({
               isAdult,
-              anilistId,
+              id,
               poster,
-              sub_episodes,
-              dub_episodes,
+              episodes,
               totalEpisodes,
-              title,
+              name,
             }: {
-              anilistId: string
+              id: string
               poster: string
-              sub_episodes: []
-              dub_episodes: []
+              episodes: { sub: number; dub: number }
               totalEpisodes: string | number
-              title: { english?: string; romaji?: string; native?: string }
+              name: string
               isAdult: string
             }) => (
               <Card
-                key={anilistId}
-                id={anilistId}
+                key={id}
+                id={id}
                 image={poster}
-                subCount={sub_episodes.length}
-                dubCount={dub_episodes.length}
+                subCount={episodes.sub}
+                dubCount={episodes.dub}
                 totalCount={totalEpisodes}
-                title={getTitle(title)}
+                title={name}
                 isAdult={isAdult}
               />
             )

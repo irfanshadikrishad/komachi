@@ -10,7 +10,7 @@ export default function Home() {
       <Navbar />
       <Board />
       <Latest />
-      <Schedule />
+      {/* <Schedule /> */}
       <Footer />
     </>
   )

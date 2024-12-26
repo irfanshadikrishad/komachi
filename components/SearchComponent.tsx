@@ -69,13 +69,15 @@ export default function SearchComponent() {
       }),
     })
     const response = await request.json()
+    console.log(response)
+
     setIsLoading(false)
 
     if (request.status === 200) {
-      setResults(response.results)
-      setCurrentPage(response.currentPage)
-      setTotalPages(response.totalPages)
-      setTotalCount(response.totalCount)
+      setResults(response.data.animes)
+      setCurrentPage(response.data.currentPage)
+      setTotalPages(response.data.totalPages)
+      // setTotalCount(response.totalCount)
     } else {
       setNotFound(true)
     }
