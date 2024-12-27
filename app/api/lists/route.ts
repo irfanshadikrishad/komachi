@@ -1,107 +1,37 @@
-import Anime from "@/schema/anime"
-import { database } from "@/utils/database"
 import { client, redis } from "@/utils/redis"
 
 export async function POST(request: Request) {
   try {
-    const { show, page = 1, perPage = 10 } = await request.json()
-    await database()
+    const { show, page = 1 } = await request.json()
     await redis.Connect()
-
-    let matchCondition = {}
-
-    if (show === "all") {
-      matchCondition = {}
-    } else if (show === "0-9") {
-      matchCondition = {
-        "title.english": { $regex: /^[0-9]/ },
-      }
-    } else if (/^[a-zA-Z]$/.test(show)) {
-      matchCondition = {
-        "title.english": { $regex: new RegExp(`^${show}`, "i") },
-      }
-    } else {
-      return new Response(
-        JSON.stringify({ error: "Invalid 'show' parameter" }),
-        {
-          status: 400,
-        }
-      )
+    const cache_Key = `$lists_${show}_${page}`
+    const cacheResp = await client.get(cache_Key)
+    if (cacheResp) {
+      return new Response(cacheResp, {
+        status: 200,
+      })
     }
 
-    const cache_Key = `search_${show}.${page}.${perPage}`
-    const cachedData = await client.get(cache_Key)
+    const resp = await fetch(
+      `${process.env.HIANIME}/api/v2/hianime/azlist/${show}?page=${page}`
+    )
+    const { data } = await resp.json()
 
-    if (cachedData) {
-      console.warn("[REDIS] Cache hit")
-      return new Response(cachedData, { status: 200 })
-    }
+    await client.set(cache_Key, JSON.stringify(data), { EX: 43200 })
 
-    console.warn("[REDIS] Cache miss")
-
-    const totalCount = await Anime.countDocuments(matchCondition)
-    const totalPages = Math.ceil(totalCount / perPage)
-    const currentPage = Math.min(page, totalPages)
-
-    const results = await Anime.aggregate([
-      { $match: matchCondition },
-      {
-        $addFields: {
-          sortKey: {
-            $switch: {
-              branches: [
-                {
-                  case: {
-                    $regexMatch: {
-                      input: { $substrCP: ["$title.english", 0, 1] },
-                      regex: /[!-/:-@[-`{-~]/,
-                    },
-                  },
-                  then: 1,
-                },
-                {
-                  case: {
-                    $regexMatch: {
-                      input: { $substrCP: ["$title.english", 0, 1] },
-                      regex: /[0-9]/,
-                    },
-                  },
-                  then: 2,
-                },
-                {
-                  case: {
-                    $regexMatch: {
-                      input: { $substrCP: ["$title.english", 0, 1] },
-                      regex: /[a-zA-Z]/,
-                    },
-                  },
-                  then: 3,
-                },
-              ],
-              default: 4,
-            },
-          },
-        },
-      },
-      { $sort: { "sortKey": 1, "title.english": 1 } },
-      { $skip: (currentPage - 1) * perPage },
-      { $limit: perPage },
-    ])
-
-    const responseData = JSON.stringify({
-      results,
-      totalCount,
-      totalPages,
-      currentPage,
+    return new Response(JSON.stringify(data), {
+      status: 200,
     })
-
-    await client.set(cache_Key, responseData, { EX: 21600 }) // 6hrs
-
-    return new Response(responseData, { status: 200 })
   } catch (error) {
-    console.error("Error in POST handler:", error)
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-    })
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: "Internal Server Error",
+        message: `${(error as Error).message}`,
+      }),
+      {
+        status: 500,
+      }
+    )
   }
 }

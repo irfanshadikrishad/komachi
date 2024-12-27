@@ -25,6 +25,9 @@ export default function Footer() {
             <Link prefetch={true} href="/lists/?show=0-9">
               0-9
             </Link>
+            <Link prefetch={true} href="/lists/?show=other">
+              #
+            </Link>
             <Link prefetch={true} href="/lists/?show=A">
               A
             </Link>
