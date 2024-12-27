@@ -4,7 +4,6 @@ import cardio from "@/styles/cardio.module.css"
 import styles from "@/styles/latest.module.css"
 import { useEffect, useState } from "react"
 // Skeleton
-import { getTitle } from "@/utils/helpers"
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
 // Icons
@@ -35,40 +34,11 @@ export default function Latest() {
         cache: "force-cache",
         next: { revalidate: 120 },
       })
-      // const {
-      //   all,
-      //   japan,
-      //   china,
-      //   korea,
-      //   p = page,
-      //   pp = perPage,
-      //   hi,
-      // } = await request.json()
       const data = await request.json()
-      // console.log(data)
 
       if (request.status === 200) {
         setAll(data)
         setRender(data)
-        // setJapan(data.japan)
-        // setChina(data.china)
-        // setKorea(data.korea)
-        // setCurrentPage(data.p)
-        // setCurrentPerPage(data.pp)
-        // const activeTab = localStorage.getItem("latest")
-        // if (activeTab) {
-        //   if (activeTab === "JP") {
-        //     setRender(data.japan)
-        //   } else if (activeTab === "CN") {
-        //     setRender(data.china)
-        //   } else if (activeTab === "KR") {
-        //     setRender(data.korea)
-        //   } else {
-        //     setRender(data.all)
-        //   }
-        // } else {
-        //   setRender(data.all)
-        // }
       } else {
         console.log(`fetch error on latest api.`)
       }
@@ -167,13 +137,7 @@ export default function Latest() {
                         title={name}
                         subCount={episodes.sub}
                         dubCount={episodes.dub}
-                        totalCount={episodes.sub}
                         isAdult={false}
-                        // lastEpisode={
-                        //   sub_episodes.length > 0
-                        //     ? sub_episodes[sub_episodes.length - 1].number
-                        //     : dub_episodes[dub_episodes.length - 1].number
-                        // }
                       />
                     )
                   }

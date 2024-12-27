@@ -15,7 +15,7 @@ export default function TopAiring() {
         },
       })
       const response = await request.json()
-      console.log(response)
+      // console.log(response)
 
       if (request.status === 200) {
         setTopiring(response.topAiringAnimes)
@@ -34,7 +34,7 @@ export default function TopAiring() {
     <section className="container">
       <p style={{ padding: "5px 0" }}>Top Airing</p>
       <section className={cardio.cardsContainer}>
-        {topAiring.map(({ id, name, poster, episodes }, idx) => {
+        {topAiring.slice(0, 12).map(({ id, name, poster, episodes }, idx) => {
           return (
             <Card
               key={idx}

@@ -132,8 +132,10 @@ export default function Info({ animeInfo }) {
               )}
             </p>
             <p className={styles.sprtr}>
-              <span className={styles.blob}>Synonyms :</span>
-              {animeInfo?.moreInfo?.synonyms ? (
+              {animeInfo?.info?.name && (
+                <span className={styles.blob}>Synonyms :</span>
+              )}
+              {animeInfo?.info?.name ? (
                 animeInfo?.moreInfo?.synonyms
               ) : (
                 <Skeleton
@@ -145,8 +147,10 @@ export default function Info({ animeInfo }) {
               )}
             </p>
             <p className={styles.sprtr}>
-              <span className={styles.blob}>Producers :</span>
-              {animeInfo?.moreInfo?.producers ? (
+              {animeInfo?.info?.name && (
+                <span className={styles.blob}>Producers :</span>
+              )}
+              {animeInfo?.info?.name ? (
                 animeInfo?.moreInfo?.producers.join(", ")
               ) : (
                 <Skeleton

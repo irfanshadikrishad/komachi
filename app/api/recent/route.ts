@@ -1,9 +1,26 @@
+import { client, redis } from "@/utils/redis"
+
 export async function POST(request: Request) {
   try {
-    const data = await fetch(`${process.env.HIANIME}/api/v2/hianime/home`)
-    const response = await data.json()
+    await redis.Connect()
 
-    return new Response(JSON.stringify(response.data.latestEpisodeAnimes), {
+    const cache_Key = `rec_69`
+    const cacheResp = await client.get(cache_Key)
+
+    if (cacheResp) {
+      return new Response(cacheResp, {
+        status: 200,
+      })
+    }
+
+    const resp = await fetch(`${process.env.HIANIME}/api/v2/hianime/home`)
+    const { data } = await resp.json()
+
+    await client.set(cache_Key, JSON.stringify(data.latestEpisodeAnimes), {
+      EX: 10800,
+    })
+
+    return new Response(JSON.stringify(data.latestEpisodeAnimes), {
       status: 200,
     })
   } catch (error) {

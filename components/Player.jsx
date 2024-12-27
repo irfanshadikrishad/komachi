@@ -64,7 +64,6 @@ export default function Player({
       player.load()
     }
   }, [streamLink, dubLink])
-  console.log(vtt)
 
   return (
     <div>
