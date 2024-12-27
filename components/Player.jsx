@@ -4,12 +4,8 @@ import Disqus from "@/components/Disqus"
 import Episodes from "@/components/Episodes"
 import Info from "@/components/Info"
 import styles from "@/styles/player.module.css"
-import {
-  convertTimestampToReadable,
-  episodeIdToEpisodeNumber,
-  originWithEps,
-} from "@/utils/helpers"
-import { useEffect, useState } from "react"
+import { originWithEps } from "@/utils/helpers"
+import { useEffect, useRef, useState } from "react"
 // ICONS
 import { FaClosedCaptioning } from "react-icons/fa6"
 import { IoMic } from "react-icons/io5"
@@ -31,39 +27,48 @@ export default function Player({
   episodes,
   getStreamLink,
   setStreamLink,
-  nextAiringEpisode,
   animeInfo,
   episode,
   vtt,
 }) {
+  const [isClient, setIsClient] = useState(false)
   const [isSub, setIsSub] = useState(true)
   const [isMouseOver, setIsMouseOver] = useState(false)
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes)
   const [origin, setOrigin] = useState("")
 
-  // Use useEffect to handle localStorage on the client side only
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedType = localStorage.getItem("type")
+  const playerRef = useRef(null)
 
+  // Set isClient to true after the component is mounted on the client
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Handle localStorage and dynamic origin logic
+  useEffect(() => {
+    if (isClient) {
+      const storedType = localStorage.getItem("type")
       setIsSub(storedType ? storedType === "Sub" : true)
       if (window.location.href) {
-        let o = originWithEps(window.location.href, currentEpisode)
+        const o = originWithEps(window.location.href, currentEpisode)
         setOrigin(o)
       }
     }
-  }, [dubLink, streamLink])
+  }, [isClient, dubLink, streamLink])
 
+  // Update unicornEpisodes whenever episodes change
   useEffect(() => {
     setUnicornEpisodes(episodes)
   }, [episodes])
 
+  // Reload the player when the streamLink or dubLink changes
   useEffect(() => {
-    const player = document.querySelector("vds-media-player")
-    if (player) {
-      player.load()
+    if (isClient && playerRef.current?.load) {
+      playerRef.current.load()
     }
-  }, [streamLink, dubLink])
+  }, [isClient, streamLink, dubLink])
+
+  if (!isClient) return null
 
   return (
     <div>
@@ -74,6 +79,7 @@ export default function Player({
             onMouseOver={() => setIsMouseOver(true)}
             onMouseLeave={() => setIsMouseOver(false)}>
             <MediaPlayer
+              ref={playerRef}
               title={episode?.title || ""}
               src={`https://goodproxy.goodproxy.workers.dev/fetch?url=${
                 isSub || !dubLink ? streamLink : dubLink
@@ -88,16 +94,14 @@ export default function Player({
               storage="storage-key"
               autoPlay>
               <MediaProvider />
-              {vtt.map((vT, idx) => {
-                return (
-                  <Track
-                    key={idx}
-                    src={vT.file}
-                    label={vT.label}
-                    kind={vT.kind}
-                  />
-                )
-              })}
+              {vtt?.map((vT, idx) => (
+                <Track
+                  key={idx}
+                  src={vT.file}
+                  label={vT.label}
+                  kind={vT.kind}
+                />
+              ))}
               <DefaultVideoLayout
                 icons={defaultLayoutIcons}
                 download={episodeDownloadLink}
@@ -112,9 +116,7 @@ export default function Player({
                 }}></div>
               <div
                 className={styles.ed}
-                style={{
-                  display: isMouseOver ? "inline" : "none",
-                }}></div>
+                style={{ display: isMouseOver ? "inline" : "none" }}></div>
             </section>
           </div>
           <Automatics />
@@ -122,10 +124,10 @@ export default function Player({
             <div className={styles.es1}>
               <p>
                 You are watching
-                <span className="primary">{` Episode ${episode?.number}`}</span>
+                <span className="primary">{` Episode ${episode?.number ? episode?.number : "?"}`}</span>
               </p>
               <p>
-                If current server doesn't work please try other servers beside.
+                If the current server doesn't work, please try other servers.
               </p>
             </div>
             <div className={styles.es2}>
@@ -135,9 +137,7 @@ export default function Player({
                 </p>
                 <div>
                   <button
-                    style={{
-                      color: isSub || !dubLink ? "var(--primary)" : "",
-                    }}
+                    style={{ color: isSub || !dubLink ? "var(--primary)" : "" }}
                     onClick={() => {
                       setStreamLink(streamLink)
                       setIsSub(true)
@@ -167,14 +167,6 @@ export default function Player({
               )}
             </div>
           </div>
-          {/* {nextAiringEpisode && currentEpisode && (
-            <div className={styles.nae}>
-              {`🚀 ${convertTimestampToReadable(
-                nextAiringEpisode?.airingTime,
-                nextAiringEpisode?.episode
-              )}`}
-            </div>
-          )} */}
         </section>
         <Episodes
           unicornEpisodes={unicornEpisodes}

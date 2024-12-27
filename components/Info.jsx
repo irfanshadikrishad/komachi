@@ -5,18 +5,21 @@ import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
 import uniqolor from "uniqolor"
 
-export default function Info({ animeInfo }) {
-  const { color } = uniqolor(animeInfo?.anilistId)
+export default function Info({ animeInfo = {} }) {
+  const { color } = uniqolor(animeInfo?.info?.anilistId)
+
+  const info = animeInfo?.info || {}
+  const moreInfo = animeInfo?.moreInfo || {}
 
   return (
     <section className={styles.infoMain}>
       <section className={styles.seperator}>
         <div className={styles.posterContainer}>
-          {animeInfo?.info?.poster ? (
+          {info?.poster ? (
             <img
               className={styles.poster}
-              src={animeInfo?.info?.poster}
-              alt={String(animeInfo?.info?.id)}
+              src={info?.poster}
+              alt={String(info?.id)}
               draggable="false"
             />
           ) : (
@@ -30,8 +33,8 @@ export default function Info({ animeInfo }) {
         </div>
         <section>
           <h1 className={styles.title}>
-            {animeInfo?.info?.name ? (
-              animeInfo.info.name
+            {info?.name ? (
+              info.name
             ) : (
               <Skeleton
                 baseColor="var(--background)"
@@ -42,8 +45,8 @@ export default function Info({ animeInfo }) {
             )}
           </h1>
           <p className={styles.description}>
-            {animeInfo?.info?.description ? (
-              removeHtmlAndMarkdown(animeInfo?.info?.description)
+            {info?.description ? (
+              removeHtmlAndMarkdown(info?.description)
             ) : (
               <Skeleton
                 baseColor="var(--background)"
@@ -55,8 +58,8 @@ export default function Info({ animeInfo }) {
           <section>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Status :</span>
-              {animeInfo?.moreInfo?.status ? (
-                animeInfo?.moreInfo?.status
+              {moreInfo?.status ? (
+                moreInfo.status
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
@@ -68,8 +71,8 @@ export default function Info({ animeInfo }) {
             </p>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Duration :</span>
-              {animeInfo?.moreInfo?.duration ? (
-                animeInfo?.moreInfo?.duration
+              {moreInfo?.duration ? (
+                moreInfo.duration
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
@@ -81,8 +84,8 @@ export default function Info({ animeInfo }) {
             </p>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Aired :</span>
-              {animeInfo?.moreInfo?.aired ? (
-                animeInfo?.moreInfo?.aired
+              {moreInfo?.aired ? (
+                moreInfo.aired
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
@@ -94,8 +97,8 @@ export default function Info({ animeInfo }) {
             </p>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Studios :</span>
-              {animeInfo?.moreInfo?.studios ? (
-                animeInfo?.moreInfo?.studios
+              {moreInfo?.studios ? (
+                moreInfo.studios
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
@@ -107,8 +110,8 @@ export default function Info({ animeInfo }) {
             </p>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Premiered :</span>
-              {animeInfo?.moreInfo?.premiered ? (
-                animeInfo?.moreInfo?.premiered
+              {moreInfo?.premiered ? (
+                moreInfo.premiered
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
@@ -120,8 +123,8 @@ export default function Info({ animeInfo }) {
             </p>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Score :</span>
-              {animeInfo?.moreInfo?.malscore ? (
-                animeInfo?.moreInfo?.malscore
+              {moreInfo?.malscore ? (
+                moreInfo.malscore
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
@@ -132,11 +135,15 @@ export default function Info({ animeInfo }) {
               )}
             </p>
             <p className={styles.sprtr}>
-              {animeInfo?.info?.name && (
-                <span className={styles.blob}>Synonyms :</span>
+              {info?.name && (
+                <span className={styles.blob} style={{ flex: "0 0 auto" }}>
+                  Synonyms :
+                </span>
               )}
-              {animeInfo?.info?.name ? (
-                animeInfo?.moreInfo?.synonyms
+              {info?.name ? (
+                <span style={{ flex: "1 1 auto", wordBreak: "break-word" }}>
+                  {moreInfo?.synonyms}
+                </span>
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
@@ -146,12 +153,11 @@ export default function Info({ animeInfo }) {
                 />
               )}
             </p>
+
             <p className={styles.sprtr}>
-              {animeInfo?.info?.name && (
-                <span className={styles.blob}>Producers :</span>
-              )}
-              {animeInfo?.info?.name ? (
-                animeInfo?.moreInfo?.producers.join(", ")
+              {info?.name && <span className={styles.blob}>Producers :</span>}
+              {moreInfo?.producers?.length > 0 ? (
+                moreInfo.producers.join(", ")
               ) : (
                 <Skeleton
                   baseColor="var(--background)"
@@ -163,8 +169,8 @@ export default function Info({ animeInfo }) {
             </p>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Genres :</span>
-              {animeInfo?.moreInfo?.genres ? (
-                animeInfo?.moreInfo?.genres.join(", ")
+              {moreInfo?.genres ? (
+                moreInfo.genres.join(", ")
               ) : (
                 <Skeleton
                   baseColor="var(--background)"

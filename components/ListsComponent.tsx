@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar"
 import cardio from "@/styles/cardio.module.css"
 import footer_styles from "@/styles/footer.module.css"
 import styles from "@/styles/lists.module.css"
-import { getTitle } from "@/utils/helpers"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
@@ -34,9 +33,9 @@ export default function ListsComponent() {
     const response = await request.json()
 
     if (request.status === 200) {
-      setResults(response.results)
+      setResults(response.animes)
       setCurrentPage(response.currentPage)
-      setTotalCount(response.totalCount)
+      // setTotalCount(response.totalCount)
       setTotalPages(response.totalPages)
       setShow(show)
     } else {
@@ -59,17 +58,24 @@ export default function ListsComponent() {
       <section className="container">
         <section className={styles.listsHeader}>
           <section className={footer_styles.list_Links}>
-            {Array.from("0-9ABCDEFGHIJKLMNOPQRSTUVWXYZ").map((char) => (
+            {[
+              { label: "0-9", value: "0-9" },
+              { label: "#", value: "other" },
+              ...Array.from("ABCDEFGHIJKLMNOPQRSTUVWXYZ").map((char) => ({
+                label: char,
+                value: char,
+              })),
+            ].map(({ label, value }) => (
               <button
-                key={char}
+                key={label}
                 style={{
-                  color: show === char ? "var(--primary)" : "var(--color)",
+                  color: show === value ? "var(--primary)" : "var(--color)",
                 }}
                 onClick={() => {
-                  setShow(char)
-                  getShowResults(char)
+                  setShow(value)
+                  getShowResults(value)
                 }}>
-                {char}
+                {label}
               </button>
             ))}
           </section>
@@ -96,13 +102,13 @@ export default function ListsComponent() {
             ? results.map((item, idx) => (
                 <Card
                   key={idx}
-                  title={getTitle(item.title)}
-                  id={item.anilistId}
+                  title={item.name}
+                  id={item.id}
                   image={item.poster}
-                  subCount={item.sub_episodes.length}
-                  dubCount={item.dub_episodes.length}
-                  totalCount={item.totalEpisodes}
-                  isAdult={item.isAdult}
+                  subCount={item.episodes.sub || 0}
+                  dubCount={item.episodes.dub || 0}
+                  totalCount={item.episodes.sub || 0}
+                  isAdult={"false"}
                 />
               ))
             : Array.from({ length: 20 }).map((_, index) => (
