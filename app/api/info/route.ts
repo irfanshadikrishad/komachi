@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
     const cacheResponse = await client.get(cache_Key)
     if (cacheResponse) {
-      console.warn(`[redis] Cache hit`, cacheResponse)
+      console.warn(`[redis] Cache hit`)
       return new Response(cacheResponse, {
         status: 200,
       })

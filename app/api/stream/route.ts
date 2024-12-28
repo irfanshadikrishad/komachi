@@ -1,12 +1,7 @@
-import { client, redis } from "@/utils/redis"
-
 export async function POST(request: Request) {
   const { subEpisodeId } = await request.json()
-  console.log(subEpisodeId)
 
   try {
-    await redis.Connect()
-
     // Fetch subtitles (sub) data
     const subRequest = await fetch(
       `${process.env.HIANIME}/api/v2/hianime/episode/sources?animeEpisodeId=${subEpisodeId}&category=sub`

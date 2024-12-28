@@ -226,10 +226,6 @@ export default function Episodes({
                           episodeId,
                           goodEpisodes[selectedEpisodeRange][idx]
                         )
-                        console.log(
-                          goodEpisodes,
-                          goodEpisodes[selectedEpisodeRange][idx]
-                        )
                       }}>
                       {number}
                     </button>

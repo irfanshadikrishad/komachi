@@ -69,7 +69,6 @@ export default function SearchComponent() {
       }),
     })
     const response = await request.json()
-    console.log(response)
 
     setIsLoading(false)
 

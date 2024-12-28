@@ -97,7 +97,6 @@ export default function Watch() {
         body: JSON.stringify({ animeId }),
       })
       const response = await request.json()
-      console.log(response)
 
       if (request.status === 200) {
         setAnimeInfo(response.info.anime)
