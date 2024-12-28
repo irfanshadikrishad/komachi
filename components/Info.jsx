@@ -1,13 +1,9 @@
 import styles from "@/styles/info.module.css"
-import { getTitle, removeHtmlAndMarkdown } from "@/utils/helpers"
-import Link from "next/link"
+import { removeHtmlAndMarkdown } from "@/utils/helpers"
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
-import uniqolor from "uniqolor"
 
 export default function Info({ animeInfo = {} }) {
-  const { color } = uniqolor(animeInfo?.info?.anilistId)
-
   const info = animeInfo?.info || {}
   const moreInfo = animeInfo?.moreInfo || {}
 
@@ -153,7 +149,6 @@ export default function Info({ animeInfo = {} }) {
                 />
               )}
             </p>
-
             <p className={styles.sprtr}>
               {info?.name && <span className={styles.blob}>Producers :</span>}
               {moreInfo?.producers?.length > 0 ? (
