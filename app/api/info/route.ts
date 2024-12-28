@@ -7,11 +7,11 @@ export async function POST(request: Request) {
     await redis.Connect()
 
     const { animeId } = await request.json()
-    const cache_Key = `Info_${animeId}`
+    const cache_Key = `Info_${animeId}69`
 
     const cacheResponse = await client.get(cache_Key)
     if (cacheResponse) {
-      console.warn(`[redis] Cache hit`)
+      console.warn(`[redis] Cache hit`, cacheResponse)
       return new Response(cacheResponse, {
         status: 200,
       })

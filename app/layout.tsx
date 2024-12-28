@@ -7,6 +7,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.BASE_URL as string),
   title: "Komachi (こまち) • Heaven for anime lovers.",
   description:
     "Minimalist anime streaming platform where users can stream or download their favorite anime effortlessly. Built for speed, simplicity, and an immersive experience.",
