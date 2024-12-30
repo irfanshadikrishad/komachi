@@ -84,7 +84,7 @@ export default function SearchComponent() {
 
   const getTrending = async () => {
     try {
-      const request = await fetch(`/api/trending`, {
+      const request = await fetch(`/api/home`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ page: 1, perPage: 25 }),
@@ -92,7 +92,8 @@ export default function SearchComponent() {
       const response = await request.json()
 
       if (request.status === 200) {
-        setTrending(response.results)
+        setTrending(response.spotlightAnimes)
+        setPopular(response.top10Animes.month)
       } else {
         console.log(response)
       }
@@ -132,7 +133,7 @@ export default function SearchComponent() {
 
   useEffect(() => {
     getTrending()
-    getPopular()
+    // getPopular()
   }, [])
 
   useEffect(() => {

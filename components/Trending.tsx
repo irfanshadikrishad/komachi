@@ -1,7 +1,6 @@
 import Card from "@/components/Card"
 import cardio from "@/styles/cardio.module.css"
 import styles from "@/styles/search.module.css"
-import { getTitle } from "@/utils/helpers"
 import Link from "next/link"
 // Skeleton
 import Skeleton from "react-loading-skeleton"
@@ -17,38 +16,34 @@ export default function Trending({ trending }: { trending: any[] }) {
       <section className={cardio.cardsContainer}>
         {trending.length > 0
           ? trending
-              .slice(0, 7)
+              .slice(0, 6)
               .map(
                 ({
-                  anilistId,
+                  id,
                   poster,
-                  sub_episodes,
-                  dub_episodes,
+                  episodes,
                   totalEpisodes,
-                  title,
-                  isAdult,
+                  name,
                 }: {
-                  anilistId: string
+                  id: string
                   poster: string
-                  sub_episodes: []
-                  dub_episodes: []
+                  episodes: { sub?: number; dub?: number }
                   totalEpisodes: string | number
-                  title: { english?: string; romaji?: string; native?: string }
-                  isAdult: string
+                  name: string
                 }) => (
                   <Card
-                    key={anilistId}
-                    id={anilistId}
+                    key={id}
+                    id={id}
                     image={poster}
-                    subCount={sub_episodes.length}
-                    dubCount={dub_episodes.length}
+                    subCount={episodes?.sub || 0}
+                    dubCount={episodes?.dub || 0}
                     totalCount={totalEpisodes}
-                    title={getTitle(title)}
-                    isAdult={isAdult}
+                    title={name}
+                    isAdult={"false"}
                   />
                 )
               )
-          : Array.from({ length: 7 }).map((_, index: number) => {
+          : Array.from({ length: 6 }).map((_, index: number) => {
               return (
                 <Skeleton
                   key={index}
