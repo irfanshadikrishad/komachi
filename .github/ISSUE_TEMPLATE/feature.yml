@@ -1,19 +1,22 @@
 ---
 name: Feature Request
-about: Suggest an idea for this project
+about: Suggest an idea to improve the website
 title: "[FEATURE] "
 labels: enhancement
 assignees:
 ---
 
 **Feature Description**
-A clear and concise description of what the feature is and how it would benefit the project.
+A clear and concise description of the requested feature and how it would enhance the streaming experience (e.g., better playback controls, new personalization options).
 
 **Proposed Solution**
-A brief explanation of how you envision this feature being implemented.
+Describe how this feature could be implemented (e.g., adding a new button to the player, integrating an AI recommendation system).
+
+**Use Cases**
+Provide examples of how users would interact with this feature (e.g., "Users can create watchlists by clicking the 'Add to Watchlist' button on content cards").
 
 **Alternatives Considered**
-Explain any alternative solutions or features you considered.
+Mention any other solutions or workarounds you thought of and why they might not be ideal.
 
-**Additional context**
-Add any other context about the feature request here.
+**Additional Context**
+Include any relevant screenshots, designs, or references to similar features on other platforms.
