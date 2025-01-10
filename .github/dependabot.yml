@@ -6,9 +6,9 @@ updates:
       prefix: "chore"
     schedule:
       interval: "weekly"
-    allow:
+    ignore:
       - dependency-type: "all"
-        update-types: ["version-update:semver-minor", "version-update:semver-patch"]
+        update-types: ["version-update:semver-major"]
     groups:
         all-dependencies:
           patterns:
