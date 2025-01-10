@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react"
 import { FaClosedCaptioning } from "react-icons/fa6"
 import { IoMic } from "react-icons/io5"
 // VIDSTACK
+import SeasonCard from "@/components/SeasonCard"
 import { MediaPlayer, MediaProvider, Track } from "@vidstack/react"
 import {
   defaultLayoutIcons,
@@ -29,6 +30,7 @@ export default function Player({
   setStreamLink,
   animeInfo,
   episode,
+  seasons,
   vtt,
 }) {
   const [isClient, setIsClient] = useState(false)
@@ -191,6 +193,24 @@ export default function Player({
             </Link>{" "}
             channel.
           </p>
+        </div>
+      </section>
+      <section className={styles.season_Main}>
+        <h1>Seasons</h1>
+        <div className={styles.seasonWrapper}>
+          {seasons.length > 0 &&
+            seasons.map(({ poster, id, name, title, isCurrent }, idx) => {
+              return (
+                <SeasonCard
+                  key={idx}
+                  id={id}
+                  name={name}
+                  title={title}
+                  poster={poster}
+                  isCurrent={isCurrent}
+                />
+              )
+            })}
         </div>
       </section>
     </div>
