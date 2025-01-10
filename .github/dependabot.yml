@@ -12,3 +12,4 @@ updates:
             - "*"
     allow:
       - type: "version-update:semver-minor"
+      - type: "version-update:semver-patch"
