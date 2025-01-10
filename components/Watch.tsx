@@ -12,6 +12,7 @@ export default function Watch() {
   const eps = useSearchParams().get("eps")
   const [isClient, setIsClient] = useState(false)
   const [animeInfo, setAnimeInfo] = useState<AnimeInfo>()
+  const [seasons, setSeasons] = useState([])
   const [episodes, setEpisodes] = useState<any>([])
   const [streamLink, setStreamLink] = useState("")
   const [dubLink, setDubLink] = useState<string | null>(null)
@@ -100,6 +101,7 @@ export default function Watch() {
 
       if (request.status === 200) {
         setAnimeInfo(response.info.anime)
+        setSeasons(response.info.seasons)
         setEpisodes(response?.episodes?.episodes)
         setCurrentEpisode(response?.episodes?.episodes[0]?.episodeId)
         getStreamLink(
@@ -160,6 +162,7 @@ export default function Watch() {
             getStreamLink={getStreamLink}
             setStreamLink={setStreamLink}
             animeInfo={animeInfo}
+            seasons={seasons}
             episode={episode}
             vtt={VTT}
           />
