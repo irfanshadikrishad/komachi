@@ -6,10 +6,10 @@ updates:
       prefix: "chore"
     schedule:
       interval: "weekly"
+    allow:
+      - dependency-type: "all"
+        update-types: ["version-update:semver-minor", "version-update:semver-patch"]
     groups:
         all-dependencies:
           patterns:
             - "*"
-    allow:
-      - type: "version-update:semver-minor"
-      - type: "version-update:semver-patch"
