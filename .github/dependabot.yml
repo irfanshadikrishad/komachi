@@ -7,7 +7,7 @@ updates:
     schedule:
       interval: "weekly"
     ignore:
-      - dependency-type: "all"
+      - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
         all-dependencies:
