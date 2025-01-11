@@ -354,6 +354,7 @@
   border-radius: 4px;
   position: relative;
   cursor: pointer;
+  border-radius: 6px;
 }
 .seasonPoster {
   width: 100%;
@@ -369,6 +370,7 @@
 }
 .titles > p {
   color: var(--color);
+  font-size: 0.9rem;
 }
 .gradient {
   position: absolute;
@@ -376,16 +378,23 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), var(--secondary));
-  mix-blend-mode: multiply;
+  border-radius: 4px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), var(--secondary));
+  /* mix-blend-mode: multiply; */
 }
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
     grid-template-columns: 3fr 1fr;
   }
+  .seasonWrapper {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 @media screen and (max-width: 1024px) {
+  .seasonWrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
   .external_sources {
     grid-template-columns: 4fr 6fr;
   }
@@ -435,6 +444,9 @@
     flex-wrap: wrap;
     gap: 5px;
   }
+  .seasonWrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 @media screen and (max-width: 650px) {
   .external_sources {
@@ -448,5 +460,10 @@
 @media screen and (max-width: 500px) {
   .btns {
     grid-template-columns: repeat(6, 1fr);
+  }
+}
+@media screen and (max-width: 425px) {
+  .seasonWrapper {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
