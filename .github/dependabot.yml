@@ -6,7 +6,10 @@ updates:
       prefix: "chore"
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
-      all-dependencies:
-        patterns:
-          - "*"
+        all-dependencies:
+          patterns:
+            - "*"
