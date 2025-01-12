@@ -29,16 +29,17 @@ export default function Genre({
   const [distinctGenres, setDistinctGenres] = useState<string[]>([])
 
   const getDistinctGenres = async () => {
-    const request = await fetch(`/api/distinct/genre`, {
-      method: "GET",
+    const request = await fetch(`/api/home`, {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
     })
     const response = await request.json()
 
     if (request.status === 200) {
-      setDistinctGenres(response)
+      setDistinctGenres(response.genres)
     } else {
       console.log(response)
+      setDistinctGenres([])
     }
   }
 
@@ -63,7 +64,7 @@ export default function Genre({
         <IoChevronDownOutline />
       </button>
       {isGenreOpen && (
-        <div className={styles.filter_options}>
+        <div className={`${styles.filter_options} ${styles.filter_divideTwo}`}>
           {distinctGenres.length > 0 &&
             distinctGenres.map((disG, index) => {
               return (

@@ -26,25 +26,11 @@ export default function Status({
   setIsYearOpen: Dispatch<SetStateAction<boolean>>
   setIsSeasonOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const [distinctStatus, setDistinctStatus] = useState<string[]>([])
+  const [distinctStatus, setDistinctStatus] = useState<string[]>([
+    "finished-airing",
+    "currently-airing",
+  ])
 
-  const getDistinctStatus = async () => {
-    const request = await fetch(`/api/distinct/status`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-    const response = await request.json()
-
-    if (request.status === 200) {
-      setDistinctStatus(response)
-    } else {
-      console.log(response)
-    }
-  }
-
-  useEffect(() => {
-    getDistinctStatus()
-  }, [])
   return (
     <section className={styles.filter_indi}>
       <button

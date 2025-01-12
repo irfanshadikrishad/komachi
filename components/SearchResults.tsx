@@ -1,7 +1,6 @@
 import Card from "@/components/Card"
 import cardio from "@/styles/cardio.module.css"
 import styles from "@/styles/search.module.css"
-import { getTitle } from "@/utils/helpers"
 // Icons
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
 
