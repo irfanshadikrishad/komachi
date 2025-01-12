@@ -1,6 +1,6 @@
 {
   "name": "komachi",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
   "author": {
     "name": "Irfan Shadik Rishad"
@@ -25,26 +25,26 @@
     "chalk": "^5.4.1",
     "date-fns": "^4.1.0",
     "disqus-react": "^1.1.5",
-    "hls.js": "^1.5.18",
-    "mongoose": "^8.9.2",
-    "next": "^15.1.3",
+    "hls.js": "^1.5.19",
+    "mongoose": "^8.9.4",
+    "next": "^15.1.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
     "react-loading-skeleton": "^3.5.0",
     "redis": "^4.7.0",
-    "swiper": "^11.1.15",
+    "swiper": "^11.2.1",
     "uniqolor": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "eslint": "^9.17.0",
-    "eslint-config-next": "^15.1.3",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^15.1.4",
     "prettier": "^3.4.2",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   },
   "keywords": [
     "streaming-service"

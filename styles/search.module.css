@@ -260,6 +260,11 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2px;
 }
+.filter_divideTwo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
 .pageBtns {
   display: flex;
   align-items: center;

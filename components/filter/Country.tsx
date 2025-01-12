@@ -3,6 +3,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { IoChevronDownOutline } from "react-icons/io5"
 import { PiCheckCircleFill } from "react-icons/pi"
 
+/**
+ * No using as language filter
+ * @param param0
+ * @returns
+ */
 export default function Country({
   country,
   setCountry,
@@ -26,25 +31,12 @@ export default function Country({
   setIsFormatOpen: Dispatch<SetStateAction<boolean>>
   setIsStatusOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const [distinctCountry, setDistinctCountry] = useState<string[]>([])
+  const [distinctCountry, setDistinctCountry] = useState<string[]>([
+    "sub",
+    "dub",
+    "sub-&-dub",
+  ])
 
-  const getDistinctCountry = async () => {
-    const request = await fetch(`/api/distinct/country`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-    const response = await request.json()
-
-    if (request.status === 200) {
-      setDistinctCountry(response)
-    } else {
-      console.log(response)
-    }
-  }
-
-  useEffect(() => {
-    getDistinctCountry()
-  }, [])
   return (
     <section className={styles.filter_indi}>
       <button
@@ -58,7 +50,7 @@ export default function Country({
           setIsStatusOpen(false)
         }}>
         <p className={`one_line ${styles.values}`}>
-          {country.length > 0 ? country.join(", ") : "Country"}
+          {country.length > 0 ? country.join(", ") : "Language"}
         </p>
         <IoChevronDownOutline />
       </button>
