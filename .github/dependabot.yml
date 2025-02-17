@@ -2,12 +2,12 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    commit-message:
-      prefix: "chore"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "chore(deps)"
     labels:
-      - "dependabot"
+      - "dependencies"
       - "javascript"
     ignore:
       - dependency-name: "*"
