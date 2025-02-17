@@ -5,11 +5,10 @@ updates:
     commit-message:
       prefix: "chore"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+    labels:
+      - "dependabot"
+      - "javascript"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-    groups:
-        all-dependencies:
-          patterns:
-            - "*"
