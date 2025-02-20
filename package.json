@@ -23,7 +23,7 @@
     "@vidstack/react": "^1.12.13",
     "chalk": "^5.3.0",
     "date-fns": "^4.1.0",
-    "disqus-react": "^1.1.5",
+    "disqus-react": "^1.1.6",
     "hls.js": "^1.5.20",
     "mongoose": "^8.10.1",
     "next": "^15.1.7",
