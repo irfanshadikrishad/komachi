@@ -43,7 +43,7 @@
     "eslint-config-next": "^15.1.7",
     "prettier": "^3.5.2",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.8.2"
   },
   "keywords": [
     "streaming-service"
