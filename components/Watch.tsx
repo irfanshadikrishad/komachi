@@ -14,7 +14,7 @@ export default function Watch() {
   const [animeInfo, setAnimeInfo] = useState<AnimeInfo>()
   const [seasons, setSeasons] = useState([])
   const [episodes, setEpisodes] = useState<any>([])
-  const [streamLink, setStreamLink] = useState("")
+  const [streamLink, setStreamLink] = useState<string | null>(null)
   const [dubLink, setDubLink] = useState<string | null>(null)
   const [currentEpisode, setCurrentEpisode] = useState<string>()
   const [episodeDownloadLink, setEpisodeDownloadLink] = useState("")
@@ -57,7 +57,7 @@ export default function Watch() {
             setVTT(response.sub.tracks)
           } else {
             console.warn("Sub sources are invalid or unavailable.")
-            setStreamLink("")
+            setStreamLink(null)
           }
 
           // Validate and set dub link
@@ -81,6 +81,8 @@ export default function Watch() {
           setEpisode(episode)
         } else {
           console.error("Failed to fetch stream link:", response)
+          setStreamLink(null)
+          setDubLink(null)
         }
       } else {
         console.warn("Invalid subEpisodeId:", subEpisodeId)

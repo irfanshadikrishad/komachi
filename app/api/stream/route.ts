@@ -30,7 +30,10 @@ export async function POST(request: Request) {
     console.error("Error fetching episode sources:", error)
 
     return new Response(
-      JSON.stringify({ error: "Failed to fetch episode sources" }),
+      JSON.stringify({
+        error: `${(error as Error).message}`,
+        message: `Internal Server Error!`,
+      }),
       {
         status: 400,
         headers: { "Content-Type": "application/json" },

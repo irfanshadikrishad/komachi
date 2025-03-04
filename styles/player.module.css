@@ -382,6 +382,20 @@
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), var(--secondary));
   /* mix-blend-mode: multiply; */
 }
+.noSources {
+  border-radius: 8px;
+  height: 500px;
+  color: var(--color-fade);
+  background-color: var(--background);
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.noSources > svg {
+  font-size: 2rem;
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
