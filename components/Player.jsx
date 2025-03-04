@@ -4,11 +4,12 @@ import Disqus from "@/components/Disqus"
 import Episodes from "@/components/Episodes"
 import Info from "@/components/Info"
 import styles from "@/styles/player.module.css"
-import { episodeIdToEpisodeNumber, originWithEps } from "@/utils/helpers"
+import { originWithEps } from "@/utils/helpers"
 import { useEffect, useRef, useState } from "react"
 // ICONS
 import { FaClosedCaptioning } from "react-icons/fa6"
 import { IoMic } from "react-icons/io5"
+import { RiLoader2Fill } from "react-icons/ri"
 import { TiWarningOutline } from "react-icons/ti"
 // VIDSTACK
 import SeasonCard from "@/components/SeasonCard"
@@ -39,6 +40,7 @@ export default function Player({
   const [isMouseOver, setIsMouseOver] = useState(false)
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes)
   const [origin, setOrigin] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
 
   const playerRef = useRef(null)
 
@@ -67,9 +69,17 @@ export default function Player({
   // Reload the player when the streamLink or dubLink changes
   useEffect(() => {
     if (isClient && playerRef.current?.load) {
+      setIsLoading(true) // Set loading to true when changing links
       playerRef.current.load()
     }
   }, [isClient, streamLink, dubLink])
+
+  // Handle successful stream link request
+  useEffect(() => {
+    if (streamLink) {
+      setIsLoading(false) // Set loading to false when streamLink is available
+    }
+  }, [streamLink])
 
   if (!isClient) return null
 
@@ -81,7 +91,12 @@ export default function Player({
             className={styles.player_Wrapper}
             onMouseOver={() => setIsMouseOver(true)}
             onMouseLeave={() => setIsMouseOver(false)}>
-            {streamLink ? (
+            {isLoading ? (
+              <section className={styles.noSources}>
+                <RiLoader2Fill />
+                <p>Loading...</p>
+              </section>
+            ) : streamLink ? (
               <MediaPlayer
                 title={`Episode ${episode?.number ? episode?.number : "?"}`}
                 src={`https://goodproxy.goodproxy.workers.dev/fetch?url=${
@@ -103,6 +118,7 @@ export default function Player({
                 />
               </MediaPlayer>
             ) : (
+              // Show error message if streamLink is null or invalid
               <section className={styles.noSources}>
                 <TiWarningOutline />
                 <p>No sources found.</p>
@@ -125,7 +141,9 @@ export default function Player({
             <div className={styles.es1}>
               <p>
                 You are watching
-                <span className="primary">{` Episode ${episode?.number ? episode?.number : "?"}`}</span>
+                <span className="primary">{` Episode ${
+                  episode?.number ? episode?.number : "?"
+                }`}</span>
               </p>
               <p>
                 If the current server doesn't work, please try other servers.
