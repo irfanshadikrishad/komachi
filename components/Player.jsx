@@ -83,7 +83,7 @@ export default function Player({
             onMouseLeave={() => setIsMouseOver(false)}>
             {streamLink ? (
               <MediaPlayer
-                title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
+                title={`Episode ${episode?.number ? episode?.number : "?"}`}
                 src={`https://goodproxy.goodproxy.workers.dev/fetch?url=${
                   isSub || !dubLink ? streamLink : dubLink
                 }`}

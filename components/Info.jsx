@@ -151,16 +151,7 @@ export default function Info({ animeInfo = {} }) {
             </p>
             <p className={styles.sprtr}>
               {info?.name && <span className={styles.blob}>Producers :</span>}
-              {moreInfo?.producers?.length > 0 ? (
-                moreInfo.producers.join(", ")
-              ) : (
-                <Skeleton
-                  baseColor="var(--background)"
-                  highlightColor="var(--secondary)"
-                  width={90}
-                  height={16}
-                />
-              )}
+              {moreInfo?.producers?.length > 0 && moreInfo.producers.join(", ")}
             </p>
             <p className={styles.sprtr}>
               <span className={styles.blob}>Genres :</span>

@@ -1,9 +1,6 @@
 import "@/app/globals.css"
 import { removeHtmlAndMarkdown } from "@/utils/helpers"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-
-const inter = Inter({ subsets: ["latin"] })
 
 interface LayoutProps {
   children: React.ReactNode
@@ -23,49 +20,40 @@ export async function generateMetadata(props: LayoutProps): Promise<Metadata> {
 
   return {
     title:
-      `Watch ${data?.info?.anime?.info?.name} online in HD - No Ads • Komachi (こまち)` ||
+      `Watch ${data?.info?.anime?.info?.name || "?"} online in HD - No Ads • Komachi (こまち)` ||
       "Komachi (こまち) • Heaven for anime lovers",
     description:
       `Stream and Watch ${
-        data?.info?.anime?.info?.name
-      } online on Komachi. ${removeHtmlAndMarkdown(data?.info?.anime?.info?.description)}` ||
+        data?.info?.anime?.info?.name || "?"
+      } online on Komachi. ${removeHtmlAndMarkdown(data?.info?.anime?.info?.description || "?")}` ||
       "Your premium destination for watching animes online without ads.",
     openGraph: {
       title:
-        `Watch ${data?.info?.anime?.info?.name} online in HD - No Ads • Komachi` ||
+        `Watch ${data?.info?.anime?.info?.name || "?"} online in HD - No Ads • Komachi` ||
         "Komachi (こまち) • Heaven for anime lovers",
       description:
         `Stream and Watch ${
-          data?.info?.anime?.info?.name
+          data?.info?.anime?.info?.name || "?"
         } online on Komachi (こまち). ${removeHtmlAndMarkdown(
-          data?.info?.anime?.info?.description
+          data?.info?.anime?.info?.description || "?"
         )}` ||
         "Your premium destination for watching animes online without ads.",
       images: [
         {
-          url: data?.info?.anime?.info?.poster,
+          url: data?.info?.anime?.info?.poster || "?",
           width: 1200,
           height: 630,
-          alt: `Stream and Watch ${data?.info?.anime?.info?.name} online in HD • Komachi`,
+          alt: `Stream and Watch ${data?.info?.anime?.info?.name || "?"} online in HD • Komachi`,
         },
       ],
       type: "video.tv_show",
-      url: `${process.env.BASE_URL}/watch/${data?.info?.anime?.info?.id}`,
+      url: `${process.env.BASE_URL}/watch/${data?.info?.anime?.info?.id || "?"}`,
     },
   }
 }
 
 export default async function RootLayout(props: LayoutProps) {
-  // const params = await props.params
-
   const { children } = props
 
-  // const metadata = await generateMetadata({ params, children })
-
-  return (
-    <html lang="en">
-      <head></head>
-      <body className={inter.className}>{children}</body>
-    </html>
-  )
+  return children
 }
