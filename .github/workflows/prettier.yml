@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - master
+      - hianime
 
 jobs:
   lint-and-prettier:
