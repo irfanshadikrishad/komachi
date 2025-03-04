@@ -1,0 +1,35 @@
+---
+name: Bug Report
+about: Report a bug or issue with the project
+title: "[BUG] "
+labels: bug
+assignees:
+---
+
+**Describe the bug**
+A clear and concise description of the issue.
+
+**To Reproduce**
+Steps to reproduce the behavior:
+
+1. Navigate to '...' (e.g., homepage, specific movie/show page).
+2. Click on '...' (e.g., play button, settings menu).
+3. Perform '...' (e.g., pause, seek, change quality).
+4. Observe the error or unexpected behavior.
+
+**Expected behavior**
+A clear and concise description of what you expected to happen (e.g., video playing without buffering, correct subtitle display).
+
+**Screenshots or Video**
+If applicable, attach screenshots or video recordings to help explain the issue.
+
+**Environment:**
+
+- Device: [e.g., PC, Mac, iPhone, Android]
+- Browser: [e.g., Chrome 110, Safari 16, Firefox 100]
+- Operating System: [e.g., Windows 10, macOS Ventura, iOS 17]
+- Internet Speed: [e.g., 50 Mbps]
+- Other relevant details: [e.g., type of content, subscription plan]
+
+**Additional context**
+Add any other context or details about the issue here, such as time of occurrence, specific error codes, or account-specific observations.

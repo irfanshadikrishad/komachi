@@ -1,0 +1,7 @@
+.watchContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+  padding: 0 0 10px 0;
+  align-items: flex-start;
+}

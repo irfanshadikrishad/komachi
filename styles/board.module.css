@@ -1,0 +1,150 @@
+.board {
+  position: relative;
+  border-radius: 4px;
+  min-height: 300px;
+  padding: 10px;
+  background-size: cover;
+  background-position: top left;
+}
+.board::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top right,
+    var(--secondary) 21%,
+    rgba(0, 0, 0, 0) 187%
+  );
+}
+.elem {
+  position: absolute;
+  bottom: 40px;
+  left: 20px;
+  color: whitesmoke;
+}
+.description {
+  width: 60%;
+  line-height: 20px;
+  opacity: 60%;
+}
+.title {
+  font-size: 2rem;
+  width: 60%;
+  line-height: 30px;
+}
+.watch {
+  text-decoration: none;
+  color: var(--primary);
+  background-color: var(--background);
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+}
+.watch:hover {
+  color: var(--text);
+  transition: all 0.3s ease-in;
+}
+.boardBtns {
+  margin-top: 10px;
+  display: flex;
+  gap: 5px;
+}
+.bookmark {
+  border: none;
+  color: var(--primary);
+  background-color: var(--background);
+  padding: 5px 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.status_Board {
+  display: flex;
+  gap: 5px;
+  align-items: stretch;
+  color: var(--text);
+  background-color: var(--secondary);
+  width: fit-content;
+  border-radius: 5px;
+}
+.status_Board > button {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: var(--secondary);
+  background-color: var(--primary);
+  border: none;
+  padding: 0 3px;
+  border-radius: 2px;
+}
+.status_Board > p {
+  padding: 0 10px 0 0;
+  border-radius: 5px;
+}
+.status_Main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.episode_stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: var(--secondary);
+  padding: 0 5px;
+  border-radius: 5px;
+}
+.episode_stats > button {
+  display: flex;
+  font-size: 1.1rem;
+  border: none;
+  color: var(--primary);
+  background-color: transparent;
+}
+.episode_stats > p {
+  padding: 0 10px 0 0;
+}
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 1.2rem;
+    line-height: 20px;
+    width: 70%;
+  }
+  .description {
+    font-size: 0.9rem;
+    width: 90%;
+  }
+  .board {
+    background-position: top center;
+  }
+}
+@media screen and (max-width: 480px) {
+  .dub {
+    display: none;
+  }
+}
+@media screen and (max-width: 425px) {
+  .title {
+    font-size: 1rem;
+  }
+  .description {
+    font-size: 0.9rem;
+    line-height: 14px;
+  }
+  .board {
+    filter: blur(1px);
+  }
+}
