@@ -339,6 +339,20 @@
   color: var(--background) !important;
   background-color: var(--primary) !important;
 }
+.noSources {
+  border-radius: 8px;
+  height: 500px;
+  color: var(--color-fade);
+  background-color: var(--background);
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.noSources > svg {
+  font-size: 2rem;
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
@@ -385,6 +399,9 @@
   }
 }
 @media screen and (max-width: 768px) {
+  .noSources {
+    height: 400px;
+  }
   .external_sources {
     grid-template-columns: 4fr 7fr;
   }
@@ -397,6 +414,9 @@
   }
 }
 @media screen and (max-width: 650px) {
+  .noSources {
+    height: 350px;
+  }
   .external_sources {
     grid-template-columns: 1fr;
   }
@@ -406,6 +426,9 @@
   }
 }
 @media screen and (max-width: 500px) {
+  .noSources {
+    height: 250px;
+  }
   .btns {
     grid-template-columns: repeat(6, 1fr);
   }

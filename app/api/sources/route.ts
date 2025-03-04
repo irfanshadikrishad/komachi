@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     await redis.Connect()
 
     const { episodeId } = await req.json()
-    const cacheKey = `gogo.sources.${episodeId}`
+    const cacheKey = `gogo.s0urces.${episodeId}`
 
     const cachedData = await client.get(cacheKey)
 

@@ -14,7 +14,7 @@ export default function Streaming() {
   const eps = useSearchParams().get("eps")
   const [animeInfo, setAnimeInfo] = useState<AnimeInfo>()
   const [episodes, setEpisodes] = useState<any>([])
-  const [streamLink, setStreamLink] = useState("")
+  const [streamLink, setStreamLink] = useState<string | null>(null)
   const [dubLink, setDubLink] = useState<string | null>(null)
   const [currentEpisode, setCurrentEpisode] = useState<string>()
   const [episodeDownloadLink, setEpisodeDownloadLink] = useState("")
@@ -49,6 +49,8 @@ export default function Streaming() {
           setEpisodeDownloadLink(response.subLink.download)
         } else {
           console.log(response)
+          setStreamLink(null)
+          setDubLink(null)
         }
       }
     } catch (error) {

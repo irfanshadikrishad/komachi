@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   try {
     await redis.Connect()
 
-    const cacheKey = `stream:${subEpisodeId}-${dubEpisodeId || "none"}`
+    const cacheKey = `str3am:${subEpisodeId}-${dubEpisodeId || "none"}`
     const cachedData = await client.get(cacheKey)
 
     if (cachedData) {
@@ -37,7 +37,12 @@ export async function POST(request: Request) {
     console.error("Error fetching episode sources:", subEpisodeId, dubEpisodeId)
 
     return new Response(
-      JSON.stringify({ error: "Failed to fetch episode sources" }),
+      JSON.stringify({
+        error: `${(error as Error).message}`,
+        message: "Internal Server Error!",
+        subLink: null,
+        dubLink: null,
+      }),
       { status: 400 }
     )
   }

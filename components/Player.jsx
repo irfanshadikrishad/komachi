@@ -3,7 +3,6 @@ import Automatics from "@/components/Automatics"
 import Disqus from "@/components/Disqus"
 import Episodes from "@/components/Episodes"
 import Info from "@/components/Info"
-import Recommendations from "@/components/Recommendations"
 import styles from "@/styles/player.module.css"
 import {
   convertTimestampToReadable,
@@ -14,6 +13,7 @@ import { useEffect, useState } from "react"
 // ICONS
 import { FaClosedCaptioning } from "react-icons/fa6"
 import { IoMic } from "react-icons/io5"
+import { TiWarningOutline } from "react-icons/ti"
 // VIDSTACK
 import { MediaPlayer, MediaProvider } from "@vidstack/react"
 import {
@@ -72,26 +72,33 @@ export default function Player({
             className={styles.player_Wrapper}
             onMouseOver={() => setIsMouseOver(true)}
             onMouseLeave={() => setIsMouseOver(false)}>
-            <MediaPlayer
-              title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
-              src={`https://goodproxy.goodproxy.workers.dev/fetch?url=${
-                isSub || !dubLink ? streamLink : dubLink
-              }`}
-              load="eager"
-              aspectRatio="16/9"
-              viewType="video"
-              streamType="on-demand"
-              logLevel="warn"
-              crossOrigin="anonymous"
-              playsInline
-              storage="storage-key"
-              autoPlay>
-              <MediaProvider />
-              <DefaultVideoLayout
-                icons={defaultLayoutIcons}
-                download={episodeDownloadLink}
-              />
-            </MediaPlayer>
+            {streamLink ? (
+              <MediaPlayer
+                title={`Episode ${episodeIdToEpisodeNumber(currentEpisode)}`}
+                src={`https://goodproxy.goodproxy.workers.dev/fetch?url=${
+                  isSub || !dubLink ? streamLink : dubLink
+                }`}
+                load="eager"
+                aspectRatio="16/9"
+                viewType="video"
+                streamType="on-demand"
+                logLevel="warn"
+                crossOrigin="anonymous"
+                playsInline
+                storage="storage-key"
+                autoPlay>
+                <MediaProvider />
+                <DefaultVideoLayout
+                  icons={defaultLayoutIcons}
+                  download={episodeDownloadLink}
+                />
+              </MediaPlayer>
+            ) : (
+              <section className={styles.noSources}>
+                <TiWarningOutline />
+                <p>No sources found.</p>
+              </section>
+            )}
             <section>
               <div
                 className={styles.ed}
@@ -196,11 +203,6 @@ export default function Player({
           </p>
         </div>
       </section>
-      {/* <Recommendations
-        recommendations={
-          animeInfo?.recommendations ? animeInfo?.recommendations : []
-        }
-      /> */}
     </div>
   )
 }

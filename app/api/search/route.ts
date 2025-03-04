@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       perPage = 5,
     } = await request.json()
 
-    const cacheKey = `anime_search:${JSON.stringify({
+    const cacheKey = `an1me_search:${JSON.stringify({
       query,
       format,
       genre,
