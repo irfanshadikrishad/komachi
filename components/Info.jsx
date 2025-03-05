@@ -17,6 +17,9 @@ export default function Info({ animeInfo = {} }) {
               src={info?.poster}
               alt={String(info?.id)}
               draggable="false"
+              onError={(e) => {
+                e.target.src = `/default_poster.png`
+              }}
             />
           ) : (
             <Skeleton
