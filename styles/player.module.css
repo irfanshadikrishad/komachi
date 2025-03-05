@@ -1,0 +1,426 @@
+.streamingV2_ReactPlayer {
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 7px;
+}
+.streamingV2_ReactPlayerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 5px 0;
+}
+.streamingV2_DownloadIcon {
+  font-size: 1.2rem;
+  display: flex;
+}
+.streamingV2_Download {
+  text-decoration: none;
+  color: var(--primary);
+  font-size: 0.8rem;
+  background-color: var(--background);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.streaming_options {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.episodes_Wrapper {
+  background-color: var(--secondary);
+  padding: 0 5px 5px 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.playerTrajectory {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 5px;
+}
+.streamingV2Button {
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  border-radius: 3px;
+  padding: 8px 8px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.streamingV2Button:hover {
+  background-color: var(--primary) !important;
+  color: var(--background) !important;
+  opacity: 70%;
+  transition: 0.33s all;
+}
+.serverSources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.serverSources > button {
+  color: var(--color);
+  background-color: var(--background);
+  border: none;
+  padding: 8px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.serverSources > button > svg {
+  display: flex;
+  transform: translateY(0.5px);
+}
+#videoPlayerWrap {
+  overflow: hidden !important;
+}
+.external_sources {
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+  gap: 5px;
+}
+.es1 {
+  padding: 20px 6px;
+  border-radius: 4px;
+  color: var(--color-fade);
+  background-color: var(--background);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  line-height: 17px;
+  font-size: 0.9rem;
+}
+.es2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 5px;
+  font-size: 0.8rem;
+}
+.es2 > div {
+  display: grid;
+  grid-template-columns: 1fr 9fr;
+  gap: 10px;
+}
+.es2 > div > p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.es2 > div > p > svg {
+  display: flex;
+  font-size: 0.8rem;
+}
+.es2 > div > div > button {
+  border: none;
+  padding: 5px 10px;
+  color: var(--color);
+  background-color: var(--background);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.nextAiringEpisode {
+  font-size: 0.9rem;
+  text-align: center;
+}
+.source_btns {
+  display: flex;
+  gap: 5px;
+}
+.source_btns > button {
+  border: none;
+  font-size: 0.7rem;
+  color: var(--background);
+  padding: 3px 10px;
+  border-radius: 3px;
+  background-color: var(--secondary);
+  cursor: pointer;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ctrls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+  border: 2px dashed var(--background);
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+.ctrl {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--color);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ctrl > input {
+  display: none;
+}
+.ctrl > p {
+  margin-left: 20px;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  background-color: var(--background);
+  border-radius: 4px;
+}
+.ctrl > input:checked ~ .checkmark {
+  background-color: var(--primary);
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.ctrl > input:checked ~ .checkmark:after {
+  display: block;
+}
+.checkmark:after {
+  left: 5px;
+  top: 3px;
+  width: 3px;
+  height: 5px;
+  border: solid var(--background);
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.player_Wrapper {
+  position: relative;
+}
+.ed {
+  position: absolute;
+  width: 0px;
+  height: 5px;
+  background-color: var(--primary);
+  bottom: 27px;
+  opacity: 50%;
+}
+.search {
+  background-color: var(--background);
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 4px;
+}
+.search > input {
+  font-size: 1rem;
+  outline: none;
+  color: var(--color);
+  background-color: transparent;
+  border: none;
+  width: 67px;
+}
+.range_Main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+.range_limit {
+  background-color: var(--background);
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 2px;
+  width: 77px;
+}
+.limit_Main {
+  display: flex;
+  align-items: stretch;
+  gap: 5px;
+}
+.limit_Main > button {
+  border: none;
+  color: var(--color);
+  padding: 0 10px;
+  background-color: var(--background);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.limit_details {
+  position: absolute;
+  color: var(--color);
+  background-color: var(--secondary);
+  width: 90px;
+  right: 0;
+  display: grid;
+  gap: 3px;
+  border-radius: 4px;
+  padding: 5px;
+  z-index: 10;
+}
+.limit_details button {
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 5px;
+}
+.btns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  max-height: 570px;
+  overflow-y: scroll;
+}
+.btn {
+  border: none;
+  color: var(--color);
+  background-color: var(--background);
+  padding: 6px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #03040f82;
+}
+.nae {
+  color: var(--color-fade);
+  background-color: var(--background);
+  border-radius: 4px;
+  padding: 5px 5px;
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+.thanks_Main {
+  background-color: var(--secondary);
+  border-radius: 4px;
+  margin-top: 5px;
+  background: url(/gojo.png) no-repeat bottom right var(--secondary);
+}
+.thanks_Main > p {
+  padding: 5px;
+  text-align: center;
+}
+.yt {
+  color: var(--primary);
+  text-decoration: underline; /* Fallback */
+  text-decoration: underline wavy var(--primary);
+  text-decoration-skip-ink: none;
+}
+.active_Episode {
+  color: var(--background) !important;
+  background-color: var(--primary) !important;
+}
+.noSources {
+  border-radius: 8px;
+  height: 500px;
+  color: var(--color-fade);
+  background-color: var(--background);
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.noSources > svg {
+  font-size: 2rem;
+}
+
+@media screen and (max-width: 1440px) {
+  .streamingV2 {
+    grid-template-columns: 3fr 1fr;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .external_sources {
+    grid-template-columns: 4fr 6fr;
+  }
+  .range_Main {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .search {
+    width: -webkit-fill-available;
+  }
+  .limit_Main {
+    width: -webkit-fill-available;
+  }
+}
+@media screen and (max-width: 960px) {
+  .btns {
+    grid-template-columns: repeat(13, 1fr);
+    max-height: 245px;
+  }
+  .range_Main {
+    flex-direction: row;
+  }
+  .search {
+    width: 150px;
+  }
+  .limit_Main {
+    width: auto;
+  }
+  .playerTrajectory {
+    grid-template-columns: 1fr;
+  }
+  .thanks_Main {
+    min-height: 200px;
+  }
+  .thanks_Main > p {
+    text-align: left;
+  }
+}
+@media screen and (max-width: 768px) {
+  .external_sources {
+    grid-template-columns: 4fr 7fr;
+  }
+  .btns {
+    grid-template-columns: repeat(10, 1fr);
+  }
+  .range_Main {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+}
+@media screen and (max-width: 650px) {
+  .external_sources {
+    grid-template-columns: 1fr;
+  }
+  .btns {
+    grid-template-columns: repeat(8, 1fr);
+    max-height: 150px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .btns {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

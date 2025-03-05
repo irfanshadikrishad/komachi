@@ -1,0 +1,285 @@
+.searchFieldContainer {
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary);
+  width: auto;
+  height: 35px;
+  border-radius: 2px;
+  padding: 0 5px;
+  border-radius: 4px;
+}
+.searchFieldContainer svg {
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.searchField {
+  border: none;
+  border-radius: 2px;
+  font-size: 0.9rem;
+  padding: 5px;
+  color: var(--text);
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+}
+.searchField::placeholder {
+  color: var(--color);
+}
+.selector {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 218px;
+  height: 35px;
+  padding: 10px;
+  border-radius: 2px;
+  border: none;
+  color: var(--text);
+  background-color: var(--secondary);
+  cursor: pointer;
+  overflow: hidden;
+}
+.selector svg {
+  font-size: 1rem;
+  color: var(--text);
+}
+.filter {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+.selector_Title {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: var(--text);
+  width: 35px;
+  height: 35px;
+  border-radius: 2px;
+  font-size: 1.4rem;
+  background-color: var(--secondary);
+  cursor: pointer;
+}
+.billboard_Main {
+  padding: 5px 0;
+}
+.billboard_Poster {
+  width: 100%;
+  border-radius: 4px;
+  aspect-ratio: 2/3;
+  object-fit: cover !important;
+}
+.billboard_Individual {
+  position: relative;
+  padding: 5px;
+  color: var(--text);
+  background-color: var(--secondary);
+  border-radius: 4px;
+  text-decoration: none;
+}
+.billboard_Title {
+  font-size: 0.9rem;
+  line-height: 15px;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.billboard_Header {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 5px 0;
+}
+.billboard_HeaderMain {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.billboard_HeaderMain a {
+  color: var(--text);
+  text-decoration: none;
+}
+.tags {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.tag {
+  background-color: var(--background);
+  font-size: 0.7rem;
+  border-radius: 4px;
+  padding: 1px 5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.adult {
+  color: var(--adult);
+  background-color: var(--background);
+}
+.billboard_Wrapper {
+  padding-bottom: 20px;
+}
+.list_Wrapper {
+  position: relative;
+}
+.genre_List {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 1;
+  width: 208px;
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 4px;
+  top: 62px;
+  left: 0;
+}
+.genre_List > button {
+  font-size: 0.8rem;
+  border: none;
+  padding: 8px 0;
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.genre_List > button:hover {
+  color: var(--primary);
+  background-color: var(--background);
+}
+.arrays {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+.array {
+  font-size: 0.7rem;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  background-color: var(--background);
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+.array > button {
+  border: none;
+  color: tomato;
+  background-color: transparent;
+}
+.filter_btn {
+  height: 35px;
+  width: 100%;
+  border: none;
+  color: var(--color);
+  background-color: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.filter_indi {
+  position: relative;
+}
+.filter_options {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 5px;
+  background-color: var(--secondary);
+  z-index: 5;
+  margin-top: 5px;
+  width: 97%;
+  border-radius: 4px;
+}
+.filter_options > button {
+  font-size: 0.9rem;
+  border: none;
+  padding: 5px;
+  border-radius: 4px;
+  color: var(--color);
+  background-color: transparent;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter_options > button > svg {
+  color: var(--primary);
+}
+.filter_options > button:hover {
+  color: var(--primary);
+  background-color: var(--background);
+  transition: all 0.3s;
+}
+.values {
+  text-align: left;
+}
+.submit_btn {
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--background);
+  background-color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+}
+.filter_optionYear {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.pageBtns {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.pageBtns > button {
+  border: none;
+  color: var(--color);
+  background-color: var(--secondary);
+  padding: 5px 7px;
+  border-radius: 4px;
+  display: flex;
+  cursor: pointer;
+}
+.loading_title {
+  padding: 10px 0;
+}
+
+@media screen and (max-width: 600px) {
+  .filter {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
