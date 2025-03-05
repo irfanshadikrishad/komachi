@@ -309,6 +309,7 @@
   cursor: pointer;
 }
 .btn:hover {
+  color: var(--color);
   background-color: #03040f82;
 }
 .nae {
@@ -396,6 +397,10 @@
 .noSources > svg {
   font-size: 2rem;
 }
+.filler {
+  color: var(--background);
+  background-color: var(--primary-fade);
+}
 
 @media screen and (max-width: 1440px) {
   .streamingV2 {
@@ -406,6 +411,9 @@
   }
 }
 @media screen and (max-width: 1024px) {
+  .noSources {
+    height: 380px;
+  }
   .seasonWrapper {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -463,6 +471,9 @@
   }
 }
 @media screen and (max-width: 650px) {
+  .noSources {
+    height: 323px;
+  }
   .external_sources {
     grid-template-columns: 1fr;
   }
@@ -472,11 +483,17 @@
   }
 }
 @media screen and (max-width: 500px) {
+  .noSources {
+    height: 247px;
+  }
   .btns {
     grid-template-columns: repeat(6, 1fr);
   }
 }
 @media screen and (max-width: 425px) {
+  .noSources {
+    height: 209px;
+  }
   .seasonWrapper {
     grid-template-columns: repeat(2, 1fr);
   }

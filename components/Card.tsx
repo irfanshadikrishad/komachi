@@ -33,6 +33,9 @@ export default function Card({
         alt={image}
         className={styles.billboard_Poster}
         draggable={false}
+        onError={(e) => {
+          ;(e.target as HTMLImageElement).src = "/default_poster.png"
+        }}
       />
       <p className={styles.billboard_Title}>{title}</p>
 

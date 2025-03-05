@@ -32,11 +32,20 @@ function convertTimestampToReadable(airingTime: any, episode: any) {
  * @returns dubId (eg: one-piece-dub-episode-1)
  */
 function subToDub(subId: string) {
-  if (String(subId).includes("dub")) {
-    return subId
-  } else {
-    const dubId = subId.split("-episode-").slice(0, -1)
-    return `${String(dubId)}-dub-episode-${episodeIdToEpisodeNumber(subId)}`
+  if (!subId) {
+    console.log(`subId not provided, ${subId}`)
+    return null
+  }
+  try {
+    if (String(subId).includes("dub")) {
+      return subId
+    } else {
+      const dubId = subId.split("-episode-").slice(0, -1)
+      return `${String(dubId)}-dub-episode-${episodeIdToEpisodeNumber(subId)}`
+    }
+  } catch (error) {
+    console.log(subId, error)
+    return null
   }
 }
 
@@ -217,36 +226,22 @@ interface AnimeInfo {
   }
 }
 
-/**
- * Get Previous Episode Id
- * @param currentEpisode (eg: one-piece-1117)
- * @returns previousEpisode (eg: one-piece-1116)
- */
-function streamPreviousEpisode(currentEpisode: string) {
-  const toSet: string = String(
-    Number(episodeIdToEpisodeNumber(currentEpisode)) - 1
-  )
-  const replacedId = replaceId(currentEpisode, toSet)
-
-  if (toSet === "0") {
-    return currentEpisode
-  } else {
-    return replacedId
-  }
+function streamPreviousEpisode(
+  currentEpisode: string,
+  episodes: Array<{ episodeId: string }>
+): string | null {
+  const index = episodes.findIndex((ep) => ep.episodeId === currentEpisode)
+  return index > 0 ? episodes[index - 1].episodeId : null
 }
 
-/**
- * Get Next Episode Id
- * @param currentEpisode (eg: one-piece-1116)
- * @returns nextEpisode (eg: one-piece-1117)
- */
-function streamNextEpisode(currentEpisode: string) {
-  const toSet: string = String(
-    Number(episodeIdToEpisodeNumber(currentEpisode)) + 1
-  )
-  const replacedId = replaceId(currentEpisode, toSet)
-
-  return replacedId
+function streamNextEpisode(
+  currentEpisode: string,
+  episodes: Array<{ episodeId: string }>
+): string | null {
+  const index = episodes.findIndex((ep) => ep.episodeId === currentEpisode)
+  return index !== -1 && index + 1 < episodes.length
+    ? episodes[index + 1].episodeId
+    : null
 }
 
 /**
@@ -386,12 +381,52 @@ function episodeIdToString(episodeId: string): string {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ")
 }
+/**
+ * Extract episode title with episode number from episodes array
+ * @param episode_number - Number of the episode (eg: 1)
+ * @param episodes - Array of episodes w/ title and episode number
+ * @returns episode title
+ */
+function extractEpisodeTitle(
+  episode_number: number,
+  episodes: Array<{
+    title: string
+    episodeId: string
+    number: number
+    isFiller: boolean
+  }>
+): string {
+  if (!episode_number) {
+    return ``
+  }
+  const episode = episodes.find((ep) => ep.number === episode_number)
+  return episode ? episode.title : `Episode ${episode_number}`
+}
+/**
+ * Gets if the episode is a filler or not
+ * @param episode_number - Number of the episode (eg: 1)
+ * @param episodes - Array of episodes w/ episode number
+ * @returns true or false
+ */
+function isFillerEpisode(
+  episode_number: number,
+  episodes: Array<{
+    title: string
+    episodeId: string
+    number: number
+    isFiller: boolean
+  }>
+): boolean {
+  const episode = episodes.find((ep) => ep.number === episode_number)
+  return episode ? episode.isFiller : false
+}
 
 export {
   convertTimestampToReadable,
   episodeIdToEpisodeNumber,
   episodeIdToString,
   extractDefaultSource,
+  extractEpisodeTitle,
   getTimeFromUnixTimestamp,
   getTitle,
   getWeekEnd,
@@ -399,6 +434,7 @@ export {
   groupScheduleByDay,
   hasRepeatedWords,
   insert_Into_Array,
+  isFillerEpisode,
   originWithEps,
   removeHtmlAndMarkdown,
   replaceId,
