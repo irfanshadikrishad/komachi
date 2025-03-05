@@ -52,7 +52,7 @@ export default function Watch() {
               setStreamLink(String(response.sub.sources[0].url))
             } else {
               console.warn("Sub source URL is missing.")
-              setStreamLink("")
+              setStreamLink(null)
             }
             setVTT(response.sub.tracks)
           } else {

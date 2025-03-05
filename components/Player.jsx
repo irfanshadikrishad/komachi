@@ -4,7 +4,7 @@ import Disqus from "@/components/Disqus"
 import Episodes from "@/components/Episodes"
 import Info from "@/components/Info"
 import styles from "@/styles/player.module.css"
-import { originWithEps } from "@/utils/helpers"
+import { extractEpisodeTitle, originWithEps } from "@/utils/helpers"
 import { useEffect, useRef, useState } from "react"
 // ICONS
 import { FaClosedCaptioning } from "react-icons/fa6"
@@ -98,7 +98,7 @@ export default function Player({
               </section>
             ) : streamLink ? (
               <MediaPlayer
-                title={`Episode ${episode?.number ? episode?.number : "?"}`}
+                title={extractEpisodeTitle(episode?.number, episodes)}
                 src={`https://goodproxy.goodproxy.workers.dev/fetch?url=${
                   isSub || !dubLink ? streamLink : dubLink
                 }`}
@@ -111,7 +111,11 @@ export default function Player({
                 playsInline
                 storage="storage-key"
                 autoPlay>
-                <MediaProvider />
+                <MediaProvider>
+                  {vtt.map((track, idx) => (
+                    <Track {...track} key={idx} src={track.file} />
+                  ))}
+                </MediaProvider>
                 <DefaultVideoLayout
                   icons={defaultLayoutIcons}
                   download={episodeDownloadLink}
@@ -192,6 +196,7 @@ export default function Player({
           getStreamLink={getStreamLink}
           currentEpisode={currentEpisode}
           streamLink={streamLink}
+          episodes={episodes}
         />
       </section>
       <section className={styles.playerTrajectory}>
@@ -212,24 +217,26 @@ export default function Player({
           </p>
         </div>
       </section>
-      <section className={styles.season_Main}>
-        <h1>Seasons</h1>
-        <div className={styles.seasonWrapper}>
-          {seasons.length > 0 &&
-            seasons.map(({ poster, id, name, title, isCurrent }, idx) => {
-              return (
-                <SeasonCard
-                  key={idx}
-                  id={id}
-                  name={name}
-                  title={title}
-                  poster={poster}
-                  isCurrent={isCurrent}
-                />
-              )
-            })}
-        </div>
-      </section>
+      {seasons.length > 0 && (
+        <section className={styles.season_Main}>
+          <h1>Seasons</h1>
+          <div className={styles.seasonWrapper}>
+            {seasons.length > 0 &&
+              seasons.map(({ poster, id, name, title, isCurrent }, idx) => {
+                return (
+                  <SeasonCard
+                    key={idx}
+                    id={id}
+                    name={name}
+                    title={title}
+                    poster={poster}
+                    isCurrent={isCurrent}
+                  />
+                )
+              })}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

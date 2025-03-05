@@ -1,5 +1,6 @@
 import styles from "@/styles/player.module.css"
 import {
+  isFillerEpisode,
   streamNextEpisode,
   streamPreviousEpisode,
   subToDub,
@@ -20,6 +21,7 @@ export default function Episodes({
   unicornEpisodes,
   getStreamLink,
   currentEpisode,
+  episodes,
 }: {
   unicornEpisodes: any[]
   getStreamLink: any
@@ -27,6 +29,12 @@ export default function Episodes({
   animeId: string
   malId: string
   currentEpisode: number | string | undefined
+  episodes: Array<{
+    title: string
+    episodeId: string
+    number: number
+    isFiller: boolean
+  }>
 }) {
   const [goodEpisodes, setGoodEpisodes] = useState<any[]>([])
   const [isRangeOpen, setIsRangeOpen] = useState<boolean>(false)
@@ -157,8 +165,13 @@ export default function Episodes({
                   : "rgb(50 50 50)",
             }}
             onClick={() => {
-              if (currentEpisode !== firstEpisode) {
-                getStreamLink(streamPreviousEpisode(String(currentEpisode)))
+              if (
+                currentEpisode !== firstEpisode &&
+                streamPreviousEpisode(String(currentEpisode), episodes)
+              ) {
+                getStreamLink(
+                  streamPreviousEpisode(String(currentEpisode), episodes)
+                )
               }
             }}>
             <IoChevronBack />
@@ -171,8 +184,13 @@ export default function Episodes({
                   : "rgb(50 50 50)",
             }}
             onClick={() => {
-              if (currentEpisode !== lastEpisode) {
-                getStreamLink(streamNextEpisode(String(currentEpisode)))
+              if (
+                currentEpisode !== lastEpisode &&
+                streamNextEpisode(String(currentEpisode), episodes)
+              ) {
+                getStreamLink(
+                  streamNextEpisode(String(currentEpisode), episodes)
+                )
               }
             }}>
             <IoChevronForward />
@@ -182,15 +200,22 @@ export default function Episodes({
       <div className={styles.btns}>
         {filtered.length > 0
           ? filtered.map(
-              ({ id, number }: { id: string; number: number }, idx: number) => {
+              (
+                { episodeId, number }: { episodeId: string; number: number },
+                idx: number
+              ) => {
                 return (
                   <button
                     key={idx}
                     className={`${styles.btn} ${
-                      currentEpisode === id ? styles.active_Episode : ""
+                      currentEpisode === episodeId
+                        ? styles.active_Episode
+                        : isFillerEpisode(number, episodes)
+                          ? styles.filler
+                          : ""
                     }`}
                     onClick={() => {
-                      getStreamLink(id, subToDub(id))
+                      getStreamLink(episodeId, subToDub(episodeId))
                     }}>
                     {number}
                   </button>
@@ -219,7 +244,9 @@ export default function Episodes({
                       className={`${styles.btn} ${
                         currentEpisode === episodeId
                           ? styles.active_Episode
-                          : ""
+                          : isFiller
+                            ? styles.filler
+                            : ""
                       }`}
                       onClick={() => {
                         getStreamLink(

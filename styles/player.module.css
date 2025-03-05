@@ -309,6 +309,7 @@
   cursor: pointer;
 }
 .btn:hover {
+  color: var(--color);
   background-color: #03040f82;
 }
 .nae {
@@ -395,6 +396,10 @@
 }
 .noSources > svg {
   font-size: 2rem;
+}
+.filler {
+  color: var(--background);
+  background-color: var(--primary-fade);
 }
 
 @media screen and (max-width: 1440px) {
