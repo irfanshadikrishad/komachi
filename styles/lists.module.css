@@ -1,0 +1,28 @@
+.listsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+.pageBtns {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.pageBtns > button {
+  border: none;
+  color: var(--color);
+  background-color: var(--secondary);
+  padding: 2px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+@media screen and (max-width: 850px) {
+  .listsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+}

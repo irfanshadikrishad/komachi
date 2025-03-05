@@ -1,0 +1,98 @@
+.isAdult {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 0.9rem;
+  padding: 2px 8px;
+  color: var(--adult);
+  background-color: var(--background);
+  border-radius: 4px;
+}
+.infoMain {
+  padding: 5px;
+  border-radius: 7px;
+  background-color: var(--secondary);
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+.posterContainer {
+  position: relative;
+}
+.poster {
+  width: 150px;
+  border-radius: 7px;
+}
+.title {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 20px;
+}
+.description {
+  font-size: 0.95rem;
+  line-height: 20px;
+  opacity: 50%;
+  margin: 5px 0;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+.sprtr {
+  margin: 5px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+.blob {
+  padding: 1px 5px;
+  background-color: var(--background);
+  border-radius: 7px;
+}
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin-top: 5px;
+}
+.genres > a {
+  text-decoration: underline wavy;
+  background-color: var(--background);
+  padding: 1px 10px;
+  border-radius: 7px;
+}
+.seperator {
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+  align-items: flex-start;
+  gap: 10px;
+}
+.studio {
+  text-decoration: none;
+  color: var(--color);
+}
+
+@media screen and (max-width: 980px) {
+  .posterContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .poster {
+    width: 200px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .poster {
+    width: 150px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .poster {
+    width: 100px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .poster {
+    width: 80px;
+    height: auto;
+  }
+}

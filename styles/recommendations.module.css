@@ -1,0 +1,52 @@
+.wrapper {
+  margin-top: 10px;
+}
+.wrapper > h1 {
+  margin-bottom: 5px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+.recHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.downBtn {
+  border: none;
+  color: var(--color);
+  background-color: var(--secondary);
+  padding: 2px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+@media screen and (max-width: 968px) {
+  .cards {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media screen and (max-width: 758px) {
+  .cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (max-width: 500px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 320px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
