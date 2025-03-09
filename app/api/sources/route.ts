@@ -1,4 +1,3 @@
-import { database } from "@/utils/database"
 import { client, redis } from "@/utils/redis"
 import { ANIME } from "@consumet/extensions"
 
@@ -6,7 +5,6 @@ const gogoanime = new ANIME.Gogoanime()
 
 export async function POST(req: Request) {
   try {
-    await database()
     await redis.Connect()
 
     const { episodeId } = await req.json()
