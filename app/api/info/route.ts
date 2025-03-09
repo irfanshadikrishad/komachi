@@ -1,9 +1,7 @@
-import { database } from "@/utils/database"
 import { client, redis } from "@/utils/redis"
 
 export async function POST(request: Request) {
   try {
-    await database()
     await redis.Connect()
 
     const { animeId } = await request.json()
