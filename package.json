@@ -27,7 +27,7 @@
     "disqus-react": "^1.1.6",
     "hls.js": "^1.5.20",
     "mongoose": "^8.12.1",
-    "next": "^15.2.1",
+    "next": "^15.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
