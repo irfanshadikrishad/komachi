@@ -73,12 +73,13 @@ export default function SearchComponent() {
     setIsLoading(false)
 
     if (request.status === 200) {
-      setResults(response.data.animes)
-      setCurrentPage(response.data.currentPage)
-      setTotalPages(response.data.totalPages)
+      setResults(response.animes)
+      setCurrentPage(response.currentPage)
+      setTotalPages(response.totalPages)
       // setTotalCount(response.totalCount)
     } else {
       setNotFound(true)
+      console.log(response)
     }
   }
 

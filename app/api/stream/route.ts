@@ -1,28 +1,29 @@
+import { HiAnime } from "aniwatch"
+
 export async function POST(request: Request) {
   const { subEpisodeId } = await request.json()
+  const hianime = new HiAnime.Scraper()
 
   try {
     // Fetch subtitles (sub) data
-    const subRequest = await fetch(
-      `${process.env.HIANIME}/api/v2/hianime/episode/sources?animeEpisodeId=${subEpisodeId}&category=sub`
-    )
-    const sub = await subRequest.json()
+    const sub = await hianime.getEpisodeSources(subEpisodeId, "hd-1", "sub")
 
     let dub = null
 
     try {
       // Fetch dubbed (dub) data
-      const dubRequest = await fetch(
-        `${process.env.HIANIME}/api/v2/hianime/episode/sources?animeEpisodeId=${subEpisodeId}&category=dub`
+      const dubRequest = await hianime.getEpisodeSources(
+        subEpisodeId,
+        "hd-1",
+        "dub"
       )
-      const dubData = await dubRequest.json()
-      dub = dubData.data // Only assign if successful
+      dub = dubRequest
     } catch (dubError) {
       console.error("Error fetching dub sources:", dubError)
-      dub = null // Explicitly set dub to null on error
+      dub = null
     }
 
-    return new Response(JSON.stringify({ sub: sub.data, dub }), {
+    return new Response(JSON.stringify({ sub: sub, dub }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     })

@@ -26,25 +26,13 @@ export default function Season({
   setIsStatusOpen: Dispatch<SetStateAction<boolean>>
   insertValuesIntoState: any
 }) {
-  const [distinctSeason, setDistinctSeason] = useState<string[]>([])
+  const [distinctSeason, setDistinctSeason] = useState<string[]>([
+    "FALL",
+    "WINTER",
+    "SPRING",
+    "SUMMER",
+  ])
 
-  const getDistinctSeason = async () => {
-    const request = await fetch(`/api/distinct/season`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-    const response = await request.json()
-
-    if (request.status === 200) {
-      setDistinctSeason(response)
-    } else {
-      console.log(response)
-    }
-  }
-
-  useEffect(() => {
-    getDistinctSeason()
-  }, [])
   return (
     <section className={styles.filter_indi}>
       <button

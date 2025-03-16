@@ -1,8 +1,10 @@
 import { client, redis } from "@/utils/redis"
+import { HiAnime } from "aniwatch"
 
 export async function GET() {
   const cache_Key = `spotlight_6x9`
   const errorCacheKey = `error_${cache_Key}`
+  const hianime = new HiAnime.Scraper()
 
   try {
     await redis.Connect()
@@ -17,13 +19,9 @@ export async function GET() {
       return new Response(cachedResponse, { status: 200 })
     }
 
-    const data = await fetch(`${process.env.HIANIME}/api/v2/hianime/home`)
-    if (!data.ok) {
-      throw new Error(`Failed to fetch data: ${data.statusText}`)
-    }
+    const data = await hianime.getHomePage()
 
-    const response = await data.json()
-    const spotlightAnimes = response?.data?.spotlightAnimes
+    const spotlightAnimes = data?.spotlightAnimes
 
     await client.set(cache_Key, JSON.stringify(spotlightAnimes), {
       EX: 1200,

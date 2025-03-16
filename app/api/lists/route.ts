@@ -1,10 +1,13 @@
 import { client, redis } from "@/utils/redis"
+import { HiAnime } from "aniwatch"
 
 export async function POST(request: Request) {
+  const { show, page = 1 } = await request.json()
+  const lowerCaseShow = show.toLowerCase()
+  const hianime = new HiAnime.Scraper()
   try {
-    const { show, page = 1 } = await request.json()
     await redis.Connect()
-    const cache_Key = `$lists_${show}_${page}`
+    const cache_Key = `$l1sts_${show}_${page}`
     const cacheResp = await client.get(cache_Key)
     if (cacheResp) {
       return new Response(cacheResp, {
@@ -12,10 +15,7 @@ export async function POST(request: Request) {
       })
     }
 
-    const resp = await fetch(
-      `${process.env.HIANIME}/api/v2/hianime/azlist/${show}?page=${page}`
-    )
-    const { data } = await resp.json()
+    const data = await hianime.getAZList(lowerCaseShow, page)
 
     await client.set(cache_Key, JSON.stringify(data), { EX: 43200 })
 
@@ -28,6 +28,10 @@ export async function POST(request: Request) {
         success: false,
         error: "Internal Server Error",
         message: `${(error as Error).message}`,
+        values: {
+          show: show,
+          page: page,
+        },
       }),
       {
         status: 500,
