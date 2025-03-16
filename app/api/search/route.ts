@@ -1,9 +1,11 @@
-import { client, redis } from "@/utils/redis"
+import { client } from "@/utils/redis"
+import { HiAnime } from "aniwatch"
 
 export async function POST(request: Request) {
   try {
-    await redis.Connect()
+    if (!client.isOpen) await client.connect()
 
+    const hianime = new HiAnime.Scraper()
     const {
       query,
       format,
@@ -20,79 +22,69 @@ export async function POST(request: Request) {
       origin,
       year,
     } = await request.json()
-    console.log(
+
+    const cacheParams = [
       query,
-      format,
-      genre,
-      season,
-      status,
+      page,
+      genre?.join(","),
+      format?.[0],
       sort,
+      season?.[0],
+      status,
       language,
       rated,
       start_date,
       end_date,
       score,
-      origin,
-      year
-    )
+      origin?.[0],
+      year?.[0],
+    ]
+      .filter(Boolean)
+      .join("_")
 
-    // Construct cache key
-    const cache_Key = `search0x_${query}_${page}_${genre}_${format}_${sort}_${season}_${status}_${language}_${rated}_${start_date}_${end_date}_${score}`
+    const cache_Key = `search0x9_${cacheParams}`
     const cacheResp = await client.get(cache_Key)
 
     if (cacheResp) {
-      return new Response(cacheResp, {
-        status: 200,
-      })
+      return new Response(cacheResp, { status: 200 })
     }
 
-    // Construct query string for advanced search
-    const queryParams = new URLSearchParams()
-    if (query) queryParams.append("q", query)
-    if (page) queryParams.append("page", String(page))
-    if (genre.length > 0)
-      queryParams.append("genres", String(genre.join(",")).toLowerCase())
-    if (format.length > 0)
-      queryParams.append("type", String(format[0]).toLowerCase())
-    if (sort) queryParams.append("sort", sort)
-    if (season.length > 0)
-      queryParams.append("season", String(season[0]).toLowerCase())
-    if (origin.length > 0)
-      queryParams.append("language", String(origin[0]).toLowerCase())
-    if (status) queryParams.append("status", status)
-    if (rated) queryParams.append("rated", rated)
-    if (year.length > 0)
-      queryParams.append("start_date", String(year[0]).toLowerCase() + "-01-01")
-    if (year.length > 0)
-      queryParams.append("end_date", String(year[0]).toLowerCase() + "-12-30")
-    if (score) queryParams.append("score", String(score))
+    // Construct `SearchFilters` object
+    const queryParams: any = {}
 
-    const url = `${process.env.HIANIME}/api/v2/hianime/search?${queryParams.toString()}`
-
-    // Fetch data from the HiAnime API
-    const respo = await fetch(url)
-    const data = await respo.json()
-    if (respo.status !== 200) {
-      throw new Error(`Failed to fetch data: ${data.message}`)
+    if (Array.isArray(genre) && genre.length > 0)
+      queryParams.genres = genre.join(",").toLowerCase()
+    if (Array.isArray(format) && format.length > 0)
+      queryParams.type = format[0].toLowerCase()
+    if (sort) queryParams.sort = sort
+    if (Array.isArray(season) && season.length > 0)
+      queryParams.season = season[0].toLowerCase()
+    if (Array.isArray(origin) && origin.length > 0)
+      queryParams.language = origin[0].toLowerCase()
+    if (status) queryParams.status = status
+    if (rated) queryParams.rated = rated
+    if (Array.isArray(year) && year.length > 0) {
+      queryParams.start_date = `${year[0]}-01-01`
+      queryParams.end_date = `${year[0]}-12-30`
     }
+    if (score) queryParams.score = String(score)
 
-    // Cache the response with an expiration
+    // Fetch data from HiAnime
+    const data = await hianime.search(query, page)
+
+    // Cache the response with expiration time
     await client.set(cache_Key, JSON.stringify(data), { EX: 42600 })
 
-    // Return the response
     return new Response(JSON.stringify(data), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     })
   } catch (error) {
-    console.log(error)
+    console.error("Error in search API:", error)
 
     return new Response(
-      JSON.stringify({ message: (error as Error).message || error }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
+      JSON.stringify({ message: (error as Error).message || "Unknown error" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
     )
   }
 }

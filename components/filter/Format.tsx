@@ -26,25 +26,16 @@ export default function Format({
   setIsStatusOpen: Dispatch<SetStateAction<boolean>>
   insertValuesIntoState: any
 }) {
-  const [distinctFormat, setDistinctFormat] = useState<string[]>([])
+  const [distinctFormat, setDistinctFormat] = useState<string[]>([
+    "TV",
+    "TV Short",
+    "Movie",
+    "Special",
+    "OVA",
+    "ONA",
+    "Music",
+  ])
 
-  const getDistinctFormat = async () => {
-    const request = await fetch(`/api/distinct/format`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-    const response = await request.json()
-
-    if (request.status === 200) {
-      setDistinctFormat(response)
-    } else {
-      console.log(response)
-    }
-  }
-
-  useEffect(() => {
-    getDistinctFormat()
-  }, [])
   return (
     <section className={styles.filter_indi}>
       <button

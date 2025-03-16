@@ -1,10 +1,13 @@
 import { client, redis } from "@/utils/redis"
+import { HiAnime } from "aniwatch"
 
 export async function POST(request: Request) {
+  const hianime = new HiAnime.Scraper()
+
   try {
     await redis.Connect()
 
-    const cache_Key = `home_69`
+    const cache_Key = `h0me_69`
     const cacheResp = await client.get(cache_Key)
 
     if (cacheResp) {
@@ -13,8 +16,7 @@ export async function POST(request: Request) {
       })
     }
 
-    const resp = await fetch(`${process.env.HIANIME}/api/v2/hianime/home`)
-    const { data } = await resp.json()
+    const data = await hianime.getHomePage()
 
     await client.set(cache_Key, JSON.stringify(data), { EX: 10800 })
 

@@ -1,7 +1,7 @@
 import { client, redis } from "@/utils/redis"
-import { ANIME } from "@consumet/extensions"
+import { HiAnime } from "aniwatch"
 
-const gogoanime = new ANIME.Gogoanime()
+const hianime = new HiAnime.Scraper()
 
 export async function POST(req: Request) {
   try {
@@ -20,9 +20,7 @@ export async function POST(req: Request) {
       })
     }
 
-    console.warn("[REDIS] Cache miss")
-
-    const sources = await gogoanime.fetchEpisodeServers(episodeId)
+    const sources = await hianime.getEpisodeServers(episodeId)
 
     await client.set(cacheKey, JSON.stringify(sources), { EX: 3600 })
 

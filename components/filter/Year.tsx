@@ -28,22 +28,12 @@ export default function Year({
 }) {
   const [distinctYear, setDistinctYear] = useState<string[]>([])
 
-  const getDistinctYear = async () => {
-    const request = await fetch(`/api/distinct/year`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-    const response = await request.json()
-
-    if (request.status === 200) {
-      setDistinctYear(response)
-    } else {
-      console.log(response)
-    }
-  }
-
   useEffect(() => {
-    getDistinctYear()
+    function getLast45Years(): string[] {
+      const currentYear = new Date().getFullYear()
+      return Array.from({ length: 45 }, (_, i) => (currentYear - i).toString())
+    }
+    setDistinctYear(getLast45Years())
   }, [])
   return (
     <section className={styles.filter_indi}>
