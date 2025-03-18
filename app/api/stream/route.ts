@@ -6,7 +6,7 @@ export async function POST(request: Request) {
 
   try {
     // Fetch subtitles (sub) data
-    const sub = await hianime.getEpisodeSources(subEpisodeId, "hd-1", "sub")
+    const sub = await hianime.getEpisodeSources(subEpisodeId, "hd-2", "sub")
 
     let dub = null
 
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
       // Fetch dubbed (dub) data
       const dubRequest = await hianime.getEpisodeSources(
         subEpisodeId,
-        "hd-1",
+        "hd-2",
         "dub"
       )
       dub = dubRequest

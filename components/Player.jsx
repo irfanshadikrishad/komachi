@@ -99,7 +99,7 @@ export default function Player({
             ) : streamLink ? (
               <MediaPlayer
                 title={extractEpisodeTitle(episode?.number, episodes)}
-                src={`https://goodproxy.goodproxy.workers.dev/fetch?url=${
+                src={`https://proxy-x1087.vercel.app/cors?url=${
                   isSub || !dubLink ? streamLink : dubLink
                 }`}
                 load="eager"
