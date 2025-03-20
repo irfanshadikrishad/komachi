@@ -13,6 +13,7 @@ import { RiLoader2Fill } from "react-icons/ri"
 import { TiWarningOutline } from "react-icons/ti"
 // VIDSTACK
 import SeasonCard from "@/components/SeasonCard"
+import { useAutomatics } from "@/lib/zustand/automatics"
 import { MediaPlayer, MediaProvider, Track } from "@vidstack/react"
 import {
   defaultLayoutIcons,
@@ -34,7 +35,10 @@ export default function Player({
   episode,
   seasons,
   vtt,
+  skipTime,
 }) {
+  const { autoplay } = useAutomatics()
+
   const [isClient, setIsClient] = useState(false)
   const [isSub, setIsSub] = useState(true)
   const [isMouseOver, setIsMouseOver] = useState(false)
@@ -110,7 +114,7 @@ export default function Player({
                 crossOrigin="anonymous"
                 playsInline
                 storage="storage-key"
-                autoPlay>
+                autoPlay={autoplay}>
                 <MediaProvider>
                   {vtt.map((track, idx) => (
                     <Track {...track} key={idx} src={track.file} />

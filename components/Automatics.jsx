@@ -1,11 +1,16 @@
 "use client"
+import { useAutomatics } from "@/lib/zustand/automatics"
 import styles from "@/styles/player.module.css"
-import { useState } from "react"
 
 export default function Automatics() {
-  const [autoPlay, setAutoPlay] = useState(false)
-  const [autoSkip, setAutoSkip] = useState(false)
-  const [autoNext, setAutoNext] = useState(false)
+  const {
+    autoplay,
+    autonext,
+    autoskip,
+    setAutoPlay,
+    setAutoSkip,
+    setAutoNext,
+  } = useAutomatics()
 
   return (
     <section className={styles.ctrls}>
@@ -13,33 +18,36 @@ export default function Automatics() {
         <input
           type="checkbox"
           name="play"
+          checked={autoplay}
           onChange={(e) => {
             setAutoPlay(e.target.checked)
           }}
         />
-        <p style={{ textDecoration: "line-through" }}>Auto Play</p>
+        <p style={{ color: autoplay ? "var(--primary)" : "" }}>Auto Play</p>
         <span className={styles.checkmark}></span>
       </label>
       <label className={styles.ctrl}>
         <input
           type="checkbox"
           name="skip"
+          checked={autoskip}
           onChange={(e) => {
             setAutoSkip(e.target.checked)
           }}
         />
-        <p style={{ textDecoration: "line-through" }}>Auto Skip</p>
+        <p style={{ color: autoskip ? "var(--primary)" : "" }}>Auto Skip</p>
         <span className={styles.checkmark}></span>
       </label>
       <label className={styles.ctrl}>
         <input
           type="checkbox"
           name="next"
+          checked={autonext}
           onChange={(e) => {
             setAutoNext(e.target.checked)
           }}
         />
-        <p style={{ textDecoration: "line-through" }}>Auto Next</p>
+        <p style={{ color: autonext ? "var(--primary)" : "" }}>Auto Next</p>
         <span className={styles.checkmark}></span>
       </label>
     </section>
