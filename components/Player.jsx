@@ -37,7 +37,7 @@ export default function Player({
   vtt,
   skipTime,
 }) {
-  const { autoplay } = useAutomatics()
+  const { autoplay, autoskip } = useAutomatics()
 
   const [isClient, setIsClient] = useState(false)
   const [isSub, setIsSub] = useState(true)
@@ -84,6 +84,28 @@ export default function Player({
       setIsLoading(false) // Set loading to false when streamLink is available
     }
   }, [streamLink])
+  console.log(skipTime)
+
+  const handleTimeUpdate = () => {
+    try {
+      if (autoskip && playerRef.current) {
+        const player = playerRef.current
+        const currentTime = player.currentTime
+        const skipSegments = isSub ? skipTime?.sub : skipTime?.dub
+
+        if (!skipSegments) return
+
+        for (const segment of Object.values(skipSegments)) {
+          if (currentTime >= segment.start && currentTime <= segment.end) {
+            player.currentTime = segment.end // Skip to end of the segment
+            break
+          }
+        }
+      }
+    } catch (err) {
+      // Skipping for unnecessary logs for now
+    }
+  }
 
   if (!isClient) return null
 
@@ -102,6 +124,7 @@ export default function Player({
               </section>
             ) : streamLink ? (
               <MediaPlayer
+                ref={playerRef}
                 title={extractEpisodeTitle(episode?.number, episodes)}
                 src={`https://proxy-x1087.vercel.app/cors?url=${
                   isSub || !dubLink ? streamLink : dubLink
@@ -114,7 +137,8 @@ export default function Player({
                 crossOrigin="anonymous"
                 playsInline
                 storage="storage-key"
-                autoPlay={autoplay}>
+                autoPlay={autoplay}
+                onTimeUpdate={handleTimeUpdate}>
                 <MediaProvider>
                   {vtt.map((track, idx) => (
                     <Track {...track} key={idx} src={track.file} />
