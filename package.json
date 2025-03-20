@@ -34,7 +34,7 @@
     "react-icons": "^5.5.0",
     "react-loading-skeleton": "^3.5.0",
     "redis": "^4.7.0",
-    "swiper": "^11.2.5",
+    "swiper": "^11.2.6",
     "uniqolor": "^1.1.1"
   },
   "devDependencies": {
