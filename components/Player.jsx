@@ -81,29 +81,32 @@ export default function Player({
   // Handle successful stream link request
   useEffect(() => {
     if (streamLink) {
-      setIsLoading(false) // Set loading to false when streamLink is available
+      setIsLoading(false)
     }
   }, [streamLink])
-  console.log(skipTime)
 
   const handleTimeUpdate = () => {
     try {
       if (autoskip && playerRef.current) {
         const player = playerRef.current
         const currentTime = player.currentTime
-        const skipSegments = isSub ? skipTime?.sub : skipTime?.dub
+        let skipSegments = isSub ? skipTime?.sub : skipTime?.dub
+        if (!skipSegments) {
+          skipSegments = skipTime?.sub
+        }
 
         if (!skipSegments) return
 
         for (const segment of Object.values(skipSegments)) {
           if (currentTime >= segment.start && currentTime <= segment.end) {
-            player.currentTime = segment.end // Skip to end of the segment
+            player.currentTime = segment.end
             break
           }
         }
       }
     } catch (err) {
       // Skipping for unnecessary logs for now
+      console.log(err)
     }
   }
 
