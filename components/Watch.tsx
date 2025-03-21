@@ -1,7 +1,7 @@
 "use client"
 import Player from "@/components/Player"
 import styles from "@/styles/watch.module.css"
-import { AnimeInfo } from "@/utils/helpers"
+import { AnimeInfo, extractSkipTimes } from "@/utils/helpers"
 import Image from "next/image"
 import { useParams, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -24,6 +24,7 @@ export default function Watch() {
   const [notFound, setNotFound] = useState(false)
   const [episode, setEpisode] = useState({})
   const [VTT, setVTT] = useState([])
+  const [skipTime, setSkipTime] = useState({})
 
   useEffect(() => {
     setIsClient(true) // Set isClient to true after mounting
@@ -42,6 +43,7 @@ export default function Watch() {
         const response = await request.json()
 
         if (request.status === 200) {
+          setSkipTime(extractSkipTimes(response))
           // Validate and set sub link
           if (
             response.sub &&
@@ -167,6 +169,7 @@ export default function Watch() {
             seasons={seasons}
             episode={episode}
             vtt={VTT}
+            skipTime={skipTime}
           />
         </section>
       ) : (

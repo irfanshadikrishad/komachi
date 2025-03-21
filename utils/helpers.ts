@@ -421,12 +421,64 @@ function isFillerEpisode(
   return episode ? episode.isFiller : false
 }
 
+interface EPS_Details {
+  anilistID: number
+  malID: number
+  intro: {
+    start: number | null
+    end: number | null
+  }
+  outro: {
+    start: number | null
+    end: number | null
+  }
+  headers: {
+    Referer: string
+  }
+  sources: [{ type: string; url: string }]
+  tracks: [{ file: string; kind: string; label: string }]
+}
+
+function extractSkipTimes(obj: { sub?: EPS_Details; dub?: EPS_Details }) {
+  let SUB = null
+  let DUB = null
+  try {
+    if (obj.sub && obj.sub.intro) {
+      SUB = { intro: obj.sub.intro, outro: obj.sub.outro }
+    }
+    if (obj.dub && obj.dub.intro) {
+      DUB = { intro: obj.dub.intro, outro: obj.dub.outro }
+    }
+    return { sub: SUB, dub: DUB }
+  } catch (err) {
+    console.log((err as Error).message)
+    return { sub: SUB, dub: DUB }
+  }
+}
+
+interface Episode {
+  number: number
+  episodeId: string
+  isFiller: boolean
+  title: string
+}
+
+function nextEpisodeId(
+  currentEpisodeId: string,
+  episodes: Episode[]
+): string | null {
+  const index = episodes.findIndex((ep) => ep.episodeId === currentEpisodeId)
+  if (index === -1 || index === episodes.length - 1) return null
+  return episodes[index + 1].episodeId
+}
+
 export {
   convertTimestampToReadable,
   episodeIdToEpisodeNumber,
   episodeIdToString,
   extractDefaultSource,
   extractEpisodeTitle,
+  extractSkipTimes,
   getTimeFromUnixTimestamp,
   getTitle,
   getWeekEnd,
@@ -435,6 +487,7 @@ export {
   hasRepeatedWords,
   insert_Into_Array,
   isFillerEpisode,
+  nextEpisodeId,
   originWithEps,
   removeHtmlAndMarkdown,
   replaceId,

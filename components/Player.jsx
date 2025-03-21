@@ -4,7 +4,11 @@ import Disqus from "@/components/Disqus"
 import Episodes from "@/components/Episodes"
 import Info from "@/components/Info"
 import styles from "@/styles/player.module.css"
-import { extractEpisodeTitle, originWithEps } from "@/utils/helpers"
+import {
+  extractEpisodeTitle,
+  nextEpisodeId,
+  originWithEps,
+} from "@/utils/helpers"
 import { useEffect, useRef, useState } from "react"
 // ICONS
 import { FaClosedCaptioning } from "react-icons/fa6"
@@ -13,6 +17,7 @@ import { RiLoader2Fill } from "react-icons/ri"
 import { TiWarningOutline } from "react-icons/ti"
 // VIDSTACK
 import SeasonCard from "@/components/SeasonCard"
+import { useAutomatics } from "@/lib/zustand/automatics"
 import { MediaPlayer, MediaProvider, Track } from "@vidstack/react"
 import {
   defaultLayoutIcons,
@@ -34,7 +39,10 @@ export default function Player({
   episode,
   seasons,
   vtt,
+  skipTime,
 }) {
+  const { autoplay, autoskip, autonext } = useAutomatics()
+
   const [isClient, setIsClient] = useState(false)
   const [isSub, setIsSub] = useState(true)
   const [isMouseOver, setIsMouseOver] = useState(false)
@@ -44,12 +52,10 @@ export default function Player({
 
   const playerRef = useRef(null)
 
-  // Set isClient to true after the component is mounted on the client
   useEffect(() => {
     setIsClient(true)
   }, [])
 
-  // Handle localStorage and dynamic origin logic
   useEffect(() => {
     if (isClient) {
       const storedType = localStorage.getItem("type")
@@ -61,25 +67,71 @@ export default function Player({
     }
   }, [isClient, dubLink, streamLink])
 
-  // Update unicornEpisodes whenever episodes change
   useEffect(() => {
     setUnicornEpisodes(episodes)
   }, [episodes])
 
-  // Reload the player when the streamLink or dubLink changes
   useEffect(() => {
     if (isClient && playerRef.current?.load) {
-      setIsLoading(true) // Set loading to true when changing links
+      setIsLoading(true)
       playerRef.current.load()
     }
   }, [isClient, streamLink, dubLink])
 
-  // Handle successful stream link request
   useEffect(() => {
     if (streamLink) {
-      setIsLoading(false) // Set loading to false when streamLink is available
+      setIsLoading(false)
     }
   }, [streamLink])
+
+  // --------------------
+  // AUTOPLAY
+  // --------------------
+  const handleTimeUpdate = () => {
+    try {
+      if (autoskip && playerRef.current) {
+        const player = playerRef.current
+        const currentTime = player.currentTime
+        let skipSegments = isSub ? skipTime?.sub : skipTime?.dub
+        if (!skipSegments) {
+          skipSegments = skipTime?.sub
+        }
+
+        if (!skipSegments) return
+
+        for (const segment of Object.values(skipSegments)) {
+          if (currentTime >= segment.start && currentTime <= segment.end) {
+            player.currentTime = segment.end
+            break
+          }
+        }
+      }
+    } catch (err) {
+      console.log(err?.message)
+    }
+  }
+
+  // --------------------
+  // AUTONEXT
+  // --------------------
+  useEffect(() => {
+    const player = playerRef.current
+    if (!autonext || !player) return
+
+    const handleEnded = async () => {
+      const nextEps = nextEpisodeId(currentEpisode, episodes)
+      if (nextEps) {
+        await getStreamLink(nextEps)
+      }
+    }
+
+    player.removeEventListener("ended", handleEnded)
+    player.addEventListener("ended", handleEnded)
+
+    return () => {
+      player.removeEventListener("ended", handleEnded)
+    }
+  }, [autonext, playerRef.current])
 
   if (!isClient) return null
 
@@ -98,6 +150,7 @@ export default function Player({
               </section>
             ) : streamLink ? (
               <MediaPlayer
+                ref={playerRef}
                 title={extractEpisodeTitle(episode?.number, episodes)}
                 src={`https://proxy-x1087.vercel.app/cors?url=${
                   isSub || !dubLink ? streamLink : dubLink
@@ -110,7 +163,8 @@ export default function Player({
                 crossOrigin="anonymous"
                 playsInline
                 storage="storage-key"
-                autoPlay>
+                autoPlay={autoplay}
+                onTimeUpdate={handleTimeUpdate}>
                 <MediaProvider>
                   {vtt.map((track, idx) => (
                     <Track {...track} key={idx} src={track.file} />
