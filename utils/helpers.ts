@@ -456,6 +456,22 @@ function extractSkipTimes(obj: { sub?: EPS_Details; dub?: EPS_Details }) {
   }
 }
 
+interface Episode {
+  number: number
+  episodeId: string
+  isFiller: boolean
+  title: string
+}
+
+function nextEpisodeId(
+  currentEpisodeId: string,
+  episodes: Episode[]
+): string | null {
+  const index = episodes.findIndex((ep) => ep.episodeId === currentEpisodeId)
+  if (index === -1 || index === episodes.length - 1) return null
+  return episodes[index + 1].episodeId
+}
+
 export {
   convertTimestampToReadable,
   episodeIdToEpisodeNumber,
@@ -471,6 +487,7 @@ export {
   hasRepeatedWords,
   insert_Into_Array,
   isFillerEpisode,
+  nextEpisodeId,
   originWithEps,
   removeHtmlAndMarkdown,
   replaceId,

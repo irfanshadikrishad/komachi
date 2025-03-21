@@ -44,7 +44,7 @@ export const useAutomatics = create<Automatics>()(
     }),
     {
       name: "automatics-storage",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 )

@@ -4,7 +4,11 @@ import Disqus from "@/components/Disqus"
 import Episodes from "@/components/Episodes"
 import Info from "@/components/Info"
 import styles from "@/styles/player.module.css"
-import { extractEpisodeTitle, originWithEps } from "@/utils/helpers"
+import {
+  extractEpisodeTitle,
+  nextEpisodeId,
+  originWithEps,
+} from "@/utils/helpers"
 import { useEffect, useRef, useState } from "react"
 // ICONS
 import { FaClosedCaptioning } from "react-icons/fa6"
@@ -37,7 +41,7 @@ export default function Player({
   vtt,
   skipTime,
 }) {
-  const { autoplay, autoskip } = useAutomatics()
+  const { autoplay, autoskip, autonext } = useAutomatics()
 
   const [isClient, setIsClient] = useState(false)
   const [isSub, setIsSub] = useState(true)
@@ -48,12 +52,10 @@ export default function Player({
 
   const playerRef = useRef(null)
 
-  // Set isClient to true after the component is mounted on the client
   useEffect(() => {
     setIsClient(true)
   }, [])
 
-  // Handle localStorage and dynamic origin logic
   useEffect(() => {
     if (isClient) {
       const storedType = localStorage.getItem("type")
@@ -65,26 +67,26 @@ export default function Player({
     }
   }, [isClient, dubLink, streamLink])
 
-  // Update unicornEpisodes whenever episodes change
   useEffect(() => {
     setUnicornEpisodes(episodes)
   }, [episodes])
 
-  // Reload the player when the streamLink or dubLink changes
   useEffect(() => {
     if (isClient && playerRef.current?.load) {
-      setIsLoading(true) // Set loading to true when changing links
+      setIsLoading(true)
       playerRef.current.load()
     }
   }, [isClient, streamLink, dubLink])
 
-  // Handle successful stream link request
   useEffect(() => {
     if (streamLink) {
       setIsLoading(false)
     }
   }, [streamLink])
 
+  // --------------------
+  // AUTOPLAY
+  // --------------------
   const handleTimeUpdate = () => {
     try {
       if (autoskip && playerRef.current) {
@@ -105,10 +107,31 @@ export default function Player({
         }
       }
     } catch (err) {
-      // Skipping for unnecessary logs for now
-      console.log(err)
+      console.log(err?.message)
     }
   }
+
+  // --------------------
+  // AUTONEXT
+  // --------------------
+  useEffect(() => {
+    const player = playerRef.current
+    if (!autonext || !player) return
+
+    const handleEnded = async () => {
+      const nextEps = nextEpisodeId(currentEpisode, episodes)
+      if (nextEps) {
+        await getStreamLink(nextEps)
+      }
+    }
+
+    player.removeEventListener("ended", handleEnded)
+    player.addEventListener("ended", handleEnded)
+
+    return () => {
+      player.removeEventListener("ended", handleEnded)
+    }
+  }, [autonext, playerRef.current])
 
   if (!isClient) return null
 
