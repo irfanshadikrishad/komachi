@@ -40,6 +40,7 @@ export default function Player({
   seasons,
   vtt,
   skipTime,
+  getDownloadLink,
 }) {
   const { autoplay, autoskip, autonext } = useAutomatics()
 
@@ -251,6 +252,8 @@ export default function Player({
           currentEpisode={currentEpisode}
           streamLink={streamLink}
           episodes={episodes}
+          getDownloadLink={getDownloadLink}
+          animeInfo={animeInfo}
         />
       </section>
       <section className={styles.playerTrajectory}>

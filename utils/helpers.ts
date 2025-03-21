@@ -472,10 +472,27 @@ function nextEpisodeId(
   return episodes[index + 1].episodeId
 }
 
+function extractBestDownloadLink(sources: { quality: string; url: string }[]) {
+  if (sources.length === 0) return null
+  if (sources.length > 1) {
+    return sources[0].url
+  }
+  const getResolution = (quality: string) => {
+    const match = quality.match(/(\d+)p/)
+    return match ? parseInt(match[1]) : 0
+  }
+  const sortedSources = sources.sort(
+    (a, b) => getResolution(b.quality) - getResolution(a.quality)
+  )
+
+  return sortedSources[0].url
+}
+
 export {
   convertTimestampToReadable,
   episodeIdToEpisodeNumber,
   episodeIdToString,
+  extractBestDownloadLink,
   extractDefaultSource,
   extractEpisodeTitle,
   extractSkipTimes,
