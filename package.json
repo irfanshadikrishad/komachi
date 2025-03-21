@@ -27,7 +27,7 @@
     "date-fns": "^4.1.0",
     "disqus-react": "^1.1.6",
     "hls.js": "^1.5.20",
-    "mongoose": "^8.12.1",
+    "mongoose": "^8.12.2",
     "next": "^15.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
