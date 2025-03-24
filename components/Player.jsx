@@ -50,6 +50,7 @@ export default function Player({
   const [unicornEpisodes, setUnicornEpisodes] = useState(episodes)
   const [origin, setOrigin] = useState("")
   const [isLoading, setIsLoading] = useState(true)
+  const PROXY = process.env.NEXT_PUBLIC_CORS_PROXY || ""
 
   const playerRef = useRef(null)
 
@@ -153,10 +154,7 @@ export default function Player({
               <MediaPlayer
                 ref={playerRef}
                 title={extractEpisodeTitle(episode?.number, episodes)}
-                src={
-                  `https://anoboye-proxy.onrender.com/m3u8-proxy?url=` +
-                  (isSub || !dubLink ? streamLink : dubLink)
-                }
+                src={PROXY + (isSub || !dubLink ? streamLink : dubLink)}
                 load="eager"
                 aspectRatio="16/9"
                 viewType="video"
@@ -178,7 +176,6 @@ export default function Player({
                 />
               </MediaPlayer>
             ) : (
-              // Show error message if streamLink is null or invalid
               <section className={styles.noSources}>
                 <TiWarningOutline />
                 <p>No sources found.</p>
