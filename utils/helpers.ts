@@ -474,7 +474,7 @@ function nextEpisodeId(
 
 function extractBestDownloadLink(sources: { quality: string; url: string }[]) {
   if (sources.length === 0) return null
-  if (sources.length > 1) {
+  if (sources.length === 1) {
     return sources[0].url
   }
   const getResolution = (quality: string) => {

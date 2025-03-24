@@ -153,9 +153,10 @@ export default function Player({
               <MediaPlayer
                 ref={playerRef}
                 title={extractEpisodeTitle(episode?.number, episodes)}
-                src={`https://proxy-x1087.vercel.app/cors?url=${
-                  isSub || !dubLink ? streamLink : dubLink
-                }`}
+                src={
+                  `https://anoboye-proxy.onrender.com/m3u8-proxy?url=` +
+                  (isSub || !dubLink ? streamLink : dubLink)
+                }
                 load="eager"
                 aspectRatio="16/9"
                 viewType="video"

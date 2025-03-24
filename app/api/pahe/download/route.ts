@@ -1,3 +1,4 @@
+import { client, redis } from "@/utils/redis"
 import { ANIME, META } from "@consumet/extensions"
 import puppeteer from "puppeteer"
 
@@ -36,6 +37,15 @@ export async function POST(request: Request) {
         { status: 400 }
       )
     }
+    // ---------------------------
+    // CHECK IF AVAILABLE IN REDIS
+    // ---------------------------
+    await redis.Connect()
+    const cache_Key = `pahe:download:${anilistId}.${episodeNumber}`
+    const cachedResponse = await client.get(cache_Key)
+    if (cachedResponse) {
+      return new Response(cachedResponse, { status: 200 })
+    }
 
     const meta = new META.Anilist(new ANIME.AnimePahe())
     const info = await meta.fetchAnimeInfo(anilistId)
@@ -56,13 +66,18 @@ export async function POST(request: Request) {
     }
     const downloads = await fetchEpisodeDownloads(episode.id)
 
-    // const downloads = await fetchEpisodeDownloads()
+    // ---------------------
+    // CACHE TO THE REDIS
+    // ---------------------
+    await client.set(cache_Key, JSON.stringify(downloads), { EX: 3600 })
+
     return new Response(JSON.stringify(downloads), { status: 200 })
   } catch (error) {
+    let msg = `${(error as Error).message}`
     return new Response(
       JSON.stringify({
         message: "Internal Server Error!",
-        error: `${(error as Error).message}`,
+        error: msg,
       }),
       { status: 500 }
     )

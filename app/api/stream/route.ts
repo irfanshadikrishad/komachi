@@ -20,7 +20,6 @@ export async function POST(request: Request) {
       dub = dubRequest
     } catch (dubError) {
       console.error("Error fetching dub sources:", dubError)
-      dub = null
     }
 
     return new Response(JSON.stringify({ sub: sub, dub }), {
