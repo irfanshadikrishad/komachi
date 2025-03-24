@@ -4,7 +4,6 @@ To contribute to Komachi, you need to know the following:
 
 - NodeJs/Bun
 - NextJs
-- Mongodb (Mongoose)
 
 #### Cloning the repository
 

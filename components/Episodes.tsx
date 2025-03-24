@@ -22,9 +22,13 @@ export default function Episodes({
   getStreamLink,
   currentEpisode,
   episodes,
+  getDownloadLink,
+  animeInfo,
 }: {
+  animeInfo: any
   unicornEpisodes: any[]
   getStreamLink: any
+  getDownloadLink: any
   streamLink: string
   animeId: string
   malId: string
@@ -172,6 +176,10 @@ export default function Episodes({
                 getStreamLink(
                   streamPreviousEpisode(String(currentEpisode), episodes)
                 )
+                getDownloadLink(
+                  animeInfo?.info?.anilistId,
+                  streamPreviousEpisode(String(currentEpisode), episodes)
+                )
               }
             }}>
             <IoChevronBack />
@@ -189,6 +197,10 @@ export default function Episodes({
                 streamNextEpisode(String(currentEpisode), episodes)
               ) {
                 getStreamLink(
+                  streamNextEpisode(String(currentEpisode), episodes)
+                )
+                getDownloadLink(
+                  animeInfo?.info?.anilistId,
                   streamNextEpisode(String(currentEpisode), episodes)
                 )
               }
@@ -216,6 +228,7 @@ export default function Episodes({
                     }`}
                     onClick={() => {
                       getStreamLink(episodeId, subToDub(episodeId))
+                      getDownloadLink(animeInfo?.info?.anilistId, number)
                     }}>
                     {number}
                   </button>
@@ -253,6 +266,7 @@ export default function Episodes({
                           episodeId,
                           goodEpisodes[selectedEpisodeRange][idx]
                         )
+                        getDownloadLink(animeInfo?.info?.anilistId, number)
                       }}>
                       {number}
                     </button>

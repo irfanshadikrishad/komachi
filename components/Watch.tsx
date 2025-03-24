@@ -1,7 +1,11 @@
 "use client"
 import Player from "@/components/Player"
 import styles from "@/styles/watch.module.css"
-import { AnimeInfo, extractSkipTimes } from "@/utils/helpers"
+import {
+  AnimeInfo,
+  extractBestDownloadLink,
+  extractSkipTimes,
+} from "@/utils/helpers"
 import Image from "next/image"
 import { useParams, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -17,7 +21,9 @@ export default function Watch() {
   const [streamLink, setStreamLink] = useState<string | null>(null)
   const [dubLink, setDubLink] = useState<string | null>(null)
   const [currentEpisode, setCurrentEpisode] = useState<string>()
-  const [episodeDownloadLink, setEpisodeDownloadLink] = useState("")
+  const [episodeDownloadLink, setEpisodeDownloadLink] = useState<string | null>(
+    null
+  )
   const [sources, setSources] = useState([])
   const [dubEpisodes, setDubEpisodes] = useState([])
   const [nextAiringTime, setNextAiringTime] = useState({})
@@ -112,12 +118,34 @@ export default function Watch() {
           response?.episodes?.episodes[0]?.episodeId,
           response?.episodes?.episodes[0]
         )
+        await getDownloadLink(response?.info?.anime?.info?.anilistId, 1)
       } else {
         console.log(response)
         setNotFound(true)
       }
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  const getDownloadLink = async (anilistId: string, episodeNumber: number) => {
+    try {
+      setEpisodeDownloadLink(null)
+      const request = await fetch(`/api/pahe/download`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ anilistId, episodeNumber }),
+      })
+      const response = await request.json()
+
+      if (request.status === 200) {
+        setEpisodeDownloadLink(extractBestDownloadLink(response))
+      } else {
+      }
+    } catch (error) {
+      console.log((error as Error).message)
     }
   }
 
@@ -170,6 +198,7 @@ export default function Watch() {
             episode={episode}
             vtt={VTT}
             skipTime={skipTime}
+            getDownloadLink={getDownloadLink}
           />
         </section>
       ) : (
