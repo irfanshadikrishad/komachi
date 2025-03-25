@@ -27,7 +27,7 @@
     "date-fns": "^4.1.0",
     "disqus-react": "^1.1.6",
     "hls.js": "^1.5.20",
-    "next": "^15.2.3",
+    "next": "^15.2.4",
     "puppeteer": "^24.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
