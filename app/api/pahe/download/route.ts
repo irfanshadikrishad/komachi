@@ -3,25 +3,29 @@ import { ANIME, META } from "@consumet/extensions"
 import puppeteer from "puppeteer"
 
 async function fetchEpisodeDownloads(episodeId: string) {
-  const browser = await puppeteer.launch({ headless: true })
-  const page = await browser.newPage()
-  const url = `https://animepahe.ru/play/${episodeId}`
+  try {
+    const browser = await puppeteer.launch({ headless: true })
+    const page = await browser.newPage()
+    const url = `https://animepahe.ru/play/${episodeId}`
 
-  await page.goto(url, { waitUntil: "domcontentloaded" })
-  await page.waitForSelector("#pickDownload > a", { timeout: 10000 })
+    await page.goto(url, { waitUntil: "domcontentloaded" })
+    await page.waitForSelector("#pickDownload > a", { timeout: 10000 })
 
-  const downloads = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll("#pickDownload > a")).map(
-      (el) => ({
-        url: el.getAttribute("href"),
-        quality: el.textContent?.trim(),
-      })
-    )
-  })
+    const downloads = await page.evaluate(() => {
+      return Array.from(document.querySelectorAll("#pickDownload > a")).map(
+        (el) => ({
+          url: el.getAttribute("href"),
+          quality: el.textContent?.trim(),
+        })
+      )
+    })
 
-  await browser.close()
+    await browser.close()
 
-  return downloads
+    return downloads
+  } catch (error) {
+    return null
+  }
 }
 
 export async function POST(request: Request) {
@@ -61,10 +65,18 @@ export async function POST(request: Request) {
     const episode = episodes?.find((ep) => ep.number === episodeNumber)
     if (!episode) {
       return new Response(JSON.stringify({ message: "Episode not found!" }), {
-        status: 400,
+        status: 404,
       })
     }
     const downloads = await fetchEpisodeDownloads(episode.id)
+    if (!downloads) {
+      return new Response(
+        JSON.stringify({ message: "Download sources not found!" }),
+        {
+          status: 404,
+        }
+      )
+    }
 
     // ---------------------
     // CACHE TO THE REDIS

@@ -5,21 +5,18 @@ export async function POST(request: Request) {
   const hianime = new HiAnime.Scraper()
 
   try {
-    // Fetch subtitles (sub) data
+    let dub = null
     const sub = await hianime.getEpisodeSources(subEpisodeId, "hd-2", "sub")
 
-    let dub = null
-
     try {
-      // Fetch dubbed (dub) data
-      const dubRequest = await hianime.getEpisodeSources(
+      const dub_request = await hianime.getEpisodeSources(
         subEpisodeId,
         "hd-2",
         "dub"
       )
-      dub = dubRequest
-    } catch (dubError) {
-      console.error("Error fetching dub sources:", dubError)
+      dub = dub_request
+    } catch (err) {
+      console.log(`${(err as Error).message}`)
     }
 
     return new Response(JSON.stringify({ sub: sub, dub }), {
@@ -27,8 +24,6 @@ export async function POST(request: Request) {
       headers: { "Content-Type": "application/json" },
     })
   } catch (error) {
-    console.error("Error fetching episode sources:", error)
-
     return new Response(
       JSON.stringify({
         error: `${(error as Error).message}`,
