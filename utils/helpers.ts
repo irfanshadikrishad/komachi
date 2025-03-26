@@ -472,8 +472,13 @@ function nextEpisodeId(
   return episodes[index + 1].episodeId
 }
 
-function extractBestDownloadLink(sources: { quality: string; url: string }[]) {
-  if (sources.length === 0) return null
+function extractBestDownloadLink(
+  sources: { quality: string; url: string }[] | null
+) {
+  if (sources === null || !sources) {
+    return ""
+  }
+  if (sources.length === 0) return ""
   if (sources.length === 1) {
     return sources[0].url
   }
