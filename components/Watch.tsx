@@ -24,6 +24,7 @@ export default function Watch() {
   const [episodeDownloadLink, setEpisodeDownloadLink] = useState<string | null>(
     null
   )
+  const [downloadSources, setDownloadSources] = useState([])
   const [sources, setSources] = useState([])
   const [dubEpisodes, setDubEpisodes] = useState([])
   const [nextAiringTime, setNextAiringTime] = useState({})
@@ -141,11 +142,14 @@ export default function Watch() {
       const response = await request.json()
 
       if (request.status === 200) {
+        setDownloadSources(response)
         setEpisodeDownloadLink(extractBestDownloadLink(response))
       } else {
+        console.log(response)
       }
     } catch (error) {
       console.log((error as Error).message)
+      setEpisodeDownloadLink(null)
     }
   }
 
@@ -199,6 +203,7 @@ export default function Watch() {
             vtt={VTT}
             skipTime={skipTime}
             getDownloadLink={getDownloadLink}
+            downloadSources={downloadSources}
           />
         </section>
       ) : (

@@ -12,6 +12,7 @@ import {
 import { useEffect, useRef, useState } from "react"
 // ICONS
 import { FaClosedCaptioning } from "react-icons/fa6"
+import { ImDownload } from "react-icons/im"
 import { IoMic } from "react-icons/io5"
 import { RiLoader2Fill } from "react-icons/ri"
 import { TiWarningOutline } from "react-icons/ti"
@@ -41,6 +42,7 @@ export default function Player({
   vtt,
   skipTime,
   getDownloadLink,
+  downloadSources,
 }) {
   const { autoplay, autoskip, autonext } = useAutomatics()
 
@@ -261,17 +263,29 @@ export default function Player({
           <Disqus url={origin} currentEpisode={currentEpisode} />
           <Info animeInfo={animeInfo} />
         </div>
-        <div className={styles.thanks_Main}>
-          <p>
-            Thanks for watching. Consider subscribing to my{" "}
-            <Link
-              href="https://www.youtube.com/@irfanshadikrishad"
-              target="_blank"
-              className={styles.yt}>
-              youtube
-            </Link>{" "}
-            channel.
-          </p>
+        <div>
+          <div className={styles.downloads}>
+            <div className={styles.downloads_header}>
+              <p>Downloads</p>
+              <button className={styles.downloads_button}>
+                <ImDownload />
+              </button>
+            </div>
+            <div className={styles.download_wrapper}>
+              {downloadSources.length > 0 &&
+                downloadSources.map(({ quality, url }, idx) => {
+                  return (
+                    <a
+                      key={idx}
+                      className={styles.download_links}
+                      href={url}
+                      target="_blank">
+                      {quality}
+                    </a>
+                  )
+                })}
+            </div>
+          </div>
         </div>
       </section>
       {seasons.length > 0 && (

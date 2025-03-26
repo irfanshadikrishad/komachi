@@ -401,7 +401,46 @@
   color: var(--background);
   background-color: var(--primary-fade);
 }
+.downloads {
+  height: 95%;
+  /* background-color: var(--secondary); */
+  margin-top: 5px;
+  border-radius: 4px;
+  padding: 10px;
+  background: url(/gojo.png) no-repeat bottom right var(--secondary);
+}
+.download_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+.download_links {
+  text-decoration: none;
+  font-size: 0.8rem;
+  padding: 5px;
+  color: var(--primary);
+  border: 1px dashed var(--primary-fade);
+  background-color: var(--secondary);
+}
+.downloads_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed var(--color-fade);
+}
+.downloads_button {
+  border: none;
+  color: var(--color-fade);
+  font-size: 1rem;
+  background-color: transparent;
+}
 
+/* ---------------------------- */
+/* -------- RESPONSIVE -------- */
+/* ---------------------------- */
 @media screen and (max-width: 1440px) {
   .streamingV2 {
     grid-template-columns: 3fr 1fr;
@@ -453,6 +492,9 @@
   }
   .thanks_Main > p {
     text-align: left;
+  }
+  .downloads {
+    min-height: 200px;
   }
 }
 @media screen and (max-width: 768px) {
