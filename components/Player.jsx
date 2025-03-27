@@ -43,6 +43,7 @@ export default function Player({
   skipTime,
   getDownloadLink,
   downloadSources,
+  downloadLoading,
 }) {
   const { autoplay, autoskip, autonext } = useAutomatics()
 
@@ -271,9 +272,11 @@ export default function Player({
                 <ImDownload />
               </button>
             </div>
-            <div className={styles.download_wrapper}>
-              {downloadSources.length > 0 &&
-                downloadSources.map(({ quality, url }, idx) => {
+            {downloadLoading ? (
+              <p style={{ marginTop: "10px" }}>Loading...</p>
+            ) : downloadSources.length > 0 ? (
+              <div className={styles.download_wrapper}>
+                {downloadSources.map(({ quality, url }, idx) => {
                   return (
                     <a
                       key={idx}
@@ -284,7 +287,10 @@ export default function Player({
                     </a>
                   )
                 })}
-            </div>
+              </div>
+            ) : (
+              <p style={{ marginTop: "10px" }}>No download links found</p>
+            )}
           </div>
         </div>
       </section>

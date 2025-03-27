@@ -37,11 +37,17 @@ export async function POST(request: Request) {
       )
     }
     const episodes = info?.episodes
-    const episode = episodes?.find((ep) => ep.number === episodeNumber)
+    let episode = episodes?.find((ep) => ep.number === episodeNumber)
+    if (!episode && episodes && episodes.length > 0) {
+      episode = episodes[episodeNumber - 1]
+    }
     if (!episode) {
-      return new Response(JSON.stringify({ message: "Episode not found!" }), {
-        status: 404,
-      })
+      return new Response(
+        JSON.stringify({ message: "Episode not found!", episodes }),
+        {
+          status: 404,
+        }
+      )
     }
 
     const downloads = await pahe.fetchEpisodeSources(episode.id)

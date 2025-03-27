@@ -25,6 +25,7 @@ export default function Watch() {
     null
   )
   const [downloadSources, setDownloadSources] = useState([])
+  const [downloadLoading, setDownloadLoading] = useState(false)
   const [sources, setSources] = useState([])
   const [dubEpisodes, setDubEpisodes] = useState([])
   const [nextAiringTime, setNextAiringTime] = useState({})
@@ -109,6 +110,7 @@ export default function Watch() {
         body: JSON.stringify({ animeId }),
       })
       const response = await request.json()
+      // console.log(response)
 
       if (request.status === 200) {
         setAnimeInfo(response.info.anime)
@@ -132,6 +134,8 @@ export default function Watch() {
   const getDownloadLink = async (anilistId: string, episodeNumber: number) => {
     try {
       setEpisodeDownloadLink(null)
+      setDownloadSources([])
+      setDownloadLoading(true)
       const request = await fetch(`/api/pahe/download`, {
         method: "POST",
         headers: {
@@ -140,6 +144,7 @@ export default function Watch() {
         body: JSON.stringify({ anilistId, episodeNumber }),
       })
       const response = await request.json()
+      console.log(response)
 
       if (request.status === 200) {
         setDownloadSources(response)
@@ -148,9 +153,10 @@ export default function Watch() {
         console.log(response)
       }
     } catch (error) {
-      console.log((error as Error).message)
+      console.log(error)
       setEpisodeDownloadLink(null)
     }
+    setDownloadLoading(false)
   }
 
   const getServerSources = async (episodeId: string) => {
@@ -204,6 +210,7 @@ export default function Watch() {
             skipTime={skipTime}
             getDownloadLink={getDownloadLink}
             downloadSources={downloadSources}
+            downloadLoading={downloadLoading}
           />
         </section>
       ) : (
