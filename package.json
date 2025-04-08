@@ -1,6 +1,9 @@
 {
   "name": "komachi",
   "version": "2.1.0",
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "private": true,
   "author": {
     "name": "Irfan Shadik Rishad"
