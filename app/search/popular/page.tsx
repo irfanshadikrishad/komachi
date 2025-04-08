@@ -8,6 +8,8 @@ import { getTitle } from "@/utils/helpers"
 import { useEffect, useState } from "react"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6"
 
+export const runtime = "edge"
+
 export default function Trending() {
   const [trending, setTrending] = useState([])
   // const [totalCount, setTotalCount] = useState(1)

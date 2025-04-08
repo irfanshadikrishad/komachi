@@ -15,9 +15,11 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "pages:build": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
+    "@cloudflare/next-on-pages": "^1.13.12",
     "@consumet/extensions": "github:fumihito-sama/consumet.ts",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",

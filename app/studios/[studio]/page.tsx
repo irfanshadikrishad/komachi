@@ -35,6 +35,8 @@ type Pagination = {
   totalItems: number
 }
 
+export const runtime = "edge"
+
 export default function Studio() {
   const { studio }: { studio: string } = useParams()
   const [studioAnimes, setStudioAnimes] = useState([])

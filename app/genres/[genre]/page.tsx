@@ -18,6 +18,8 @@ type Pagination = {
   totalItems: number
 }
 
+export const runtime = "edge"
+
 export default function Genre() {
   const { genre }: { genre: string } = useParams()
   const [genreAnimes, setGenreAnimes] = useState([])
