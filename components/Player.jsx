@@ -157,7 +157,7 @@ export default function Player({
                 ref={playerRef}
                 title={extractEpisodeTitle(episode?.number, episodes)}
                 src={
-                  `https://proxy-v7.vercel.app/m3u8-proxy?url=` +
+                  `https://m3u8proxy-2c51.onrender.com/m3u8-proxy?url=` +
                   (isSub || !dubLink ? streamLink : dubLink)
                 }
                 load="eager"

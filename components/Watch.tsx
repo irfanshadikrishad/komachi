@@ -49,7 +49,7 @@ export default function Watch() {
         })
 
         const response = await request.json()
-
+        
         if (request.status === 200) {
           setSkipTime(extractSkipTimes(response))
           // Validate and set sub link
