@@ -22,7 +22,7 @@
     "pages:build": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
-    "@cloudflare/next-on-pages": "^1.13.12",
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@consumet/extensions": "github:fumihito-sama/consumet.ts",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
