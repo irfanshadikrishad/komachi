@@ -28,7 +28,7 @@
     "@vercel/speed-insights": "^1.2.0",
     "@vidstack/react": "^1.12.11",
     "aniwatch": "^2.18.3",
-    "chalk": "^5.4.1",
+    "chalk": "^5.6.2",
     "date-fns": "^4.1.0",
     "disqus-react": "^1.1.6",
     "hls.js": "^1.6.0",
